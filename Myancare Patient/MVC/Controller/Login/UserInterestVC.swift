@@ -54,14 +54,14 @@ extension UserInterestVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserInterestCell
-        cell.label.text = indexPath.row%2 == 0 ? "Neurology" : "Ear, Nose, Throat"
+        cell.label.text = indexPath.row%3 == 0 ? "Neurology" : "Ear, Nose, Throat"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.width
-        let infoText = indexPath.row%2 == 0 ? "Neurology" : "Ear, Nose, Throat"
-        let cellWidth = infoText.count < 10 ? screenWidth/3+10 : screenWidth/2 + 20
+        let infoText = indexPath.row%3 == 0 ? "Neurology" : "Ear, Nose, Throat"
+        let cellWidth = infoText.count < 10 ? screenWidth/3+10 : screenWidth/2 + 40
         return CGSize(width: cellWidth, height: 50)
     }
 }
