@@ -38,6 +38,7 @@
 		528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */; };
 		528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */; };
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
+		52B1E019222AF2150080243A /* ReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E018222AF2150080243A /* ReasonVC.swift */; };
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
@@ -78,6 +79,7 @@
 		528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewEditProfileCell.swift; sourceTree = "<group>"; };
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		52B1E018222AF2150080243A /* ReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonVC.swift; sourceTree = "<group>"; };
 		52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Logo-Motion_Gif.gif"; sourceTree = "<group>"; };
 		52C07C872222553C003D12BD /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		52C07C8B222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Main.strings; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */,
 				52092D2222217DFB0035C257 /* AppointmentListViewController.swift */,
+				52B1E018222AF2150080243A /* ReasonVC.swift */,
 			);
 			path = Appointment;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
 				52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */,
 				52092D1D2221524B0035C257 /* UIView+anchors.swift in Sources */,
+				52B1E019222AF2150080243A /* ReasonVC.swift in Sources */,
 				52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */,
 				520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,

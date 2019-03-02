@@ -55,7 +55,7 @@ class BookAppointmentViewController: UIViewController {
     }()
     
     @objc func bookBtnClick(){
-        self.navigationController?.pushViewController(InvoiceViewController(), animated: true)
+        self.navigationController?.pushViewController(ReasonVC(), animated: true)
     }
     
     override func viewDidLoad() {
