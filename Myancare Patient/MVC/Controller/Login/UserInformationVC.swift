@@ -95,7 +95,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     }()
     
     @objc func confrimBtnClick(){
-        UtilityClass.switchToHomeViewController()
+        self.navigationController?.pushViewController(UserInterestVC(), animated: true)
     }
     
     lazy var setupPasscodeBtn: UIButton = {

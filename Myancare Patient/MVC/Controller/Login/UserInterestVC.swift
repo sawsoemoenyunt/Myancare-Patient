@@ -34,14 +34,33 @@ class UserInterestVC: UIViewController {
         return cv
     }()
     
+    lazy var confrimBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("NEXT", for: .normal)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(confrimBtnClick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func confrimBtnClick(){
+        UtilityClass.switchToHomeViewController()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.title = "Your Interests"
         view.addSubview(label)
         view.addSubview(collectionView)
+        view.addSubview(confrimBtn)
         label.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        collectionView.anchor(label.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        confrimBtn.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        collectionView.anchor(label.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: confrimBtn.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 10, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         
         collectionView.register(UserInterestCell.self, forCellWithReuseIdentifier: cellID)
     }

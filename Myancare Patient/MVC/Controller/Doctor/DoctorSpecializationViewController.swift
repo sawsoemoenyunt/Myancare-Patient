@@ -43,7 +43,7 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.title = "အထူးကုအမ်ိဳးစားေ႐ြးခ်ယ္ပါ"
+        self.title = "Choose Specializations"
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
