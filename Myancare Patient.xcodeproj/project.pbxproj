@@ -39,6 +39,7 @@
 		528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */; };
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
 		52B1E019222AF2150080243A /* ReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E018222AF2150080243A /* ReasonVC.swift */; };
+		52B1E01C222B02B10080243A /* WalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E01B222B02B10080243A /* WalletVC.swift */; };
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
@@ -80,6 +81,7 @@
 		528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewEditProfileCell.swift; sourceTree = "<group>"; };
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		52B1E018222AF2150080243A /* ReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonVC.swift; sourceTree = "<group>"; };
+		52B1E01B222B02B10080243A /* WalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVC.swift; sourceTree = "<group>"; };
 		52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Logo-Motion_Gif.gif"; sourceTree = "<group>"; };
 		52C07C872222553C003D12BD /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		52C07C8B222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Main.strings; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				52B1E01A222B02A30080243A /* Wallet */,
 				52162CD32224EE4F001F054E /* More */,
 				52162CD22224EE43001F054E /* Payment */,
 				52162CD12224EE25001F054E /* Appointment */,
@@ -328,6 +331,14 @@
 				528DA54F221D96DA00140CFF /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		52B1E01A222B02A30080243A /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				52B1E01B222B02B10080243A /* WalletVC.swift */,
+			);
+			path = Wallet;
 			sourceTree = "<group>";
 		};
 		52C07C84222254A9003D12BD /* SupportingFiles */ = {
@@ -502,6 +513,7 @@
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,
+				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,
 			);

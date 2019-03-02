@@ -182,7 +182,7 @@ class AppointmentListCell: UICollectionViewCell {
         
         self.layer.cornerRadius = 5
         self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0.5
         self.layer.masksToBounds = true
         
         self.backgroundColor = .white
