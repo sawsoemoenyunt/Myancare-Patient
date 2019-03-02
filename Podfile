@@ -9,4 +9,5 @@ target 'Myancare Patient' do
 
 	pod 'SwiftyGif'
 	pod 'Localize-Swift'
+	pod 'MagazineLayout'
 end

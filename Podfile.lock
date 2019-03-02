@@ -1,20 +1,24 @@
 PODS:
   - Localize-Swift (2.0.0)
+  - MagazineLayout (1.0.0)
   - SwiftyGif (4.2.0)
 
 DEPENDENCIES:
   - Localize-Swift
+  - MagazineLayout
   - SwiftyGif
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Localize-Swift
+    - MagazineLayout
     - SwiftyGif
 
 SPEC CHECKSUMS:
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
+  MagazineLayout: 5a33327c140be0a04e0fffdf9bee37cce703ad1e
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
 
-PODFILE CHECKSUM: c52eeef7107f944c851d81a796af59916e5021a0
+PODFILE CHECKSUM: 9d7fb5620949b54f704133ba01b31e847c174535
 
 COCOAPODS: 1.5.3
