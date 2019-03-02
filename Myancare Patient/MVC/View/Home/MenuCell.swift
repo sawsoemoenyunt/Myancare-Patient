@@ -85,6 +85,8 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
         //do something for cell click
         if indexPath.row == 1 {
             homeViewController?.navigationController?.pushViewController(AppointmentListViewController(), animated: true)
+        }  else if indexPath.row == 0{
+            homeViewController?.navigationController?.pushViewController(WalletVC(), animated: true)
         }
     }
 }
