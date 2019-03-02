@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  Myancare Patient
+
+  Created by SawSMN's MacBook Pro on 2/24/19.
+  Copyright © 2019 Saw Soe Moe Nyunt. All rights reserved.
+*/
+
+//languageViewController
+"Select Language" = "SELECT LANGUAGE";
+
+//HomeViewController
+"Welcome" = "Welcome";
+"Wallet" = "Wallet";
+"Appointments" = "Appointments";
+"Medical Records" = "Medical Records";
+"Articles" = "Articles";
+"Reminder" = "Reminder";
+"More" = "More";
+
+"Online" = "Online";
+"Favourite" = "Favourite";
+"View all" = "View all";

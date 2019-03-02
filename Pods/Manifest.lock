@@ -1,0 +1,20 @@
+PODS:
+  - Localize-Swift (2.0.0)
+  - SwiftyGif (4.2.0)
+
+DEPENDENCIES:
+  - Localize-Swift
+  - SwiftyGif
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Localize-Swift
+    - SwiftyGif
+
+SPEC CHECKSUMS:
+  Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
+  SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
+
+PODFILE CHECKSUM: c52eeef7107f944c851d81a796af59916e5021a0
+
+COCOAPODS: 1.5.3
