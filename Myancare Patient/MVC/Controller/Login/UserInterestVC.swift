@@ -8,11 +8,13 @@
 
 import UIKit
 
+///UIViewController : To choose favourite category
 class UserInterestVC: UIViewController {
     
+    ///Cell id for collectionview
     let cellID = "cellID"
     
-    //UILabel to show information
+    ///UILabel : to show information
     let label: UILabel = {
         let lbl = UILabel()
         lbl.text = "What are you interest in?\nChoose one or more. You can edit this later."
@@ -22,6 +24,7 @@ class UserInterestVC: UIViewController {
         return lbl
     }()
     
+    ///UICollectionView : to show list of category
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
@@ -34,6 +37,7 @@ class UserInterestVC: UIViewController {
         return cv
     }()
     
+    //UIButton : Custom button for confirmation
     lazy var confrimBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("NEXT", for: .normal)
@@ -46,6 +50,11 @@ class UserInterestVC: UIViewController {
         return btn
     }()
     
+    /**
+     To handle confrim button click
+     - Parameters: nil
+     - Returns: nil
+     */
     @objc func confrimBtnClick(){
         UtilityClass.switchToHomeViewController()
     }
@@ -55,17 +64,23 @@ class UserInterestVC: UIViewController {
         
         view.backgroundColor = .white
         self.title = "Your Interests"
+        
+        //adding subviews to view
         view.addSubview(label)
         view.addSubview(collectionView)
         view.addSubview(confrimBtn)
+        
+        //adding constraints to subviews
         label.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         confrimBtn.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         collectionView.anchor(label.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: confrimBtn.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 10, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         
+        //register custom cell for collectionview
         collectionView.register(UserInterestCell.self, forCellWithReuseIdentifier: cellID)
     }
 }
 
+///UICollectionvewi Extension for UserInterestVC
 extension UserInterestVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 18
@@ -74,6 +89,7 @@ extension UserInterestVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserInterestCell
         cell.label.text = indexPath.row%3 == 0 ? "Neurology" : "Ear, Nose, Throat"
+
         return cell
     }
     
@@ -85,8 +101,10 @@ extension UserInterestVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 }
 
+//UICollectionViewCell for UserInterest table view cell
 class UserInterestCell: UICollectionViewCell {
-    
+   
+    ///UIImageView : to show icon
     let icon: UIImageView = {
        let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -96,6 +114,7 @@ class UserInterestCell: UICollectionViewCell {
         return img
     }()
     
+    ///UILabel : to show info
     let label: UILabel = {
         let lbl = UILabel()
         lbl.text = "Urology"
@@ -104,6 +123,7 @@ class UserInterestCell: UICollectionViewCell {
         return lbl
     }()
     
+    ///Setup view and subviews
     func setupViews(){
         addSubview(icon)
         addSubview(label)
@@ -118,6 +138,7 @@ class UserInterestCell: UICollectionViewCell {
         clipsToBounds = true
     }
     
+    ///To handle cell selection
     override var isSelected: Bool{
         didSet{
             if isSelected{

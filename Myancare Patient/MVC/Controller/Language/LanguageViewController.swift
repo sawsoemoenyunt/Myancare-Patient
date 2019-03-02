@@ -9,9 +9,10 @@
 import UIKit
 import Localize_Swift
 
+/// Language view controller to choose langauge : Available languages -> English/Myanmar
 class LanguageViewController: UIViewController {
     
-    //icon
+    /// UIImageView for display icon
     let icon: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "icons8-language_filled")
@@ -19,7 +20,7 @@ class LanguageViewController: UIViewController {
         return img
     }()
     
-    //select language label
+    /// UILabel for select language
     let label: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.mmFontBold(ofSize: 28)
@@ -29,7 +30,7 @@ class LanguageViewController: UIViewController {
         return lbl
     }()
     
-    //select language label
+    /// UILabel for Myancare's info text
     let label2: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.systemFont(ofSize: 12)
@@ -40,7 +41,7 @@ class LanguageViewController: UIViewController {
         return lbl
     }()
     
-    //custom button choosing language : Myanmar
+    /// Custom UIButton for Myanmare language
     lazy var mmBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("မြန်မာ", for: .normal)
@@ -53,13 +54,17 @@ class LanguageViewController: UIViewController {
         return btn
     }()
     
-    //Handle mmBtn action : set localization to Myanmar
+    /**
+     To handle mmBtn click action
+     - Parameters: nil
+     - Returns: nil
+     */
     @objc func mmBtnClick(){
         Localize.setCurrentLanguage("my")
         pushToNextView()
     }
     
-    //custom button choosing language : English
+    /// Custom UIButton for English language
     lazy var engBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("English", for: .normal)
@@ -72,12 +77,21 @@ class LanguageViewController: UIViewController {
         return btn
     }()
     
-    //Handle engBtn action : set localization to English
+    /**
+     To handle engBtn click action
+     - Parameters: nil
+     - Returns: nil
+     */
     @objc func engBtnClick(){
         Localize.setCurrentLanguage("eng")
         pushToNextView()
     }
     
+    /**
+     To show next View
+     - Parameters: nil
+     - Returns: nil
+     */
     func pushToNextView(){
        //show loginview
         UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
@@ -90,7 +104,11 @@ class LanguageViewController: UIViewController {
         setupViews()
     }
     
-    //function for setupviews
+    /**
+     Setup for subviews
+     - Parameters: nil
+     - Returns: nil
+     */
     func setupViews(){
         //add subviews to view
         view.addSubview(icon)
@@ -100,7 +118,6 @@ class LanguageViewController: UIViewController {
         view.addSubview(label2)
         
         //setup constraints
-        
         mmBtn.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 287, heightConstant: 50)
         mmBtn.anchorCenterSuperview()
         engBtn.anchor(mmBtn.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 287, heightConstant: 50)

@@ -9,17 +9,17 @@
 import UIKit
 import SwiftyGif
 
-//StartScreen View with animated gif logo
+/// Start Screen View Controller with Animated gif logo
 class StartScreenViewController: UIViewController, SwiftyGifDelegate {
     
-    //imageview to show gif logo
+    ///Imageview for gif logo
     let logo: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         return img
     }()
     
-    //this function will work after view loaded
+    ///This func work after view was loaded
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,25 +29,36 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
         logo.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 200)
         logo.anchorCenterSuperview()
         
-        //setup gif
-        setupGifPlayer()
+        //init gif
+        initGifPlayer()
     }
     
-    //Gif image initialize
-    func setupGifPlayer(){
-        //gif file name => Logo-Motion_Gif
+    /**
+     Initializes a new gif with file name
+     - Parameters: nil
+     - Returns: nil
+     */
+    func initGifPlayer(){
         let gif = UIImage(gifName: "Logo-Motion_Gif.gif")
         logo.delegate = self
         logo.setGifImage(gif, manager: SwiftyGifManager.defaultManager, loopCount: 1)
         logo.startAnimatingGif()
     }
     
-    //Gif player listener : gifDidStart
+    /**
+     gif player listener to check gif was playing
+     - Parameters: nil
+     - Returns: nil
+     */
     func gifDidStart(sender: UIImageView) {
         print("StartScreen : gif file start animating")
     }
     
-    //Gif player listener : gifDidStop
+    /**
+     gif player listener to check gif was stop playing
+     - Parameters: nil
+     - Returns: nil
+     */
     func gifDidStop(sender: UIImageView) {
         print("StartScreen : gif file finished animating")
         
@@ -58,7 +69,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
         UtilityClass.changeRootViewController(with: LanguageViewController())
     }
     
-    //MARK : Deinit
+    // MARK : Deinit
     deinit {
         print("StartScreen Deinit")
     }

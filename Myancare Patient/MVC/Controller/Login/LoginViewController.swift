@@ -8,12 +8,14 @@
 
 import UIKit
 
+///Login View Controller to choose login with Facebook or Mobile phone
 class LoginViewController: UIViewController {
     
+    /// Cell id for collectionView
     let cellID = "cellID"
     let pages = ["page1", "page2", "page3", "page4", "page5"]
     
-    //page control for walk through
+    /// UIPageControl for walk through
     lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.pageIndicatorTintColor = .lightGray
@@ -22,7 +24,7 @@ class LoginViewController: UIViewController {
         return pc
     }()
     
-    //collection view walk through
+    /// CollectionView to show walk through
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -38,7 +40,7 @@ class LoginViewController: UIViewController {
         return cv
     }()
     
-    //custom button for facebook login
+    /// Custom facebook login button
     lazy var fbBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Login with Facebook".localized(), for: .normal)
@@ -51,11 +53,16 @@ class LoginViewController: UIViewController {
         return btn
     }()
     
+    /**
+     To handle fbBtn click action
+     - Parameters: nil
+     - Returns: nil
+     */
     @objc func fbBtnClick(){
         self.navigationController?.pushViewController(UserInformationVC(), animated: true)
     }
     
-    //custom button for mobile login
+    /// Custom mobile login button
     lazy var mobileBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Login with Mobile", for: .normal)
@@ -65,12 +72,14 @@ class LoginViewController: UIViewController {
         return btn
     }()
     
+    /// Line
     let lineView:UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.MyanCareColor.lightGray
         return view
     }()
     
+    /// Moblie phone login button bottom constraint
     var loginbtnBottomConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
@@ -92,6 +101,11 @@ class LoginViewController: UIViewController {
         animateViews()
     }
     
+    /**
+     To setup view and subviews
+     - Parameters: nil
+     - Returns: nil
+     */
     func setupViews(){
         
         //add subviews to view
@@ -114,6 +128,11 @@ class LoginViewController: UIViewController {
         loginbtnBottomConstraint?.constant = 150
     }
     
+    /**
+     Animated views
+     - Parameters: nil
+     - Returns: nil
+     */
     func animateViews(){
         
         loginbtnBottomConstraint?.constant = -20
@@ -124,6 +143,7 @@ class LoginViewController: UIViewController {
     }
 }
 
+///LoginViewController's extension for collection view
 extension LoginViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -146,8 +166,10 @@ extension LoginViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
 }
 
+/// Custom Collection View Cell for walk through collection view
 class WalkthroughCell: UICollectionViewCell {
     
+    /// UIImageView to show image
     let image: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -155,6 +177,7 @@ class WalkthroughCell: UICollectionViewCell {
         return img
     }()
     
+    /// Setup UICollectionViewCell and subviews
     func setupViews(){
         addSubview(image)
         image.fillSuperview()
