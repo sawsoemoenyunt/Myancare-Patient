@@ -13,6 +13,7 @@
 		52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */; };
 		52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2022216E040035C257 /* InvoiceViewController.swift */; };
 		52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2222217DFB0035C257 /* AppointmentListViewController.swift */; };
+		521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521015F6222C4D6F004119E6 /* SelectAmountVC.swift */; };
 		523415362222858600CE2A91 /* Pyidaungsu.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415342222858600CE2A91 /* Pyidaungsu.ttf */; };
 		523415372222858600CE2A91 /* Pyidaungsu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */; };
 		523415392222862700CE2A91 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523415382222862700CE2A91 /* LanguageViewController.swift */; };
@@ -55,6 +56,7 @@
 		52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		52092D2022216E040035C257 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		52092D2222217DFB0035C257 /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
+		521015F6222C4D6F004119E6 /* SelectAmountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAmountVC.swift; sourceTree = "<group>"; };
 		523415342222858600CE2A91 /* Pyidaungsu.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pyidaungsu.ttf; sourceTree = "<group>"; };
 		523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pyidaungsu-Bold.ttf"; sourceTree = "<group>"; };
 		523415382222862700CE2A91 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			children = (
 				52B1E01B222B02B10080243A /* WalletVC.swift */,
 				52B30394222BC26500BBFDA1 /* PaymentMethodVC.swift */,
+				521015F6222C4D6F004119E6 /* SelectAmountVC.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,
+				521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */,
 				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,

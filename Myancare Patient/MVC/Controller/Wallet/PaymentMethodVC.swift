@@ -32,11 +32,11 @@ class PaymentMethodVC: UIViewController {
             ]),
         PaymentList.init(paymentGroup: "Pay with Mobile Money", paymentGateways: [
             PaymentGateway.init(name: "Wave Money", iconName: "wave_money"),
-            PaymentGateway.init(name: "OK$", iconName: "ok$"),
+            PaymentGateway.init(name: "OK$", iconName: "ok"),
             PaymentGateway.init(name: "MPitesan", iconName: "mpitesan")
             ]),
         PaymentList.init(paymentGroup: "Pay with other", paymentGateways: [
-            PaymentGateway.init(name: "2c2p", iconName: "2c2p")
+            PaymentGateway.init(name: "2c2p", iconName: "m2c2p")
             ])
     ]
     
@@ -77,6 +77,7 @@ extension PaymentMethodVC : UICollectionViewDelegate, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PaymentRowCell
         cell.payments = paymentList[indexPath.row].paymentGateways
         cell.typeLabel.text = paymentList[indexPath.row].paymentGroup
+        cell.paymentMethodVC = self
         return cell
     }
     
@@ -87,6 +88,7 @@ extension PaymentMethodVC : UICollectionViewDelegate, UICollectionViewDataSource
 
 class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
+    var paymentMethodVC: PaymentMethodVC?
     var payments = [PaymentGateway]()
     
     let cellID = "cellID"
@@ -141,6 +143,10 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
         return CGSize(width: collectionView.bounds.width/4, height: collectionView.bounds.height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        paymentMethodVC?.navigationController?.pushViewController(SelectAmountVC(), animated: true)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -156,7 +162,7 @@ class PaymentCell: UICollectionViewCell {
     let icon: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
-        img.backgroundColor = .gray
+        img.backgroundColor = .white
         img.layer.cornerRadius = 25 //size 50
         img.layer.borderColor = UIColor.gray.cgColor
         img.layer.borderWidth = 0.5
