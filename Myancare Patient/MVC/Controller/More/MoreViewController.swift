@@ -61,7 +61,6 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         self.title = ""
         self.view.backgroundColor = .white
         self.navigationItem.largeTitleDisplayMode = .never
-        self.navigationController?.navigationBar.topItem?.title = ""
         
         
         setupViews()

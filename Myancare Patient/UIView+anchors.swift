@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 extension UIColor {
     //colors from Myancare UI
@@ -21,11 +22,23 @@ extension UIColor {
 
 extension UIFont {
     class func mmFontRegular(ofSize fontSize: CGFloat) -> UIFont {
-        return UIFont(name: "Pyidaungsu", size: fontSize)!
+        var myfont = UIFont()
+        if Localize.currentLanguage() == "en" {
+            myfont = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        } else {
+            myfont = UIFont(name: "Pyidaungsu", size: fontSize)!
+        }
+        return myfont
     }
     
     class func mmFontBold(ofSize fontSize: CGFloat) -> UIFont {
-        return UIFont(name: "Pyidaungsu-Bold", size: fontSize)!
+        var myfont = UIFont()
+        if Localize.currentLanguage() == "en" {
+            myfont = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        } else {
+            myfont = UIFont(name: "Pyidaungsu-bold", size: fontSize)!
+        }
+        return myfont
     }
 }
 
