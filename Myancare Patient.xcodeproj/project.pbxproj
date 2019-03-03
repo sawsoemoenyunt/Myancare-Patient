@@ -41,6 +41,7 @@
 		52B1E019222AF2150080243A /* ReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E018222AF2150080243A /* ReasonVC.swift */; };
 		52B1E01C222B02B10080243A /* WalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E01B222B02B10080243A /* WalletVC.swift */; };
 		52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */; };
+		52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B30394222BC26500BBFDA1 /* PaymentMethodVC.swift */; };
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
@@ -84,6 +85,7 @@
 		52B1E018222AF2150080243A /* ReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonVC.swift; sourceTree = "<group>"; };
 		52B1E01B222B02B10080243A /* WalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVC.swift; sourceTree = "<group>"; };
 		52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListVC.swift; sourceTree = "<group>"; };
+		52B30394222BC26500BBFDA1 /* PaymentMethodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodVC.swift; sourceTree = "<group>"; };
 		52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Logo-Motion_Gif.gif"; sourceTree = "<group>"; };
 		52C07C872222553C003D12BD /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		52C07C8B222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Main.strings; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				52B1E01B222B02B10080243A /* WalletVC.swift */,
+				52B30394222BC26500BBFDA1 /* PaymentMethodVC.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */,
 				528DA571221D990A00140CFF /* MenuOnlineCell.swift in Sources */,
 				528DA57B221D9ABB00140CFF /* DoctorDetailProfileCell.swift in Sources */,
+				52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */,
 				528DA552221D96DA00140CFF /* ViewController.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,

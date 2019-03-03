@@ -75,10 +75,17 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     }()
     
     ///UISwitch : To control agree terms or not
-    let agreeSwitch: UISwitch = {
+    lazy var agreeSwitch: UISwitch = {
         let sw = UISwitch()
+        sw.addTarget(self, action: #selector(swithOnOff), for: .valueChanged)
         return sw
     }()
+    
+    @objc func swithOnOff(){
+        if agreeSwitch.isOn{
+            moveViewToTopWithConstant(-120)
+        }
+    }
     
     ///UILabel : To show term of service text
     let agreeLabel: UILabel = {
@@ -149,12 +156,13 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
         let screenHeight = screensize.height
-        scrollView.contentSize = CGSize(width: screenWidth, height: screenHeight+100)
+        
         
         //add scrollview to view
         view.addSubview(scrollView)
         //scrollview layout constraint
-        scrollView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: screenHeight+100)
+        scrollView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        scrollView.contentSize = CGSize(width: screenWidth, height: screenHeight+200)
         
         //adding sub views to view
         scrollView.addSubview(label)
