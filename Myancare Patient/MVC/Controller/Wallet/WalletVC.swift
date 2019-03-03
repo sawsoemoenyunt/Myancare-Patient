@@ -123,7 +123,18 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! WalletCell
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MMM.yyyy"
+        let result = formatter.string(from: date)
+        cell.dateLabel.text = result
+        cell.noteLabel.text = indexPath.row%3 == 0 ? "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..." : "Transaction note is here..."
+        let randomcolor = indexPath.row%4 == 0 ? UIColor.red : UIColor.black
+        cell.dateLabel.textColor = randomcolor
+        cell.noteLabel.textColor = randomcolor
+        cell.circleView.layer.borderColor = randomcolor.cgColor
+        cell.verticallineView.backgroundColor = randomcolor
         return cell
     }
     
@@ -146,7 +157,7 @@ class WalletCell: UICollectionViewCell {
     let noteLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "transaction note here"
-        lbl.numberOfLines = 1
+        lbl.numberOfLines = 0
         lbl.font = UIFont.mmFontRegular(ofSize: 12)
         lbl.textColor = UIColor.black
         return lbl

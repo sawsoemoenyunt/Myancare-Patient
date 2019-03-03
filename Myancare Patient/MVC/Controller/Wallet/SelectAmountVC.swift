@@ -165,7 +165,7 @@ class AmountCell: UICollectionViewCell {
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 0.5
         view.clipsToBounds = true
-        view.layer.cornerRadius = 6
+        view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
        
         return view
@@ -177,7 +177,7 @@ class AmountCell: UICollectionViewCell {
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.borderWidth = 0.5
         view.clipsToBounds = true
-        view.layer.cornerRadius = 6
+        view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         
         return view

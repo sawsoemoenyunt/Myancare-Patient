@@ -114,18 +114,37 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
         return cv
     }()
     
+    let roundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 0.5
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        
+        return view
+    }()
+    
     func setupViews(){
+       
+        addSubview(roundView)
+        roundView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 2, leftConstant: 2, bottomConstant: 2, rightConstant: 2, widthConstant: 0, heightConstant: 0)
+        
         addSubview(typeLabel)
         addSubview(collectionView)
-        typeLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        typeLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 14, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         collectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 4, leftConstant: 8, bottomConstant: 4, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         collectionView.register(PaymentCell.self, forCellWithReuseIdentifier: cellID)
         
-        layer.cornerRadius = 5
-        layer.borderColor = UIColor.gray.cgColor
-        layer.borderWidth = 0.5
-        clipsToBounds = true
+        
+        // set the shadow of the view's layer
+        layer.backgroundColor = UIColor.clear.cgColor
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.2
+        layer.shadowRadius = 4.0
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
