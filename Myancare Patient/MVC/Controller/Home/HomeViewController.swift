@@ -57,7 +57,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     // MARK: - Navigation Message Button Action
     @objc func notiButtonPressed () {
-        
+        self.navigationController?.pushViewController(NotificationListVC(), animated: true)
     }
     
     func setupViews(){

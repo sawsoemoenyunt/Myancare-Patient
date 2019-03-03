@@ -40,6 +40,7 @@
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
 		52B1E019222AF2150080243A /* ReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E018222AF2150080243A /* ReasonVC.swift */; };
 		52B1E01C222B02B10080243A /* WalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E01B222B02B10080243A /* WalletVC.swift */; };
+		52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */; };
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
@@ -82,6 +83,7 @@
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		52B1E018222AF2150080243A /* ReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonVC.swift; sourceTree = "<group>"; };
 		52B1E01B222B02B10080243A /* WalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVC.swift; sourceTree = "<group>"; };
+		52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListVC.swift; sourceTree = "<group>"; };
 		52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Logo-Motion_Gif.gif"; sourceTree = "<group>"; };
 		52C07C872222553C003D12BD /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
 		52C07C8B222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Main.strings; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				52B30391222BBBFF00BBFDA1 /* Notification */,
 				52B1E01A222B02A30080243A /* Wallet */,
 				52162CD32224EE4F001F054E /* More */,
 				52162CD22224EE43001F054E /* Payment */,
@@ -339,6 +342,14 @@
 				52B1E01B222B02B10080243A /* WalletVC.swift */,
 			);
 			path = Wallet;
+			sourceTree = "<group>";
+		};
+		52B30391222BBBFF00BBFDA1 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		52C07C84222254A9003D12BD /* SupportingFiles */ = {
@@ -488,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				528DA56F221D98E400140CFF /* MenuCell.swift in Sources */,
+				52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */,
 				528DA573221D992D00140CFF /* MenuCategoryCell.swift in Sources */,
 				528DA579221D9A5400140CFF /* DoctorListCell.swift in Sources */,
 				528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */,
