@@ -18,6 +18,8 @@
 		523415372222858600CE2A91 /* Pyidaungsu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */; };
 		523415392222862700CE2A91 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523415382222862700CE2A91 /* LanguageViewController.swift */; };
 		5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234153A2222919700CE2A91 /* LoginViewController.swift */; };
+		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
+		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
 		52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269115F222AE0450082FCC6 /* UserInterestVC.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA552221D96DA00140CFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA551221D96DA00140CFF /* ViewController.swift */; };
@@ -61,6 +63,8 @@
 		523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pyidaungsu-Bold.ttf"; sourceTree = "<group>"; };
 		523415382222862700CE2A91 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		5234153A2222919700CE2A91 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
+		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
 		5269115F222AE0450082FCC6 /* UserInterestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterestVC.swift; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +251,15 @@
 			path = More;
 			sourceTree = "<group>";
 		};
+		5245F6E6222EAE0800D270F4 /* VoiceAndVideo */ = {
+			isa = PBXGroup;
+			children = (
+				5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */,
+				5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */,
+			);
+			path = VoiceAndVideo;
+			sourceTree = "<group>";
+		};
 		528DA543221D96DA00140CFF = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +330,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
 				52B30391222BBBFF00BBFDA1 /* Notification */,
 				52B1E01A222B02A30080243A /* Wallet */,
 				52162CD32224EE4F001F054E /* More */,
@@ -532,9 +546,11 @@
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,
+				5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */,
 				521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */,
 				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
+				5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
