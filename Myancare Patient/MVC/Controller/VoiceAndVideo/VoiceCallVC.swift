@@ -106,7 +106,7 @@ class VoiceCallVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(animateButtons), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(animateButtons), userInfo: nil, repeats: false)
         
     }
     
@@ -155,10 +155,10 @@ class VoiceCallVC: UIViewController {
         doctorImage.anchorCenterXToSuperview()
         doctornamelabel.anchor(doctorImage.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         callinglabel.anchor(doctornamelabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 30, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        muteBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 46, heightConstant: 46)
+        muteBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 56, heightConstant: 56)
         muteBtn.layer.cornerRadius = 28
         muteBtn.anchorCenterXToSuperview()
-        speakerBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 46, heightConstant: 46)
+        speakerBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 56, heightConstant: 56)
         speakerBtn.anchorCenterXToSuperview()
         speakerBtn.layer.cornerRadius = 28
         hangupBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 56, heightConstant: 56)

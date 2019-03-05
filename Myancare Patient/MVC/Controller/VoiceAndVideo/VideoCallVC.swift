@@ -164,7 +164,7 @@ class VideoCallVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(secondLayout), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(secondLayout), userInfo: nil, repeats: false)
         
     }
     

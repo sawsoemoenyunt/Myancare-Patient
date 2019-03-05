@@ -13,8 +13,8 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     let cellID = "cellID"
     let cellID_profile = "cellID_profile"
     let buttonList:[MenuButton] = [MenuButton(title: "Username", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Change Language", icon: #imageLiteral(resourceName: "icons8-geography")),
-                                   MenuButton(title: "Security", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
+                                   MenuButton(title: "Phone Call Test", icon: #imageLiteral(resourceName: "icons8-geography")),
+                                   MenuButton(title: "Video Call Test", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
                                    MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
                                    MenuButton(title: "Invite your friend", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
                                    MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-ask_question_filled")),
@@ -88,7 +88,11 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if indexPath.row == 1 {
+            self.navigationController?.pushViewController(VoiceCallVC(), animated: true)
+        } else if indexPath.row == 2{
+            self.navigationController?.pushViewController(VideoCallVC(), animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
