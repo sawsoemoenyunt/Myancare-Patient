@@ -20,6 +20,7 @@
 		5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234153A2222919700CE2A91 /* LoginViewController.swift */; };
 		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
+		5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268C553222F7DC6001CF258 /* UserProfileVC.swift */; };
 		52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269115F222AE0450082FCC6 /* UserInterestVC.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA552221D96DA00140CFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA551221D96DA00140CFF /* ViewController.swift */; };
@@ -65,6 +66,7 @@
 		5234153A2222919700CE2A91 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
+		5268C553222F7DC6001CF258 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		5269115F222AE0450082FCC6 /* UserInterestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterestVC.swift; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +262,14 @@
 			path = VoiceAndVideo;
 			sourceTree = "<group>";
 		};
+		5268C552222F7DA3001CF258 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5268C553222F7DC6001CF258 /* UserProfileVC.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
 		528DA543221D96DA00140CFF = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +340,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5268C552222F7DA3001CF258 /* UserProfile */,
 				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
 				52B30391222BBBFF00BBFDA1 /* Notification */,
 				52B1E01A222B02A30080243A /* Wallet */,
@@ -541,6 +552,7 @@
 				52B1E019222AF2150080243A /* ReasonVC.swift in Sources */,
 				52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */,
 				520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */,
+				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,
 				528DA575221D99B700140CFF /* DoctorSpecializationViewController.swift in Sources */,
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
