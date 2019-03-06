@@ -77,7 +77,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         
         infoLabel.anchor(nil, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 4, bottomConstant: 4, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         signOutBtn.anchor(nil, left: self.view.safeAreaLayoutGuide.leftAnchor, bottom: infoLabel.topAnchor, right: self.view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 12, rightConstant: 8, widthConstant: 0, heightConstant: 46)
-        collectionView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: signOutBtn.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 10, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        collectionView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: signOutBtn.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         collectionView.register(MoreCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.register(MoreCollectionViewEditProfileCell.self, forCellWithReuseIdentifier: cellID_profile)

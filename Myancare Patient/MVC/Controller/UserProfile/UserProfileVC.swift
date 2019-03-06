@@ -31,6 +31,8 @@ class UserProfileVC: UIViewController {
     var collectionViewTopAnchor:NSLayoutConstraint?
     
     func setupViews(){
+        self.title = "User Profile"
+        view.backgroundColor = .white
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: cellID)
         view.addSubview(collectionView)
         let v = view.safeAreaLayoutGuide
@@ -199,8 +201,8 @@ class ProfileCell: UICollectionViewCell, UITextFieldDelegate {
         
         profileImage.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 80, heightConstant: 80)
         profileImage.anchorCenterXToSuperview()
-        phoneUserIDTextField.anchor(profileImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-        nameTextField.anchor(phoneUserIDTextField.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        phoneUserIDTextField.anchor(profileImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        nameTextField.anchor(phoneUserIDTextField.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         dobTextField.anchor(nameTextField.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         emailTextField.anchor(dobTextField.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         femaleBtn.anchor(emailTextField.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 30, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 24, heightConstant: 24)
@@ -227,6 +229,7 @@ class ProfileCell: UICollectionViewCell, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         hideKeyboard()
+        userProfileVC?.moveViewToTopWithConstant(20)
         return true
     }
     
@@ -235,8 +238,10 @@ class ProfileCell: UICollectionViewCell, UITextFieldDelegate {
             userProfileVC?.moveViewToTopWithConstant(-120)
         } else if textField == emailTextField{
             userProfileVC?.moveViewToTopWithConstant(-180)
-        } else if textField == heightTextField, textField == weightTextField, textField == bloodtypeTextField{
+        } else if textField == heightTextField || textField == weightTextField || textField == bloodtypeTextField{
             userProfileVC?.moveViewToTopWithConstant(-300)
+        } else {
+            userProfileVC?.moveViewToTopWithConstant(20)
         }
         return true
     }
