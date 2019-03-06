@@ -128,7 +128,8 @@ class VoiceCallVC: UIViewController {
         let v = view.safeAreaLayoutGuide
         speakerBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 70, heightConstant: 70)
         speakerBtn.anchorCenterXToSuperview()
-        hangupButtonLeftConstraint = hangupBtn.anchorWithReturnAnchors(nil, left: speakerBtn.rightAnchor, bottom: speakerBtn.bottomAnchor, right: nil, topConstant: 0, leftConstant: 30, bottomConstant: 0, rightConstant: 0, widthConstant: 70, heightConstant: 70)[0]
+        hangupButtonLeftConstraint = hangupBtn.anchorWithReturnAnchors(nil, left: speakerBtn.rightAnchor, bottom: speakerBtn.bottomAnchor, right: nil, topConstant: 0, leftConstant: 30, bottomConstant: 0, rightConstant: 0, widthConstant: 56, heightConstant: 56)[0]
+        hangupBtn.layer.cornerRadius = 28
         muteButtonRightConstraint = muteBtn.anchorWithReturnAnchors(nil, left: nil, bottom: speakerBtn.bottomAnchor, right: speakerBtn.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: 70, heightConstant: 70)[1]
         
         hangupButtonLeftConstraint?.constant = -100
@@ -161,8 +162,7 @@ class VoiceCallVC: UIViewController {
         speakerBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 56, heightConstant: 56)
         speakerBtn.anchorCenterXToSuperview()
         speakerBtn.layer.cornerRadius = 28
-        hangupBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 56, heightConstant: 56)
-        hangupBtn.layer.cornerRadius = 28
+        hangupBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 40, rightConstant: 0, widthConstant: 70, heightConstant: 70)
         hangupBtn.anchorCenterXToSuperview()
     }
 }

@@ -58,16 +58,32 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         return btn
     }()
     
+    var bookBtnTopAnchor:NSLayoutConstraint?
+    var chatBtnTopAnchor:NSLayoutConstraint?
+    var voiceBtnTopAnchor:NSLayoutConstraint?
+    var videoBtnTopAnchor:NSLayoutConstraint?
+    
     @objc func bookBtnClick(){
         bookBtn.isHidden = true
-        addSubview(chatBtn)
-        addSubview(voiceBtn)
-        addSubview(videoBtn)
         
-        let btnWidth = self.frame.width/3 - 30
-        chatBtn.anchor(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 39, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)
-        voiceBtn.anchor(experienceLabel.bottomAnchor, left: self.chatBtn.rightAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)
-        videoBtn.anchor(experienceLabel.bottomAnchor, left: self.voiceBtn.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 39, widthConstant: btnWidth, heightConstant: 50)
+        chatBtn.alpha = 0
+        voiceBtn.alpha = 0
+        videoBtn.alpha = 0
+        
+        bookBtnTopAnchor?.constant = 13
+        chatBtnTopAnchor?.constant = 20
+        voiceBtnTopAnchor?.constant = 13
+        videoBtnTopAnchor?.constant = 13
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.bookBtn.alpha = 0
+            self.chatBtn.alpha = 1
+            self.voiceBtn.alpha = 1
+            self.videoBtn.alpha = 1
+            self.layoutIfNeeded()
+        }) { (true) in
+            self.bookBtn.isHidden = true
+        }
     }
     
     lazy var voiceBtn: UIButton = {
@@ -110,14 +126,24 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         addSubview(nameLabel)
         addSubview(specializeLabel)
         addSubview(experienceLabel)
+        addSubview(chatBtn)
+        addSubview(voiceBtn)
+        addSubview(videoBtn)
         addSubview(bookBtn)
+        
         
         profileImage.anchor(self.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 115, heightConstant: 115)
         profileImage.anchorCenterXToSuperview()
         nameLabel.anchor(profileImage.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         specializeLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         experienceLabel.anchor(specializeLabel.bottomAnchor, left: specializeLabel.leftAnchor, bottom: nil, right: specializeLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        bookBtn.anchor(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 39, bottomConstant: 0, rightConstant: 39, widthConstant: 0, heightConstant: 50)
+        let btnWidth = self.frame.width/3 - 15
+        chatBtnTopAnchor = chatBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)[1]
+        voiceBtnTopAnchor = voiceBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.chatBtn.rightAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)[0]
+        videoBtnTopAnchor = videoBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.voiceBtn.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 20, widthConstant: btnWidth, heightConstant: 50)[0]
+        bookBtnTopAnchor = bookBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)[0]
+        
+        chatBtnTopAnchor?.constant = self.frame.width
     }
     
     override init(frame: CGRect) {
