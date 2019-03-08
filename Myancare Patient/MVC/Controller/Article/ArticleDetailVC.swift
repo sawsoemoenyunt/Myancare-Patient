@@ -1,0 +1,152 @@
+//
+//  ArticleDetailVC.swift
+//  Myancare Patient
+//
+//  Created by SawSMN's MacBook Pro on 3/8/19.
+//  Copyright © 2019 Saw Soe Moe Nyunt. All rights reserved.
+//
+
+import UIKit
+
+class ArticleDetailVC: UIViewController {
+    
+    let cellID = "cellID"
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = .white
+        cv.showsVerticalScrollIndicator = false
+        cv.allowsMultipleSelection = true
+        cv.backgroundColor = UIColor.groupTableViewBackground
+        return cv
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+    }
+    
+    func setupViews(){
+        self.title = "Article title"
+        self.view.backgroundColor = .white
+        
+        view.addSubview(collectionView)
+        collectionView.fillSuperview()
+        
+        collectionView.register(ArticleDetailCell.self, forCellWithReuseIdentifier: cellID)
+    }
+}
+
+extension ArticleDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ArticleDetailCell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let addmoreHeight:CGFloat = 100
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height + addmoreHeight)
+    }
+}
+
+class ArticleDetailCell: UICollectionViewCell {
+    
+    let titlelabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = ""
+        lbl.numberOfLines = 4
+        lbl.font = UIFont.mmFontBold(ofSize: 20)
+        lbl.textColor = UIColor.black
+        return lbl
+    }()
+    
+    let articleImage: UIImageView = {
+        let img = UIImageView()
+        img.backgroundColor = UIColor.MyanCareColor.lightGray
+        img.contentMode = .scaleAspectFill
+        img.clipsToBounds = true
+        return img
+    }()
+    
+    lazy var likeBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("BOOKMARK", for: .normal)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        return btn
+    }()
+    
+    lazy var bookmarkBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("BOOKMARK", for: .normal)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        return btn
+    }()
+    
+    lazy var shareBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("SHARE", for: .normal)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        return btn
+    }()
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        return view
+    }()
+    
+    let infoLabel: UILabel = {
+       let lbl = UILabel()
+        lbl.font = UIFont.mmFontRegular(ofSize: 14)
+        lbl.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt."
+        lbl.numberOfLines = 0
+        return lbl
+    }()
+    
+    func setupViews(){
+        addSubview(titlelabel)
+        addSubview(articleImage)
+        addSubview(likeBtn)
+        addSubview(bookmarkBtn)
+        addSubview(shareBtn)
+        addSubview(lineView)
+        addSubview(infoLabel)
+        
+        titlelabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        articleImage.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 250)
+        likeBtn.anchor(articleImage.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+        bookmarkBtn.anchor(articleImage.bottomAnchor, left: likeBtn.rightAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+        shareBtn.anchor(articleImage.bottomAnchor, left: bookmarkBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+        lineView.anchor(likeBtn.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+        infoLabel.anchor(lineView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

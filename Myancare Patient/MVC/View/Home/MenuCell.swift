@@ -89,6 +89,8 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
             homeViewController?.navigationController?.pushViewController(WalletVC(), animated: true)
         } else if indexPath.row == 5{
             homeViewController?.navigationController?.pushViewController(MoreViewController(), animated: true)
+        } else if indexPath.row == 3{
+            homeViewController?.navigationController?.pushViewController(ArticleVC(), animated: true)
         }
     }
 }
