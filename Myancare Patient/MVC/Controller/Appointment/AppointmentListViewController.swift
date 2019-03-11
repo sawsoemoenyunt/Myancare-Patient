@@ -22,7 +22,7 @@ class AppointmentListViewController: UIViewController {
         sg.tintColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1)
         sg.backgroundColor = .clear
         sg.selectedSegmentIndex = 0
-        sg.layer.cornerRadius = 22
+        sg.layer.cornerRadius = 17
         sg.clipsToBounds = true
         sg.layer.borderWidth = 2
         sg.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
@@ -88,7 +88,7 @@ class AppointmentListViewController: UIViewController {
         view.addSubview(appointmentTypeLabel)
         view.addSubview(appointmentListCollectionView)
         
-        listTypeSegment.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 44)
+        listTypeSegment.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
         appointmentTypeLabel.anchor(listTypeSegment.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         appointmentListCollectionView.anchor(appointmentTypeLabel.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         appointmentListCollectionView.refreshControl = refreshControl1

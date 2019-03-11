@@ -1,5 +1,5 @@
 //
-//  SelectBookVC.swift
+//  RecordBookVC.swift
 //  Myancare Patient
 //
 //  Created by SawSMN's MacBook Pro on 3/11/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectBookVC: UIViewController {
+class RecordBookVC: UIViewController {
     
     let cellID = "cellID"
     
@@ -21,9 +21,47 @@ class SelectBookVC: UIViewController {
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
         cv.allowsMultipleSelection = true
-        cv.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 4, right: 0)
+        cv.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 70, right: 0)
         return cv
     }()
+    
+    lazy var typeSegment:UISegmentedControl = {
+        let sg = UISegmentedControl(items: ["All Record","My Record"])
+        //        sg.setImage( #imageLiteral(resourceName: "icons8-magazine"), forSegmentAt: 0)
+        //        sg.setImage( #imageLiteral(resourceName: "icons8-more_filled"), forSegmentAt: 1)
+        //        sg.setImage( #imageLiteral(resourceName: "icons8-appointment_reminders"), forSegmentAt: 2)
+        sg.tintColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1)
+        sg.backgroundColor = .clear
+        sg.selectedSegmentIndex = 0
+        sg.layer.cornerRadius = 17
+        sg.clipsToBounds = true
+        sg.layer.borderWidth = 2
+        sg.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        sg.layer.borderColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1).cgColor
+        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
+        sg.addTarget(self, action: #selector(handleSegment), for: .valueChanged)
+        return sg
+    }()
+    
+    @objc func handleSegment(){
+        
+    }
+    
+    lazy var addBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("+", for: .normal)
+        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.orange
+        btn.layer.cornerRadius = 28 //56
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(addBtnClick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func addBtnClick(){
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,25 +69,29 @@ class SelectBookVC: UIViewController {
     }
     
     func setupViews(){
+        self.title = "Record Book"
         view.backgroundColor = .white
-        self.title = "Share Book"
         
+        view.addSubview(typeSegment)
         view.addSubview(collectionView)
-        collectionView.fillSuperview()
+        view.addSubview(addBtn)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View Book List", style: .plain, target: self, action: nil)
+        let v = view.safeAreaLayoutGuide
+        typeSegment.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
+        collectionView.anchor(typeSegment.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
         
-        collectionView.register(MedicalRecordSelectCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
     }
 }
 
-extension SelectBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 14
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MedicalRecordSelectCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MedicalRecordCell
         return cell
     }
     
@@ -58,7 +100,7 @@ extension SelectBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
 }
 
-class MedicalRecordSelectCell: UICollectionViewCell {
+class MedicalRecordCell: UICollectionViewCell {
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -107,6 +149,17 @@ class MedicalRecordSelectCell: UICollectionViewCell {
         return view
     }()
     
+    lazy var editBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage.init(named: "icons8-edit_property"), for: .normal)
+        btn.addTarget(self, action: #selector(editBtnclick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func editBtnclick() {
+        print("edit button click")
+    }
+    
     let bgView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -125,12 +178,12 @@ class MedicalRecordSelectCell: UICollectionViewCell {
         bgView.addSubview(dateLabel)
         bgView.addSubview(infolabel)
         bgView.addSubview(verticalLine)
-        bgView.addSubview(checkBox)
+        bgView.addSubview(editBtn)
         
         
-        verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.5, heightConstant: 0)
-        checkBox.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 16, heightConstant: 16)
-        checkBox.anchorCenterYToSuperview()
+        verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.1, heightConstant: 0)
+        editBtn.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 25, heightConstant: 25)
+        editBtn.anchorCenterYToSuperview()
         icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 69, heightConstant: 69)
         icon.anchorCenterYToSuperview()
         docNamelabel.anchor(icon.topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
@@ -143,16 +196,6 @@ class MedicalRecordSelectCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 1, height: 1)
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 2.0
-    }
-    
-    override var isSelected: Bool{
-        didSet{
-            if isSelected {
-                checkBox.backgroundColor = UIColor.MyanCareColor.green
-            } else {
-                checkBox.backgroundColor = UIColor.white
-            }
-        }
     }
     
     override init(frame: CGRect) {

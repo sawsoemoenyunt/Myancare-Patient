@@ -24,6 +24,10 @@
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
 		5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268C553222F7DC6001CF258 /* UserProfileVC.swift */; };
 		52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269115F222AE0450082FCC6 /* UserInterestVC.swift */; };
+		526C568622363828003F2C66 /* RecordBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C568522363828003F2C66 /* RecordBookVC.swift */; };
+		526C571022364113003F2C66 /* AddPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C570F22364113003F2C66 /* AddPhotoVC.swift */; };
+		526C571222364369003F2C66 /* PhotoGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C571122364369003F2C66 /* PhotoGalleryVC.swift */; };
+		526C571422364A54003F2C66 /* ViewSheetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C571322364A54003F2C66 /* ViewSheetVC.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA552221D96DA00140CFF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA551221D96DA00140CFF /* ViewController.swift */; };
 		528DA555221D96DA00140CFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 528DA553221D96DA00140CFF /* Main.storyboard */; };
@@ -74,6 +78,10 @@
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
 		5268C553222F7DC6001CF258 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		5269115F222AE0450082FCC6 /* UserInterestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterestVC.swift; sourceTree = "<group>"; };
+		526C568522363828003F2C66 /* RecordBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordBookVC.swift; sourceTree = "<group>"; };
+		526C570F22364113003F2C66 /* AddPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoVC.swift; sourceTree = "<group>"; };
+		526C571122364369003F2C66 /* PhotoGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryVC.swift; sourceTree = "<group>"; };
+		526C571322364A54003F2C66 /* ViewSheetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSheetVC.swift; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		528DA551221D96DA00140CFF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +297,24 @@
 			path = UserProfile;
 			sourceTree = "<group>";
 		};
+		526C56842236380B003F2C66 /* MedicalRecord */ = {
+			isa = PBXGroup;
+			children = (
+				526C568522363828003F2C66 /* RecordBookVC.swift */,
+				526C570F22364113003F2C66 /* AddPhotoVC.swift */,
+				526C571122364369003F2C66 /* PhotoGalleryVC.swift */,
+				526C571322364A54003F2C66 /* ViewSheetVC.swift */,
+			);
+			path = MedicalRecord;
+			sourceTree = "<group>";
+		};
+		526C568722363D1D003F2C66 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		528DA543221D96DA00140CFF = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +337,7 @@
 		528DA54E221D96DA00140CFF /* Myancare Patient */ = {
 			isa = PBXGroup;
 			children = (
+				526C568722363D1D003F2C66 /* Utility */,
 				52C07C84222254A9003D12BD /* SupportingFiles */,
 				528DA57E221D9B0C00140CFF /* AppDelegate */,
 				528DA561221D970C00140CFF /* MVC */,
@@ -359,6 +386,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				526C56842236380B003F2C66 /* MedicalRecord */,
 				5233269E22323C4800DD3BB6 /* Article */,
 				5268C552222F7DA3001CF258 /* UserProfile */,
 				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
@@ -549,6 +577,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526C571022364113003F2C66 /* AddPhotoVC.swift in Sources */,
 				528DA56F221D98E400140CFF /* MenuCell.swift in Sources */,
 				52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */,
 				528DA573221D992D00140CFF /* MenuCategoryCell.swift in Sources */,
@@ -566,6 +595,8 @@
 				528DA56B221D984700140CFF /* DoctorDetailViewController.swift in Sources */,
 				52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */,
 				52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */,
+				526C571422364A54003F2C66 /* ViewSheetVC.swift in Sources */,
+				526C571222364369003F2C66 /* PhotoGalleryVC.swift in Sources */,
 				5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */,
 				52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
@@ -581,6 +612,7 @@
 				528DA575221D99B700140CFF /* DoctorSpecializationViewController.swift in Sources */,
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
+				526C568622363828003F2C66 /* RecordBookVC.swift in Sources */,
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,
 				5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */,
 				521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */,

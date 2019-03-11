@@ -35,7 +35,6 @@ class ArticleVC: UIViewController {
         cv.dataSource = self
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
-        cv.allowsMultipleSelection = true
         cv.backgroundColor = UIColor.groupTableViewBackground
         cv.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         return cv
