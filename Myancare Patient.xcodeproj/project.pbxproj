@@ -58,6 +58,8 @@
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
+		52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */; };
+		52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */; };
 		78874FA114DC211CF82CC53F /* Pods_Myancare_Patient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +120,8 @@
 		52C07C8C222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		52C07C9022226594003D12BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52C07C92222265C3003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Localizable.strings; sourceTree = "<group>"; };
+		52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailVC.swift; sourceTree = "<group>"; };
+		52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointmentVC.swift; sourceTree = "<group>"; };
 		63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.release.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.release.xcconfig"; sourceTree = "<group>"; };
 		6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.debug.xcconfig"; sourceTree = "<group>"; };
 		CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Myancare_Patient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,31 +147,13 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		52162CCD2224EDC0001F054E /* Doctor */ = {
-			isa = PBXGroup;
-			children = (
-				528DA568221D983900140CFF /* DoctorListViewController.swift */,
-				528DA56A221D984700140CFF /* DoctorDetailViewController.swift */,
-				528DA574221D99B700140CFF /* DoctorSpecializationViewController.swift */,
-				528DA576221D99CD00140CFF /* DoctorSearchViewController.swift */,
-			);
-			path = Doctor;
-			sourceTree = "<group>";
-		};
-		52162CCE2224EDE7001F054E /* StartScreen */ = {
+		52162CCE2224EDE7001F054E /* Startup */ = {
 			isa = PBXGroup;
 			children = (
 				52C07C872222553C003D12BD /* StartScreenViewController.swift */,
-			);
-			path = StartScreen;
-			sourceTree = "<group>";
-		};
-		52162CCF2224EDFC001F054E /* Language */ = {
-			isa = PBXGroup;
-			children = (
 				523415382222862700CE2A91 /* LanguageViewController.swift */,
 			);
-			path = Language;
+			path = Startup;
 			sourceTree = "<group>";
 		};
 		52162CD02224EE0D001F054E /* Login */ = {
@@ -183,12 +169,9 @@
 		52162CD12224EE25001F054E /* Appointment */ = {
 			isa = PBXGroup;
 			children = (
-				52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */,
 				52092D2222217DFB0035C257 /* AppointmentListViewController.swift */,
-				52B1E018222AF2150080243A /* ReasonVC.swift */,
-				52092D2022216E040035C257 /* InvoiceViewController.swift */,
-				52AE88932236197600867151 /* ShareBookVC.swift */,
-				52AE889522361F8700867151 /* SelectBookVC.swift */,
+				52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */,
+				52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */,
 			);
 			path = Appointment;
 			sourceTree = "<group>";
@@ -396,22 +379,21 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				526C571522365088003F2C66 /* MedicationReminder */,
-				526C56842236380B003F2C66 /* MedicalRecord */,
-				5233269E22323C4800DD3BB6 /* Article */,
-				5268C552222F7DA3001CF258 /* UserProfile */,
-				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
-				52B30391222BBBFF00BBFDA1 /* Notification */,
-				52B1E01A222B02A30080243A /* Wallet */,
-				52162CD32224EE4F001F054E /* More */,
-				52162CD22224EE43001F054E /* Payment */,
+				52EBC3C622368EA7009AFEBE /* BookAppointment */,
 				52162CD12224EE25001F054E /* Appointment */,
-				52162CD02224EE0D001F054E /* Login */,
-				52162CCF2224EDFC001F054E /* Language */,
-				52162CCE2224EDE7001F054E /* StartScreen */,
-				52162CCD2224EDC0001F054E /* Doctor */,
+				5233269E22323C4800DD3BB6 /* Article */,
 				52162CCC2224EDAD001F054E /* Home */,
+				52162CD02224EE0D001F054E /* Login */,
+				526C56842236380B003F2C66 /* MedicalRecord */,
+				526C571522365088003F2C66 /* MedicationReminder */,
+				52162CD32224EE4F001F054E /* More */,
+				52B30391222BBBFF00BBFDA1 /* Notification */,
+				52162CD22224EE43001F054E /* Payment */,
+				52162CCE2224EDE7001F054E /* Startup */,
+				5268C552222F7DA3001CF258 /* UserProfile */,
 				528DA551221D96DA00140CFF /* ViewController.swift */,
+				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
+				52B1E01A222B02A30080243A /* Wallet */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -450,6 +432,22 @@
 				523415342222858600CE2A91 /* Pyidaungsu.ttf */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		52EBC3C622368EA7009AFEBE /* BookAppointment */ = {
+			isa = PBXGroup;
+			children = (
+				528DA574221D99B700140CFF /* DoctorSpecializationViewController.swift */,
+				528DA568221D983900140CFF /* DoctorListViewController.swift */,
+				528DA576221D99CD00140CFF /* DoctorSearchViewController.swift */,
+				528DA56A221D984700140CFF /* DoctorDetailViewController.swift */,
+				52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */,
+				52B1E018222AF2150080243A /* ReasonVC.swift */,
+				52092D2022216E040035C257 /* InvoiceViewController.swift */,
+				52AE88932236197600867151 /* ShareBookVC.swift */,
+				52AE889522361F8700867151 /* SelectBookVC.swift */,
+			);
+			path = BookAppointment;
 			sourceTree = "<group>";
 		};
 		80827240D85AB6059467E4B7 /* Pods */ = {
@@ -602,6 +600,7 @@
 				528DA552221D96DA00140CFF /* ViewController.swift in Sources */,
 				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
+				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
 				528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */,
 				528DA56B221D984700140CFF /* DoctorDetailViewController.swift in Sources */,
@@ -621,6 +620,7 @@
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,
+				52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */,
 				528DA575221D99B700140CFF /* DoctorSpecializationViewController.swift in Sources */,
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
