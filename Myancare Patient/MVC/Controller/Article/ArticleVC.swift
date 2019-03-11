@@ -22,7 +22,6 @@ class ArticleVC: UIViewController {
         cv.dataSource = self
         cv.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1) //ligh gray
         cv.showsVerticalScrollIndicator = false
-        cv.allowsMultipleSelection = true
         cv.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         return cv
     }()
@@ -64,7 +63,10 @@ class ArticleVC: UIViewController {
 extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
+        if collectionView == articleCollectionView{
+            print("item selected")
+            self.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -144,7 +146,6 @@ class ArticleCell: UICollectionViewCell {
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
 //        img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(imageClick)))
-        img.isUserInteractionEnabled = false
         return img
     }()
     
@@ -170,8 +171,13 @@ class ArticleCell: UICollectionViewCell {
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(readBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func readBtnClick(){
+        articleVC?.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
+    }
     
     lazy var bookMarkBtn: UIButton = {
         let btn = UIButton()

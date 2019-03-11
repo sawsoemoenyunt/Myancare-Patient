@@ -176,13 +176,6 @@
 			path = Appointment;
 			sourceTree = "<group>";
 		};
-		52162CD22224EE43001F054E /* Payment */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Payment;
-			sourceTree = "<group>";
-		};
 		52162CD32224EE4F001F054E /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,7 +381,6 @@
 				526C571522365088003F2C66 /* MedicationReminder */,
 				52162CD32224EE4F001F054E /* More */,
 				52B30391222BBBFF00BBFDA1 /* Notification */,
-				52162CD22224EE43001F054E /* Payment */,
 				52162CCE2224EDE7001F054E /* Startup */,
 				5268C552222F7DA3001CF258 /* UserProfile */,
 				528DA551221D96DA00140CFF /* ViewController.swift */,

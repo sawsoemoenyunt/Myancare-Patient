@@ -83,14 +83,23 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //do something for cell click
-        if indexPath.row == 1 {
-            homeViewController?.navigationController?.pushViewController(AppointmentListViewController(), animated: true)
-        }  else if indexPath.row == 0{
+        
+        switch indexPath.row {
+        case 0:
             homeViewController?.navigationController?.pushViewController(WalletVC(), animated: true)
-        } else if indexPath.row == 5{
-            homeViewController?.navigationController?.pushViewController(MoreViewController(), animated: true)
-        } else if indexPath.row == 3{
+        case 1:
+            homeViewController?.navigationController?.pushViewController(AppointmentListViewController(), animated: true)
+        case 2:
+            homeViewController?.navigationController?.pushViewController(RecordBookVC(), animated: true)
+        case 3:
             homeViewController?.navigationController?.pushViewController(ArticleVC(), animated: true)
+        case 4:
+            homeViewController?.navigationController?.pushViewController(ReminderListVC(), animated: true)
+        case 5:
+            homeViewController?.navigationController?.pushViewController(MoreViewController(), animated: true)
+        default:
+            //do nothing
+            print("No button action")
         }
     }
 }
