@@ -143,9 +143,13 @@ class InvoiceViewController: UIViewController {
         btn.backgroundColor = UIColor(red:0.54, green:0.77, blue:0.45, alpha:1) //green
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
-        //        btn.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(confirmBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func confirmBtnClick(){
+        self.navigationController?.pushViewController(ShareBookVC(), animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

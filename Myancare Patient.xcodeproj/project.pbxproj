@@ -44,6 +44,8 @@
 		528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */; };
 		528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */; };
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
+		52AE88942236197600867151 /* ShareBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE88932236197600867151 /* ShareBookVC.swift */; };
+		52AE889622361F8700867151 /* SelectBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE889522361F8700867151 /* SelectBookVC.swift */; };
 		52B1E019222AF2150080243A /* ReasonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E018222AF2150080243A /* ReasonVC.swift */; };
 		52B1E01C222B02B10080243A /* WalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1E01B222B02B10080243A /* WalletVC.swift */; };
 		52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */; };
@@ -94,6 +96,8 @@
 		528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewEditProfileCell.swift; sourceTree = "<group>"; };
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		52AE88932236197600867151 /* ShareBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareBookVC.swift; sourceTree = "<group>"; };
+		52AE889522361F8700867151 /* SelectBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBookVC.swift; sourceTree = "<group>"; };
 		52B1E018222AF2150080243A /* ReasonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonVC.swift; sourceTree = "<group>"; };
 		52B1E01B222B02B10080243A /* WalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVC.swift; sourceTree = "<group>"; };
 		52B30392222BBC1100BBFDA1 /* NotificationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListVC.swift; sourceTree = "<group>"; };
@@ -172,6 +176,9 @@
 				52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */,
 				52092D2222217DFB0035C257 /* AppointmentListViewController.swift */,
 				52B1E018222AF2150080243A /* ReasonVC.swift */,
+				52092D2022216E040035C257 /* InvoiceViewController.swift */,
+				52AE88932236197600867151 /* ShareBookVC.swift */,
+				52AE889522361F8700867151 /* SelectBookVC.swift */,
 			);
 			path = Appointment;
 			sourceTree = "<group>";
@@ -179,7 +186,6 @@
 		52162CD22224EE43001F054E /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				52092D2022216E040035C257 /* InvoiceViewController.swift */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -553,6 +559,7 @@
 				523326A022323C6700DD3BB6 /* ArticleVC.swift in Sources */,
 				52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */,
 				528DA552221D96DA00140CFF /* ViewController.swift in Sources */,
+				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
 				528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */,
@@ -566,6 +573,7 @@
 				52092D1D2221524B0035C257 /* UIView+anchors.swift in Sources */,
 				52B1E019222AF2150080243A /* ReasonVC.swift in Sources */,
 				52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */,
+				52AE88942236197600867151 /* ShareBookVC.swift in Sources */,
 				520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */,
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
@@ -739,15 +747,18 @@
 			baseConfigurationReference = 6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F26PZF8L54;
+				DEVELOPMENT_TEAM = VVN8FFXZBU;
 				INFOPLIST_FILE = "Myancare Patient/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt.Myancare-Patient";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt2.Myancare-Patient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -758,15 +769,18 @@
 			baseConfigurationReference = 63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F26PZF8L54;
+				DEVELOPMENT_TEAM = VVN8FFXZBU;
 				INFOPLIST_FILE = "Myancare Patient/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt.Myancare-Patient";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt2.Myancare-Patient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

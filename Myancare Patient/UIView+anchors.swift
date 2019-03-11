@@ -17,10 +17,37 @@ extension UIColor {
         static let gray = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //gray
         static let lightGray = UIColor(red:0.81, green:0.8, blue:0.8, alpha:1) //light gray
         static let fbBlue = UIColor(red:0.31, green:0.45, blue:0.65, alpha:1) //facebook blue
+        static let yellow = UIColor(red:0.98, green:0.83, blue:0.19, alpha:1) //yellow
+        static let darkGray = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //dark gray
+        static let iconColor = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //icon color
+        static let font1 = UIColor(red:0.53, green:0.53, blue:0.53, alpha:1)
+        static let font2 = UIColor(red:0.71, green:0.71, blue:0.71, alpha:1)
+        static let font3 = UIColor(red:0.26, green:0.26, blue:0.26, alpha:1)
     }
 }
 
 extension UIFont {
+    
+    struct MyanCareFont {
+        static let title = UIFont.mmFontBold(ofSize: 28)
+        static let subtitle1 = UIFont.mmFontBold(ofSize: 20)
+        static let subtitle2 = UIFont.mmFontBold(ofSize: 18)
+        static let textBox = UIFont.mmFontRegular(ofSize: 14)
+        static let button1 = UIFont.mmFontBold(ofSize: 14)
+        static let button2 = UIFont.mmFontBold(ofSize: 20)
+        static let chip = UIFont.mmFontBold(ofSize: 14)
+        static let type1 = UIFont.mmFontRegular(ofSize: 20)
+        static let type2 = UIFont.mmFontRegular(ofSize: 16)
+        static let type3 = UIFont.mmFontRegular(ofSize: 14)
+        static let type4 = UIFont.mmFontRegular(ofSize: 12)
+        static let type5 = UIFont.mmFontRegular(ofSize: 10)
+        static let type6 = UIFont.mmFontRegular(ofSize: 11)
+        static let type7 = UIFont.mmFontRegular(ofSize: 18)
+        static let type8 = UIFont.mmFontRegular(ofSize: 13)
+        static let type9 = UIFont.mmFontRegular(ofSize: 10)
+        static let type10 = UIFont.mmFontRegular(ofSize: 25)
+    }
+    
     class func mmFontRegular(ofSize fontSize: CGFloat) -> UIFont {
         var myfont = UIFont()
         if Localize.currentLanguage() == "en" {

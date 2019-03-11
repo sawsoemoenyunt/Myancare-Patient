@@ -22,6 +22,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>"Myancare need your permission to access photo library"</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pyidaungsu.ttf</string>
@@ -46,7 +48,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&quot;Myancare need your permission to access photo library&quot;</string>
 </dict>
 </plist>
