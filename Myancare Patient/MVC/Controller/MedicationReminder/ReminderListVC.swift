@@ -1,5 +1,5 @@
 //
-//  RecordBookVC.swift
+//  ReminderListVC.swift
 //  Myancare Patient
 //
 //  Created by SawSMN's MacBook Pro on 3/11/19.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class RecordBookVC: UIViewController {
+class ReminderListVC: UIViewController {
     
     let cellID = "cellID"
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -25,7 +25,7 @@ class RecordBookVC: UIViewController {
     }()
     
     lazy var typeSegment:UISegmentedControl = {
-        let sg = UISegmentedControl(items: ["All Record","My Record"])
+        let sg = UISegmentedControl(items: ["Today","All"])
         //        sg.setImage( #imageLiteral(resourceName: "icons8-magazine"), forSegmentAt: 0)
         //        sg.setImage( #imageLiteral(resourceName: "icons8-more_filled"), forSegmentAt: 1)
         //        sg.setImage( #imageLiteral(resourceName: "icons8-appointment_reminders"), forSegmentAt: 2)
@@ -68,7 +68,7 @@ class RecordBookVC: UIViewController {
     }
     
     func setupViews(){
-        self.title = "Record Book"
+        self.title = "Medication Reminder"
         view.backgroundColor = .white
         
         view.addSubview(typeSegment)
@@ -80,17 +80,17 @@ class RecordBookVC: UIViewController {
         collectionView.anchor(typeSegment.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
         
-        collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(ReminderListCell.self, forCellWithReuseIdentifier: cellID)
     }
 }
 
-extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+extension ReminderListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 14
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MedicalRecordCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReminderListCell
         return cell
     }
     
@@ -99,7 +99,7 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
 }
 
-class MedicalRecordCell: UICollectionViewCell {
+class ReminderListCell: UICollectionViewCell {
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -109,17 +109,17 @@ class MedicalRecordCell: UICollectionViewCell {
         return img
     }()
     
-    let docNamelabel: UILabel = {
+    let typelabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Dr.Thomas"
-        lbl.font = UIFont.MyanCareFont.type3
+        lbl.text = "Vitamins"
+        lbl.font = UIFont.MyanCareFont.type7
         lbl.textColor = UIColor.black
         return lbl
     }()
     
     let dateLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "12-Feb-2019"
+        lbl.text = "Daily 7:00 PM"
         lbl.font = UIFont.MyanCareFont.type4
         lbl.textColor = UIColor.black
         return lbl
@@ -139,12 +139,9 @@ class MedicalRecordCell: UICollectionViewCell {
         return view
     }()
     
-    let checkBox: UIView = {
+    let bottomLineView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 2
-        view.layer.borderColor = UIColor.MyanCareColor.lightGray.cgColor
-        view.layer.borderWidth = 1
-        view.clipsToBounds = true
+        view.backgroundColor = UIColor.lightGray
         return view
     }()
     
@@ -173,21 +170,22 @@ class MedicalRecordCell: UICollectionViewCell {
         bgView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 2, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         
         bgView.addSubview(icon)
-        bgView.addSubview(docNamelabel)
+        bgView.addSubview(typelabel)
         bgView.addSubview(dateLabel)
-        bgView.addSubview(infolabel)
         bgView.addSubview(verticalLine)
         bgView.addSubview(editBtn)
+        bgView.addSubview(bottomLineView)
         
         
-        verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.1, heightConstant: 0)
+        verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.5, heightConstant: 0)
         editBtn.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 25, heightConstant: 25)
         editBtn.anchorCenterYToSuperview()
         icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 69, heightConstant: 69)
         icon.anchorCenterYToSuperview()
-        docNamelabel.anchor(icon.topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
-        dateLabel.anchor(docNamelabel.bottomAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
-        infolabel.anchor(dateLabel.bottomAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        typelabel.anchor(icon.topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        dateLabel.anchor(typelabel.bottomAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        
+        bottomLineView.anchor(nil, left: bgView.leftAnchor, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         
         // set the shadow of the view's layer
         layer.backgroundColor = UIColor.clear.cgColor

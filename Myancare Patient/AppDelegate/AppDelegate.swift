@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        window?.rootViewController = StartScreenViewController()
+        window?.rootViewController = ReminderListVC()
         
         return true
     }
