@@ -8,6 +8,60 @@
 
 import UIKit
 
+
+func getWeekdayString(weekDay: Int) -> String{
+    var yourWeekday = ""
+    switch weekDay {
+    case 1:
+        yourWeekday = "S"
+    case 2:
+        yourWeekday = "M"
+    case 3:
+        yourWeekday = "T"
+    case 4:
+        yourWeekday = "W"
+    case 5:
+        yourWeekday = "T"
+    case 6:
+        yourWeekday = "F"
+    case 7:
+        yourWeekday = "S"
+    default:
+        yourWeekday = ""
+    }
+    
+    return yourWeekday
+}
+
+func getComingDates(days: Int) -> NSMutableArray {
+    
+    let dates = NSMutableArray()
+    let calendar = Calendar.current
+    
+    var today = calendar.startOfDay(for: Date())
+    
+    for _ in 1 ... days {
+        
+        let day = calendar.component(.day, from: today)
+        let month = calendar.component(.month, from: today)
+        let year = calendar.component(.year, from: today)
+        let weekday = calendar.component(.weekday, from: today)
+        
+        let date = NSMutableDictionary()
+        
+        date.setValue(day, forKey: "day")
+        date.setValue(month, forKey: "month")
+        date.setValue(year, forKey: "year")
+        date.setValue(weekday, forKey: "weekday")
+        
+        dates.add(date)
+        today = calendar.date(byAdding: .day, value: 1, to: today)!
+    }
+    
+    return dates
+    
+}
+
 class UtilityClass: NSObject {
     
     class func switchToHomeViewController(){

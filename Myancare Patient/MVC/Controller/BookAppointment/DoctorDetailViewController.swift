@@ -17,7 +17,6 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.largeTitleDisplayMode = .never
         collectionView?.backgroundColor = .white
         collectionView?.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         collectionView?.register(DoctorDetailProfileCell.self, forCellWithReuseIdentifier: profileCellID)

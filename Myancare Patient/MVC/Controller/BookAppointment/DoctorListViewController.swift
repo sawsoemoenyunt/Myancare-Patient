@@ -41,7 +41,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         
         self.title = "ဆရာ၀န္မ်ား"
         self.view.backgroundColor = .white
-        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-ask_question_filled"), style: .plain, target: self, action: #selector(searchButtonClick))
+        let searchButton = UIBarButtonItem(image: UIImage.init(named: "icons8-search"), style: .plain, target: self, action: #selector(searchButtonClick))
         self.navigationItem.rightBarButtonItems = [searchButton]
         
         //searchController

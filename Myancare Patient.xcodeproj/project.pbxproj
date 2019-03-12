@@ -332,6 +332,7 @@
 				528DA558221D96DC00140CFF /* LaunchScreen.storyboard */,
 				528DA55B221D96DC00140CFF /* Info.plist */,
 				52092D1C2221524B0035C257 /* UIView+anchors.swift */,
+				528DA551221D96DA00140CFF /* ViewController.swift */,
 				52A5B7E622224F6500AAE3D3 /* Utility.swift */,
 			);
 			path = "Myancare Patient";
@@ -383,7 +384,6 @@
 				52B30391222BBBFF00BBFDA1 /* Notification */,
 				52162CCE2224EDE7001F054E /* Startup */,
 				5268C552222F7DA3001CF258 /* UserProfile */,
-				528DA551221D96DA00140CFF /* ViewController.swift */,
 				5245F6E6222EAE0800D270F4 /* VoiceAndVideo */,
 				52B1E01A222B02A30080243A /* Wallet */,
 			);

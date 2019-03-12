@@ -139,8 +139,8 @@ class InvoiceViewController: UIViewController {
     lazy var confirmBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("CONFIRM", for: .normal)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor(red:0.54, green:0.77, blue:0.45, alpha:1) //green
+        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(confirmBtnClick), for: .touchUpInside)
