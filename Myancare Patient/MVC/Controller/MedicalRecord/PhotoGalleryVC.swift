@@ -55,6 +55,7 @@ extension PhotoGalleryVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoGalleryCell
+        cell.imageView.image = UIImage.init(named: "pablo-profile")
         return cell
     }
     

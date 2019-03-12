@@ -48,7 +48,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     let lineView1: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor.gray
+        v.backgroundColor = UIColor.lightGray
         return v
     }()
     
@@ -104,7 +104,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     let lineView2: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor.gray
+        v.backgroundColor = UIColor.lightGray
         return v
     }()
     
@@ -148,7 +148,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     let lineView3: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor.gray
+        v.backgroundColor = UIColor.lightGray
         return v
     }()
     
@@ -172,7 +172,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     let lineView4: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor.gray
+        v.backgroundColor = UIColor.lightGray
         return v
     }()
     
