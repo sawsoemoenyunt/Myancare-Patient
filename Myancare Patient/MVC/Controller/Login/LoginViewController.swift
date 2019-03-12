@@ -166,29 +166,4 @@ extension LoginViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
 }
 
-/// Custom Collection View Cell for walk through collection view
-class WalkthroughCell: UICollectionViewCell {
-    
-    /// UIImageView to show image
-    let image: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        return img
-    }()
-    
-    /// Setup UICollectionViewCell and subviews
-    func setupViews(){
-        addSubview(image)
-        image.fillSuperview()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+

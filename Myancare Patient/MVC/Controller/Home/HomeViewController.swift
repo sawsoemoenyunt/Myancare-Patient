@@ -70,6 +70,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 //        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.mmFontZawgyi(ofSize: 14)]
     }
     
+    func pushToVC(vc: UIViewController){
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }

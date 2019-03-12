@@ -59,27 +59,4 @@ extension ViewSheetVC: UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
 }
 
-class ViewSheetCell: UICollectionViewCell {
-    
-    let imageView: UIImageView = {
-        let img = UIImageView()
-        img.backgroundColor = .gray
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        return img
-    }()
-    
-    func setupViews(){
-        addSubview(imageView)
-        imageView.fillSuperview()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+

@@ -39,7 +39,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "ဆရာ၀န္မ်ား"
+        self.title = "Doctor List"
         self.view.backgroundColor = .white
         let searchButton = UIBarButtonItem(image: UIImage.init(named: "icons8-search"), style: .plain, target: self, action: #selector(searchButtonClick))
         self.navigationItem.rightBarButtonItems = [searchButton]
