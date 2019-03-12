@@ -20,7 +20,18 @@ class UserProfileVC: UIViewController {
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
         cv.allowsMultipleSelection = true
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
         return cv
+    }()
+    
+    lazy var editInterestBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Edit my interest", for: .normal)
+        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        return btn
     }()
     
     override func viewDidLoad() {
@@ -34,9 +45,15 @@ class UserProfileVC: UIViewController {
         self.title = "User Profile"
         view.backgroundColor = .white
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: cellID)
+        
         view.addSubview(collectionView)
+        view.addSubview(editInterestBtn)
+        
         let v = view.safeAreaLayoutGuide
-        collectionViewTopAnchor = collectionView.anchorWithReturnAnchors(v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)[0]
+        collectionViewTopAnchor = collectionView.anchorWithReturnAnchors(v.topAnchor, left: v.leftAnchor, bottom: editInterestBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)[0]
+        editInterestBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: nil)
     }
     
     func moveViewToTopWithConstant(_ constant:CGFloat){
@@ -60,7 +77,7 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 600)
+        return CGSize(width: collectionView.bounds.width, height: 650)
     }
 }
 

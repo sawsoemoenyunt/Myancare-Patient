@@ -59,12 +59,153 @@ class RecordBookVC: UIViewController {
     }()
     
     @objc func addBtnClick(){
+        showPopUpView(true)
+    }
+    
+    let popuptitlelabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Add Book Cover"
+        lbl.font = UIFont.MyanCareFont.type2
+        lbl.textColor = UIColor.MyanCareColor.darkGray
+        return lbl
+    }()
+    
+    let popupdocNamelabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Doctor name"
+        lbl.font = UIFont.MyanCareFont.type4
+        lbl.textColor = UIColor.black
+        return lbl
+    }()
+    
+    lazy var docNameTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Doctor Name"
+        tf.borderStyle = .roundedRect
+        tf.delegate = self
+        return tf
+    }()
+    
+    let popupreasonlabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Description"
+        lbl.font = UIFont.MyanCareFont.type4
+        lbl.textColor = UIColor.black
+        return lbl
+    }()
+    
+    lazy var reasonTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Description"
+        tf.borderStyle = .roundedRect
+        tf.delegate = self
+        return tf
+    }()
+    
+    let popupdatelabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Date"
+        lbl.font = UIFont.MyanCareFont.type4
+        lbl.textColor = UIColor.black
+        return lbl
+    }()
+    
+    lazy var dateTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Date"
+        tf.borderStyle = .roundedRect
+        tf.delegate = self
+        tf.isUserInteractionEnabled = false
+        return tf
+    }()
+    
+    lazy var popupBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.init(white: 0, alpha: 0.3)
+        return view
+    }()
+    
+    lazy var popupView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    lazy var confirmBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("CONFIRM", for: .normal)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.orange
+//        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(handleConfirmBtnClick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func handleConfirmBtnClick(){
+        showPopUpView(false)
+        hideKeyboard()
+    }
+    
+    var popupTopConstraint:NSLayoutConstraint?
+    
+    func setupPopupView(){
+        popupBackgroundView.tag = 100
         
+        view.addSubview(popupBackgroundView)
+        popupBackgroundView.fillSuperview()
+        
+        popupBackgroundView.addSubview(popupView)
+        popupView.tag = 101
+        popupTopConstraint = popupView.anchorWithReturnAnchors(popupBackgroundView.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: -340, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: view.bounds.width-40, heightConstant: 340)[0]
+        popupView.anchorCenterXToSuperview()
+        
+        popupView.addSubview(popuptitlelabel)
+        popupView.addSubview(popupdocNamelabel)
+        popupView.addSubview(docNameTextField)
+        popupView.addSubview(popupreasonlabel)
+        popupView.addSubview(reasonTextField)
+        popupView.addSubview(popupdatelabel)
+        popupView.addSubview(dateTextField)
+        popupView.addSubview(confirmBtn)
+        
+        let p = popupView
+        popuptitlelabel.anchor(p.topAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        popupdocNamelabel.anchor(popuptitlelabel.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        docNameTextField.anchor(popupdocNamelabel.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
+        popupreasonlabel.anchor(docNameTextField.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        reasonTextField.anchor(popupreasonlabel.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
+        popupdatelabel.anchor(reasonTextField.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        dateTextField.anchor(popupdatelabel.bottomAnchor, left: p.leftAnchor, bottom: nil, right: p.rightAnchor, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
+        confirmBtn.anchor(dateTextField.bottomAnchor, left: p.leftAnchor, bottom: p.bottomAnchor, right: p.rightAnchor, topConstant: 30, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        popupView.layer.cornerRadius = 5
+        popupView.layer.masksToBounds = true
+    }
+    
+    func showPopUpView(_ isShow:Bool){
+        if isShow {
+            popupBackgroundView.isHidden = false
+            animatePopView(constant: 40)
+        } else {
+            popupBackgroundView.isHidden = true
+            animatePopView(constant: -340)
+        }
+    }
+    
+    func animatePopView(constant:CGFloat){
+        popupTopConstraint?.constant = constant
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupPopupView()
+        popupBackgroundView.isHidden = true
     }
     
     func setupViews(){
@@ -96,6 +237,7 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MedicalRecordCell
+        cell.medicalRecordVC = self
         return cell
     }
     
@@ -104,4 +246,23 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
 }
 
+extension RecordBookVC: UITextFieldDelegate{
+    
+    func hideKeyboard(){
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        hideKeyboard()
+        animatePopView(constant: 40)
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == reasonTextField {
+            animatePopView(constant: 20)
+        }
+        return true
+    }
+}
 

@@ -12,8 +12,8 @@ class MenuCategoryCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout
     
     var homeViewController: HomeViewController?
     let cellID = "cellID"
-    let buttonList:[MenuButton] = [MenuButton(title: "အထွေထွေဆရာ၀န်များ", icon: #imageLiteral(resourceName: "icons8-health_checkup").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "အထူးကုဆရာ၀န်များ", icon: #imageLiteral(resourceName: "icons8-heart_with_pulse").withRenderingMode(.alwaysTemplate))]
+    let buttonList:[MenuButton] = [MenuButton(title: "General Practitioners", icon: #imageLiteral(resourceName: "icons8-health_checkup").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "Specialists", icon: #imageLiteral(resourceName: "icons8-heart_with_pulse").withRenderingMode(.alwaysTemplate))]
     
     lazy var collectionView: UICollectionView = {
         //layout of collectionview
@@ -83,6 +83,7 @@ extension MenuCategoryCell: UICollectionViewDataSource, UICollectionViewDelegate
         if indexPath.row == 1 {
             let layout = UICollectionViewFlowLayout()
             layout.minimumLineSpacing = 20
+            layout.minimumInteritemSpacing = 0
             let viewController = DoctorSpecializeViewController(collectionViewLayout: layout)
             self.homeViewController?.navigationController?.pushViewController(viewController, animated: true)
         } else {

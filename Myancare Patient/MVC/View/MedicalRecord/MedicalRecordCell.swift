@@ -10,11 +10,13 @@ import UIKit
 
 class MedicalRecordCell: UICollectionViewCell {
     
+    var medicalRecordVC: RecordBookVC?
+    
     let icon: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.backgroundColor = .gray
+        img.image = UIImage.init(named: "book")
         return img
     }()
     
@@ -65,7 +67,8 @@ class MedicalRecordCell: UICollectionViewCell {
     }()
     
     @objc func editBtnclick() {
-        print("edit button click")
+        medicalRecordVC?.popuptitlelabel.text = "Edit Book Cover"
+        medicalRecordVC?.showPopUpView(true)
     }
     
     let bgView: UIView = {
@@ -92,7 +95,7 @@ class MedicalRecordCell: UICollectionViewCell {
         verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.1, heightConstant: 0)
         editBtn.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 25, heightConstant: 25)
         editBtn.anchorCenterYToSuperview()
-        icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 69, heightConstant: 69)
+        icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 69, heightConstant: 69)
         icon.anchorCenterYToSuperview()
         docNamelabel.anchor(icon.topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         dateLabel.anchor(docNamelabel.bottomAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
