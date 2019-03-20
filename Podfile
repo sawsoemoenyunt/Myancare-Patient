@@ -8,5 +8,16 @@ target 'Myancare Patient' do
   # Pods for Myancare Patient
 
 	pod 'SwiftyGif'
+	pod 'IQKeyboardManagerSwift'
 	pod 'Localize-Swift'
+	pod 'Alamofire'
+	pod 'AlamofireImage'
+
+    	pod 'FBSDKLoginKit'
+	pod 'AccountKit'
+	pod 'FacebookCore'
+	pod 'FacebookLogin'
+	pod 'FacebookShare'
+    	
+	pod 'Pushy'
 end

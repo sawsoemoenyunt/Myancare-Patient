@@ -8,6 +8,9 @@
 
 import UIKit
 import Localize_Swift
+import FacebookCore
+import FacebookLogin
+import Pushy
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
@@ -23,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         //change navigation bar tint color
         UINavigationBar.appearance().tintColor = UIColor(red:0.18, green:0.18, blue:0.18, alpha:1) //black
         
+        //FB SDK
+        SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         //choose screen to show first
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
@@ -32,6 +38,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         window?.rootViewController = StartScreenViewController()
         
         return true
+    }
+    
+    func registerPushyDevice(){
+        // Initialize Pushy SDK
+        let pushy = Pushy(UIApplication.shared)
+        
+        // Register the device for push notifications
+        pushy.register({ (error, deviceToken) in
+            // Handle registration errors
+            if error != nil {
+                return print ("Registration failed: \(error!)")
+            }
+            
+            // Print device token to console
+            print("Pushy device token: \(deviceToken)")
+            
+            // Persist the token locally and send it to your backend later
+            UserDefaults.standard.setPushyToken(value: deviceToken)
+        })
+        
+        // Handle push notifications
+        pushy.setNotificationHandler({ (data, completionHandler) in
+            // Print notification payload data
+            print("Received notification: \(data)")
+            
+            // Fallback message containing data payload
+            var message = "\(data)"
+            
+            // Attempt to extract "message" key from APNs payload
+            if let aps = data["aps"] as? [AnyHashable : Any] {
+                if let payloadMessage = aps["alert"] as? String {
+                    message = payloadMessage
+                }
+            }
+            
+            // Display the notification as an alert
+            let alert = UIAlertController(title: "Incoming Notification", message: message, preferredStyle: UIAlertController.Style.alert)
+            
+            // Add an action button
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // Show the alert dialog
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            
+            // You must call this completion handler when you finish processing
+            // the notification (after fetching background data, if applicable)
+            completionHandler(UIBackgroundFetchResult.newData)
+        })
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let appId: String = SDKSettings.appId
+        if url.scheme != nil && url.scheme!.hasPrefix("fb\(appId)") && url.host ==  "authorize" {
+            return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        }
+        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -50,6 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        AppEventsLogger.activate(application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

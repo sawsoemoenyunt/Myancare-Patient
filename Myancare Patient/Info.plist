@@ -18,12 +18,35 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb402237953640815</string>
+                <string>ak402237953640815</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>402237953640815</string>
+    <key>AccountKitClientToken</key>
+    <string>6c9d8550772b3f9c4b0f26230e94a294</string>
+	<key>FacebookDisplayName</key>
+	<string>MyanCareApp</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>"Myancare need your permission to access photo library"</string>
+	<string>&quot;Myancare need your permission to access photo library&quot;</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pyidaungsu.ttf</string>
@@ -48,5 +71,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import FacebookCore
+import FacebookLogin
+import Alamofire
+import AccountKit
 
 ///Login View Controller to choose login with Facebook or Mobile phone
 class LoginViewController: UIViewController {
+    
+    var _accountKit: AKFAccountKit!
     
     /// Cell id for collectionView
     let cellID = "cellID"
@@ -53,22 +59,13 @@ class LoginViewController: UIViewController {
         return btn
     }()
     
-    /**
-     To handle fbBtn click action
-     - Parameters: nil
-     - Returns: nil
-     */
-    @objc func fbBtnClick(){
-        self.navigationController?.pushViewController(UserInformationVC(), animated: true)
-    }
-    
     /// Custom mobile login button
     lazy var mobileBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Login with Mobile", for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 16)
         btn.setTitleColor(UIColor.MyanCareColor.gray, for: .normal)
-        btn.addTarget(self, action: #selector(fbBtnClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(mobileBtnClick), for: .touchUpInside)
         return btn
     }()
     
@@ -82,18 +79,147 @@ class LoginViewController: UIViewController {
     /// Moblie phone login button bottom constraint
     var loginbtnBottomConstraint: NSLayoutConstraint?
     
+    /**
+     To handle fbBtn click action
+     - Parameters: nil
+     - Returns: nil
+     */
+    @objc func fbBtnClick(){
+//        self.navigationController?.pushViewController(UserInformationVC(), animated: true)
+        facebookLogin()
+    }
+    
+    func facebookLogin(){
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: [.publicProfile], viewController: self) { (loginResult) in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success:
+                print("Logged in!")
+                self.getFBUserData()
+            }
+        }
+    }
+    
+    func getFBUserData(){
+        let connection = GraphRequestConnection()
+        connection.add(MyProfileRequest()) { response, result in
+            switch result {
+            case .success(let response):
+                print("Custom Graph Request Succeeded: \(response)")
+                print("Fblogin id was : \(String(describing: response.facebookId)) and name is \(String(describing: response.facebookName))")
+                self.ischeckFB(isFB: true, id: response.facebookId!)
+            case .failed(let error):
+                print("Custom Graph Request Failed: \(error)")
+            }
+        }
+        connection.start()
+    }
+    
+    struct MyProfileRequest: GraphRequestProtocol {
+        struct Response: GraphResponseProtocol {
+            var facebookId : String?
+            var facebookName : String?
+            var facebookEmail : String?
+            init(rawResponse: Any?) {
+                // Decode JSON from rawResponse into other properties here.
+                if let rawResponse = rawResponse as? [String:String]{
+                    facebookId = rawResponse["id"]
+                    facebookName = rawResponse["name"]
+                    facebookEmail = rawResponse["email"]
+                }
+            }
+        }
+        
+        var graphPath = "/me"
+        var parameters: [String : Any]? = ["fields": "id, name"]
+        var accessToken = AccessToken.current
+        var httpMethod: GraphRequestHTTPMethod = .GET
+        var apiVersion: GraphAPIVersion = .defaultVersion
+    }
+    
+    func ischeckFB(isFB:Bool, id:String){
+        
+        let urlToHit = isFB == true ? EndPoints.checkfb(id).path : EndPoints.checkmobile(id).path
+        let header = ["Content-Type":"application/json"]
+        
+        Alamofire.request(urlToHit, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                print("response status: \(response.response?.statusCode)")
+                let responseStatus = response.response?.statusCode
+                
+                if responseStatus == 404{
+                    //register user process here
+                    print("RECORD NOT FOUND")
+                    self.navigationController?.pushViewController(UserInformationVC(), animated: true)
+                    
+                } else if responseStatus == 200{
+                    //apply login process here
+                    print("RECORD WAS FOUND")
+                    if let responseData = response.result.value as? NSDictionary{
+                        if let userToken = responseData.object(forKey: "token") as? String{
+                            print("USER TOKEN WAS : \(userToken)")
+                            UserDefaults.standard.setToken(value: userToken)
+                        }
+                        if let userData = responseData.object(forKey: "user") as? [String:Any]{
+                            let user = PatientModel()
+                            user.updateModel(usingDictionary: userData)
+                            UserDefaults.standard.setLoginUserData(value: user)
+                            UtilityClass.switchToHomeViewController()
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
+    @objc func mobileBtnClick(){
+        mobileLogin()
+    }
+    
+    func mobileLogin()
+    {
+        let inputState = UUID().uuidString
+        let vc = (_accountKit?.viewControllerForPhoneLogin(with: nil, state: inputState))!
+        vc.enableSendToFacebook = true
+        self.prepareLoginViewController(loginViewController: vc)
+        self.present(vc as UIViewController, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
         collectionView.register(WalkthroughCell.self, forCellWithReuseIdentifier: cellID)
+        
+        if _accountKit == nil {
+            _accountKit = AKFAccountKit(responseType: .accessToken)
+        }
+        _accountKit.logOut()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
         setupViews()
+        
+        _accountKit.requestAccount {
+            (account, error) -> Void in
+            
+            if let phoneNumber = account?.phoneNumber{
+                print("phoneNumber \(phoneNumber.phoneNumber)")
+                self.ischeckFB(isFB: false, id: phoneNumber.phoneNumber)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -140,6 +266,33 @@ class LoginViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+}
+
+extension LoginViewController: AKFViewControllerDelegate{
+    
+    func prepareLoginViewController(loginViewController: AKFViewController) {
+        loginViewController.delegate = self
+    }
+    
+    func viewController(_ viewController: (UIViewController & AKFViewController)!, didCompleteLoginWith accessToken: AKFAccessToken!, state: String!) {
+        print("did complete login with access token \(accessToken.tokenString) state \(String(describing: state))")
+    }
+    
+    func viewController(_ viewController: (UIViewController & AKFViewController)!, didCompleteLoginWithAuthorizationCode code: String!, state: String!) {
+        print("did complete login with authorizationcode \(String(describing: code))")
+    }
+    
+    func viewController(_ viewController: (UIViewController & AKFViewController)!, didFailWithError error: Error!) {
+        print("\(String(describing: viewController)) did fail with error: \(error.localizedDescription)")
+    }
+    
+    func viewController(viewController: UIViewController!, didFailWithError error: NSError!) {
+        print(error)
+    }
+    
+    func viewControllerDidCancel(_ viewController: (UIViewController & AKFViewController)!) {
+        print("error")
     }
 }
 

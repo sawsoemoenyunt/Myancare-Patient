@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -93,6 +93,9 @@
 		52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C85222254EF003D12BD /* Logo-Motion_Gif.gif */; };
 		52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C07C872222553C003D12BD /* StartScreenViewController.swift */; };
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
+		52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59691223F841C0071BE52 /* UserDefaults.swift */; };
+		52D59694223F8EE90071BE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59693223F8EE90071BE52 /* API.swift */; };
+		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
 		52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */; };
 		52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */; };
 		78874FA114DC211CF82CC53F /* Pods_Myancare_Patient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */; };
@@ -156,6 +159,7 @@
 		526E08982237D5D800FECD70 /* PaymentHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoryModel.swift; sourceTree = "<group>"; };
 		526E089A2237D5F300FECD70 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		526E089C2237D63000FECD70 /* ModelLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLogin.swift; sourceTree = "<group>"; };
+		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		528DA554221D96DA00140CFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -190,6 +194,9 @@
 		52C07C8C222264EB003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		52C07C9022226594003D12BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52C07C92222265C3003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Localizable.strings; sourceTree = "<group>"; };
+		52D59691223F841C0071BE52 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		52D59693223F8EE90071BE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailVC.swift; sourceTree = "<group>"; };
 		52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointmentVC.swift; sourceTree = "<group>"; };
 		63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.release.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.release.xcconfig"; sourceTree = "<group>"; };
@@ -410,6 +417,7 @@
 		526C568722363D1D003F2C66 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				52D59693223F8EE90071BE52 /* API.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -444,8 +452,10 @@
 		528DA54E221D96DA00140CFF /* Myancare Patient */ = {
 			isa = PBXGroup;
 			children = (
+				528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */,
 				52092D1C2221524B0035C257 /* UIView+anchors.swift */,
 				52A5B7E622224F6500AAE3D3 /* Utility.swift */,
+				52D59691223F841C0071BE52 /* UserDefaults.swift */,
 				526C568722363D1D003F2C66 /* Utility */,
 				52C07C84222254A9003D12BD /* SupportingFiles */,
 				528DA57E221D9B0C00140CFF /* AppDelegate */,
@@ -482,6 +492,7 @@
 				526E08982237D5D800FECD70 /* PaymentHistoryModel.swift */,
 				526E089A2237D5F300FECD70 /* ProfileModel.swift */,
 				526E089C2237D63000FECD70 /* ModelLogin.swift */,
+				52D59695223FADBD0071BE52 /* PatientModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -616,6 +627,7 @@
 				528DA549221D96DA00140CFF /* Frameworks */,
 				528DA54A221D96DA00140CFF /* Resources */,
 				36E6688C14A2690079A63F74 /* [CP] Embed Pods Frameworks */,
+				79D0DAEFECE093CA9B9942AA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -638,11 +650,25 @@
 				TargetAttributes = {
 					528DA54B221D96DA00140CFF = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
 			buildConfigurationList = 528DA547221D96DA00140CFF /* Build configuration list for PBXProject "Myancare Patient" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -684,18 +710,62 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/Pushy/Pushy.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pushy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79D0DAEFECE093CA9B9942AA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-resources.sh",
+				"${PODS_ROOT}/AccountKit/AccountKitStrings.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccountKitStrings.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D47AE61E5692078709BCC230 /* [CP] Check Pods Manifest.lock */ = {
@@ -739,6 +809,7 @@
 				528DA57B221D9ABB00140CFF /* DoctorDetailProfileCell.swift in Sources */,
 				523326A022323C6700DD3BB6 /* ArticleVC.swift in Sources */,
 				526E089B2237D5F300FECD70 /* ProfileModel.swift in Sources */,
+				52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */,
 				524D8EAB2237954900B7AEAB /* SlotCell.swift in Sources */,
 				52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */,
 				524D8EB2223795D800B7AEAB /* AppointmentListCell.swift in Sources */,
@@ -753,6 +824,7 @@
 				528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */,
 				528DA56B221D984700140CFF /* DoctorDetailViewController.swift in Sources */,
 				52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */,
+				52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */,
 				524D8EB82237966400B7AEAB /* WalthroughCell.swift in Sources */,
 				524D8ECC223797F900B7AEAB /* WalletCell.swift in Sources */,
 				52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */,
@@ -788,6 +860,7 @@
 				524D8EA12237943400B7AEAB /* ArticleCategoryCell.swift in Sources */,
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
+				52D59694223F8EE90071BE52 /* API.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,
 				52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */,
 				526E08892237D44400FECD70 /* DoctorModel.swift in Sources */,
@@ -896,6 +969,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -951,6 +1025,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -963,18 +1038,19 @@
 			baseConfigurationReference = 6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Myancare Patient/Myancare Patient.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VVN8FFXZBU;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = X624A6G9UP;
 				INFOPLIST_FILE = "Myancare Patient/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt2.Myancare-Patient";
+				PRODUCT_BUNDLE_IDENTIFIER = com.myancarepatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "MyanCare-Patient-2-Jan";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -985,18 +1061,19 @@
 			baseConfigurationReference = 63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VVN8FFXZBU;
+				CODE_SIGN_ENTITLEMENTS = "Myancare Patient/Myancare Patient.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = X624A6G9UP;
 				INFOPLIST_FILE = "Myancare Patient/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sawsoemoenyunt2.Myancare-Patient";
+				PRODUCT_BUNDLE_IDENTIFIER = com.myancarepatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "MyanCare-Patient-Pro-2Jan";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
