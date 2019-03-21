@@ -14,7 +14,7 @@ class MoreCollectionViewEditProfileCell: UICollectionViewCell {
     let namelabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Pablo Escobar"
-        lbl.font = UIFont.boldSystemFont(ofSize: 32)
+        lbl.font = UIFont.MyanCareFont.type1
         lbl.textColor = UIColor.black
         return lbl
     }()

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
@@ -42,7 +44,11 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     }()
     
     @objc func signOutButtonClick(){
-        
+        //logout user and delete token from userdefaults
+        UserDefaults.standard.setToken(value: "")
+        UserDefaults.standard.setIsLoggedIn(value: false)
+        UserDefaults.standard.setUserData(value: NSDictionary())
+        UtilityClass.changeRootViewController(with: LoginViewController())
     }
     
     let infoLabel: UILabel = {
@@ -114,6 +120,20 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
         var cell = UICollectionViewCell()
         if indexPath.row == 0 {
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID_profile, for: indexPath) as! MoreCollectionViewEditProfileCell
+            let userName = UserDefaults.standard.getUserData().object(forKey: "name") as! String
+            let image_url = UserDefaults.standard.getUserData().object(forKey: "image_url") as! String
+
+            profilecell.namelabel.text = userName
+            
+            Alamofire.request("\(image_url)").responseImage { response in
+                debugPrint(response.result)
+                
+                if let image = response.result.value {
+                    print("image downloaded: \(image)")
+                    profilecell.icon.image = image
+                }
+            }
+            
             cell = profilecell
         } else {
             let morecell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MoreCollectionViewCell

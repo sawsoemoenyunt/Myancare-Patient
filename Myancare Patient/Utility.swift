@@ -8,6 +8,7 @@
 
 import UIKit
 
+let userDefaults = UserDefaults.standard
 
 func getWeekdayString(weekDay: Int) -> String{
     var yourWeekday = ""
@@ -63,6 +64,44 @@ func getComingDates(days: Int) -> NSMutableArray {
 }
 
 class UtilityClass: NSObject {
+    
+    //MARK:- User Info ( SAVE )
+    class func saveUserInfoData(userDict : [String:Any]) -> Void
+    {
+        let data = NSKeyedArchiver.archivedData(withRootObject: userDict)
+        userDefaults.set(data, forKey: UserDefaults.UserDefaultsKeys.userInfoData.rawValue)
+    }
+    
+    //MARK:- User Info ( GET )
+    class func getUserInfoData() -> [String:Any]
+    {
+        let data : Data = userDefaults.object(forKey: UserDefaults.UserDefaultsKeys.userInfoData.rawValue) as! Data
+        let userDict : [String:Any] = NSKeyedUnarchiver.unarchiveObject(with: data) as! [String : Any]
+        
+        return userDict
+    }
+    
+    //MARK:- User Name ( GET )
+    class func getPersonName() -> String
+    {
+        let data : Data = userDefaults.object(forKey: UserDefaults.UserDefaultsKeys.userInfoData.rawValue) as! Data
+        let userDict : [String:Any] = NSKeyedUnarchiver.unarchiveObject(with: data) as! [String : Any]
+        
+        let name = userDict["username"] as! String
+        
+        return name
+    }
+    
+    //MARK:- User wallet balance ( GET )
+    class func getWalletBalance() -> Double
+    {
+        let data : Data = userDefaults.object(forKey: UserDefaults.UserDefaultsKeys.userInfoData.rawValue) as! Data
+        let userDict : [String:Any] = NSKeyedUnarchiver.unarchiveObject(with: data) as! [String : Any]
+        
+        let balance = userDict["wallet_balance"] as! Double
+        
+        return balance
+    }
     
     class func switchToHomeViewController(){
         //show homeViewController

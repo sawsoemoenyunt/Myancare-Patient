@@ -64,6 +64,10 @@
 		526E08992237D5D800FECD70 /* PaymentHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E08982237D5D800FECD70 /* PaymentHistoryModel.swift */; };
 		526E089B2237D5F300FECD70 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E089A2237D5F300FECD70 /* ProfileModel.swift */; };
 		526E089D2237D63000FECD70 /* ModelLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E089C2237D63000FECD70 /* ModelLogin.swift */; };
+		526FD435224258810035D757 /* ChatListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD434224258810035D757 /* ChatListVC.swift */; };
+		526FD437224258C10035D757 /* ChatRecordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD436224258C10035D757 /* ChatRecordVC.swift */; };
+		526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD4392242591D0035D757 /* ChatListCell.swift */; };
+		526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD43B224259240035D757 /* ChatRecordCell.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA555221D96DA00140CFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 528DA553221D96DA00140CFF /* Main.storyboard */; };
 		528DA557221D96DC00140CFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 528DA556221D96DC00140CFF /* Assets.xcassets */; };
@@ -159,6 +163,10 @@
 		526E08982237D5D800FECD70 /* PaymentHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoryModel.swift; sourceTree = "<group>"; };
 		526E089A2237D5F300FECD70 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		526E089C2237D63000FECD70 /* ModelLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLogin.swift; sourceTree = "<group>"; };
+		526FD434224258810035D757 /* ChatListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListVC.swift; sourceTree = "<group>"; };
+		526FD436224258C10035D757 /* ChatRecordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordVC.swift; sourceTree = "<group>"; };
+		526FD4392242591D0035D757 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
+		526FD43B224259240035D757 /* ChatRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordCell.swift; sourceTree = "<group>"; };
 		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -430,6 +438,24 @@
 			path = MedicationReminder;
 			sourceTree = "<group>";
 		};
+		526FD4332242583D0035D757 /* Consultation */ = {
+			isa = PBXGroup;
+			children = (
+				526FD434224258810035D757 /* ChatListVC.swift */,
+				526FD436224258C10035D757 /* ChatRecordVC.swift */,
+			);
+			path = Consultation;
+			sourceTree = "<group>";
+		};
+		526FD438224259100035D757 /* Consultation */ = {
+			isa = PBXGroup;
+			children = (
+				526FD4392242591D0035D757 /* ChatListCell.swift */,
+				526FD43B224259240035D757 /* ChatRecordCell.swift */,
+			);
+			path = Consultation;
+			sourceTree = "<group>";
+		};
 		528DA543221D96DA00140CFF = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +526,7 @@
 		528DA564221D972400140CFF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				526FD438224259100035D757 /* Consultation */,
 				524D8EB0223795C900B7AEAB /* Appointment */,
 				524D8E9F2237942400B7AEAB /* Article */,
 				52162CD92224EE80001F054E /* BookAppointment */,
@@ -519,6 +546,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				526FD4332242583D0035D757 /* Consultation */,
 				529490442237CE0900507240 /* Passcode */,
 				52162CD12224EE25001F054E /* Appointment */,
 				5233269E22323C4800DD3BB6 /* Article */,
@@ -722,6 +750,7 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Pushy/Pushy.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 			);
@@ -738,6 +767,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pushy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 			);
@@ -815,6 +845,7 @@
 				524D8EB2223795D800B7AEAB /* AppointmentListCell.swift in Sources */,
 				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
+				526FD435224258810035D757 /* ChatListVC.swift in Sources */,
 				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
@@ -827,6 +858,7 @@
 				52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */,
 				524D8EB82237966400B7AEAB /* WalthroughCell.swift in Sources */,
 				524D8ECC223797F900B7AEAB /* WalletCell.swift in Sources */,
+				526FD437224258C10035D757 /* ChatRecordVC.swift in Sources */,
 				52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */,
 				524D8ECE2237981F00B7AEAB /* PaymentRowCell.swift in Sources */,
 				524D8EC12237972D00B7AEAB /* ViewSheetCell.swift in Sources */,
@@ -861,6 +893,7 @@
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
 				52D59694223F8EE90071BE52 /* API.swift in Sources */,
+				526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,
 				52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */,
 				526E08892237D44400FECD70 /* DoctorModel.swift in Sources */,
@@ -875,6 +908,7 @@
 				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
 				5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */,
+				526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */,
 				526E08912237D54B00FECD70 /* ModelAppointment.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,
 			);

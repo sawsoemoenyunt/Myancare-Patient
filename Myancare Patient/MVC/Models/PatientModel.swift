@@ -12,10 +12,13 @@ class PatientModel {
     
     var token : String?
     
+    var _id : String?
     var createdAt : String?
     var updatedAt : String?
     var username : String?
+    var name : String?
     var dob : String?
+    var country_code: String?
     var mobile : String?
     var gender : String?
     var email : String?
@@ -26,12 +29,17 @@ class PatientModel {
     var age : Double?
     var avatar : String?
     var avatarUrl : String?
+    var image_url : String?
+    var facebook_id : String?
     
     init(){
+        _id = ""
         createdAt = ""
         updatedAt = ""
         username = ""
+        name = ""
         dob = ""
+        country_code = ""
         mobile = ""
         gender = ""
         email = ""
@@ -42,6 +50,7 @@ class PatientModel {
         age = 0
         avatar = ""
         avatarUrl = ""
+        facebook_id = ""
     }
     
     deinit {
@@ -50,6 +59,10 @@ class PatientModel {
     
     func updateModel(usingDictionary dictionary:[String:Any]) -> Void {
 
+        if let id1 = dictionary["_id"] as? String{
+            _id = id1
+        }
+        
         if let createdAt1 = dictionary["createdAt"] as? String{
             createdAt = createdAt1
         }
@@ -62,8 +75,16 @@ class PatientModel {
             username  = username1
         }
         
+        if let name1 = dictionary["name"] as? String{
+            name  = name1
+        }
+        
         if let dob1 = dictionary["dob"] as? String{
             dob  = dob1
+        }
+        
+        if let countrycode1 = dictionary["country_code"] as? String{
+            country_code  = countrycode1
         }
         
         if let mobile1 = dictionary["mobile"] as? String{
@@ -108,6 +129,14 @@ class PatientModel {
         
         if let avatar_url = dictionary["avatar_url"] as? String{
             avatarUrl = avatar_url
+        }
+        
+        if let image_url1 = dictionary["image_url"] as? String{
+            image_url = image_url1
+        }
+        
+        if let facebookid1 = dictionary["facebook_id"] as? String{
+            facebook_id = facebookid1
         }
     }
 }

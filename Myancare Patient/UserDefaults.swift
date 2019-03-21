@@ -11,8 +11,18 @@ import Foundation
 extension UserDefaults{
     enum UserDefaultsKeys: String {
         case pushyToken
-        case loginUserData
         case token
+        case userInfoData
+        case isLoggedIn
+    }
+    
+    func setIsLoggedIn(value: Bool) {
+        set(value, forKey: UserDefaultsKeys.isLoggedIn.rawValue)
+        synchronize()
+    }
+    
+    func isLoggedIn() -> Bool {
+        return bool(forKey: UserDefaultsKeys.isLoggedIn.rawValue)
     }
     
     func setPushyToken(value: String){
@@ -24,15 +34,6 @@ extension UserDefaults{
         return string(forKey: UserDefaultsKeys.pushyToken.rawValue)
     }
     
-    func setLoginUserData(value: PatientModel){
-        set(value, forKey: UserDefaultsKeys.loginUserData.rawValue)
-        synchronize()
-    }
-    
-    func getLoginUserData() -> String?{
-        return string(forKey: UserDefaultsKeys.loginUserData.rawValue)
-    }
-    
     func setToken(value: String){
         set(value, forKey: UserDefaultsKeys.token.rawValue)
         synchronize()
@@ -40,5 +41,14 @@ extension UserDefaults{
     
     func getToken() -> String?{
         return string(forKey: UserDefaultsKeys.token.rawValue)
+    }
+    
+    func setUserData(value: NSDictionary) {
+        set(value, forKey: UserDefaultsKeys.userInfoData.rawValue)
+        synchronize()
+    }
+    
+    func getUserData() -> NSDictionary {
+        return object(forKey: UserDefaultsKeys.userInfoData.rawValue) as! NSDictionary
     }
 }

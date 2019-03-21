@@ -11,6 +11,7 @@ import FacebookCore
 import FacebookLogin
 import Alamofire
 import AccountKit
+import PKHUD
 
 ///Login View Controller to choose login with Facebook or Mobile phone
 class LoginViewController: UIViewController {
@@ -143,6 +144,8 @@ class LoginViewController: UIViewController {
     
     func ischeckFB(isFB:Bool, id:String){
         
+        HUD.show(.progress, onView: self.view)
+        
         let urlToHit = isFB == true ? EndPoints.checkfb(id).path : EndPoints.checkmobile(id).path
         let header = ["Content-Type":"application/json"]
         
@@ -150,8 +153,8 @@ class LoginViewController: UIViewController {
             
             switch response.result{
             case .success:
-                print("response status: \(response.response?.statusCode)")
                 let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus)")
                 
                 if responseStatus == 404{
                     //register user process here
@@ -166,10 +169,29 @@ class LoginViewController: UIViewController {
                             print("USER TOKEN WAS : \(userToken)")
                             UserDefaults.standard.setToken(value: userToken)
                         }
+                        
                         if let userData = responseData.object(forKey: "user") as? [String:Any]{
                             let user = PatientModel()
                             user.updateModel(usingDictionary: userData)
-                            UserDefaults.standard.setLoginUserData(value: user)
+                            print("User data -> \(userData)")
+                            
+                            let info:NSDictionary = ["name":user.name!, "wallet_balance":user.wallet_balance!, "image_url":user.image_url!,
+                                                     "height":user.height!,
+                                                     "age":user.age!,
+                                                     "weight":user.weight!,
+                                                     "facebook_id":user.facebook_id!,
+                                                     "country_code":user.country_code!,
+                                                     "_id":user._id!,
+                                                     "createdAt":user.createdAt!,
+                                                     "gender":user.gender!,
+                                                     "dob":user.gender!,
+                                                     "email":user.email!,
+                                                     "mobile":user.mobile!,
+                                                     "blood_type":user.bloodType!,
+                                                     "username":user.username!,
+                                                     "updatedAt":user.updatedAt!]
+                            UserDefaults.standard.setUserData(value: info)
+                            UserDefaults.standard.setIsLoggedIn(value: true)
                             UtilityClass.switchToHomeViewController()
                         }
                     }
@@ -177,6 +199,7 @@ class LoginViewController: UIViewController {
             case .failure(let error):
                 print(error)
             }
+            HUD.hide()
         }
         
     }
@@ -216,8 +239,8 @@ class LoginViewController: UIViewController {
             (account, error) -> Void in
             
             if let phoneNumber = account?.phoneNumber{
-                print("phoneNumber \(phoneNumber.phoneNumber)")
-                self.ischeckFB(isFB: false, id: phoneNumber.phoneNumber)
+                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
+                self.ischeckFB(isFB: false, id: "\(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
             }
         }
     }

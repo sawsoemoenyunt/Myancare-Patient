@@ -8,6 +8,7 @@ target 'Myancare Patient' do
   # Pods for Myancare Patient
 
 	pod 'SwiftyGif'
+  pod 'PKHUD'
 	pod 'IQKeyboardManagerSwift'
 	pod 'Localize-Swift'
 	pod 'Alamofire'

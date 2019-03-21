@@ -66,7 +66,14 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
 //        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: homeViewController))
-        UtilityClass.changeRootViewController(with: LanguageViewController())
+        
+        if UserDefaults.standard.isLoggedIn(){
+            print("User didn't logged in")
+            UtilityClass.switchToHomeViewController()
+        } else {
+            print("User already logged in")
+            UtilityClass.changeRootViewController(with: LanguageViewController())
+        }
     }
     
     // MARK : Deinit

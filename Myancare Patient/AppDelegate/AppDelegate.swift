@@ -11,6 +11,8 @@ import Localize_Swift
 import FacebookCore
 import FacebookLogin
 import Pushy
+import IQKeyboardManagerSwift
+import PKHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
@@ -28,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
         //FB SDK
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        //IQKeyboardmanager
+        IQKeyboardManager.shared.enable = true
         
         //choose screen to show first
         window = UIWindow(frame: UIScreen.main.bounds)

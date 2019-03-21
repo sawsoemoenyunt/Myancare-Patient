@@ -11,12 +11,13 @@ import UIKit
 class WalletVC: UIViewController {
     
     let cellID = "cellID"
+    var walletbalance = 0
     
     let coinlabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "8000 Coin"
         lbl.numberOfLines = 1
-        lbl.font = UIFont.mmFontBold(ofSize: 72)
+        lbl.font = UIFont.MyanCareFont.title
         lbl.textColor = UIColor.black
         lbl.textAlignment = .center
         return lbl
@@ -85,6 +86,12 @@ class WalletVC: UIViewController {
         collectionView.register(WalletCell.self, forCellWithReuseIdentifier: cellID)
         
         setupViews()
+        setupData()
+    }
+    
+    func setupData(){
+        walletbalance = UserDefaults.standard.getUserData().object(forKey: "wallet_balance") as! Int
+        setupAttributeString()
     }
     
     func setupViews(){
@@ -94,19 +101,17 @@ class WalletVC: UIViewController {
         view.addSubview(headerView)
         
         let v = view.safeAreaLayoutGuide
-        coinlabel.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        coinlabel.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 100)
         topUpBtn.anchor(coinlabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         headerView.anchor(topUpBtn.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 30, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         collectionView.anchor(headerView.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 5, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        
-        setupAttributeString()
     }
     
     func setupAttributeString(){
-        let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 72)]
+        let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 32)]
         let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
         
-        let coinAmount = NSMutableAttributedString(string: "80,000", attributes: yourAttributes)
+        let coinAmount = NSMutableAttributedString(string: "\(walletbalance)", attributes: yourAttributes)
         let cointStatus = NSMutableAttributedString(string: " coin", attributes: yourOtherAttributes)
         
         let combination = NSMutableAttributedString()
