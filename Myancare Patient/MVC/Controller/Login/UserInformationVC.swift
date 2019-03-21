@@ -11,67 +11,43 @@ import UIKit
 /// User information fill form view
 class UserInformationVC: UIViewController, UITextFieldDelegate {
     
-    /// UIScrollview
-    let scrollView: UIScrollView = {
-        let sc = UIScrollView()
-        sc.backgroundColor = UIColor.white
-        return sc
+    let cellID = "cellID"
+    var profileImage: UIImage?
+    
+    var phoneID = ""
+    var name = ""
+    var dob = ""
+    var email = ""
+    var gender = ""
+    var height = ""
+    var weight = ""
+    var bloodType = ""
+    
+    lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter
     }()
     
-    ///UILabel to show information
     let label: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Make sure your information is correct before continuing"
+        lbl.text = "Make sure your information is correct before continuing."
         lbl.numberOfLines = 0
-        lbl.font = UIFont.systemFont(ofSize: 14)
+        lbl.font = UIFont.mmFontRegular(ofSize: 14)
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
     }()
     
-    ///UIImageview to show profile image
-    let profileImage: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.backgroundColor = UIColor.gray
-        img.layer.cornerRadius = 40
-        img.clipsToBounds = true
-        return img
-    }()
-    
-    ///UITextField : To accept phone number / user id from user input
-    lazy var phoneUserIDTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Phone Number / User ID"
-        tf.borderStyle = .roundedRect
-        tf.delegate = self
-        return tf
-    }()
-    
-    ///UITextField : To accept name from user input
-    lazy var nameTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Name"
-        tf.borderStyle = .roundedRect
-        tf.delegate = self
-        return tf
-    }()
-    
-    ///UITextField : To accept date of birth from user input
-    lazy var dobTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Date of Birth"
-        tf.borderStyle = .roundedRect
-        tf.delegate = self
-        return tf
-    }()
-    
-    ///UITextField : To accept email from user input
-    lazy var emailTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Email Address"
-        tf.borderStyle = .roundedRect
-        tf.delegate = self
-        return tf
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = .white
+        cv.showsVerticalScrollIndicator = false
+        cv.allowsMultipleSelection = true
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+        return cv
     }()
     
     ///UISwitch : To control agree terms or not
@@ -83,7 +59,11 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     
     @objc func swithOnOff(){
         if agreeSwitch.isOn{
-            moveViewToTopWithConstant(-120)
+            confrimBtn.isEnabled = true
+            confrimBtn.backgroundColor = UIColor.MyanCareColor.green
+        } else {
+            confrimBtn.isEnabled = false
+            confrimBtn.backgroundColor = UIColor.MyanCareColor.darkGray
         }
     }
     
@@ -102,10 +82,11 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
         btn.setTitle("CONFIRM", for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.backgroundColor = UIColor.MyanCareColor.darkGray
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(confrimBtnClick), for: .touchUpInside)
+        btn.isEnabled = false
         return btn
     }()
     
@@ -115,7 +96,12 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
      - Returns: nil
      */
     @objc func confrimBtnClick(){
-        self.navigationController?.pushViewController(UserInterestVC(), animated: true)
+        if validateForm() {
+            self.navigationController?.pushViewController(UserInterestVC(), animated: true)
+        } else {
+            print("validate form failed!")
+            showAlert()
+        }
     }
     
     ///UIButton : Custom button for setup passcode
@@ -152,45 +138,22 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
         self.title = "User Information"
         view.backgroundColor = UIColor.white
         
-        //set scrollView size and it's content size
-        let screensize: CGRect = UIScreen.main.bounds
-        let screenWidth = screensize.width
-        let screenHeight = screensize.height
+        view.addSubview(confrimBtn)
+        view.addSubview(agreeSwitch)
+        view.addSubview(agreeLabel)
+        view.addSubview(collectionView)
+        view.addSubview(label)
         
+        let v = view.safeAreaLayoutGuide
+        confrimBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        agreeSwitch.anchor(nil, left: v.leftAnchor, bottom: confrimBtn.topAnchor, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 6, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        agreeLabel.anchor(nil, left: agreeSwitch.rightAnchor, bottom: confrimBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 10, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         
-        //add scrollview to view
-        view.addSubview(scrollView)
-        //scrollview layout constraint
-        scrollView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        scrollView.contentSize = CGSize(width: screenWidth, height: screenHeight+200)
+        label.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        collectionView.anchor(label.bottomAnchor, left: v.leftAnchor, bottom: agreeSwitch.topAnchor, right: v.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        //adding sub views to view
-        scrollView.addSubview(label)
-        scrollView.addSubview(profileImage)
-        scrollView.addSubview(phoneUserIDTextField)
-        scrollView.addSubview(nameTextField)
-        scrollView.addSubview(dobTextField)
-        scrollView.addSubview(emailTextField)
-        scrollView.addSubview(agreeSwitch)
-        scrollView.addSubview(agreeLabel)
-        scrollView.addSubview(confrimBtn)
-        scrollView.addSubview(setupPasscodeBtn)
-        
-        let v = scrollView.safeAreaLayoutGuide //scrollview's safe area layout
-        //adding constraints to subviews
-        labelTopAnchor = label.anchorWithReturnAnchors(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)[0] //get top anchor of label
-        profileImage.anchor(label.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 80, heightConstant: 80)
-        profileImage.anchorCenterXToSuperview()
-        phoneUserIDTextField.anchor(profileImage.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 30, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 48)
-        nameTextField.anchor(phoneUserIDTextField.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 48)
-        dobTextField.anchor(nameTextField.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 48)
-        emailTextField.anchor(dobTextField.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 48)
-        agreeSwitch.anchor(emailTextField.bottomAnchor, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 30, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        agreeLabel.anchor(emailTextField.bottomAnchor, left: agreeSwitch.rightAnchor, bottom: nil, right: v.rightAnchor, topConstant: 40, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        confrimBtn.anchor(agreeSwitch.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-        setupPasscodeBtn.anchor(confrimBtn.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-        
-        scrollView.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(hideKeyBoard)))
+        view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(hideKeyBoard)))
+        collectionView.register(UserInfoCell.self, forCellWithReuseIdentifier: cellID)
     }
     
     /**
@@ -204,11 +167,6 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == dobTextField {
-            moveViewToTopWithConstant(-60)
-        } else if textField == emailTextField {
-            moveViewToTopWithConstant(-120)
-        }
         return true
     }
     
@@ -227,5 +185,94 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         hideKeyBoard()
         return true
+    }
+    
+    func validateForm() -> Bool{
+        
+        var result = true
+        
+        if name == "" {
+            print("name required")
+            result = false
+        } else if dob == ""{
+            print("dob required")
+            result = false
+        } else if email == ""{
+            print("email required")
+            result = false
+        } else if gender == ""{
+            print("gender required")
+            result = false
+        } else if height == ""{
+            print("height required")
+            result = false
+        } else if weight == ""{
+            print("weight required")
+            result = false
+        } else if bloodType == ""{
+            print("blood type required")
+            result = false
+        }
+        
+        return result
+    }
+    
+    func showAlert() {
+        // create the alert
+        let alert = UIAlertController(title: "Information Required!", message: "Please fill all form!", preferredStyle: UIAlertController.Style.alert)
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension UserInformationVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserInfoCell
+        cell.userInfoVC = self
+        cell.profileImage.image = profileImage
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 1000)
+    }
+    
+}
+
+extension UserInformationVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func showImagePicker(){
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info[.editedImage]{
+            selectedImageFromPicker = editedImage as? UIImage
+        } else if let originalImage = info[.originalImage]{
+            selectedImageFromPicker = originalImage as? UIImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            profileImage = selectedImage
+        }
+        
+        self.dismiss(animated: true) {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

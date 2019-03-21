@@ -32,6 +32,9 @@ PODS:
   - Localize-Swift (2.0.0)
   - PKHUD (5.2.1)
   - Pushy (1.0.14)
+  - Socket.IO-Client-Swift (14.0.0):
+    - Starscream (~> 3.0.6)
+  - Starscream (3.0.6)
   - SwiftyGif (4.2.0)
 
 DEPENDENCIES:
@@ -46,6 +49,7 @@ DEPENDENCIES:
   - Localize-Swift
   - PKHUD
   - Pushy
+  - Socket.IO-Client-Swift
   - SwiftyGif
 
 SPEC REPOS:
@@ -64,6 +68,8 @@ SPEC REPOS:
     - Localize-Swift
     - PKHUD
     - Pushy
+    - Socket.IO-Client-Swift
+    - Starscream
     - SwiftyGif
 
 SPEC CHECKSUMS:
@@ -81,8 +87,10 @@ SPEC CHECKSUMS:
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
   Pushy: 9462b7798a9754a9e82c496bc3f8b07c758268bb
+  Socket.IO-Client-Swift: 21e6a8a23a7d367d5ddfab6cbbd3c679cf3c25d6
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
 
-PODFILE CHECKSUM: a1b34c6f556c27e861ced892cb0d13d1a46ab1cd
+PODFILE CHECKSUM: c3b137456e4254f17c782fa6a00f8e9f59df9579
 
 COCOAPODS: 1.6.1

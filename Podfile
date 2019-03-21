@@ -21,4 +21,5 @@ target 'Myancare Patient' do
 	pod 'FacebookShare'
     	
 	pod 'Pushy'
+  pod 'Socket.IO-Client-Swift'
 end

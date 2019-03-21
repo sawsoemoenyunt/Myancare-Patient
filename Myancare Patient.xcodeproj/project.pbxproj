@@ -22,6 +22,7 @@
 		5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234153A2222919700CE2A91 /* LoginViewController.swift */; };
 		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
+		5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */; };
 		524D8EA12237943400B7AEAB /* ArticleCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA02237943400B7AEAB /* ArticleCategoryCell.swift */; };
 		524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA22237945100B7AEAB /* ArticleListCell.swift */; };
 		524D8EA52237949C00B7AEAB /* ArticleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA42237949C00B7AEAB /* ArticleDetailCell.swift */; };
@@ -102,6 +103,7 @@
 		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
 		52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */; };
 		52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */; };
+		52F98DC222439A230040D1F5 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F98DC122439A230040D1F5 /* SocketIOManager.swift */; };
 		78874FA114DC211CF82CC53F /* Pods_Myancare_Patient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,7 @@
 		5234153A2222919700CE2A91 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
+		5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		524D8EA02237943400B7AEAB /* ArticleCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoryCell.swift; sourceTree = "<group>"; };
 		524D8EA22237945100B7AEAB /* ArticleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListCell.swift; sourceTree = "<group>"; };
 		524D8EA42237949C00B7AEAB /* ArticleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailCell.swift; sourceTree = "<group>"; };
@@ -207,6 +210,7 @@
 		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailVC.swift; sourceTree = "<group>"; };
 		52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointmentVC.swift; sourceTree = "<group>"; };
+		52F98DC122439A230040D1F5 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.release.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.release.xcconfig"; sourceTree = "<group>"; };
 		6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.debug.xcconfig"; sourceTree = "<group>"; };
 		CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Myancare_Patient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -292,6 +296,7 @@
 			children = (
 				524D8EB72237966400B7AEAB /* WalthroughCell.swift */,
 				524D8EB92237969200B7AEAB /* UserInterestListCel.swift */,
+				5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				52D59693223F8EE90071BE52 /* API.swift */,
+				52F98DC122439A230040D1F5 /* SocketIOManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -752,6 +758,8 @@
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Pushy/Pushy.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -769,6 +777,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pushy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -831,6 +841,7 @@
 				528DA579221D9A5400140CFF /* DoctorListCell.swift in Sources */,
 				528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */,
 				529490462237CE2200507240 /* EnterPasscodeVC.swift in Sources */,
+				5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */,
 				526E088F2237D4E000FECD70 /* MedicationReminderModel.swift in Sources */,
 				526C57172236509D003F2C66 /* ReminderListVC.swift in Sources */,
 				528DA571221D990A00140CFF /* MenuOnlineCell.swift in Sources */,
@@ -846,6 +857,7 @@
 				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
 				526FD435224258810035D757 /* ChatListVC.swift in Sources */,
+				52F98DC222439A230040D1F5 /* SocketIOManager.swift in Sources */,
 				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
