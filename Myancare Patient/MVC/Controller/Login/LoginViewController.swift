@@ -12,15 +12,20 @@ import FacebookLogin
 import Alamofire
 import AccountKit
 import PKHUD
+import NVActivityIndicatorView
 
 ///Login View Controller to choose login with Facebook or Mobile phone
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, NVActivityIndicatorViewable {
     
     var _accountKit: AKFAccountKit!
     
     /// Cell id for collectionView
     let cellID = "cellID"
     let pages = ["page1", "page2", "page3", "page4", "page5"]
+    var countryCode = "95"
+    var pohoneID = ""
+    var facebookID = ""
+    
     
     /// UIPageControl for walk through
     lazy var pageControl: UIPageControl = {
@@ -112,6 +117,7 @@ class LoginViewController: UIViewController {
             case .success(let response):
                 print("Custom Graph Request Succeeded: \(response)")
                 print("Fblogin id was : \(String(describing: response.facebookId)) and name is \(String(describing: response.facebookName))")
+                self.facebookID = response.facebookId!
                 self.ischeckFB(isFB: true, id: response.facebookId!)
             case .failed(let error):
                 print("Custom Graph Request Failed: \(error)")
@@ -144,13 +150,13 @@ class LoginViewController: UIViewController {
     
     func ischeckFB(isFB:Bool, id:String){
         
-        HUD.show(.progress, onView: self.view)
+        startAnimating()
         
         let urlToHit = isFB == true ? EndPoints.checkfb(id).path : EndPoints.checkmobile(id).path
         let header = ["Content-Type":"application/json"]
         
         Alamofire.request(urlToHit, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
-            
+            print("This is requrest url : \(response.request)")
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
@@ -159,7 +165,17 @@ class LoginViewController: UIViewController {
                 if responseStatus == 404{
                     //register user process here
                     print("RECORD NOT FOUND")
-                    self.navigationController?.pushViewController(UserInformationVC(), animated: true)
+                    if isFB {
+                        self.mobileLogin()
+                    } else {
+                        if id != ""{
+                            let userInfoVC = UserInformationVC()
+                            userInfoVC.phoneID = id
+                            userInfoVC.countryCode = self.countryCode
+                            userInfoVC.facebookID = self.facebookID
+                            self.navigationController?.pushViewController(userInfoVC, animated: true)
+                        }
+                    }
                     
                 } else if responseStatus == 200{
                     //apply login process here
@@ -199,7 +215,7 @@ class LoginViewController: UIViewController {
             case .failure(let error):
                 print(error)
             }
-            HUD.hide()
+            self.stopAnimating()
         }
         
     }
@@ -240,7 +256,8 @@ class LoginViewController: UIViewController {
             
             if let phoneNumber = account?.phoneNumber{
                 print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
-                self.ischeckFB(isFB: false, id: "\(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
+                self.countryCode = phoneNumber.countryCode
+                self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
             }
         }
     }
@@ -248,6 +265,8 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         animateViews()
+        
+        showLoading()
     }
     
     /**
@@ -289,6 +308,26 @@ class LoginViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+    
+    @objc func showLoading() {
+        startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            NVActivityIndicatorPresenter.sharedInstance.setMessage("Loading...")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            self.stopAnimating()
+        }
+    }
+    
+    func showAlert(title:String, message:String) {
+        // create the alert
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -341,5 +380,3 @@ extension LoginViewController: UICollectionViewDataSource, UICollectionViewDeleg
         pageControl.currentPage = pageNumber
     }
 }
-
-

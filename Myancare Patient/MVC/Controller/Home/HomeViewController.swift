@@ -8,6 +8,7 @@
 
 import UIKit
 import Localize_Swift
+import Alamofire
 
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -17,6 +18,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 //    var doctorArr = [DoctorModel]()
 //    var recommandDoctorArr = [DoctorModel]()
     var notiCount = 0
+    
+    func updateDeviceToken(){
+        if let deviceToken = UserDefaults.standard.getPushyToken(){
+            let url = EndPoints.updateDeviceToken(deviceToken).path
+            Alamofire.request(url, method: HTTPMethod.put, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                print("Update device token result = \(response.result)")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +40,8 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.collectionView?.register(MenuCell.self, forCellWithReuseIdentifier: collectionViewCellID_Menu)
         self.collectionView?.register(MenuCategoryCell.self, forCellWithReuseIdentifier: collectionViewCellID_Category)
         self.collectionView?.register(MenuOnlineCell.self, forCellWithReuseIdentifier: collectionViewCellID_Online)
+        
+        updateDeviceToken()
     }
     
     override func viewWillAppear(_ animated: Bool) {

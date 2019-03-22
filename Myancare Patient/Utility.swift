@@ -65,6 +65,15 @@ func getComingDates(days: Int) -> NSMutableArray {
 
 class UtilityClass: NSObject {
     
+    //MARK:- Extract Number
+    class func extractNumber(fromString string:String) -> String
+    {
+        let characterSet = CharacterSet.decimalDigits.inverted
+        let stringArray = string.components(separatedBy: characterSet)
+        let newString = stringArray.joined(separator: "")
+        return newString
+    }
+    
     //MARK:- User Info ( SAVE )
     class func saveUserInfoData(userDict : [String:Any]) -> Void
     {

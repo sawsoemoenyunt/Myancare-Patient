@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import NVActivityIndicatorView
 
 /// User information fill form view
-class UserInformationVC: UIViewController, UITextFieldDelegate {
+class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var profileImage: UIImage?
     
+    var countryCode = ""
     var phoneID = ""
     var name = ""
     var dob = ""
@@ -22,6 +26,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
     var height = ""
     var weight = ""
     var bloodType = ""
+    var facebookID = ""
     
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -97,10 +102,10 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
      */
     @objc func confrimBtnClick(){
         if validateForm() {
-            self.navigationController?.pushViewController(UserInterestVC(), animated: true)
+            uploadUserDataToServer()
         } else {
             print("validate form failed!")
-            showAlert()
+            showAlert(title: "Information required!", message: "Please fill all form with correct format!")
         }
     }
     
@@ -212,18 +217,114 @@ class UserInformationVC: UIViewController, UITextFieldDelegate {
         } else if bloodType == ""{
             print("blood type required")
             result = false
+        } else if validateEmail(email: self.email) == false{
+            print("invalid email")
         }
         
         return result
     }
     
-    func showAlert() {
+    func validateEmail(email: String?) -> Bool {
+        
+        let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest: NSPredicate =  NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        let isValid: Bool = emailTest.evaluate(with: email)
+        
+        return isValid
+    }
+    
+    func showAlert(title:String, message:String) {
         // create the alert
-        let alert = UIAlertController(title: "Information Required!", message: "Please fill all form!", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         // add an action (button)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         // show the alert
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadUserDataToServer(){
+        
+        startAnimating()
+        
+        let params = [
+            "name": self.name,
+            "dob": self.dob,
+            "mobile": self.phoneID,
+            "gender": self.gender,
+            "email": self.email,
+            "height": self.height,
+            "weight": self.weight,
+            "blood_type": self.bloodType,
+            "device_tokens": "",
+            "country_code": self.countryCode,
+            "facebook_id": self.facebookID,
+            "avatar": "",
+            "device_os": "iOS",
+            "user_device_info": ""
+        ]
+        
+        let url = EndPoints.patientCreate.path
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus)")
+                
+                if responseStatus == 404{
+                    print("404 route Not found")
+                    
+                } else if responseStatus == 400{
+                    print("Account create failed!")
+                    if let responseData = response.result.value as? NSDictionary{
+                        if let message = responseData.object(forKey: "message") as? NSDictionary{
+                            if let messageArr = message.object(forKey: "Validation_Failed") as? NSArray{
+                                print(messageArr)
+                            }
+                        }
+                    }
+                    self.showAlert(title: "Failed to register", message: "Please try again!\nDid you enter the correct information?")
+                    
+                } else if responseStatus == 201{
+                    //apply login process here
+                    print("Account created!")
+                    if let responseData = response.result.value as? NSDictionary{
+                        if let userToken = responseData.object(forKey: "token") as? String{
+                            print("USER TOKEN WAS : \(userToken)")
+                            UserDefaults.standard.setToken(value: userToken)
+                        }
+                        
+                        if let userData = responseData.object(forKey: "user") as? [String:Any]{
+                            let user = PatientModel()
+                            user.updateModel(usingDictionary: userData)
+                            print("User data -> \(userData)")
+                            
+                            let info:NSDictionary = ["name":user.name!, "wallet_balance":user.wallet_balance!, "image_url":user.image_url!,
+                                                     "height":user.height!,
+                                                     "age":user.age!,
+                                                     "weight":user.weight!,
+                                                     "facebook_id":user.facebook_id!,
+                                                     "country_code":user.country_code!,
+                                                     "_id":user._id!,
+                                                     "createdAt":user.createdAt!,
+                                                     "gender":user.gender!,
+                                                     "dob":user.gender!,
+                                                     "email":user.email!,
+                                                     "mobile":user.mobile!,
+                                                     "blood_type":user.bloodType!,
+                                                     "username":user.username!,
+                                                     "updatedAt":user.updatedAt!]
+                            UserDefaults.standard.setUserData(value: info)
+                            UserDefaults.standard.setIsLoggedIn(value: true)
+                            UtilityClass.switchToHomeViewController()
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+            self.stopAnimating()
+        }
     }
 }
 
@@ -236,6 +337,7 @@ extension UserInformationVC: UICollectionViewDelegate, UICollectionViewDataSourc
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserInfoCell
         cell.userInfoVC = self
         cell.profileImage.image = profileImage
+        cell.phoneUserIDTextField.text = phoneID
         return cell
     }
     

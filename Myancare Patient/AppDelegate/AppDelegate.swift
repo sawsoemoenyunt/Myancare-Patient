@@ -13,6 +13,7 @@ import FacebookLogin
 import Pushy
 import IQKeyboardManagerSwift
 import PKHUD
+import AudioToolbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
@@ -34,19 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         //IQKeyboardmanager
         IQKeyboardManager.shared.enable = true
         
+        //register pushy
+        registerPushyDevice()
+        
         //choose screen to show first
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        let chatVC = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
-        window?.rootViewController = UserInformationVC()
+        window?.rootViewController = StartScreenViewController()
         
         return true
     }
     
     func registerPushyDevice(){
+        
         // Initialize Pushy SDK
         let pushy = Pushy(UIApplication.shared)
         
@@ -87,6 +91,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
             
             // Show the alert dialog
             self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            
+            // Play notification sound (cute tweet noise)
+            AudioServicesPlaySystemSound(1016)
+            
+            // Vibrate the device
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             
             // You must call this completion handler when you finish processing
             // the notification (after fetching background data, if applicable)

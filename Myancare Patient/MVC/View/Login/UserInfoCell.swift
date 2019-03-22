@@ -12,6 +12,7 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     var userInfoVC:UserInformationVC?
     var isFemaleSelected = false
+    var bloodOptions = ["A+","O+","B+","AB+","A-","O-","B-", "AB-"]
     
     lazy var profileImage: UIImageView = {
         let img = UIImageView()
@@ -42,6 +43,7 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
+        tf.isEnabled = false
         return tf
     }()
     
@@ -174,10 +176,11 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var heightTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Height"
+        tf.placeholder = "Height(feets)"
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -191,10 +194,11 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var weightTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Weight"
+        tf.placeholder = "Weight(lbs)"
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -212,7 +216,15 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
         tf.delegate = self
+        tf.inputView = bloodTypePicker
         return tf
+    }()
+    
+    lazy var bloodTypePicker: UIPickerView = {
+        let p = UIPickerView()
+        p.delegate = self
+        p.dataSource = self
+        return p
     }()
     
     func setupViews(){
@@ -288,6 +300,96 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         self.endEditing(true)
     }
     
+    func updateHeightValue(usingValue value: String)
+    {
+        var numberString = UtilityClass.extractNumber(fromString: value)
+        
+        if numberString.count == 1
+        {
+            numberString = numberString + "'"
+        }
+        else
+        {
+            numberString.insert("'", at: numberString.index(after: numberString.startIndex))
+        }
+        
+        heightTextField.text = numberString
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == dobTextField{
+            return false
+        }
+        
+        var newString : String?
+        
+        if string.count == 0
+        {
+            if textField.text?.count==0
+            {
+                //finalCount = 0
+                newString = textField.text
+            }
+            else
+            {
+                //finalCount = textField.text!.count - 1
+                if textField.text?.last == "'" {
+                    newString = ""
+                } else {
+                    var newStr = textField.text! as NSString
+                    newStr = newStr.replacingCharacters(in: range, with: string) as NSString
+                    newString = newStr as String
+                }
+            }
+        }
+        else
+        {
+            //finalCount = textField.text!.count + 1
+            let length = (textField.text?.count)!
+            
+            if textField == heightTextField  {
+                if length >= 4 {
+                    newString = textField.text
+                } else {
+                    var newStr = textField.text! as NSString
+                    
+                    newStr = newStr.replacingCharacters(in: range, with: string) as NSString
+                    
+                    newString = newStr as String
+                }
+            } else if textField == weightTextField {
+                if length >= 3 {
+                    newString = textField.text
+                } else {
+                    var newStr = textField.text! as NSString
+                    
+                    newStr = newStr.replacingCharacters(in: range, with: string) as NSString
+                    
+                    newString = newStr as String
+                }
+            } else {
+                var newStr = textField.text! as NSString
+                
+                newStr = newStr.replacingCharacters(in: range, with: string) as NSString
+                
+                newString = newStr as String
+            }
+        }
+        
+        if textField == heightTextField {
+            if string.count > 0 {
+                updateHeightValue(usingValue: newString!)
+            } else {
+                textField.text = newString
+            }
+        } else {
+            textField.text = newString
+        }
+        
+        return false
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         hideKeyboard()
         
@@ -316,5 +418,23 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension UserInfoCell: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return bloodOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return bloodOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        bloodtypeTextField.text = bloodOptions[row]
     }
 }
