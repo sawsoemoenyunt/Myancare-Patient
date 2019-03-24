@@ -156,11 +156,11 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         let header = ["Content-Type":"application/json"]
         
         Alamofire.request(urlToHit, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
-            print("This is requrest url : \(response.request)")
+            print("This is requrest url : \(String(describing: response.request))")
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
-                print("Response status: \(responseStatus)")
+                print("Response status: \(responseStatus ?? 0)")
                 
                 if responseStatus == 404{
                     //register user process here

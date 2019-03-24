@@ -8,7 +8,7 @@
 
 import Foundation
 
-let baseURLString = "http://192.168.1.105:5000/api/"
+let baseURLString = "http://159.65.10.176:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -21,6 +21,7 @@ enum EndPoints : ApiEndpoint {
     case checkfb(String)
     case checkmobile(String)
     case articles
+    case imagesProfile
     case patientCreate
     case updateDeviceToken(String)
     
@@ -33,10 +34,12 @@ enum EndPoints : ApiEndpoint {
                 return URL(string: String(baseURLString+"patients/checkmobile?mobile=\(id)"))!
             case .articles:
                 return URL(string: String(baseURLString+"patients/checkmobile?article"))!
+            case .imagesProfile:
+                return URL(string: String(baseURLString+"images/profile"))!
             case .patientCreate:
                 return URL(string: String(baseURLString+"patients/create"))!
-        case .updateDeviceToken(let token):
-            return URL(string: String(baseURLString+"patients/update_device/\(token)"))!
+            case .updateDeviceToken(let token):
+                return URL(string: String(baseURLString+"patients/update_device/\(token)"))!
         }
     }
 }

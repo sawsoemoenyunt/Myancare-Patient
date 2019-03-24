@@ -407,6 +407,10 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        setUerInfo()
+    }
+    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return true
     }

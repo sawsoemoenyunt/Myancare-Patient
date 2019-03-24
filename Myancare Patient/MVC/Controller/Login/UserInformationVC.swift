@@ -15,7 +15,7 @@ import NVActivityIndicatorView
 class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    var profileImage: UIImage?
+    var profileImage = UIImage(named: "pablo-profile")
     
     var countryCode = ""
     var phoneID = ""
@@ -27,6 +27,8 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     var weight = ""
     var bloodType = ""
     var facebookID = ""
+    var imageKey = ""
+    var imageUrl = ""
     
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -102,7 +104,15 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
      */
     @objc func confrimBtnClick(){
         if validateForm() {
-            uploadUserDataToServer()
+//            uploadUserDataToServer()
+            self.imageUpload { (result) in
+                if result{
+                    self.uploadUserDataToServer()
+                } else {
+                    self.showAlert(title: "Failed to signup!", message: "Please try again.")
+                }
+                return
+            }
         } else {
             print("validate form failed!")
             showAlert(title: "Information required!", message: "Please fill all form with correct format!")
@@ -242,6 +252,61 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         self.present(alert, animated: true, completion: nil)
     }
     
+    func imageUpload(_ processResult: @escaping (Bool) -> ()){
+        startAnimating()
+        let url = EndPoints.imagesProfile.path /* your API url */
+        
+        let headers: HTTPHeaders = [
+            /* "Authorization": "your_access_token",  in case you need authorization header */
+            "Content-type": "multipart/form-data"
+        ]
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            if let data = self.profileImage?.jpegData(compressionQuality: 1){
+                multipartFormData.append(data, withName: "userimage\(self.phoneID)")
+            }
+            
+        }, usingThreshold: UInt64.init(), to: url, method: .get, headers: headers) { (result) in
+            switch result{
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    print("Succesfully uploaded user profile image")
+                    if let err = response.error{
+                        //error
+                        print("Response error result: \(err.localizedDescription)")
+                        processResult(false)
+                        return
+                    }
+                    //complete
+                    let responseStatus = response.response?.statusCode
+                    print("Response status: \(responseStatus ?? 0)")
+                    
+                    if responseStatus == 400{
+                        print("failed to upload image")
+                        processResult(false)
+                        
+                    } else if responseStatus == 200{
+                        if let result = response.result.value as? NSDictionary{
+                            if let key = result.object(forKey: "key") as? String{
+                                self.imageKey = key
+                            }
+                            if let url = result.object(forKey: "url") as? String{
+                                self.imageUrl = url
+                                print("Image url return from server: \(url)")
+                            }
+                            processResult(true)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Error in upload: \(error.localizedDescription)")
+                //error
+                processResult(false)
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func uploadUserDataToServer(){
         
         startAnimating()
@@ -259,6 +324,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "country_code": self.countryCode,
             "facebook_id": self.facebookID,
             "avatar": "",
+            "image_url": self.imageUrl,
             "device_os": "iOS",
             "user_device_info": ""
         ]
@@ -269,7 +335,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
-                print("Response status: \(responseStatus)")
+                print("Response status: \(responseStatus ?? 0)")
                 
                 if responseStatus == 404{
                     print("404 route Not found")
