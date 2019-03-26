@@ -22,8 +22,8 @@ class PatientModel {
     var mobile : String?
     var gender : String?
     var email : String?
-    var height : Double?
-    var weight : Double?
+    var height : String?
+    var weight : String?
     var bloodType : String?
     var wallet_balance : Double?
     var age : Double?
@@ -43,8 +43,8 @@ class PatientModel {
         mobile = ""
         gender = ""
         email = ""
-        height = 0
-        weight = 0
+        height = ""
+        weight = ""
         bloodType = ""
         wallet_balance = 0
         age = 0
@@ -99,11 +99,11 @@ class PatientModel {
             email  = email1
         }
         
-        if let height1 = dictionary["height"] as? Double{
+        if let height1 = dictionary["height"] as? String{
             height  = height1
         }
         
-        if let weight1 = dictionary["weight"] as? Double{
+        if let weight1 = dictionary["weight"] as? String{
             weight = weight1
         }
         

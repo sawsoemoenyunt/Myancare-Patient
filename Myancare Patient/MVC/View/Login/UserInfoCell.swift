@@ -92,7 +92,7 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     @objc func dateChange(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.dateFormat = "yyyy-MM-dd"
         dobTextField.text = formatter.string(from: datePicker.date)
         hideKeyboard()
     }
@@ -289,6 +289,11 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         userInfoVC?.height = heightTextField.text!
         userInfoVC?.weight = weightTextField.text!
         userInfoVC?.bloodType = bloodtypeTextField.text!
+        
+        if let h = heightTextField.text{
+            userInfoVC?.height = h.replacingOccurrences(of: "'", with: ".")
+        }
+        
     }
     
     @objc func normalView(){

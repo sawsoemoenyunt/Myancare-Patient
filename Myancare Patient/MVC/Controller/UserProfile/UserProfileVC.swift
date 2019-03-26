@@ -11,6 +11,7 @@ import UIKit
 class UserProfileVC: UIViewController {
     
     let cellID = "cellID"
+    var userData = PatientModel()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,6 +38,12 @@ class UserProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        if let user = UserDefaults.standard.getUserData() as? [String:Any]{
+            userData.updateModel(usingDictionary: user)
+            print(userData)
+            collectionView.reloadData()
+        }
     }
     
     var collectionViewTopAnchor:NSLayoutConstraint?
@@ -73,6 +80,18 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ProfileCell
         cell.userProfileVC = self
         cell.profileImage.image = UIImage.init(named: "pablo-profile")
+        cell.nameTextField.text = userData.name!
+        cell.phoneUserIDTextField.text = "\(userData.country_code!)\(userData.mobile!)"
+        cell.dobTextField.text = userData.dob!
+        cell.emailTextField.text = userData.email!
+        if userData.gender == "male" {
+            cell.maleBtn.isSelected = true
+        } else {
+            cell.femaleBtn.isSelected = true
+        }
+        cell.heightTextField.text = "\(userData.height!)"
+        cell.weightTextField.text = "\(userData.weight!)"
+        cell.bloodtypeTextField.text = "\(userData.bloodType!)"
         return cell
     }
     

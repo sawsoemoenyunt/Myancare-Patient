@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520337E6222AC92E004B4103 /* DocotorSpecializeCell.swift */; };
 		520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520337E8222ACA9E004B4103 /* UserInformationVC.swift */; };
+		5203B0DD224A318C002B4B44 /* DoctorListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5203B0DC224A318C002B4B44 /* DoctorListModel.swift */; };
+		52085D582249372500A7FB46 /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52085D572249372500A7FB46 /* SocketManager.swift */; };
+		52085D5A2249376A00A7FB46 /* SocketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52085D592249376A00A7FB46 /* SocketModel.swift */; };
 		52092D1D2221524B0035C257 /* UIView+anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D1C2221524B0035C257 /* UIView+anchors.swift */; };
 		52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */; };
 		52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2022216E040035C257 /* InvoiceViewController.swift */; };
@@ -110,6 +113,9 @@
 /* Begin PBXFileReference section */
 		520337E6222AC92E004B4103 /* DocotorSpecializeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocotorSpecializeCell.swift; sourceTree = "<group>"; };
 		520337E8222ACA9E004B4103 /* UserInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationVC.swift; sourceTree = "<group>"; };
+		5203B0DC224A318C002B4B44 /* DoctorListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorListModel.swift; sourceTree = "<group>"; };
+		52085D572249372500A7FB46 /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
+		52085D592249376A00A7FB46 /* SocketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketModel.swift; sourceTree = "<group>"; };
 		52092D1C2221524B0035C257 /* UIView+anchors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+anchors.swift"; sourceTree = "<group>"; };
 		52092D1E2221634C0035C257 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		52092D2022216E040035C257 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +234,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52085D562249371600A7FB46 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				52085D572249372500A7FB46 /* SocketManager.swift */,
+				52085D592249376A00A7FB46 /* SocketModel.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
 		52162CCC2224EDAD001F054E /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +503,7 @@
 				52092D1C2221524B0035C257 /* UIView+anchors.swift */,
 				52A5B7E622224F6500AAE3D3 /* Utility.swift */,
 				52D59691223F841C0071BE52 /* UserDefaults.swift */,
+				52085D562249371600A7FB46 /* Socket */,
 				526C568722363D1D003F2C66 /* Utility */,
 				52C07C84222254A9003D12BD /* SupportingFiles */,
 				528DA57E221D9B0C00140CFF /* AppDelegate */,
@@ -525,6 +541,7 @@
 				526E089A2237D5F300FECD70 /* ProfileModel.swift */,
 				526E089C2237D63000FECD70 /* ModelLogin.swift */,
 				52D59695223FADBD0071BE52 /* PatientModel.swift */,
+				5203B0DC224A318C002B4B44 /* DoctorListModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -885,6 +902,7 @@
 				52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */,
 				524D8EB62237962100B7AEAB /* RescheduleSlotsCell.swift in Sources */,
 				524D8EC72237977E00B7AEAB /* NotiListCell.swift in Sources */,
+				52085D5A2249376A00A7FB46 /* SocketModel.swift in Sources */,
 				526E08952237D58700FECD70 /* NotificationModel.swift in Sources */,
 				526E08992237D5D800FECD70 /* PaymentHistoryModel.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
@@ -893,6 +911,7 @@
 				524D8ECA223797BF00B7AEAB /* ProfileCell.swift in Sources */,
 				524D8EB42237960200B7AEAB /* AppointmentDetailCell.swift in Sources */,
 				52B1E019222AF2150080243A /* ReasonVC.swift in Sources */,
+				52085D582249372500A7FB46 /* SocketManager.swift in Sources */,
 				526E089D2237D63000FECD70 /* ModelLogin.swift in Sources */,
 				52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */,
 				524D8ED422379BE600B7AEAB /* PaymentGateWayVC.swift in Sources */,
@@ -914,6 +933,7 @@
 				528DA575221D99B700140CFF /* DoctorSpecializationViewController.swift in Sources */,
 				524D8EAD2237957100B7AEAB /* ReasonImageCell.swift in Sources */,
 				528DA569221D983900140CFF /* DoctorListViewController.swift in Sources */,
+				5203B0DD224A318C002B4B44 /* DoctorListModel.swift in Sources */,
 				520337E7222AC92E004B4103 /* DocotorSpecializeCell.swift in Sources */,
 				526C568622363828003F2C66 /* RecordBookVC.swift in Sources */,
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,

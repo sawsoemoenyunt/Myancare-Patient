@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class WalletVC: UIViewController {
+class WalletVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var walletbalance = 0
+    var paymentHistories = [PaymentHistoryModel]()
     
     let coinlabel: UILabel = {
         let lbl = UILabel()
@@ -20,6 +23,8 @@ class WalletVC: UIViewController {
         lbl.font = UIFont.MyanCareFont.title
         lbl.textColor = UIColor.black
         lbl.textAlignment = .center
+        lbl.minimumScaleFactor = 10/UIFont.labelFontSize
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
@@ -54,6 +59,7 @@ class WalletVC: UIViewController {
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
         cv.allowsMultipleSelection = true
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
         return cv
     }()
     
@@ -63,7 +69,7 @@ class WalletVC: UIViewController {
     
     let headerLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Purchase Histories"
+        lbl.text = "Transaction History"
         lbl.numberOfLines = 0
         lbl.font = UIFont.mmFontBold(ofSize: 20)
         lbl.textColor = UIColor.MyanCareColor.gray
@@ -81,7 +87,7 @@ class WalletVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Wallet Screen"
+        self.title = "Wallet"
         view.backgroundColor = .white
         collectionView.register(WalletCell.self, forCellWithReuseIdentifier: cellID)
         
@@ -90,8 +96,11 @@ class WalletVC: UIViewController {
     }
     
     func setupData(){
-        walletbalance = UserDefaults.standard.getUserData().object(forKey: "wallet_balance") as! Int
+        if let wBalance = UserDefaults.standard.getUserData().object(forKey: "wallet_balance") as? Int{
+            walletbalance = wBalance
+        }
         setupAttributeString()
+        getTransactions()
     }
     
     func setupViews(){
@@ -108,7 +117,7 @@ class WalletVC: UIViewController {
     }
     
     func setupAttributeString(){
-        let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 32)]
+        let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 42)]
         let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
         
         let coinAmount = NSMutableAttributedString(string: "\(walletbalance)", attributes: yourAttributes)
@@ -124,22 +133,17 @@ class WalletVC: UIViewController {
 
 extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 18
+        return paymentHistories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! WalletCell
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MMM.yyyy"
-        let result = formatter.string(from: date)
-        cell.dateLabel.text = result
-        cell.noteLabel.text = indexPath.row%3 == 0 ? "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..." : "Transaction note is here..."
-        let randomcolor = indexPath.row%4 == 0 ? UIColor.red : UIColor.black
-        cell.dateLabel.textColor = randomcolor
-        cell.noteLabel.textColor = randomcolor
-        cell.circleView.layer.borderColor = randomcolor.cgColor
-        cell.verticallineView.backgroundColor = randomcolor
+        cell.transactionData = paymentHistories[indexPath.row]
+        
+        if indexPath.row > paymentHistories.count - 1{
+            getTransactions()
+        }
+        
         return cell
     }
     
@@ -148,5 +152,51 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
 }
 
+extension WalletVC{
+    func getTransactions(){
+        
+        startAnimating()
+        
+        let skip  = paymentHistories.count != 0 ? paymentHistories.count : 0
+        let url = EndPoints.get_transactions(skip, 20).path // skip, limit
+        
+        if let token = UserDefaults.standard.getToken(){
+            let heads = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY"]
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                print("Response raw : \(response)")
+                
+                switch response.result{
+                case .success:
+                    print("success getting trnasaction history from server...")
+                    
+                    let responseStatus = response.response?.statusCode
+                    
+                    if responseStatus == 400{
+                        print("Transaction record not found!")
+                        
+                    } else if responseStatus == 200{
+                        if let responseDataArray = response.result.value as? NSArray{
+                            for responseData in responseDataArray{
+                                if let resData = responseData as? [String:Any]{
+                                    let paymentHistory = PaymentHistoryModel()
+                                    paymentHistory.updateUsingDictionary(resData)
+                                    
+                                    self.paymentHistories.append(paymentHistory)
+                                }
+                            }
+                            self.collectionView.reloadData()
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("Faild to get transaction history from server...")
+                    print("\(error)")
+                }
+            }
+            self.stopAnimating()
+        }
+    }
+}
 
 

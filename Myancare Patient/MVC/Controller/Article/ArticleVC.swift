@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class ArticleVC: UIViewController {
     
     let cellIDCategory = "cellIDCategory"
     let cellID = "cellID"
+    var articles = [ArticleModel]()
     
     lazy var categoryListView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -99,4 +101,33 @@ extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         return cellSize
     }
     
+}
+
+extension ArticleVC{
+    func loadArticles(){
+        let skip = ""
+        let liimit = ""
+        let url = ""
+        let params = ["":""]
+        let heads = ["":""]
+        Alamofire.request(url, method: .get, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                print("success")
+                if let responeData = response.result.value as? NSArray{
+                    for articleData in responeData{
+                        if let articleJson = articleData as? [String:Any]{
+                            let article = ArticleModel()
+                            article.updateArticleModel(articleJson)
+                            
+                            self.articles.append(article)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
 }

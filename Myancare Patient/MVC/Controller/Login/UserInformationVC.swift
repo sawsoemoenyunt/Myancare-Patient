@@ -105,14 +105,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     @objc func confrimBtnClick(){
         if validateForm() {
 //            uploadUserDataToServer()
-            self.imageUpload { (result) in
-                if result{
-                    self.uploadUserDataToServer()
-                } else {
-                    self.showAlert(title: "Failed to signup!", message: "Please try again.")
-                }
-                return
-            }
+            getImageUploadLinkFromServer()
         } else {
             print("validate form failed!")
             showAlert(title: "Information required!", message: "Please fill all form with correct format!")
@@ -141,6 +134,12 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         super.viewDidLoad()
         
         setupViews()
+        let newBackButton = UIBarButtonItem(title: "<Back", style: .plain, target: self, action: #selector(handleBackBtn))
+        self.navigationItem.leftBarButtonItem = newBackButton
+    }
+    
+    @objc func handleBackBtn(){
+        UtilityClass.changeRootViewController(with: UINavigationController.init(rootViewController: LoginViewController()))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -252,52 +251,70 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         self.present(alert, animated: true, completion: nil)
     }
     
-    func imageUpload(_ processResult: @escaping (Bool) -> ()){
+    func getImageUploadLinkFromServer(){
+        let url = EndPoints.imagesProfile.path
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus ?? 0)")
+                
+                if responseStatus == 400{
+                    print("Failed to get image upload link")
+                    self.showAlert(title: "Failed to signup!", message: "Please try again.")
+                    
+                } else if responseStatus == 200{
+                    if let result = response.result.value as? NSDictionary{
+                        if let key = result.object(forKey: "key") as? String{
+                            self.imageKey = key
+                        }
+                        if let url = result.object(forKey: "url") as? String{
+                            self.imageUrl = url
+                            print("Image url return from server: \(url)")
+                        }
+                        
+                        if self.imageUrl != "" && self.imageKey != ""{
+                            self.imageUpload(self.imageUrl, processResult: { (res) in
+                                if res{
+                                    print("uploading user data to server...")
+                                    self.uploadUserDataToServer()
+                                } else {
+                                    print("image upload failed...")
+                                    self.showAlert(title: "Failed to signup!", message: "Please try again.")
+                                }
+                            })
+                        } else {
+                            self.showAlert(title: "Failed to signup!", message: "Please try again.")
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("\(error)")
+                self.showAlert(title: "Failed to signup!", message: "Please try again.")
+            }
+        }
+    }
+    
+    func imageUpload(_ imageLink:String, processResult: @escaping (Bool) -> ()){
         startAnimating()
-        let url = EndPoints.imagesProfile.path /* your API url */
+        let url = URL(string: imageLink)!
         
         let headers: HTTPHeaders = [
             /* "Authorization": "your_access_token",  in case you need authorization header */
-            "Content-type": "multipart/form-data"
+//            "Content-type": "multipart/form-data"
+            "Content-type": "image/jpg"
         ]
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             if let data = self.profileImage?.jpegData(compressionQuality: 1){
                 multipartFormData.append(data, withName: "userimage\(self.phoneID)")
             }
-            
-        }, usingThreshold: UInt64.init(), to: url, method: .get, headers: headers) { (result) in
+
+        }, usingThreshold: UInt64.init(), to: url, method: .put, headers: headers) { (result) in
             switch result{
-            case .success(let upload, _, _):
-                upload.responseJSON { response in
-                    print("Succesfully uploaded user profile image")
-                    if let err = response.error{
-                        //error
-                        print("Response error result: \(err.localizedDescription)")
-                        processResult(false)
-                        return
-                    }
-                    //complete
-                    let responseStatus = response.response?.statusCode
-                    print("Response status: \(responseStatus ?? 0)")
-                    
-                    if responseStatus == 400{
-                        print("failed to upload image")
-                        processResult(false)
-                        
-                    } else if responseStatus == 200{
-                        if let result = response.result.value as? NSDictionary{
-                            if let key = result.object(forKey: "key") as? String{
-                                self.imageKey = key
-                            }
-                            if let url = result.object(forKey: "url") as? String{
-                                self.imageUrl = url
-                                print("Image url return from server: \(url)")
-                            }
-                            processResult(true)
-                        }
-                    }
-                }
+            case .success:
+                print("Success upload")
+                processResult(true)
             case .failure(let error):
                 print("Error in upload: \(error.localizedDescription)")
                 //error
@@ -323,15 +340,18 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "device_tokens": "",
             "country_code": self.countryCode,
             "facebook_id": self.facebookID,
-            "avatar": "",
-            "image_url": self.imageUrl,
+            "avatar": self.imageUrl,
             "device_os": "iOS",
             "user_device_info": ""
         ]
         
+        print("Requested params : \(params)")
+        
+//        let header: HTTPHeaders = ["Content-Type": "application/json"]
+        
         let url = EndPoints.patientCreate.path
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
-            
+            print("User register response raw : \(response)")
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
@@ -348,10 +368,14 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                                 print(messageArr)
                             }
                         }
+                        
+                        if let messageString = responseData.object(forKey: "message") as? NSString{
+                            print(messageString)
+                        }
                     }
                     self.showAlert(title: "Failed to register", message: "Please try again!\nDid you enter the correct information?")
                     
-                } else if responseStatus == 201{
+                } else if responseStatus == 201 || responseStatus == 200{
                     //apply login process here
                     print("Account created!")
                     if let responseData = response.result.value as? NSDictionary{
@@ -387,6 +411,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                     }
                 }
             case .failure(let error):
+                print("failed to upload user data")
                 print(error)
             }
             self.stopAnimating()

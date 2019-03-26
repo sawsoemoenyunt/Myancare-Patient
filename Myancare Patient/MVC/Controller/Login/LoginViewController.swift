@@ -173,6 +173,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
                             userInfoVC.phoneID = id
                             userInfoVC.countryCode = self.countryCode
                             userInfoVC.facebookID = self.facebookID
+                            
                             self.navigationController?.pushViewController(userInfoVC, animated: true)
                         }
                     }
@@ -200,7 +201,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
                                                      "_id":user._id!,
                                                      "createdAt":user.createdAt!,
                                                      "gender":user.gender!,
-                                                     "dob":user.gender!,
+                                                     "dob":user.dob!,
                                                      "email":user.email!,
                                                      "mobile":user.mobile!,
                                                      "blood_type":user.bloodType!,

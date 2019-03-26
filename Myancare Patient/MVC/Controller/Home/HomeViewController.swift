@@ -47,6 +47,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupViews()
+        
+        ///MARK : CHANGE LATER
+        UserDefaults.standard.setToken(value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNTkyNzI2fQ.MEmQGBBsLFZfLrnqLiCWMa-O2CacRGjME1PCd6f4fAY")
+        
+        if let token = UserDefaults.standard.getToken(){
+            print("Login token : \(token)")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

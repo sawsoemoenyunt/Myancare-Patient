@@ -10,12 +10,87 @@ import UIKit
 
 class WalletCell: UICollectionViewCell {
     
+    var transactionData: PaymentHistoryModel?{
+        didSet{
+            if let data = transactionData{
+                
+                dateLabel.text = data.updatedAt
+                
+                switch data.remarks{
+                case "Onhold":
+
+                    let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
+                    let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
+                    let remark = NSMutableAttributedString(string: "Consultation with \(data.doctorName!)", attributes: yourAttributes)
+                    let coin = NSMutableAttributedString(string: "\n- Coin \(data.coin!)", attributes: yourOtherAttributes)
+                    
+                    let combination = NSMutableAttributedString()
+                    combination.append(remark)
+                    combination.append(coin)
+                    noteLabel.attributedText = combination
+                    circleView.layer.borderColor = UIColor.red.cgColor
+                    
+                    break
+                    
+                case "Refund":
+                    
+                    let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
+                    let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.MyanCareColor.green, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
+                    let remark = NSMutableAttributedString(string: "Refund", attributes: yourAttributes)
+                    let coin = NSMutableAttributedString(string: "\n+ Coin \(data.coin!)", attributes: yourOtherAttributes)
+                    
+                    let combination = NSMutableAttributedString()
+                    combination.append(remark)
+                    combination.append(coin)
+                    noteLabel.attributedText = combination
+                    circleView.layer.borderColor = UIColor.MyanCareColor.green.cgColor
+                    
+                    break
+                    
+                case "Wallet Recharge":
+                    
+                    var statusColor = UIColor.red
+                    if data.manual_payment_status == "approve_by_admin"{
+                        statusColor = UIColor.MyanCareColor.green
+                    }
+                    
+                    let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
+                    let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.MyanCareColor.green, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
+                    let yourOtherAttributes2 = [NSAttributedString.Key.foregroundColor: statusColor, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
+                    let remark = NSMutableAttributedString(string: "Top up wallet", attributes: yourAttributes)
+                    let coin = NSMutableAttributedString(string: "\n+ Coin \(data.coin!)", attributes: yourOtherAttributes)
+                    let status = NSMutableAttributedString(string: "\nStatus : \(data.manual_payment_status!)", attributes: yourOtherAttributes2)
+                    
+                    let combination = NSMutableAttributedString()
+                    combination.append(remark)
+                    combination.append(coin)
+                    combination.append(status)
+                    noteLabel.attributedText = combination
+                    
+                    circleView.layer.borderColor = UIColor.MyanCareColor.green.cgColor
+                    
+                    break
+                    
+                default:
+                    break
+                }
+                
+                //                let date = Date()
+                //                let formatter = DateFormatter()
+                //                formatter.dateFormat = "dd.MMM.yyyy"
+                //                let result = formatter.string(from: data.updatedAt)
+                
+                
+            }
+        }
+    }
+    
     let dateLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "dd-MMM-yy"
         lbl.numberOfLines = 1
         lbl.font = UIFont.mmFontRegular(ofSize: 12)
-        lbl.textColor = UIColor.black
+        lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
     }()
     
