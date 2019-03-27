@@ -9,16 +9,17 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import Localize_Swift
 
 class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
     let cellID_profile = "cellID_profile"
     let buttonList:[MenuButton] = [MenuButton(title: "Username", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Phone Call Test", icon: #imageLiteral(resourceName: "icons8-geography")),
-                                   MenuButton(title: "Video Call Test", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
+                                   MenuButton(title: "Change Language", icon: #imageLiteral(resourceName: "icons8-geography")),
+                                   MenuButton(title: "Security", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
                                    MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
-                                   MenuButton(title: "Invite your friend", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
+                                   MenuButton(title: "Invite your Friend", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
                                    MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-ask_question_filled")),
                                    MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about"))]
     
@@ -92,13 +93,47 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
 extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
+    func showLanguagePicker(){
+        let actionSheet = UIAlertController(title: "Change Language", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let mmBtn = UIAlertAction(title: "Myanmar", style: .default) { (action) in
+            Localize.setCurrentLanguage("my")
+            self.collectionView.reloadData()
+        }
+        let enBtn = UIAlertAction(title: "English", style: .default) { (action) in
+            Localize.setCurrentLanguage("en")
+            self.collectionView.reloadData()
+        }
+        
+        actionSheet.addAction(mmBtn)
+        actionSheet.addAction(enBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
-            self.navigationController?.pushViewController(VoiceCallVC(), animated: true)
-        } else if indexPath.row == 2{
-            self.navigationController?.pushViewController(VideoCallVC(), animated: true)
-        } else if indexPath.row == 0{
+        if indexPath.row == 0{
             self.navigationController?.pushViewController(UserProfileVC(), animated: true)
+        
+        } else if indexPath.row == 1{
+            print("language picker action sheet appear...")
+            self.showLanguagePicker()
+            
+        } else if indexPath.row == 4{
+            if let name = NSURL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8") {
+                let objectsToShare = [name]
+                let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+                
+                self.present(activityVC, animated: true, completion: nil)
+            }
+            else
+            {
+                print("sharing not available...")
+            }
+            
+        }else if indexPath.row == 6{
+            self.navigationController?.pushViewController(AboutusVC(), animated: true)
         }
     }
     
@@ -138,7 +173,7 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
         } else {
             let morecell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MoreCollectionViewCell
             morecell.icon.image = buttonList[indexPath.row].icon
-            morecell.label.text = buttonList[indexPath.row].title
+            morecell.label.text = buttonList[indexPath.row].title.localized()
             morecell.swLangauge.isHidden = true
             
             cell = morecell

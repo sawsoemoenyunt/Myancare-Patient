@@ -41,7 +41,6 @@ class UserProfileVC: UIViewController {
         
         if let user = UserDefaults.standard.getUserData() as? [String:Any]{
             userData.updateModel(usingDictionary: user)
-            print(userData)
             collectionView.reloadData()
         }
     }
@@ -85,9 +84,9 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.dobTextField.text = userData.dob!
         cell.emailTextField.text = userData.email!
         if userData.gender == "male" {
-            cell.maleBtn.isSelected = true
+            cell.maleBtn.backgroundColor = UIColor.MyanCareColor.orange
         } else {
-            cell.femaleBtn.isSelected = true
+            cell.femaleBtn.backgroundColor = UIColor.MyanCareColor.orange
         }
         cell.heightTextField.text = "\(userData.height!)"
         cell.weightTextField.text = "\(userData.weight!)"

@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        window?.rootViewController = UINavigationController.init(rootViewController: ChatListVC())
+        window?.rootViewController = UINavigationController.init(rootViewController: MoreViewController())
         
         return true
     }
