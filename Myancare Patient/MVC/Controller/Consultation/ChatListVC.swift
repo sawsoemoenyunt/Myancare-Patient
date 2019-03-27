@@ -6,4 +6,127 @@
 //  Copyright © 2019 Saw Soe Moe Nyunt. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class ChatListVC: UIViewController {
+    
+    let cellID = "cellID"
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = .white
+        cv.showsVerticalScrollIndicator = false
+        cv.allowsMultipleSelection = true
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        return cv
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+    }
+    
+    func setupViews(){
+        self.title = "Chats"
+        view.backgroundColor = UIColor.white
+        
+        view.addSubview(collectionView)
+        collectionView.fillSuperview()
+        
+        collectionView.register(ChatListCell.self, forCellWithReuseIdentifier: cellID)
+    }
+}
+
+extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 17
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatListCell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 89)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let chatRoom = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
+        self.navigationController?.pushViewController(chatRoom, animated: true)
+    }
+}
+
+class ChatListCell: UICollectionViewCell {
+    
+    let profileImage: UIImageView = {
+        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+        img.image = UIImage.init(named: "pablo-profile")
+        img.contentMode = .scaleAspectFill
+        img.layer.cornerRadius = 32
+        img.clipsToBounds = true
+        return img
+    }()
+    
+    let nameLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Doctor Name"
+        lbl.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        return lbl
+    }()
+    
+    let specializeLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "This is last message"
+        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.textColor = UIColor.gray
+        return lbl
+    }()
+    
+    let addressLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "5 min ago"
+        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.textColor = UIColor.gray
+        lbl.textAlignment = .right
+        return lbl
+    }()
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.gray
+        return view
+    }()
+    
+    func setupViews(){
+        
+        self.backgroundColor = .white
+        
+        addSubview(profileImage)
+        addSubview(nameLabel)
+        addSubview(specializeLabel)
+        addSubview(addressLabel)
+        addSubview(lineView)
+        
+        
+        profileImage.anchor(nil, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 64, heightConstant: 64)
+        profileImage.anchorCenterYToSuperview()
+        nameLabel.anchor(profileImage.topAnchor, left: profileImage.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 0, leftConstant: 24, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        specializeLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addressLabel.anchor(specializeLabel.bottomAnchor, left: specializeLabel.leftAnchor, bottom: nil, right: specializeLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        lineView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

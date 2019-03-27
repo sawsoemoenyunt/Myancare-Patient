@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellId"
+    var cellCount = 10
     
     let reminderView: UIView = {
         let view = UIView()
@@ -37,10 +38,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         inputTextField.placeholder = "Enter messages.."
         inputTextField.delegate = self
         inputTextField.returnKeyType = .send
-        inputTextField.layer.cornerRadius = 25
-        inputTextField.layer.borderColor = UIColor.lightGray.cgColor
-        inputTextField.layer.borderWidth = 1
-        inputTextField.layer.masksToBounds = true
+        inputTextField.borderStyle = .roundedRect
         return inputTextField
     }()
     
@@ -61,7 +59,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         super.viewDidLoad()
         
         self.title = "Dr.Kaung Mon"
-        IQKeyboardManager.shared.disabledToolbarClasses.append(ChatRecordVC.self)
+        view.backgroundColor = UIColor.white
         
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 78, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
@@ -72,7 +70,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return cellCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,13 +129,16 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         
         containerView.addSubview(inputTextField)
         containerView.addSubview(sendButton)
-        inputTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 2, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
-        sendButton.anchor(inputTextField.topAnchor, left: nil, bottom: inputTextField.bottomAnchor, right: inputTextField.rightAnchor, topConstant: 5, leftConstant: 0, bottomConstant: 5, rightConstant: 0, widthConstant: 40, heightConstant: 40)
+        inputTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 2, leftConstant: 20, bottomConstant: 0, rightConstant: 70, widthConstant: 0, heightConstant: 50)
+        sendButton.anchor(inputTextField.topAnchor, left: nil, bottom: inputTextField.bottomAnchor, right: containerView.rightAnchor, topConstant: 5, leftConstant: 0, bottomConstant: 5, rightConstant: 20, widthConstant: 40, heightConstant: 40)
     }
     
     @objc func handleSend() {
         self.inputTextField.text = nil
-        view.endEditing(true)
+        self.cellCount = cellCount + 1
+        self.collectionView.reloadData()
+        self.collectionView.scrollToItem(at: IndexPath(row: cellCount-1, section: 0), at: .top, animated: true)
+//        view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

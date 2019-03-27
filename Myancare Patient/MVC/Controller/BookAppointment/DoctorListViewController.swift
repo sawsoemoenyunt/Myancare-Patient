@@ -76,6 +76,8 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
             collectionView.backgroundView = notDataLabel
+        }else{
+            collectionView.backgroundView = nil
         }
         return doctors.count
     }

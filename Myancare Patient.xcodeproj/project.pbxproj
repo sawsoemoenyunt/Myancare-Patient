@@ -294,7 +294,6 @@
 				528DA56E221D98E400140CFF /* MenuCell.swift */,
 				528DA572221D992D00140CFF /* MenuCategoryCell.swift */,
 				528DA570221D990A00140CFF /* MenuOnlineCell.swift */,
-				528DA578221D9A5400140CFF /* DoctorListCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -319,6 +318,7 @@
 		52162CD92224EE80001F054E /* BookAppointment */ = {
 			isa = PBXGroup;
 			children = (
+				528DA578221D9A5400140CFF /* DoctorListCell.swift */,
 				528DA57A221D9ABB00140CFF /* DoctorDetailProfileCell.swift */,
 				528DA57C221D9ACE00140CFF /* DoctorDetailAdditionCell.swift */,
 				520337E6222AC92E004B4103 /* DocotorSpecializeCell.swift */,
