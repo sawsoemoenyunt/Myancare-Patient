@@ -15,6 +15,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     let collectionViewCellID_Menu = "collectionViewCellID_Menu"
     let collectionViewCellID_Category = "collectionViewCellID_Category"
     let collectionViewCellID_Online = "collectionViewCellID_Online"
+    let collectionViewCellID_Today = "collectionViewCellID_Today"
 //    var doctorArr = [DoctorModel]()
 //    var recommandDoctorArr = [DoctorModel]()
     var notiCount = 0
@@ -40,6 +41,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.collectionView?.register(MenuCell.self, forCellWithReuseIdentifier: collectionViewCellID_Menu)
         self.collectionView?.register(MenuCategoryCell.self, forCellWithReuseIdentifier: collectionViewCellID_Category)
         self.collectionView?.register(MenuOnlineCell.self, forCellWithReuseIdentifier: collectionViewCellID_Online)
+        self.collectionView?.register(MenuTodayCell.self, forCellWithReuseIdentifier: collectionViewCellID_Today)
         
         updateDeviceToken()
     }
@@ -63,15 +65,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func setupNavBarItems(){
-        let questionButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-ask_question_filled"), style: .plain, target: self, action: #selector(messagesButtonPressed))
+        let chatButton = UIBarButtonItem(image: UIImage.init(named: "icons8-sms"), style: .plain, target: self, action: #selector(messagesButtonPressed))
         let notiButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-appointment_reminders"), style: .plain, target: self, action: #selector(self.notiButtonPressed))
 //        let spacebutton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        self.navigationItem.rightBarButtonItems = [questionButton, notiButton]
+        self.navigationItem.rightBarButtonItems = [chatButton, notiButton]
     }
     
     // MARK: - Navigation Message Button Action
     @objc func messagesButtonPressed () {
-        UtilityClass.changeRootViewController(with: StartScreenViewController())
+        self.navigationController?.pushViewController(ChatListVC(), animated: true)
     }
     
     // MARK: - Navigation Message Button Action
@@ -94,7 +96,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,10 +109,9 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             cell = menuCell
             break
         case 1:
-            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Category, for: indexPath) as! MenuCategoryCell
-            categoryCell.homeViewController = self
-            cell = categoryCell
-            break
+            let todayCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Today, for: indexPath) as! MenuTodayCell
+            todayCell.homeViewController = self
+            cell = todayCell
         case 2:
             let onlinecell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Online, for: indexPath) as! MenuOnlineCell
             onlinecell.labe1.text = "Online".localized()
@@ -125,6 +126,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             mydocCell.docType = DoctorType.favourite
             cell = mydocCell
             break
+        case 4:
+            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Category, for: indexPath) as! MenuCategoryCell
+            categoryCell.homeViewController = self
+            cell = categoryCell
+            break
         default:
             break
         }
@@ -134,8 +140,8 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height:CGFloat = 180.0
-        if indexPath.row > 1 {
-            height = 165.0
+        if indexPath.row == 1 {
+            height = 110
         }
         return CGSize(width: (self.collectionView?.frame.width)! - 20, height: height)
     }
