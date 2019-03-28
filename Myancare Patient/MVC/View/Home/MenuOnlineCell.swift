@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class MenuOnlineCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
     
-    var docType:DoctorType?
+    var docType:DoctorType?{
+        didSet{
+            self.collectionView.reloadData()
+        }
+    }
+    
+    var docList = [DoctorListModel]()
     
     var homeViewController: HomeViewController?
     let cellID = "cellID"
-    let buttonList:[MenuButton] = [MenuButton(title: "Dr.Apple", icon: #imageLiteral(resourceName: "pablo-profile")),
-                                   MenuButton(title: "Dr.Orange", icon: #imageLiteral(resourceName: "pablo-profile")),
-                                   MenuButton(title: "Dr.Grape", icon: #imageLiteral(resourceName: "pablo-profile")),
-                                   MenuButton(title: "Dr.Paul", icon: #imageLiteral(resourceName: "pablo-profile"))]
     
     lazy var collectionView: UICollectionView = {
         //layout of collectionview
@@ -51,7 +55,7 @@ class MenuOnlineCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
     let labe1: UILabel = {
         let lbl = UILabel()
         lbl.text = "Online".localized()
-        lbl.font = UIFont.mmFontBold(ofSize: 22)
+        lbl.font = UIFont.MyanCareFont.type1
         lbl.textColor = UIColor(red:0.18, green:0.18, blue:0.18, alpha:1) //black
         return lbl
     }()
@@ -59,7 +63,7 @@ class MenuOnlineCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
     lazy var labe2: UILabel = {
         let lbl = UILabel()
         lbl.text = "View all".localized()+" >"
-        lbl.font = UIFont.mmFontRegular(ofSize: 11)
+        lbl.font = UIFont.MyanCareFont.type6
         lbl.isUserInteractionEnabled = true
         lbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(label2Click)))
         return lbl
@@ -69,7 +73,7 @@ class MenuOnlineCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         let docVC = DoctorListViewController(collectionViewLayout: layout)
-        docVC.doctorType = docType ?? DoctorType.all
+        docVC.doctorType = docType!
         self.homeViewController?.navigationController?.pushViewController(docVC, animated: true)
     }
     
@@ -98,12 +102,21 @@ class MenuOnlineCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
 //Menu Cell Extension for collectionview
 extension MenuOnlineCell: UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return buttonList.count
+        if docList.count == 0 {
+            let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
+            notDataLabel.text = "No doctor available!"
+            notDataLabel.textColor = UIColor.MyanCareColor.darkGray
+            notDataLabel.textAlignment = .center
+            collectionView.backgroundView = notDataLabel
+        }else{
+            collectionView.backgroundView = UILabel()
+        }
+        return docList.count > 5 ? 5 : docList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:MenuOnlineButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MenuOnlineButtonCell
-        
+        cell.docData = docList[indexPath.row]
         return cell
     }
     
@@ -114,6 +127,7 @@ extension MenuOnlineCell: UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let layout = UICollectionViewFlowLayout()
         let docDetailVC = DoctorDetailVC(collectionViewLayout: layout)
+        docDetailVC.doctorID = docList[indexPath.row].id!
         self.homeViewController?.navigationController?.pushViewController(docDetailVC, animated: true)
     }
 }
@@ -121,9 +135,31 @@ extension MenuOnlineCell: UICollectionViewDataSource, UICollectionViewDelegate{
 //Cell inside menucell
 class MenuOnlineButtonCell: UICollectionViewCell {
     
+    var docData:DoctorListModel?{
+        didSet{
+            if let data = docData{
+                self.title.text = data.name!
+                self.loadImage(data.image_url!)
+            }
+        }
+    }
+    
+    func loadImage(_ urlString:String){
+        let url = URL(string: "\(urlString)")!
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.icon.image = image
+            }
+        }
+    }
+    
     let icon: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "pablo-profile")
+        img.image = UIImage(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         return img

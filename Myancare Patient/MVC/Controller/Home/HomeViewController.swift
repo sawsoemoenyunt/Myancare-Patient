@@ -9,15 +9,17 @@
 import UIKit
 import Localize_Swift
 import Alamofire
+import NVActivityIndicatorView
 
-class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
     let collectionViewCellID_Menu = "collectionViewCellID_Menu"
     let collectionViewCellID_Category = "collectionViewCellID_Category"
     let collectionViewCellID_Online = "collectionViewCellID_Online"
     let collectionViewCellID_Today = "collectionViewCellID_Today"
-//    var doctorArr = [DoctorModel]()
-//    var recommandDoctorArr = [DoctorModel]()
+    var favoriteDoctorArr = [DoctorListModel]()
+    var recommandDoctorArr = [DoctorListModel]()
+    var todayAppointmentArr = [DoctorListModel]()
     var notiCount = 0
     
     func updateDeviceToken(){
@@ -51,8 +53,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         setupViews()
         
         ///MARK : CHANGE LATER
-        UserDefaults.standard.setToken(value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNTkyNzI2fQ.MEmQGBBsLFZfLrnqLiCWMa-O2CacRGjME1PCd6f4fAY")
-        
         if let token = UserDefaults.standard.getToken(){
             print("Login token : \(token)")
         }
@@ -62,12 +62,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidAppear(true)
         self.title = "Welcome".localized()
         setupNavBarItems()
+        getDoctors(.recommand)
+        getDoctors(.favourite)
     }
     
     func setupNavBarItems(){
         let chatButton = UIBarButtonItem(image: UIImage.init(named: "icons8-sms"), style: .plain, target: self, action: #selector(messagesButtonPressed))
         let notiButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-appointment_reminders"), style: .plain, target: self, action: #selector(self.notiButtonPressed))
-//        let spacebutton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         self.navigationItem.rightBarButtonItems = [chatButton, notiButton]
     }
     
@@ -106,17 +107,21 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         case 0:
             let menuCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Menu, for: indexPath) as! MenuCell
             menuCell.homeViewController = self
+            menuCell.collectionView.reloadData()
             cell = menuCell
             break
         case 1:
             let todayCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Today, for: indexPath) as! MenuTodayCell
             todayCell.homeViewController = self
+            todayCell.viewmoreLabel.isHidden = todayAppointmentArr.count == 0 ? true : false
             cell = todayCell
         case 2:
             let onlinecell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Online, for: indexPath) as! MenuOnlineCell
             onlinecell.labe1.text = "Online".localized()
+            onlinecell.labe2.text = "View all".localized()+" >"
             onlinecell.homeViewController = self
             onlinecell.docType = DoctorType.recommand
+            onlinecell.docList = recommandDoctorArr
             cell = onlinecell
             break
         case 3:
@@ -124,6 +129,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             mydocCell.labe1.text = "Favourite".localized()
             mydocCell.homeViewController = self
             mydocCell.docType = DoctorType.favourite
+            mydocCell.docList = favoriteDoctorArr
             cell = mydocCell
             break
         case 4:
@@ -141,11 +147,85 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height:CGFloat = 180.0
         if indexPath.row == 1 {
-            height = 110
+            if todayAppointmentArr.count == 0{
+                height = 0
+            } else {
+                height = 110
+            }
         }
         return CGSize(width: (self.collectionView?.frame.width)! - 20, height: height)
     }
     
 }
 
-
+extension HomeViewController{
+    func getDoctors(_ docType:DoctorType){
+        
+//        startAnimating()
+        
+        //        let skip = doctors.count != 0 ? doctors.count : 0
+        //        let limit = 20
+        var url = EndPoints.getDoctors.path
+        
+        switch docType {
+        case .recommand:
+            url = EndPoints.getRecommandDoctors.path
+            break
+        case .favourite:
+            url = EndPoints.getFavoriteDoctors.path
+            break
+        default:
+            break
+        }
+        
+        print("Your doc request link : \(url)")
+        
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                print("Request successful!")
+                
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus ?? 0)")
+                
+                if responseStatus == 400{
+                    print("Record not found!")
+                    
+                } else if responseStatus == 200{
+                    print("Docots found!")
+                    if let responseDataArr = response.result.value as? NSArray{
+                        self.assignDocArray(docType, dataArr: responseDataArr)
+                    }
+                }
+                
+            case .failure(let error):
+                print("Error occur on request")
+                print("\(error)")
+            }
+//            self.stopAnimating()
+        }
+    }
+    
+    func assignDocArray(_ type:DoctorType, dataArr:NSArray){
+        var docArr = [DoctorListModel]()
+        
+        for responseData in dataArr{
+            if let resData = responseData as? [String:Any]{
+                let docListModel = DoctorListModel()
+                docListModel.updateDoctorListModel(resData)
+                docArr.append(docListModel)
+            }
+        }
+        
+        if type == .favourite{
+            self.favoriteDoctorArr = docArr
+        } else{
+            self.recommandDoctorArr = docArr
+        }
+        
+        self.collectionView.reloadData()
+    }
+}

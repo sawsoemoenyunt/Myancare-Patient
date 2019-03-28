@@ -15,6 +15,7 @@ enum DoctorType{
     case favourite
     case all
     case specialize
+    case filter
 }
 
 class DoctorListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
@@ -23,6 +24,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     var isPaging = false
     var doctorType = DoctorType.all
     var specializeID = ""
+    var specializeName = ""
     var doctors = [DoctorListModel]()
     
     lazy var refreshControl1 : UIRefreshControl = {
@@ -32,8 +34,9 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     }()
     
     @objc func refreshDoctorData() {
+        docSearch.isSearch = false
         doctors.removeAll()
-        self.getAllDoctors()
+        self.getAllDoctors(doctorType)
         self.refreshControl1.endRefreshing()
     }
     
@@ -43,7 +46,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         self.title = "Doctors"
         self.view.backgroundColor = .white
         let searchButton = UIBarButtonItem(image: UIImage.init(named: "icons8-search"), style: .plain, target: self, action: #selector(searchButtonClick))
-        self.navigationItem.rightBarButtonItems = [searchButton]
+        self.navigationItem.rightBarButtonItems = []
         
         //searchController
         //        let search = UISearchController(searchResultsController: nil)
@@ -56,9 +59,25 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         collectionView?.backgroundColor = .white
         collectionView?.refreshControl = refreshControl1
         
-        //load doctors
-        self.getAllDoctors()
+        //change title
+        switch doctorType {
+        case .recommand:
+            self.title = "Online"
+            break
+        case .favourite:
+            self.title = "Favourite"
+            break
+        case .specialize:
+            self.title = "\(specializeName)"
+            break
+        default:
+            self.title = "General Practitioners"
+            self.navigationItem.rightBarButtonItems = [searchButton]
+            break
+        }
         
+        //load doctors
+        self.getAllDoctors(doctorType)
     }
     
     @objc func searchButtonClick(){
@@ -67,6 +86,13 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        if docSearch.isSearch{
+            //load data with search query
+            print("Searched")
+            doctors.removeAll()
+            getAllDoctors(.filter)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -105,13 +131,33 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
 }
 
 extension DoctorListViewController{
-    func getAllDoctors(){
+    func getAllDoctors(_ docType:DoctorType){
         
         startAnimating()
         
 //        let skip = doctors.count != 0 ? doctors.count : 0
 //        let limit = 20
-        let url = EndPoints.getDoctors.path
+        var url = EndPoints.getDoctors.path
+        
+        switch docType {
+        case .recommand:
+            url = EndPoints.getRecommandDoctors.path
+            break
+        case .favourite:
+            url = EndPoints.getFavoriteDoctors.path
+            break
+        case .specialize:
+            url = EndPoints.getDocotrBySpecialiation(specializeID).path
+            break
+        case .filter:
+            url = EndPoints.getDoctorFilter(docSearch.name).path
+        default:
+            url = EndPoints.getDoctors.path
+            break
+        }
+        
+        print("Your doc request link : \(url)")
+        
         let heads = ["Authorization":"\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in

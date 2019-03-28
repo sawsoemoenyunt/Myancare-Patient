@@ -17,8 +17,8 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     let cellID = "cellID"
     var profileImage = UIImage(named: "pablo-profile")
     
-    var countryCode = ""
-    var phoneID = ""
+    var countryCode = "95"
+    var phoneID = "9422474028"
     var name = ""
     var dob = ""
     var email = ""
@@ -104,8 +104,8 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
      */
     @objc func confrimBtnClick(){
         if validateForm() {
-//            uploadUserDataToServer()
-            getImageUploadLinkFromServer()
+            uploadUserDataToServer()
+            
         } else {
             print("validate form failed!")
             showAlert(title: "Information required!", message: "Please fill all form with correct format!")
@@ -274,54 +274,40 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                         }
                         
                         if self.imageUrl != "" && self.imageKey != ""{
-                            self.imageUpload(self.imageUrl, processResult: { (res) in
-                                if res{
-                                    print("uploading user data to server...")
-                                    self.uploadUserDataToServer()
-                                } else {
-                                    print("image upload failed...")
-                                    self.showAlert(title: "Failed to signup!", message: "Please try again.")
-                                }
-                            })
+                            self.uploadImageToS3(self.imageUrl)
+                            
                         } else {
-                            self.showAlert(title: "Failed to signup!", message: "Please try again.")
+                            print("image url was nil")
                         }
                     }
                 }
             case .failure(let error):
                 print("\(error)")
-                self.showAlert(title: "Failed to signup!", message: "Please try again.")
             }
         }
     }
     
-    func imageUpload(_ imageLink:String, processResult: @escaping (Bool) -> ()){
-        startAnimating()
-        let url = URL(string: imageLink)!
-        
-        let headers: HTTPHeaders = [
-            /* "Authorization": "your_access_token",  in case you need authorization header */
-//            "Content-type": "multipart/form-data"
-            "Content-type": "image/jpg"
-        ]
-        
-        Alamofire.upload(multipartFormData: { (multipartFormData) in
-            if let data = self.profileImage?.jpegData(compressionQuality: 1){
-                multipartFormData.append(data, withName: "userimage\(self.phoneID)")
-            }
-
-        }, usingThreshold: UInt64.init(), to: url, method: .put, headers: headers) { (result) in
-            switch result{
-            case .success:
-                print("Success upload")
-                processResult(true)
-            case .failure(let error):
-                print("Error in upload: \(error.localizedDescription)")
-                //error
-                processResult(false)
-            }
-            self.stopAnimating()
+    func uploadImageToS3(_ urlString:String){
+        var url = urlString
+        url = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        guard let imageData = profileImage?.jpegData(compressionQuality: 1) else {
+            return
         }
+        
+        let heads = ["Content-Type":"image/jpeg"]
+        
+        Alamofire.upload(imageData, to: URL(string: url)!, method: .put, headers: heads).responseJSON { (response) in
+            print("RESPONSE RAW S3 => \(response)")
+            
+            switch response.result{
+            case .success:
+                print("Success image upload")
+            case .failure(let error):
+                print("error image upload")
+                print("\(error)")
+            }
+        }
+        
     }
     
     func uploadUserDataToServer(){
@@ -458,6 +444,7 @@ extension UserInformationVC: UIImagePickerControllerDelegate, UINavigationContro
         
         if let selectedImage = selectedImageFromPicker {
             profileImage = selectedImage
+            self.getImageUploadLinkFromServer()
         }
         
         self.dismiss(animated: true) {

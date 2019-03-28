@@ -47,6 +47,7 @@ extension UIFont {
         static let type9 = UIFont.mmFontRegular(ofSize: 10)
         static let type10 = UIFont.mmFontRegular(ofSize: 25)
         static let type1unbold = UIFont.mmFontRegular(ofSize: 20)
+        static let type2unbold = UIFont.mmFontRegular(ofSize: 16)
     }
     
     class func mmFontRegular(ofSize fontSize: CGFloat) -> UIFont {

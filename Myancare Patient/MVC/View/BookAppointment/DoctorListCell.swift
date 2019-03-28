@@ -21,7 +21,7 @@ class DoctorListCell: UICollectionViewCell{
                 statusView.backgroundColor = data.online_status == true ? UIColor.MyanCareColor.green : UIColor.gray
                 
                 //load image
-//                loadImage(data.image_url!)
+                loadImage(data.image_url!)
             }
         }
     }
@@ -41,7 +41,7 @@ class DoctorListCell: UICollectionViewCell{
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
-        img.image = UIImage.init(named: "pablo-profile")
+        img.image = UIImage.init(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
         img.clipsToBounds = true
@@ -104,7 +104,7 @@ class DoctorListCell: UICollectionViewCell{
         lineView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
         
         addSubview(statusView)
-        statusView.anchor(nil, left: nil, bottom: profileImage.bottomAnchor, right: profileImage.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 14, heightConstant: 14)
+        statusView.anchor(nil, left: nil, bottom: profileImage.bottomAnchor, right: profileImage.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 4, widthConstant: 14, heightConstant: 14)
     }
     
     override init(frame: CGRect) {

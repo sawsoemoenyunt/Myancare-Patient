@@ -74,6 +74,7 @@
 		526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD4392242591D0035D757 /* ChatListCell.swift */; };
 		526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD43B224259240035D757 /* ChatRecordCell.swift */; };
 		527FAD0B224B8C9C00484DD1 /* AboutusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */; };
+		528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528BFB28224D22DC00CC8986 /* SpecializationModel.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA555221D96DA00140CFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 528DA553221D96DA00140CFF /* Main.storyboard */; };
 		528DA557221D96DC00140CFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 528DA556221D96DC00140CFF /* Assets.xcassets */; };
@@ -182,6 +183,7 @@
 		526FD43B224259240035D757 /* ChatRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordCell.swift; sourceTree = "<group>"; };
 		527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutusVC.swift; sourceTree = "<group>"; };
 		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
+		528BFB28224D22DC00CC8986 /* SpecializationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationModel.swift; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		528DA554221D96DA00140CFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 				52D59695223FADBD0071BE52 /* PatientModel.swift */,
 				5203B0DC224A318C002B4B44 /* DoctorListModel.swift */,
 				5233D535224C865400E7A2E0 /* ExchangeRateModel.swift */,
+				528BFB28224D22DC00CC8986 /* SpecializationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -930,6 +933,7 @@
 				52AE88942236197600867151 /* ShareBookVC.swift in Sources */,
 				524D8EA52237949C00B7AEAB /* ArticleDetailCell.swift in Sources */,
 				526E08932237D56A00FECD70 /* ModelDoctorFilter.swift in Sources */,
+				528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */,
 				526E088D2237D4AE00FECD70 /* AppointmentModel.swift in Sources */,
 				524D8EBD223796E700B7AEAB /* MedicalRecordCell.swift in Sources */,
 				520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */,

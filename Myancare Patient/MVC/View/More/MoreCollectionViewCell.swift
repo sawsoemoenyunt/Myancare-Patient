@@ -14,7 +14,7 @@ class MoreCollectionViewCell: UICollectionViewCell {
     let label: UILabel = {
         let lbl = UILabel()
         lbl.text = "Notifications & settings"
-        lbl.font = UIFont.MyanCareFont.type1unbold
+        lbl.font = UIFont.MyanCareFont.type2unbold
         return lbl
     }()
     

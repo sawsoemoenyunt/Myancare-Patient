@@ -18,12 +18,12 @@ class MenuCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
     var homeViewController: HomeViewController?
     
     let cellID = "cellID"
-    let buttonList:[MenuButton] = [MenuButton(title: "Wallet".localized(), icon: #imageLiteral(resourceName: "icons8-wallet").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "Appointments".localized(), icon: #imageLiteral(resourceName: "icons8-property_time").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "Medical Records".localized(), icon: #imageLiteral(resourceName: "icons8-opened_folder").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "Articles".localized(), icon: #imageLiteral(resourceName: "icons8-magazine").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "Reminder".localized(), icon: #imageLiteral(resourceName: "icons8-stopwatch").withRenderingMode(.alwaysTemplate)),
-                                   MenuButton(title: "More".localized(), icon: #imageLiteral(resourceName: "icons8-more_filled").withRenderingMode(.alwaysTemplate))]
+    let buttonList:[MenuButton] = [MenuButton(title: "Wallet", icon: #imageLiteral(resourceName: "icons8-wallet").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "Appointments", icon: #imageLiteral(resourceName: "icons8-property_time").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "Medical Records", icon: #imageLiteral(resourceName: "icons8-opened_folder").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "Articles", icon: #imageLiteral(resourceName: "icons8-magazine").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "Reminder", icon: #imageLiteral(resourceName: "icons8-stopwatch").withRenderingMode(.alwaysTemplate)),
+                                   MenuButton(title: "More", icon: #imageLiteral(resourceName: "icons8-more_filled").withRenderingMode(.alwaysTemplate))]
     
     lazy var collectionView: UICollectionView = {
         //layout of collectionview
@@ -71,7 +71,7 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:MenuButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MenuButtonCell
-        cell.title.text = buttonList[indexPath.row].title
+        cell.title.text = buttonList[indexPath.row].title.localized()
         cell.icon.image = buttonList[indexPath.row].icon
         return cell
     }

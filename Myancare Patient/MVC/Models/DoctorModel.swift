@@ -66,6 +66,12 @@ class DoctorModel
             specialization = specialization1
         }
         
+        if let specialization2 = dict["specialization"] as? NSDictionary{
+            if let specname = specialization2.object(forKey: "name") as? String{
+                specialization = specname
+            }
+        }
+        
         if let languageArray = dict["language"] as? NSArray{
             language = languageArray
         }

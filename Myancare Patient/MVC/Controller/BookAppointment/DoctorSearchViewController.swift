@@ -8,6 +8,14 @@
 
 import UIKit
 
+struct DoctorSearch {
+    var name = ""
+    var date = ""
+    var isSearch = false
+}
+
+var docSearch = DoctorSearch.init(name: "", date: "", isSearch: false)
+
 class DoctorSearchViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
@@ -146,6 +154,8 @@ class DoctorSearchViewController: UIViewController, UICollectionViewDelegateFlow
     }()
     
     @objc func confrimbuttonClick(){
+        docSearch.name = searchField.text!.lowercased().replacingOccurrences(of: " ", with: "%20")
+        docSearch.isSearch = true
         self.navigationController?.popViewController(animated: true)
         print("Search button clicked")
     }
@@ -168,23 +178,23 @@ class DoctorSearchViewController: UIViewController, UICollectionViewDelegateFlow
     
     func setupViews(){
         view.addSubview(searchField)
-        view.addSubview(specialitiesLabel)
+//        view.addSubview(specialitiesLabel)
+//        view.addSubview(collectionView)
         view.addSubview(dateLabel)
-        view.addSubview(collectionView)
         view.addSubview(calendarView)
         view.addSubview(confirmBtn)
         view.addSubview(nextBtn)
         view.addSubview(previousBtn)
         
         searchField.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 36)
-        specialitiesLabel.anchor(searchField.bottomAnchor, left: self.view.leftAnchor, bottom: nil
-            , right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        collectionView.anchor(specialitiesLabel.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 100)
-        dateLabel.anchor(collectionView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+//        specialitiesLabel.anchor(searchField.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+//        collectionView.anchor(specialitiesLabel.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 100)
+        dateLabel.anchor(searchField.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 40, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         calendarView.anchor(dateLabel.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 20, leftConstant: 30, bottomConstant: 0, rightConstant: 30, widthConstant: 0, heightConstant: 80)
         previousBtn.anchor(calendarView.topAnchor, left: nil, bottom: nil, right: calendarView.leftAnchor, topConstant: 30, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 24, heightConstant: 24)
         nextBtn.anchor(calendarView.topAnchor, left: calendarView.rightAnchor, bottom: nil, right: nil, topConstant: 30, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 24, heightConstant: 24)
         confirmBtn.anchor(nil, left: self.view.leftAnchor, bottom: self.view.bottomAnchor, right: self.view.rightAnchor, topConstant: 0, leftConstant: 38, bottomConstant: 50, rightConstant: 38, widthConstant: 0, heightConstant: 50)
+        
         
         collectionView.register(DoctorSearchSpecializationCell.self, forCellWithReuseIdentifier: cellID)
         calendarView.register(CalendarCell.self, forCellWithReuseIdentifier: cellIDCalendar)

@@ -65,9 +65,9 @@ extension MenuCategoryCell: UICollectionViewDataSource, UICollectionViewDelegate
         cell.icon.image = buttonList[indexPath.row].icon
         
         if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(red:0.98, green:0.82, blue:0.19, alpha:1) //yellow
+            cell.backgroundColor = UIColor.MyanCareColor.yellow
         } else {
-            cell.backgroundColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1) //green
+            cell.backgroundColor = UIColor.MyanCareColor.green
         }
         
         return cell

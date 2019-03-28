@@ -32,8 +32,13 @@ class UserProfileVC: UIViewController {
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func editBtnClick(){
+        self.navigationController?.pushViewController(UserInterestVC(), animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

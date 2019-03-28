@@ -7,9 +7,33 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 //specialization cell
 class SpecializationCell: UICollectionViewCell {
+    
+    var specData:SpecializationModel?{
+        didSet{
+            if let data = specData{
+                label.text = data.name!
+                loadImage(data.image!)
+            }
+        }
+    }
+    
+    func loadImage(_ urlString:String){
+        let url = URL(string: "\(urlString)")!
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.icon.image = image
+            }
+        }
+    }
     
     let backView: UIImageView = {
         let img = UIImageView()
@@ -22,6 +46,7 @@ class SpecializationCell: UICollectionViewCell {
     
     let icon: UIImageView = {
         let img = UIImageView()
+        img.image = UIImage(named: "no-image")
         img.backgroundColor = .white
         img.contentMode = .scaleAspectFit
         return img

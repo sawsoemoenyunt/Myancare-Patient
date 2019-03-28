@@ -7,22 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import NVActivityIndicatorView
 
-class DoctorSpecializeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class DoctorSpecializeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    let buttonList:[MenuButton] = [MenuButton(title: "Vegan", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Heart", icon: #imageLiteral(resourceName: "icons8-medical_heart")),
-                                   MenuButton(title: "Babay", icon: #imageLiteral(resourceName: "icons8-baby")),
-                                   MenuButton(title: "Medicine", icon: #imageLiteral(resourceName: "icons8-supplement_bottle")),
-                                   MenuButton(title: "Sp5", icon: UIImage()),
-                                   MenuButton(title: "Sp6", icon: UIImage()),
-                                   MenuButton(title: "Vegan", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Heart", icon: #imageLiteral(resourceName: "icons8-medical_heart")),
-                                   MenuButton(title: "Babay", icon: #imageLiteral(resourceName: "icons8-baby")),
-                                   MenuButton(title: "Medicine", icon: #imageLiteral(resourceName: "icons8-supplement_bottle")),
-                                   MenuButton(title: "Sp5", icon: UIImage()),
-                                   MenuButton(title: "Sp6", icon: UIImage())]
+    var specList = [SpecializationModel]()
     
     
     override func viewDidLoad() {
@@ -39,15 +31,17 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
         collectionView?.register(SpecializationCell.self, forCellWithReuseIdentifier: cellID)
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
         
+        //get data
+        getSpecializations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.title = "Choose Specializations"
+        self.title = "Specializations"
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return buttonList.count
+        return specList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -56,8 +50,7 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SpecializationCell
-            cell.label.text = buttonList[indexPath.row].title
-            cell.icon.image = buttonList[indexPath.row].icon
+        cell.specData = specList[indexPath.row]
         
         return cell
     }
@@ -67,7 +60,53 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
         layout.minimumLineSpacing = 0
         let docVC = DoctorListViewController(collectionViewLayout: layout)
         docVC.doctorType = DoctorType.specialize
+        docVC.specializeID = specList[indexPath.row].id!
+        docVC.specializeName = specList[indexPath.row].name!
         self.navigationController?.pushViewController(docVC, animated: true)
     }
 }
 
+extension DoctorSpecializeViewController{
+    func getSpecializations(){
+        startAnimating()
+        
+        let url = EndPoints.getSpecializations.path
+        print("Your specializations request link : \(url)")
+        
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                print("Request successful!")
+                
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus ?? 0)")
+                
+                if responseStatus == 400{
+                    print("RecoSpecializations not found!")
+                    
+                } else if responseStatus == 200{
+                    print("Specializations found!")
+                    if let responseDataArr = response.result.value as? NSArray{
+                        for responseData in responseDataArr{
+                            if let resData = responseData as? [String:Any]{
+                                let specModel = SpecializationModel()
+                                specModel.updateModelUsingDict(resData)
+                                
+                                self.specList.append(specModel)
+                            }
+                        }
+                        self.collectionView.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                print("Error occur on request")
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+}

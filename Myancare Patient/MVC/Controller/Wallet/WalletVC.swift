@@ -133,6 +133,15 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
 
 extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if paymentHistories.count == 0 {
+            let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
+            notDataLabel.text = "No transaction found!"
+            notDataLabel.textColor = UIColor.MyanCareColor.darkGray
+            notDataLabel.textAlignment = .center
+            collectionView.backgroundView = notDataLabel
+        }else{
+            collectionView.backgroundView = UILabel()
+        }
         return paymentHistories.count
     }
     
