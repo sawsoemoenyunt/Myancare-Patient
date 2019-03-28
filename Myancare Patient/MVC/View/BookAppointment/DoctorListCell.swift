@@ -104,7 +104,7 @@ class DoctorListCell: UICollectionViewCell{
         lineView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
         
         addSubview(statusView)
-        statusView.anchor(profileImage.topAnchor, left: nil, bottom: nil, right: profileImage.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 14, heightConstant: 14)
+        statusView.anchor(nil, left: nil, bottom: profileImage.bottomAnchor, right: profileImage.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 14, heightConstant: 14)
     }
     
     override init(frame: CGRect) {

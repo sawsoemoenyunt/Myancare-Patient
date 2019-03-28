@@ -8,7 +8,7 @@
 
 import Foundation
 
-let baseURLString = "http://159.65.10.176/api/"
+let baseURLString = "http://192.168.1.128:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -26,6 +26,8 @@ enum EndPoints : ApiEndpoint {
     case updateDeviceToken(String)
     case get_transactions(Int,Int)
     case getDoctors
+    case getExchangeRatesByPaymentGateway(String)
+    case getDoctorData(String)
     
     var path: URL
     {
@@ -44,8 +46,12 @@ enum EndPoints : ApiEndpoint {
                 return URL(string: String(baseURLString+"patients/update_device/\(token)"))!
             case .get_transactions(let skip, let limit):
                 return URL(string: String(baseURLString+"transactions/patient?skip=\(skip)&limit=\(limit)"))!
-        case .getDoctors:
-            return URL(string: String(baseURLString+"doctors"))!
+            case .getDoctors:
+                return URL(string: String(baseURLString+"doctors?favorite=true"))!
+            case .getExchangeRatesByPaymentGateway(let gateway):
+                return URL(string: String(baseURLString+"exchange-rates/\(gateway)"))!
+            case .getDoctorData(let doctorID):
+                return URL(string: String(baseURLString+"doctors/\(doctorID)"))!
         }
     }
 }

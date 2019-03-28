@@ -41,10 +41,8 @@ class DoctorListModel{
             id = id1
         }
         
-        if let specDict = dict["specialization"] as? NSDictionary{
-            if let specname = specDict.object(forKey: "name") as? String{
-                specialization = specname
-            }
+        if let specialization1 = dict["specialization"] as? String{
+            specialization = specialization1
         }
     }
 }

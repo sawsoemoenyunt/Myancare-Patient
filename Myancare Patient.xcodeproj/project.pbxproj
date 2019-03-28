@@ -19,6 +19,7 @@
 		521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521015F6222C4D6F004119E6 /* SelectAmountVC.swift */; };
 		523326A022323C6700DD3BB6 /* ArticleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5233269F22323C6700DD3BB6 /* ArticleVC.swift */; };
 		523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523326A1223259DF00DD3BB6 /* ArticleDetailVC.swift */; };
+		5233D536224C865400E7A2E0 /* ExchangeRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5233D535224C865400E7A2E0 /* ExchangeRateModel.swift */; };
 		523415362222858600CE2A91 /* Pyidaungsu.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415342222858600CE2A91 /* Pyidaungsu.ttf */; };
 		523415372222858600CE2A91 /* Pyidaungsu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */; };
 		523415392222862700CE2A91 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523415382222862700CE2A91 /* LanguageViewController.swift */; };
@@ -125,6 +126,7 @@
 		521015F6222C4D6F004119E6 /* SelectAmountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAmountVC.swift; sourceTree = "<group>"; };
 		5233269F22323C6700DD3BB6 /* ArticleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleVC.swift; sourceTree = "<group>"; };
 		523326A1223259DF00DD3BB6 /* ArticleDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailVC.swift; sourceTree = "<group>"; };
+		5233D535224C865400E7A2E0 /* ExchangeRateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateModel.swift; sourceTree = "<group>"; };
 		523415342222858600CE2A91 /* Pyidaungsu.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pyidaungsu.ttf; sourceTree = "<group>"; };
 		523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pyidaungsu-Bold.ttf"; sourceTree = "<group>"; };
 		523415382222862700CE2A91 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				526E089C2237D63000FECD70 /* ModelLogin.swift */,
 				52D59695223FADBD0071BE52 /* PatientModel.swift */,
 				5203B0DC224A318C002B4B44 /* DoctorListModel.swift */,
+				5233D535224C865400E7A2E0 /* ExchangeRateModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				524D8ED02237983A00B7AEAB /* PaymentCell.swift in Sources */,
 				5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */,
 				52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */,
+				5233D536224C865400E7A2E0 /* ExchangeRateModel.swift in Sources */,
 				524D8EB62237962100B7AEAB /* RescheduleSlotsCell.swift in Sources */,
 				524D8EC72237977E00B7AEAB /* NotiListCell.swift in Sources */,
 				52085D5A2249376A00A7FB46 /* SocketModel.swift in Sources */,

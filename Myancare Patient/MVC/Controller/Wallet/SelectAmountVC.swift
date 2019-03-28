@@ -7,10 +7,24 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import NVActivityIndicatorView
 
-class SelectAmountVC: UIViewController {
+class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
+    var amountList = [ExchangeRateModel]()
+    var gateWayName: String?{
+        didSet{
+            if let name = gateWayName{
+                self.icon.image = UIImage(named: "\(name)")
+                self.gateWayNameLabel.text = "Pay with \(name.capitalized)"
+                self.infoLabel.text = "Please select the amount that you want to purchase to pay with \(name.capitalized) bank."
+                self.getAllAmount("\(name)")
+            }
+        }
+    }
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -122,16 +136,60 @@ class SelectAmountVC: UIViewController {
 
 extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return amountList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AmountCell
+        cell.amountData = amountList[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 60)
+    }
+}
+
+extension SelectAmountVC{
+    func getAllAmount(_ gateWayName: String){
+        
+        startAnimating()
+        
+        if let token = UserDefaults.standard.getToken(){
+            let url = EndPoints.getExchangeRatesByPaymentGateway(gateWayName).path
+            let heads = ["Authorization":"\(token)"]
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    print("Success requesting payment amount...")
+                    let responseStatus = response.response?.statusCode
+                    print("Response status: \(responseStatus ?? 0)")
+                    
+                    if responseStatus == 400{
+                        print("Record not found!")
+                        
+                    } else if responseStatus == 200{
+                        print("Payment amounts for \(gateWayName) found!")
+                        
+                        if let responseDataArray = response.result.value as? NSArray{
+                            for responseData in responseDataArray{
+                                if let resData = responseData as? [String:Any]{
+                                    let rate = ExchangeRateModel()
+                                    rate.updateWithDict(resData)
+                                    self.amountList.append(rate)
+                                }
+                            }
+                            self.collectionView.reloadData()
+                        }
+                    }
+                case .failure(let error):
+                    print("Error requesting payment amount...")
+                    print("\(error)")
+                }
+                self.stopAnimating()
+            }
+        }
     }
 }
 

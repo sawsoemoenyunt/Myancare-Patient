@@ -23,17 +23,17 @@ class PaymentMethodVC: UIViewController {
     let cellID = "cellID"
     let paymentList = [
         PaymentList.init(paymentGroup: "Pay with Bill", paymentGateways: [
-            PaymentGateway.init(name: "Telenor", iconName: "telenor")]),
+            PaymentGateway.init(name: "telenor", iconName: "telenor")]),
         PaymentList.init(paymentGroup: "Pay with Banking", paymentGateways: [
-            PaymentGateway.init(name: "KBZ", iconName: "kbz"),
-            PaymentGateway.init(name: "CB", iconName: "cb"),
-            PaymentGateway.init(name: "AYA", iconName: "aya"),
-            PaymentGateway.init(name: "MPU", iconName: "mpu")
+            PaymentGateway.init(name: "kbz", iconName: "kbz"),
+            PaymentGateway.init(name: "cb", iconName: "cb"),
+            PaymentGateway.init(name: "aya", iconName: "aya"),
+            PaymentGateway.init(name: "mpu", iconName: "mpu")
             ]),
         PaymentList.init(paymentGroup: "Pay with Mobile Money", paymentGateways: [
             PaymentGateway.init(name: "Wave Money", iconName: "wave_money"),
-            PaymentGateway.init(name: "OK$", iconName: "ok"),
-            PaymentGateway.init(name: "MPitesan", iconName: "mpitesan")
+            PaymentGateway.init(name: "ok$", iconName: "ok"),
+            PaymentGateway.init(name: "mpitesan", iconName: "mpitesan")
             ]),
         PaymentList.init(paymentGroup: "Pay with other", paymentGateways: [
             PaymentGateway.init(name: "2c2p", iconName: "m2c2p")

@@ -161,7 +161,7 @@ extension WalletVC{
         let url = EndPoints.get_transactions(skip, 20).path // skip, limit
         
         if let token = UserDefaults.standard.getToken(){
-            let heads = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY"]
+            let heads = ["Authorization":"\(jwtTkn)"]
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 
                 print("Response raw : \(response)")

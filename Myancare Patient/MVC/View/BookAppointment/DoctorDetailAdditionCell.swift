@@ -30,14 +30,14 @@ class DoctorDetailAdditionCell: UICollectionViewCell{
         lbl.text = "-"
         //        lbl.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         lbl.font = UIFont.mmFontRegular(ofSize: 12)
-        lbl.numberOfLines = 3
+        lbl.numberOfLines = 0
         //        lbl.textColor = UIColor.gray
         return lbl
     }()
     
     let bgView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.94, green:0.97, blue:0.98, alpha:1) //light blue
+        view.backgroundColor = UIColor.white
         return view
     }()
     

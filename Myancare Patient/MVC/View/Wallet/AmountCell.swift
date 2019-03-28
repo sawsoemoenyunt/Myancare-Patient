@@ -10,6 +10,15 @@ import UIKit
 
 class AmountCell: UICollectionViewCell {
     
+    var amountData: ExchangeRateModel?{
+        didSet{
+            if let data = amountData{
+                coinLabel.text = "\(data.coin_amount!) Coin"
+                kyatLabel.text = "\(data.kyat_amount!) Kyat"
+            }
+        }
+    }
+    
     let coinImage: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "coin")

@@ -75,7 +75,7 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PaymentCell
-        cell.gateWayNameLabel.text = payments[indexPath.row].name
+        cell.gateWayNameLabel.text = payments[indexPath.row].name.capitalized
         cell.icon.image = UIImage(named: payments[indexPath.row].iconName)
         return cell
     }
@@ -85,7 +85,9 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        paymentMethodVC?.navigationController?.pushViewController(SelectAmountVC(), animated: true)
+        let amountVC = SelectAmountVC()
+        amountVC.gateWayName = payments[indexPath.row].name
+        paymentMethodVC?.navigationController?.pushViewController(amountVC, animated: true)
     }
     
     override init(frame: CGRect) {

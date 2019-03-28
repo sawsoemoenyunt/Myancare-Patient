@@ -7,14 +7,41 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class DoctorDetailProfileCell: UICollectionViewCell {
     
     var doctorDetailViewController: DoctorDetailVC?
+    var docData:DoctorModel?{
+        didSet{
+            if let data = docData{
+                nameLabel.text = data.name!
+                specializeLabel.text = data.specialization!
+                experienceLabel.text = "\(data.experience!) Year of Experience"
+                
+                self.loadImage(data.image_url!)
+            }
+        }
+    }
     
-    let profileImage: UIImageView = {
+    func loadImage(_ urlString:String){
+        Alamofire.request("\(urlString)").responseImage { response in
+            debugPrint(response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.profileImage.image = image
+            } else {
+                print("failed to download image")
+            }
+        }
+    }
+    
+    lazy var profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 115, height: 115))
-        img.image = #imageLiteral(resourceName: "pablo-profile")
+        img.image = UIImage(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 57.5
         img.clipsToBounds = true
@@ -25,7 +52,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.text = "Dr.Steve Jobs"
         lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        lbl.font = UIFont.MyanCareFont.type1
         return lbl
     }()
     
@@ -33,7 +60,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.text = "Specialization"
         lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        lbl.font = UIFont.MyanCareFont.chip
         //        lbl.textColor = UIColor.gray
         return lbl
     }()
@@ -42,7 +69,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.text = "8 Years of Experience"
         lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.gray
         return lbl
     }()

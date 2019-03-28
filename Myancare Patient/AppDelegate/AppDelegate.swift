@@ -15,6 +15,8 @@ import IQKeyboardManagerSwift
 import PKHUD
 import AudioToolbox
 
+let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
 

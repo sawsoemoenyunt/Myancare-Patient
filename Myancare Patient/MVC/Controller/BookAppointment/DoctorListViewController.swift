@@ -98,6 +98,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let layout = UICollectionViewFlowLayout()
         let doctorDetailVC = DoctorDetailVC(collectionViewLayout: layout)
+        doctorDetailVC.doctorID = doctors[indexPath.row].id!
         self.navigationController?.pushViewController(doctorDetailVC, animated: true)
     }
     
@@ -111,7 +112,7 @@ extension DoctorListViewController{
 //        let skip = doctors.count != 0 ? doctors.count : 0
 //        let limit = 20
         let url = EndPoints.getDoctors.path
-        let heads = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY"]
+        let heads = ["Authorization":"\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             
@@ -144,7 +145,7 @@ extension DoctorListViewController{
                 print("Error occur on request")
                 print("\(error)")
             }
+            self.stopAnimating()
         }
-        self.stopAnimating()
     }
 }
