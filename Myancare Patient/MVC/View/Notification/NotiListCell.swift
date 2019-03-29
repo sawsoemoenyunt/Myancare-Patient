@@ -7,9 +7,48 @@
 //
 
 import UIKit
+import Localize_Swift
 
 ///UICollectionViewCell for notification list
 class NotiCell: UICollectionViewCell {
+    
+    var notiData:NotificationModel?{
+        didSet{
+            if let data = notiData{
+                let body = Localize.currentLanguage() == "en" ? data.message_en! : data.message_my!
+                let title = Localize.currentLanguage() == "en" ? data.title_en! : data.title_my!
+                self.setupAttributeString(title, body: body)
+                
+                dateLabel.text = data.createdAt!
+                icon.image = UIImage.init(named: "icons8-alarm_clock")?.withRenderingMode(.alwaysTemplate)
+                
+                let notiTypeString = data.notification_type!.rawValue
+                if notiTypeString.contains("rejected") || notiTypeString.contains("cancel"){
+                    icon.tintColor = UIColor.red
+                    
+                } else if notiTypeString.contains("reschedule"){
+                    icon.tintColor = UIColor.MyanCareColor.yellow
+                    
+                } else {
+                    icon.tintColor = UIColor.MyanCareColor.green
+                }
+            }
+        }
+    }
+    
+    func setupAttributeString(_ title:String, body:String){
+        let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.MyanCareFont.chip]
+        let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.MyanCareFont.type3]
+        
+        let title1 = NSMutableAttributedString(string: "\(title) • ", attributes: yourAttributes)
+        let body1 = NSMutableAttributedString(string: "\(body)", attributes: yourOtherAttributes)
+        
+        let combination = NSMutableAttributedString()
+        
+        combination.append(title1)
+        combination.append(body1)
+        noteLabel.attributedText = combination
+    }
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -17,13 +56,12 @@ class NotiCell: UICollectionViewCell {
         return img
     }()
     
-    let noteLabel: UITextView = {
-        let lbl = UITextView()
+    let noteLabel: UILabel = {
+        let lbl = UILabel()
         lbl.text = "Your next appointment with Dr.Henry is in 5 mins"
-        lbl.textAlignment = .left
-        lbl.isUserInteractionEnabled = false
-        lbl.font = UIFont.mmFontRegular(ofSize: 14)
+        lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.black
+        lbl.numberOfLines = 3
         return lbl
     }()
     
@@ -47,10 +85,9 @@ class NotiCell: UICollectionViewCell {
         addSubview(dateLabel)
         addSubview(lineView)
         
-        icon.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 25, heightConstant: 25)
-        icon.anchorCenterYToSuperview()
+        icon.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: 25, heightConstant: 25)
         dateLabel.anchor(nil, left: icon.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 4, widthConstant: 0, heightConstant: 0)
-        noteLabel.anchor(topAnchor, left: icon.rightAnchor, bottom: dateLabel.topAnchor, right: rightAnchor, topConstant: 4, leftConstant: 16, bottomConstant: 4, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        noteLabel.anchor(topAnchor, left: icon.rightAnchor, bottom: dateLabel.topAnchor, right: rightAnchor, topConstant: 6, leftConstant: 16, bottomConstant: 4, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         lineView.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
     }
     

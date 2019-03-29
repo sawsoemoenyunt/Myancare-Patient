@@ -8,7 +8,7 @@
 
 import Foundation
 
-let baseURLString = "http://159.65.10.176/api/"
+let baseURLString = "http://192.168.1.128:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -33,6 +33,7 @@ enum EndPoints : ApiEndpoint {
     case getDoctorFilter(String)
     case getSpecializations
     case getDocotrBySpecialiation(String)
+    case getNotifications(Int,Int) //limit, skip
     
     var path: URL
     {
@@ -67,6 +68,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"specializations"))!
         case .getDocotrBySpecialiation(let specID):
             return URL(string: String(baseURLString+"doctors?specialization=\(specID)"))!
+        case .getNotifications(let limit, let skip):
+            return URL(string: String(baseURLString+"notifications?limit=\(limit)&skip=\(skip)"))!
         }
     }
 }
