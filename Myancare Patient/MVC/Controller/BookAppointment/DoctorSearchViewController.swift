@@ -154,7 +154,7 @@ class DoctorSearchViewController: UIViewController, UICollectionViewDelegateFlow
     }()
     
     @objc func confrimbuttonClick(){
-        docSearch.name = searchField.text!.lowercased().replacingOccurrences(of: " ", with: "%20")
+        docSearch.name = searchField.text!.lowercased().replacingOccurrences(of: " ", with: "-")
         docSearch.isSearch = true
         self.navigationController?.popViewController(animated: true)
         print("Search button clicked")

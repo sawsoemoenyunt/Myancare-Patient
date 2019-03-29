@@ -148,7 +148,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         var height:CGFloat = 180.0
         if indexPath.row == 1 {
             if todayAppointmentArr.count == 0{
-                height = 0
+                height = 0 //hide today appointment list
             } else {
                 height = 110
             }

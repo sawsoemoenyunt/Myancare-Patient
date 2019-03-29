@@ -18,7 +18,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     var profileImage = UIImage(named: "pablo-profile")
     
     var countryCode = "95"
-    var phoneID = "9422474028"
+    var phoneID = ""
     var name = ""
     var dob = ""
     var email = ""
@@ -288,24 +288,33 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     }
     
     func uploadImageToS3(_ urlString:String){
-        var url = urlString
-        url = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        guard let imageData = profileImage?.jpegData(compressionQuality: 1) else {
+        
+        self.startAnimating()
+        
+        let url = urlString
+        guard let imageData = profileImage?.jpegData(compressionQuality: 0.7) else {
             return
         }
         
+        print("Image Data : -> \(imageData)")
+        
         let heads = ["Content-Type":"image/jpeg"]
         
-        Alamofire.upload(imageData, to: URL(string: url)!, method: .put, headers: heads).responseJSON { (response) in
-            print("RESPONSE RAW S3 => \(response)")
+        Alamofire.upload(imageData, to: URL(string: url)!, method: .put, headers: heads).response { (response) in
             
-            switch response.result{
-            case .success:
-                print("Success image upload")
-            case .failure(let error):
-                print("error image upload")
-                print("\(error)")
+            print("RAW RESPONSE S3 -> \(response)")
+            
+            let responseStatus = response.response?.statusCode
+            print("RESPONSE STATUS CODE FROM S3 : \(responseStatus ?? 0)")
+            
+            switch responseStatus{
+            case 200:
+                print("Image uploaded to s3 success...")
+            default:
+                print("Failed uploading Image to s3...")
+                self.showAlert(title: "Failed", message: "Failed to upload image!")
             }
+            self.stopAnimating()
         }
         
     }
@@ -326,7 +335,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "device_tokens": "",
             "country_code": self.countryCode,
             "facebook_id": self.facebookID,
-            "avatar": self.imageUrl,
+            "avatar": self.imageKey,
             "device_os": "iOS",
             "user_device_info": ""
         ]
