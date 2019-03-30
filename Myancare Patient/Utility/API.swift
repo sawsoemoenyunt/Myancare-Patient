@@ -8,7 +8,7 @@
 
 import Foundation
 
-let baseURLString = "http://192.168.1.128:5000/api/"
+let baseURLString = "http://159.65.10.176/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -28,12 +28,15 @@ enum EndPoints : ApiEndpoint {
     case getDoctors
     case getRecommandDoctors
     case getFavoriteDoctors
+    case getPaymentMethods
     case getExchangeRatesByPaymentGateway(String)
     case getDoctorData(String)
     case getDoctorFilter(String)
     case getSpecializations
     case getDocotrBySpecialiation(String)
     case getNotifications(Int,Int) //limit, skip
+    case getArticles(Int,Int) //skip, limit
+    case getArticleByID(String)
     
     var path: URL
     {
@@ -54,6 +57,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"transactions/patient?skip=\(skip)&limit=\(limit)"))!
         case .getDoctors:
             return URL(string: String(baseURLString+"doctors"))!
+        case .getPaymentMethods:
+            return URL(string: String(baseURLString+"exchange-rates"))!
         case .getExchangeRatesByPaymentGateway(let gateway):
             return URL(string: String(baseURLString+"exchange-rates/\(gateway)"))!
         case .getDoctorData(let doctorID):
@@ -70,6 +75,10 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"doctors?specialization=\(specID)"))!
         case .getNotifications(let limit, let skip):
             return URL(string: String(baseURLString+"notifications?limit=\(limit)&skip=\(skip)"))!
+        case .getArticles(let skip, let limit):
+            return URL(string: String(baseURLString+"articles?skip=\(skip)&limit=\(limit)"))!
+        case .getArticleByID(let id):
+            return URL(string: String(baseURLString+"articles/\(id)"))!
         }
     }
 }

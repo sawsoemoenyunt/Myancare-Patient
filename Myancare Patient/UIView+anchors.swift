@@ -8,6 +8,8 @@
 
 import UIKit
 import Localize_Swift
+import Alamofire
+import AlamofireImage
 
 extension UIColor {
     //colors from Myancare UI
@@ -23,6 +25,21 @@ extension UIColor {
         static let font1 = UIColor(red:0.53, green:0.53, blue:0.53, alpha:1)
         static let font2 = UIColor(red:0.71, green:0.71, blue:0.71, alpha:1)
         static let font3 = UIColor(red:0.26, green:0.26, blue:0.26, alpha:1)
+    }
+}
+
+extension UIImage{
+    class func loadImage(_ urlString:String, result: @escaping (UIImage) -> ()){
+        let url = URL(string: "\(urlString)")!
+        Alamofire.request(url).responseImage { response in
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                result(image)
+            } else {
+                result(UIImage(named: "no-image")!)
+            }
+        }
     }
 }
 
@@ -51,23 +68,11 @@ extension UIFont {
     }
     
     class func mmFontRegular(ofSize fontSize: CGFloat) -> UIFont {
-        var myfont = UIFont()
-        if Localize.currentLanguage() == "en" {
-            myfont = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        } else {
-            myfont = UIFont(name: "Pyidaungsu", size: fontSize)!
-        }
-        return myfont
+        return UIFont(name: "Pyidaungsu", size: fontSize)!
     }
     
     class func mmFontBold(ofSize fontSize: CGFloat) -> UIFont {
-        var myfont = UIFont()
-        if Localize.currentLanguage() == "en" {
-            myfont = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-        } else {
-            myfont = UIFont(name: "Pyidaungsu-bold", size: fontSize)!
-        }
-        return myfont
+        return UIFont(name: "Pyidaungsu-bold", size: fontSize)!
     }
 }
 

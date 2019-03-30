@@ -86,10 +86,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.navigationController?.navigationBar.isHidden = false
         self.title = "Welcome".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-//        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.font: UIFont.mmFontZawgyi(ofSize: 32)]
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 32)]
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.view.backgroundColor = .white
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.mmFontZawgyi(ofSize: 14)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.mmFontBold(ofSize: 14)]
     }
     
     func pushToVC(vc: UIViewController){

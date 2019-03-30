@@ -160,7 +160,7 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
 
             profilecell.namelabel.text = userName
             
-            Alamofire.request("\(image_url)").responseImage { response in
+            Alamofire.request(URL(string: "\(image_url)")!).responseImage { response in
                 debugPrint(response.result)
                 
                 if let image = response.result.value {

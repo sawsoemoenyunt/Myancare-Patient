@@ -11,7 +11,7 @@ import UIKit
 class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var paymentMethodVC: PaymentMethodVC?
-    var payments = [PaymentGateway]()
+    var payments = [PaymentRateModel]()
     
     let cellID = "cellID"
     
@@ -26,7 +26,7 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 4
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -75,18 +75,18 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PaymentCell
-        cell.gateWayNameLabel.text = payments[indexPath.row].name.capitalized
-        cell.icon.image = UIImage(named: payments[indexPath.row].iconName)
+        cell.gateWayNameLabel.text = payments[indexPath.row]._id!.capitalized
+        cell.icon.image = UIImage(named: payments[indexPath.row]._id!)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width/4, height: collectionView.bounds.height)
+        return CGSize(width: collectionView.bounds.width/4, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let amountVC = SelectAmountVC()
-        amountVC.gateWayName = payments[indexPath.row].name
+        amountVC.gateWayName = payments[indexPath.row]._id!
         paymentMethodVC?.navigationController?.pushViewController(amountVC, animated: true)
     }
     

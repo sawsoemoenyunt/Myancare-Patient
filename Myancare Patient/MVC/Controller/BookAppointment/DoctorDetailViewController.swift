@@ -110,7 +110,7 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
                 break
             }
             
-            height = self.view.calculateHeightofTextView(dummyText: "\(text)", fontSize: 14, viewWdith: collectionView.bounds.width - 40) + 80
+            height = self.view.calculateHeightofTextView(dummyText: "\(text)", fontSize: 14, viewWdith: collectionView.bounds.width - 40) + 90
         }
         
         return CGSize(width: collectionView.frame.width, height: height)

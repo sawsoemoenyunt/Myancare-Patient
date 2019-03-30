@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class ChatListVC: UIViewController {
     
     let cellID = "cellID"
+    var roomList = [ChatRoomModel]()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,6 +31,7 @@ class ChatListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        getRooms()
     }
     
     func setupViews(){
@@ -39,11 +43,19 @@ class ChatListVC: UIViewController {
         
         collectionView.register(ChatListCell.self, forCellWithReuseIdentifier: cellID)
     }
+    
+    func getRooms(){
+        SocketManagerHandler.sharedInstance().getAllChatRooms { (rooms) in
+            self.roomList = rooms
+            self.collectionView.reloadData()
+            return
+        }
+    }
 }
 
 extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 17
+        return roomList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -62,6 +74,29 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
 }
 
 class ChatListCell: UICollectionViewCell {
+    
+    var roomData: ChatRoomModel?{
+        didSet{
+            if let data = roomData{
+                nameLabel.text = data.doctor_name!
+                specializeLabel.text = data.last_message!
+                loadImage(data.doctor_imageUrl!)
+            }
+        }
+    }
+    
+    func loadImage(_ urlString:String){
+        let url = URL(string: "\(urlString)")!
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.profileImage.image = image
+            }
+        }
+    }
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))

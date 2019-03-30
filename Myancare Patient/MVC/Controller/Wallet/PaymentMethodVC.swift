@@ -7,38 +7,18 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
 struct PaymentList {
     var paymentGroup = ""
-    var paymentGateways: [PaymentGateway]
+    var paymentGateways: [PaymentRateModel]
 }
 
-struct PaymentGateway {
-    var name = ""
-    var iconName = ""
-}
-
-class PaymentMethodVC: UIViewController {
+class PaymentMethodVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    let paymentList = [
-        PaymentList.init(paymentGroup: "Pay with Bill", paymentGateways: [
-            PaymentGateway.init(name: "telenor", iconName: "telenor")]),
-        PaymentList.init(paymentGroup: "Pay with Banking", paymentGateways: [
-            PaymentGateway.init(name: "kbz", iconName: "kbz"),
-            PaymentGateway.init(name: "cb", iconName: "cb"),
-            PaymentGateway.init(name: "aya", iconName: "aya"),
-            PaymentGateway.init(name: "mpu", iconName: "mpu")
-            ]),
-        PaymentList.init(paymentGroup: "Pay with Mobile Money", paymentGateways: [
-            PaymentGateway.init(name: "Wave Money", iconName: "wave_money"),
-            PaymentGateway.init(name: "ok$", iconName: "ok"),
-            PaymentGateway.init(name: "mpitesan", iconName: "mpitesan")
-            ]),
-        PaymentList.init(paymentGroup: "Pay with other", paymentGateways: [
-            PaymentGateway.init(name: "2c2p", iconName: "m2c2p")
-            ])
-    ]
+    var paymentList = [PaymentList]()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -55,10 +35,11 @@ class PaymentMethodVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        getPaymentMethods()
     }
     
     func setupViews(){
-        self.title = "Select Payment Methods"
+        self.title = "Payment Methods"
         view.backgroundColor = .white
         
         view.addSubview(collectionView)
@@ -76,14 +57,84 @@ extension PaymentMethodVC : UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PaymentRowCell
         cell.payments = paymentList[indexPath.row].paymentGateways
-        cell.typeLabel.text = paymentList[indexPath.row].paymentGroup
+        cell.typeLabel.text = paymentList[indexPath.row].paymentGroup.replacingOccurrences(of: "_", with: " ")
         cell.paymentMethodVC = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 130)
+        
+        let cellCount = paymentList[indexPath.row].paymentGateways.count
+        let rowCount = cellCount / 4
+        var heightCell:CGFloat = 130 //for 1 row
+        
+        if rowCount > 0 && rowCount <= 2{
+            heightCell = 200
+        } else if rowCount > 2 && rowCount <= 3{
+            heightCell = 280
+        }
+        
+        return CGSize(width: collectionView.bounds.width, height: heightCell)
     }
 }
 
-
+extension PaymentMethodVC{
+    
+    func getPaymentMethods(){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.getPaymentMethods.path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                print("Success requesting payment amount...")
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus ?? 0)")
+                
+                if responseStatus == 400{
+                    print("Record not found!")
+                    
+                } else if responseStatus == 200{
+                    
+                    if let responseDataArray = response.result.value as? NSArray{
+                        self.assignData(responseDataArray)
+                    }
+                }
+            case .failure(let error):
+                print("Error requesting payment amount...")
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func assignData(_ dataArray:NSArray){
+        
+        var gateWayList = [PaymentList.init(paymentGroup: "PAY_WITH_BILL", paymentGateways: [PaymentRateModel]()),
+                           PaymentList.init(paymentGroup: "PAY_WITH_BANKING", paymentGateways: [PaymentRateModel]()),
+                           PaymentList.init(paymentGroup: "PAY_WITH_OTHER", paymentGateways: [PaymentRateModel]())]
+        
+        for data in dataArray{
+            if let dataDict = data as? [String:Any]{
+                let paymentGateway = PaymentRateModel()
+                paymentGateway.updateUsingDict(dataDict)
+                
+                switch paymentGateway.gatewayType{
+                case "PAY_WITH_BILL":
+                    gateWayList[0].paymentGateways.append(paymentGateway)
+                case "PAY_WITH_BANKING":
+                    gateWayList[1].paymentGateways.append(paymentGateway)
+                case "PAY_WITH_OTHER":
+                    gateWayList[2].paymentGateways.append(paymentGateway)
+                default:
+                    break
+                }
+            }
+        }
+        paymentList = gateWayList
+        self.collectionView.reloadData()
+    }
+}

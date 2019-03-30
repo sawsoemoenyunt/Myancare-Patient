@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class UserProfileVC: UIViewController {
     
@@ -83,7 +85,7 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ProfileCell
         cell.userProfileVC = self
-        cell.profileImage.image = UIImage.init(named: "pablo-profile")
+        cell.profileImage.image = UIImage.init(named: "no-image")
         cell.nameTextField.text = userData.name!
         cell.phoneUserIDTextField.text = "\(userData.country_code!)\(userData.mobile!)"
         cell.dobTextField.text = userData.dob!
@@ -96,6 +98,10 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.heightTextField.text = "\(userData.height!)"
         cell.weightTextField.text = "\(userData.weight!)"
         cell.bloodtypeTextField.text = "\(userData.bloodType!)"
+        UIImage.loadImage(userData.image_url!) { (image) in
+            cell.profileImage.image = image   
+        }
+        
         return cell
     }
     

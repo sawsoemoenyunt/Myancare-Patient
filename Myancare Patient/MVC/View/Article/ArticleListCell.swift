@@ -7,33 +7,53 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 ///cell for article list
 class ArticleCell: UICollectionViewCell {
     
     var articleVC:ArticleVC?
+    var articleData: ArticleModel?{
+        didSet{
+            if let data = articleData{
+                titlelabel.text = data.title!
+                introlabel.text = data.short_description!
+                loadImage(data.image_url!)
+            }
+        }
+    }
+    
+    func loadImage(_ urlString:String){
+        let url = URL(string: "\(urlString)")!
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.articleImage.image = image
+            }
+        }
+    }
     
     let titlelabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Article Title\nonemore"
         lbl.numberOfLines = 2
-        lbl.font = UIFont.mmFontBold(ofSize: 20)
+        lbl.font = UIFont.MyanCareFont.type1
         lbl.textColor = UIColor.black
         return lbl
     }()
     
-    lazy var articleImage: UIImageView = {
+    let articleImage: UIImageView = {
         let img = UIImageView()
+        img.image = UIImage(named: "no-image")
         img.backgroundColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        //        img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(imageClick)))
         return img
     }()
-    
-    @objc func imageClick(){
-        articleVC?.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
-    }
     
     let introlabel: UILabel = {
         let lbl = UILabel()
@@ -41,7 +61,6 @@ class ArticleCell: UICollectionViewCell {
         lbl.numberOfLines = 2
         lbl.font = UIFont.mmFontRegular(ofSize: 14)
         lbl.textColor = UIColor.black
-        lbl.isUserInteractionEnabled = false
         return lbl
     }()
     
@@ -58,7 +77,10 @@ class ArticleCell: UICollectionViewCell {
     }()
     
     @objc func readBtnClick(){
-        articleVC?.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
+        let articleDetail = ArticleDetailVC()
+        articleDetail.articleID = (articleData?.id)!
+        articleDetail.articleData = articleData!
+        articleVC?.navigationController?.pushViewController(articleDetail, animated: true)
     }
     
     lazy var bookMarkBtn: UIButton = {

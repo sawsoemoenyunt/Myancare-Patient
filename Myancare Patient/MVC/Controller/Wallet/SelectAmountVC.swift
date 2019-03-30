@@ -157,7 +157,7 @@ extension SelectAmountVC{
         
         if let token = UserDefaults.standard.getToken(){
             let url = EndPoints.getExchangeRatesByPaymentGateway(gateWayName).path
-            let heads = ["Authorization":"\(token)"]
+            let heads = ["Authorization":"Bearer \(token)"]
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 
                 switch response.result{

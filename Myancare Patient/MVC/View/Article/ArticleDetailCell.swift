@@ -11,6 +11,19 @@ import UIKit
 ///article detail cell
 class ArticleDetailCell: UICollectionViewCell {
     
+    var articleData: ArticleModel?{
+        didSet{
+            if let data = articleData{
+                titlelabel.text = data.title!
+                infoLabel.text = data.description!
+                UIImage.loadImage(data.image_url!) { (image) in
+                    self.articleImage.image = image
+                    return
+                }
+            }
+        }
+    }
+    
     let titlelabel: UILabel = {
         let lbl = UILabel()
         lbl.text = ""
@@ -22,6 +35,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     let articleImage: UIImageView = {
         let img = UIImageView()
+        img.image = UIImage(named: "no-image")
         img.backgroundColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true

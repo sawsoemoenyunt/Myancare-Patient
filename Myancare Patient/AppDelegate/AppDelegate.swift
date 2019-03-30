@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
         //change navigation bar tint color
         UINavigationBar.appearance().tintColor = UIColor(red:0.18, green:0.18, blue:0.18, alpha:1) //black
+       
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.mmFontBold(ofSize: 14)], for: .normal)
         
         //FB SDK
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -123,10 +125,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        SocketManagerHandler.sharedInstance().disconnectSocket()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        //connect socket
+        
+        SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
+            print(dataArray)
+            print(socAck)
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

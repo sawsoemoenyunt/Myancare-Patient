@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import NVActivityIndicatorView
 
-class ArticleVC: UIViewController {
+class ArticleVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellIDCategory = "cellIDCategory"
     let cellID = "cellID"
@@ -44,6 +45,7 @@ class ArticleVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        loadArticles()
     }
     
     func setupViews(){
@@ -66,13 +68,15 @@ extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if collectionView == articleCollectionView{
-            print("item selected")
-            self.navigationController?.pushViewController(ArticleDetailVC(), animated: true)
+            let articleDetail = ArticleDetailVC()
+            articleDetail.articleID = articles[indexPath.row].id!
+            articleDetail.articleData = articles[indexPath.row]
+            self.navigationController?.pushViewController(articleDetail, animated: true)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == articleCollectionView ? 10 : 4
+        return collectionView == articleCollectionView ? articles.count : 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -82,7 +86,7 @@ extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
         if collectionView == articleCollectionView {
             let colCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ArticleCell
             colCell.articleVC = self
-            colCell.articleImage.image = UIImage.init(named: "article")
+            colCell.articleData = articles[indexPath.row]
             cell = colCell
         } else {
             let colCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIDCategory, for: indexPath) as! ArticleCategoryCell
@@ -105,29 +109,34 @@ extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICol
 
 extension ArticleVC{
     func loadArticles(){
-        let skip = ""
-        let liimit = ""
-        let url = ""
-        let params = ["":""]
-        let heads = ["":""]
-        Alamofire.request(url, method: .get, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+        
+        startAnimating()
+        
+        let skip = articles.count > 0 ? articles.count : 0
+        let limit = 10
+        let url = EndPoints.getArticles(skip, limit).path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             
             switch response.result{
             case .success:
                 print("success")
                 if let responeData = response.result.value as? NSArray{
                     for articleData in responeData{
-                        if let articleJson = articleData as? [String:Any]{
+                        if let articleDict = articleData as? [String:Any]{
                             let article = ArticleModel()
-                            article.updateArticleModel(articleJson)
+                            article.updateArticleModel(articleDict)
                             
                             self.articles.append(article)
                         }
                     }
+                    self.articleCollectionView.reloadData()
                 }
             case .failure(let error):
                 print("\(error)")
             }
+            self.stopAnimating()
         }
     }
 }
