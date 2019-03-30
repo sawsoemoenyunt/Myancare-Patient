@@ -23,4 +23,5 @@ target 'Myancare Patient' do
     	
 	pod 'Pushy'
   pod 'Socket.IO-Client-Swift'
+  pod 'SinchRTC'
 end

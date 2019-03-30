@@ -7,18 +7,31 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class AppointmentListViewController: UIViewController {
-    
+enum AppointmentType{
+    case history
+    case ongoing
+    case upcoming
+}
+
+enum AppointmentStatus:String{
+    case waiting = "waiting"
+    case reschedule = "reschedule"
+    case accepted = "accepted"
+    case completed = "completed"
+    case rejected = "rejected"
+}
+
+class AppointmentListViewController: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var numberofCell = 5
+    var appointmentList = [AppointmentModel]()
     
     lazy var listTypeSegment:UISegmentedControl = {
         let sg = UISegmentedControl(items: ["Upcoming","Ongoing", "History"])
-//        sg.setImage( #imageLiteral(resourceName: "icons8-magazine"), forSegmentAt: 0)
-//        sg.setImage( #imageLiteral(resourceName: "icons8-more_filled"), forSegmentAt: 1)
-//        sg.setImage( #imageLiteral(resourceName: "icons8-appointment_reminders"), forSegmentAt: 2)
         sg.tintColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1)
         sg.backgroundColor = .clear
         sg.selectedSegmentIndex = 0
@@ -81,6 +94,7 @@ class AppointmentListViewController: UIViewController {
         view.backgroundColor = .white
         appointmentListCollectionView.register(AppointmentListCell.self, forCellWithReuseIdentifier: cellID)
         setupViews()
+        addCutomData()
     }
 
     func setupViews(){
@@ -98,33 +112,98 @@ class AppointmentListViewController: UIViewController {
 extension AppointmentListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(AppointmentDetailVC(), animated: true)
+        let appointmentdetailVC = AppointmentDetailVC()
+        appointmentdetailVC.appointmentData = appointmentList[indexPath.row]
+        self.navigationController?.pushViewController(appointmentdetailVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberofCell
+        return appointmentList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AppointmentListCell
-       
-        if indexPath.row % 2 == 0 {
-            cell.typeBtn.setTitle("Voice", for: .normal)
-            cell.conditionBtn.setTitle("Accepted", for: .normal)
-            cell.conditionBtn.setTitleColor(UIColor.white, for: .normal)
-            cell.conditionBtn.backgroundColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1)
-        } else {
-            cell.typeBtn.setTitle("Chat", for: .normal)
-            cell.conditionBtn.setTitle("Waiting", for: .normal)
-            cell.conditionBtn.setTitleColor(UIColor.black, for: .normal)
-            cell.conditionBtn.backgroundColor = UIColor.yellow
-        }
+       cell.appointmentData = appointmentList[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: appointmentListCollectionView.frame.width, height: 110)
+        return CGSize(width: collectionView.frame.width, height: 110)
     }
 }
 
-
+extension AppointmentListViewController{
+    func addCutomData(){
+        for item in 1...10{
+            let appointment = AppointmentModel()
+            appointment.doctor = ["name":"Dr.Phyo Phyo Maung", "image_url":"www.imagelink.com"]
+            appointment.patient = ["name":"Saw Soe Moe Nyunt"]
+            appointment.date_of_issue = ["date":"2019-3-30"]
+            appointment.reason = "I'm sick like a sick"
+            appointment.type = item%2 == 0 ? "voice" : "chat"
+            appointment.service_fees = 1500
+            appointment.total_appointment_fees = 2500
+            appointment.date_of_issue_utc = ["date":"019-03-30T15:34:29Z"]
+            
+            switch item{
+            case 0:
+                appointment.booking_status = "reschedule"
+                break
+            case 1:
+                appointment.booking_status = "waiting"
+                break
+            case 2:
+                appointment.booking_status = "accepted"
+                break
+            case 3:
+                appointment.booking_status = "completed"
+                break
+            default:
+                appointment.booking_status = "waiting"
+                break
+            }
+            
+            appointmentList.append(appointment)
+        }
+        self.appointmentListCollectionView.reloadData()
+    }
+    
+    func getAppointments(_ type:AppointmentType){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.getAppointmentHistory.path
+        let heads = ["Authorazations" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let status = response.response?.statusCode
+                print("Status code : \(status ?? 0)")
+                
+                if status == 400{
+                    print("Record Not found!")
+                    
+                } else if status == 200{
+                    if let responseDataArray = response.result.value as? NSArray{
+                        for responseData in responseDataArray{
+                            if let responseDict = responseData as? [String:Any]{
+                                let appointment = AppointmentModel()
+                                appointment.updateModleUsingDict(responseDict)
+                                
+                                self.appointmentList.append(appointment)
+                            }
+                        }
+                        self.appointmentListCollectionView.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+}

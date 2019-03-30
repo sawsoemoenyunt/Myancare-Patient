@@ -151,6 +151,7 @@ extension DoctorListViewController{
             break
         case .filter:
             url = EndPoints.getDoctorFilter(docSearch.name).path
+            docSearch.isSearch = false
         default:
             url = EndPoints.getDoctors.path
             break

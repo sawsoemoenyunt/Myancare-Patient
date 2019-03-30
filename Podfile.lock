@@ -35,6 +35,7 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.6.1)
   - PKHUD (5.2.1)
   - Pushy (1.0.14)
+  - SinchRTC (3.12.8)
   - Socket.IO-Client-Swift (14.0.0):
     - Starscream (~> 3.0.6)
   - Starscream (3.0.6)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - NVActivityIndicatorView
   - PKHUD
   - Pushy
+  - SinchRTC
   - Socket.IO-Client-Swift
   - SwiftyGif
 
@@ -73,6 +75,7 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - PKHUD
     - Pushy
+    - SinchRTC
     - Socket.IO-Client-Swift
     - Starscream
     - SwiftyGif
@@ -93,10 +96,11 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   PKHUD: 4e6162c4c39ac367c6934e9855c6b4762ee16256
   Pushy: 9462b7798a9754a9e82c496bc3f8b07c758268bb
+  SinchRTC: aafe970312279b220b2e9d075fb39d5abcb85d93
   Socket.IO-Client-Swift: 21e6a8a23a7d367d5ddfab6cbbd3c679cf3c25d6
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
 
-PODFILE CHECKSUM: b9bb12442e97852c3d3b6258d6dc8ed9b94a9062
+PODFILE CHECKSUM: c9c13276ae550cfa2ab41ea5a9f1e2f15a2e6fc5
 
 COCOAPODS: 1.6.1

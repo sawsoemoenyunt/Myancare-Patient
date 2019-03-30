@@ -12,6 +12,55 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     var appointmentDetailVC:AppointmentDetailVC?
     
+    var appointmentData: AppointmentModel?{
+        didSet{
+            if let data = appointmentData{
+                if let docName = data.doctor?.object(forKey: "name") as? String{
+                    doctorNameLabel.text = docName
+                }
+                if let docImage = data.doctor?.object(forKey: "image_url") as? String{
+                    UIImage.loadImage(docImage) { (image) in
+                        self.doctorImage.image = image
+                    }
+                }
+                
+                statusBtn.setTitle("\(data.booking_status!.capitalized)", for: .normal)
+                
+                switch data.booking_status{
+                case AppointmentStatus.accepted.rawValue:
+                    statusBtn.backgroundColor = UIColor.MyanCareColor.green
+                case AppointmentStatus.completed.rawValue:
+                    statusBtn.backgroundColor = UIColor.MyanCareColor.green
+                case AppointmentStatus.rejected.rawValue:
+                    statusBtn.backgroundColor = UIColor.red
+                case AppointmentStatus.waiting.rawValue:
+                    statusBtn.backgroundColor = UIColor.MyanCareColor.yellow
+                case AppointmentStatus.reschedule.rawValue:
+                    scheduleLabel.text = "Reschedule Date/Time"
+                    statusBtn.backgroundColor = UIColor.MyanCareColor.yellow
+                default:
+                    statusBtn.backgroundColor = UIColor.gray
+                }
+                
+                if let patientName = data.patient?.object(forKey: "name") as? String{
+                    patientNameLabel.text = patientName
+                }
+                
+                if let issueDate = data.date_of_issue?.object(forKey: "date") as? String{
+                    dateNameLabel.text = issueDate
+                }
+                
+                reasonDataLabel.text = data.reason!
+                serviceTypeLabel.text = data.type!.capitalized
+                totalAmountDataLabel.text = "\(data.total_appointment_fees!) coin"
+                if let sDateTime = data.date_of_issue_utc?.object(forKey: "date") as? String{
+                    scheduleDataLabel.text = sDateTime
+                }
+                
+            }
+        }
+    }
+    
     let bgView: UIView = {
         let v = UIView()
         v.backgroundColor = UIColor.white

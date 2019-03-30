@@ -10,9 +10,48 @@ import UIKit
 
 class AppointmentListCell: UICollectionViewCell {
     
+    var appointmentData: AppointmentModel?{
+        didSet{
+            if let data = appointmentData{
+                if let docName = data.doctor?.object(forKey: "name") as? String{
+                    doctorNameLabel.text = docName
+                }
+                if let docImage = data.doctor?.object(forKey: "image_url") as? String{
+                    UIImage.loadImage(docImage) { (image) in
+                        self.profileImage.image = image
+                        return
+                    }
+                }
+                if let dateTime = data.date_of_issue_utc?.object(forKey: "date") as? String{
+                    dateLabel.text = dateTime
+                }
+                typeBtn.setTitle("\(data.type!)", for: .normal)
+                conditionBtn.setTitle("\(data.booking_status!)", for: .normal)
+                
+                switch data.booking_status{
+                case AppointmentStatus.waiting.rawValue:
+                    conditionBtn.backgroundColor = UIColor.MyanCareColor.blue
+                    break
+                case AppointmentStatus.rejected.rawValue:
+                    conditionBtn.backgroundColor = UIColor.red
+                    break
+                case AppointmentStatus.reschedule.rawValue:
+                    conditionBtn.backgroundColor = UIColor.MyanCareColor.yellow
+                    break
+                case AppointmentStatus.accepted.rawValue, AppointmentStatus.completed.rawValue:
+                    conditionBtn.backgroundColor = UIColor.MyanCareColor.green
+                    break
+                default:
+                    conditionBtn.backgroundColor = UIColor.gray
+                    break
+                }
+            }
+        }
+    }
+    
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
-        img.image = #imageLiteral(resourceName: "pablo-profile")
+        img.image = UIImage(named: "pablo-profile")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
         img.clipsToBounds = true
@@ -55,7 +94,7 @@ class AppointmentListCell: UICollectionViewCell {
     lazy var conditionBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Waiting", for: .normal)
-        btn.setTitleColor(UIColor.black, for: .normal)
+        btn.setTitleColor(UIColor.white, for: .normal)
         btn.titleLabel?.font = UIFont.mmFontRegular(ofSize: 11)
         btn.backgroundColor = UIColor.yellow
         btn.layer.cornerRadius = 10

@@ -37,6 +37,7 @@ enum EndPoints : ApiEndpoint {
     case getNotifications(Int,Int) //limit, skip
     case getArticles(Int,Int) //skip, limit
     case getArticleByID(String)
+    case getAppointmentHistory
     
     var path: URL
     {
@@ -79,6 +80,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"articles?skip=\(skip)&limit=\(limit)"))!
         case .getArticleByID(let id):
             return URL(string: String(baseURLString+"articles/\(id)"))!
+        case .getAppointmentHistory:
+            return URL(string: String(baseURLString+"appointments/history"))!
         }
     }
 }

@@ -24,6 +24,11 @@
 		523415372222858600CE2A91 /* Pyidaungsu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */; };
 		523415392222862700CE2A91 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523415382222862700CE2A91 /* LanguageViewController.swift */; };
 		5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5234153A2222919700CE2A91 /* LoginViewController.swift */; };
+		523B1374224F8D5400914BA5 /* AudioContollerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1373224F8D5400914BA5 /* AudioContollerDelegate.swift */; };
+		523B1376224F90EF00914BA5 /* CallHandlingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1375224F90EF00914BA5 /* CallHandlingVC.swift */; };
+		523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1377224F913800914BA5 /* SINUIViewController.swift */; };
+		523B137A224F922000914BA5 /* SINCallKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1379224F922000914BA5 /* SINCallKitProvider.swift */; };
+		523B137C224F9AE300914BA5 /* VoiceCallHandlingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */; };
 		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
 		5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */; };
@@ -135,6 +140,11 @@
 		523415352222858600CE2A91 /* Pyidaungsu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pyidaungsu-Bold.ttf"; sourceTree = "<group>"; };
 		523415382222862700CE2A91 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		5234153A2222919700CE2A91 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		523B1373224F8D5400914BA5 /* AudioContollerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioContollerDelegate.swift; sourceTree = "<group>"; };
+		523B1375224F90EF00914BA5 /* CallHandlingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHandlingVC.swift; sourceTree = "<group>"; };
+		523B1377224F913800914BA5 /* SINUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINUIViewController.swift; sourceTree = "<group>"; };
+		523B1379224F922000914BA5 /* SINCallKitProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINCallKitProvider.swift; sourceTree = "<group>"; };
+		523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallHandlingVC.swift; sourceTree = "<group>"; };
 		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
 		5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
@@ -480,6 +490,11 @@
 			children = (
 				526FD434224258810035D757 /* ChatListVC.swift */,
 				526FD436224258C10035D757 /* ChatRecordVC.swift */,
+				523B1373224F8D5400914BA5 /* AudioContollerDelegate.swift */,
+				523B1375224F90EF00914BA5 /* CallHandlingVC.swift */,
+				523B1377224F913800914BA5 /* SINUIViewController.swift */,
+				523B1379224F922000914BA5 /* SINCallKitProvider.swift */,
+				523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */,
 			);
 			path = Consultation;
 			sourceTree = "<group>";
@@ -883,6 +898,7 @@
 				529490462237CE2200507240 /* EnterPasscodeVC.swift in Sources */,
 				5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */,
 				526E088F2237D4E000FECD70 /* MedicationReminderModel.swift in Sources */,
+				523B137C224F9AE300914BA5 /* VoiceCallHandlingVC.swift in Sources */,
 				526C57172236509D003F2C66 /* ReminderListVC.swift in Sources */,
 				528DA571221D990A00140CFF /* MenuOnlineCell.swift in Sources */,
 				526E088B2237D49100FECD70 /* ArticleModel.swift in Sources */,
@@ -901,6 +917,7 @@
 				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
+				523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */,
 				524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */,
 				524D8EC42237975200B7AEAB /* ReminderListCell.swift in Sources */,
 				52C1973C224EA68F004AD6E9 /* ChatRoomModel.swift in Sources */,
@@ -942,7 +959,9 @@
 				52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */,
 				524D8ED422379BE600B7AEAB /* PaymentGateWayVC.swift in Sources */,
 				52AE88942236197600867151 /* ShareBookVC.swift in Sources */,
+				523B1376224F90EF00914BA5 /* CallHandlingVC.swift in Sources */,
 				524D8EA52237949C00B7AEAB /* ArticleDetailCell.swift in Sources */,
+				523B1374224F8D5400914BA5 /* AudioContollerDelegate.swift in Sources */,
 				526E08932237D56A00FECD70 /* ModelDoctorFilter.swift in Sources */,
 				528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */,
 				526E088D2237D4AE00FECD70 /* AppointmentModel.swift in Sources */,
@@ -970,6 +989,7 @@
 				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
 				5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */,
+				523B137A224F922000914BA5 /* SINCallKitProvider.swift in Sources */,
 				526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */,
 				526E08912237D54B00FECD70 /* ModelAppointment.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,

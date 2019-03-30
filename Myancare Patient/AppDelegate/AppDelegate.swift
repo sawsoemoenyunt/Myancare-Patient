@@ -14,16 +14,23 @@ import Pushy
 import IQKeyboardManagerSwift
 import PKHUD
 import AudioToolbox
+import Sinch
 
 let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
+
+var appDelegate = UIApplication.shared.delegate
+var callDuration: String = ""
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
 
     var window: UIWindow?
-
-
+    var client: SINClient?
+    var push: SINManagedPush?
+    var callKitProvider : SINCallKitProvider?
+    var callSin : SINCall?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //disble view constraints error messages in console
@@ -150,6 +157,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+}
 
+//MARK:-
+extension UIWindow
+{
+    //MARK:-
+    func visibleViewController() -> UIViewController?
+    {
+        if let rootViewController: UIViewController  = self.rootViewController
+        {
+            return UIWindow.getVisibleViewControllerFrom(vc: rootViewController)
+        }
+        
+        return nil
+    }
+    
+    //MARK:-
+    class func getVisibleViewControllerFrom(vc:UIViewController) -> UIViewController
+    {
+        if vc.isKind(of: UINavigationController.self)
+        {
+            let navigationController = vc as! UINavigationController
+            return UIWindow.getVisibleViewControllerFrom( vc: navigationController.visibleViewController!)
+        }
+        else if vc.isKind(of: UITabBarController.self)
+        {
+            let tabBarController = vc as! UITabBarController
+            return UIWindow.getVisibleViewControllerFrom(vc: tabBarController.selectedViewController!)
+        }
+        else
+        {
+            if let presentedViewController = vc.presentedViewController
+            {
+                return UIWindow.getVisibleViewControllerFrom(vc: presentedViewController)
+            }
+            else
+            {
+                return vc
+            }
+        }
+    }
 }
 
