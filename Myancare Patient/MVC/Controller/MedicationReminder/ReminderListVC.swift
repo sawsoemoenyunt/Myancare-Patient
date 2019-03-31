@@ -59,7 +59,7 @@ class ReminderListVC: UIViewController {
     }()
     
     @objc func addBtnClick(){
-        
+        self.navigationController?.pushViewController(AddReminderVC(), animated: true)
     }
     
     override func viewDidLoad() {
@@ -91,11 +91,17 @@ extension ReminderListVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReminderListCell
+        cell.reminderListVC = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 85)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let reminderVC = ReminderVC()
+        self.navigationController?.pushViewController(reminderVC, animated: true)
     }
 }
 

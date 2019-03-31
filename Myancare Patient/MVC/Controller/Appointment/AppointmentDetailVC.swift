@@ -124,8 +124,8 @@ class AppointmentDetailVC: UIViewController {
             break
             
         case AppointmentStatus.accepted.rawValue:
-            closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
-            acceptBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+            closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width/2, heightConstant: 50)
+            acceptBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
             collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
@@ -153,23 +153,24 @@ class AppointmentDetailVC: UIViewController {
     }
     
     @objc func reject(){
-        
+        //reject doctor's reschedule
     }
     
     @objc func accept(){
-        
+        //accept doctor's reschedule
     }
     
     @objc func cancel(){
-        
+        //appointent cancel
     }
     
     @objc func reschedule(){
-        
+        let rescheduleVC = RescheduleAppointmentVC()
+        self.navigationController?.pushViewController(rescheduleVC, animated: true)
     }
     
     @objc func start(){
-        
+        //start conversation chat, voice, video
     }
 }
 

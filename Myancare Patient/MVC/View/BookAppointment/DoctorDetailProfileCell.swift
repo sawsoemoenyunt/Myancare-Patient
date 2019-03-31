@@ -12,31 +12,100 @@ import AlamofireImage
 
 class DoctorDetailProfileCell: UICollectionViewCell {
     
+    var buttonWidth:CGFloat?
     var doctorDetailViewController: DoctorDetailVC?
+    
     var docData:DoctorModel?{
         didSet{
             if let data = docData{
                 nameLabel.text = data.name!
                 specializeLabel.text = data.specialization!
                 experienceLabel.text = "\(data.experience!) Year of Experience"
+                UIImage.loadImage(data.image_url!) { (image) in
+                    self.profileImage.image = image
+                }
                 
-                self.loadImage(data.image_url!)
+                buttongroup3()
+                chatBtn.isHidden = true
+                voiceBtn.isHidden = true
+                videoBtn.isHidden = true
+                
+//                var buttonArr = [String]()
+//                if data.chat!{
+//                    buttonArr.append("CHAT")
+//
+//                } else if data.voice!{
+//                    buttonArr.append("VOICE")
+//
+//                } else if data.video!{
+//                    buttonArr.append("VIDEO")
+//                }
+//
+//                for (index,button) in buttonArr.enumerated(){
+//                    if index == 0 {
+//                        assignAction(button, button: chatBtn)
+//                    } else if index == 1{
+//                        assignAction(button, button: voiceBtn)
+//                    } else if index == 2{
+//                        assignAction(button, button: videoBtn)
+//                    }
+//                }
+//
+//                if buttonArr.count == 3{
+//                    buttongroup3()
+//                } else if buttonArr.count == 2{
+//                    buttongroup2()
+//                } else if buttonArr.count == 1{
+//                    buttongroup1()
+//                }
+                
+                
             }
         }
     }
     
-    func loadImage(_ urlString:String){
-        Alamofire.request("\(urlString)").responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.profileImage.image = image
-            } else {
-                print("failed to download image")
-            }
+    func assignAction(_ buttonName:String, button:UIButton){
+        
+        button.setTitle("\(buttonName)", for: .normal)
+        
+        switch buttonName {
+        case "CHAT":
+            button.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)
+        case "VOICE":
+            button.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)
+        case "VIDEO":
+            button.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)
+        default:
+            break
         }
+    }
+    
+    func buttongroup1(){
+        addSubview(chatBtn)
+        addSubview(voiceBtn)
+        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+    }
+    
+    func buttongroup2(){
+        
+        buttonWidth = self.frame.width/2 - 15
+        
+        addSubview(chatBtn)
+        addSubview(voiceBtn)
+        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
+        voiceBtn.anchor(experienceLabel.bottomAnchor, left: chatBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+    }
+    
+    func buttongroup3(){
+        
+        buttonWidth = self.frame.width/3 - 15
+        
+        addSubview(chatBtn)
+        addSubview(voiceBtn)
+        addSubview(videoBtn)
+        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
+        voiceBtn.anchor(experienceLabel.bottomAnchor, left: chatBtn.rightAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
+        videoBtn.anchor(experienceLabel.bottomAnchor, left: voiceBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
     }
     
     lazy var profileImage: UIImageView = {
@@ -93,24 +162,9 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     @objc func bookBtnClick(){
         bookBtn.isHidden = true
         
-        chatBtn.alpha = 0
-        voiceBtn.alpha = 0
-        videoBtn.alpha = 0
-        
-        bookBtnTopAnchor?.constant = 13
-        chatBtnTopAnchor?.constant = 20
-        voiceBtnTopAnchor?.constant = 13
-        videoBtnTopAnchor?.constant = 13
-        
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.bookBtn.alpha = 0
-            self.chatBtn.alpha = 1
-            self.voiceBtn.alpha = 1
-            self.videoBtn.alpha = 1
-            self.layoutIfNeeded()
-        }) { (true) in
-            self.bookBtn.isHidden = true
-        }
+        chatBtn.isHidden = false
+        voiceBtn.isHidden = false
+        videoBtn.isHidden = false
     }
     
     lazy var voiceBtn: UIButton = {
@@ -120,8 +174,13 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         btn.backgroundColor = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //yellow
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func bookAppointment(){
+        doctorDetailViewController?.navigationController?.pushViewController(BookAppointmentViewController(), animated: true)
+    }
     
     lazy var videoBtn: UIButton = {
         let btn = UIButton()
@@ -130,6 +189,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         btn.backgroundColor = UIColor(red:0.82, green:0.31, blue:0.16, alpha:1) //orange
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
         return btn
     }()
     
@@ -145,7 +205,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     }()
     
     @objc func chatBtnClick(){
-        doctorDetailViewController?.navigationController?.pushViewController(BookAppointmentViewController(), animated: true)
+        doctorDetailViewController?.navigationController?.pushViewController(ChatListVC(), animated: true)
     }
     
     func setupViews(){
@@ -153,9 +213,6 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         addSubview(nameLabel)
         addSubview(specializeLabel)
         addSubview(experienceLabel)
-        addSubview(chatBtn)
-        addSubview(voiceBtn)
-        addSubview(videoBtn)
         addSubview(bookBtn)
         
         
@@ -164,10 +221,6 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         nameLabel.anchor(profileImage.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         specializeLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         experienceLabel.anchor(specializeLabel.bottomAnchor, left: specializeLabel.leftAnchor, bottom: nil, right: specializeLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        let btnWidth = self.frame.width/3 - 15
-        chatBtnTopAnchor = chatBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)[1]
-        voiceBtnTopAnchor = voiceBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.chatBtn.rightAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: btnWidth, heightConstant: 50)[0]
-        videoBtnTopAnchor = videoBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.voiceBtn.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 20, widthConstant: btnWidth, heightConstant: 50)[0]
         bookBtnTopAnchor = bookBtn.anchorWithReturnAnchors(experienceLabel.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)[0]
         
         chatBtnTopAnchor?.constant = self.frame.width

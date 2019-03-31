@@ -10,6 +10,8 @@ import UIKit
 
 class ReminderListCell: UICollectionViewCell {
     
+    var reminderListVC : ReminderListVC?
+    
     let icon: UIImageView = {
         let img = UIImageView()
         img.image = UIImage.init(named: "capsule")
@@ -62,7 +64,7 @@ class ReminderListCell: UICollectionViewCell {
     }()
     
     @objc func editBtnclick() {
-        print("edit button click")
+        self.reminderListVC?.navigationController?.pushViewController(EditReminderVC(), animated: true)
     }
     
     let bgView: UIView = {
@@ -87,11 +89,11 @@ class ReminderListCell: UICollectionViewCell {
         
         
         verticalLine.anchor(bgView.topAnchor, left: nil, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 50, widthConstant: 0.5, heightConstant: 0)
-        editBtn.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 25, heightConstant: 25)
+        editBtn.anchor(nil, left: nil, bottom: nil, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 15, widthConstant: 25, heightConstant: 25)
         editBtn.anchorCenterYToSuperview()
-        icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 69, heightConstant: 69)
+        icon.anchor(nil, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         icon.anchorCenterYToSuperview()
-        typelabel.anchor(icon.topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        typelabel.anchor(topAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         dateLabel.anchor(typelabel.bottomAnchor, left: icon.rightAnchor, bottom: nil, right: verticalLine.leftAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         
         bottomLineView.anchor(nil, left: bgView.leftAnchor, bottom: bgView.bottomAnchor, right: bgView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)

@@ -31,15 +31,18 @@ extension UIColor {
 
 extension UIImage{
     class func loadImage(_ urlString:String, result: @escaping (UIImage) -> ()){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                result(image)
-            } else {
-                result(UIImage(named: "no-image")!)
+        if urlString != ""{
+            let url = URL(string: "\(urlString)")!
+            Alamofire.request(url).responseImage { response in
+                
+                if let image = response.result.value {
+                    result(image)
+                } else {
+                    result(UIImage(named: "no-image")!)
+                }
             }
+        } else {
+            result(UIImage(named: "no-image")!)
         }
     }
 }
