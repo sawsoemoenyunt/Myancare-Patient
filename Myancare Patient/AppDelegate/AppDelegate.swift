@@ -16,7 +16,8 @@ import PKHUD
 import AudioToolbox
 import Sinch
 
-let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
+let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
+//let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
 
 var appDelegate = UIApplication.shared.delegate
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         //change navigation bar tint color
         UINavigationBar.appearance().tintColor = UIColor(red:0.18, green:0.18, blue:0.18, alpha:1) //black
        
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.mmFontBold(ofSize: 14)], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.mmFontBold(ofSize: 16)], for: .normal)
         
         //FB SDK
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)

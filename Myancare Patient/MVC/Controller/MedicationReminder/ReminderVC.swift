@@ -11,6 +11,7 @@ import UIKit
 class ReminderVC: UIViewController {
     
     let cellID = "cellID"
+    var reminderData = MedicalReminderModel()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -72,6 +73,7 @@ extension ReminderVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReminderCell
         cell.reminderVC = self
+        cell.reminderData = reminderData
         return cell
     }
     
@@ -83,6 +85,16 @@ extension ReminderVC : UICollectionViewDelegate, UICollectionViewDataSource, UIC
 class ReminderCell: UICollectionViewCell, UITextFieldDelegate {
     
     var reminderVC: ReminderVC?
+    var reminderData: MedicalReminderModel?{
+        didSet{
+            if let data = reminderData{
+                reasonTextField.text = data.drug_for!
+                drugsTextView.text = data.drug_name!
+                startdateTextField.text = data.from_date!.count > 10 ? String((data.from_date?.prefix(10))!) : data.from_date!
+                enddateTextField.text = data.to_date!.count > 10 ? String((data.to_date?.prefix(10))!) : data.to_date!
+            }
+        }
+    }
     
     let reasonlabel: UILabel = {
         let lbl = UILabel()

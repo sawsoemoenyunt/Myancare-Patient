@@ -38,6 +38,9 @@ enum EndPoints : ApiEndpoint {
     case getArticles(Int,Int) //skip, limit
     case getArticleByID(String)
     case getAppointmentHistory
+    case getReminders(Int,Int)
+    case getRemindersToday(Int,Int)
+    case deleteReminderByID(String)
     
     var path: URL
     {
@@ -82,6 +85,12 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"articles/\(id)"))!
         case .getAppointmentHistory:
             return URL(string: String(baseURLString+"appointments/history"))!
+        case .getReminders(let skip, let limit):
+            return URL(string: String(baseURLString+"medical-reminder?skip=\(skip)&limit=\(limit)"))!
+        case .getRemindersToday(let skip, let limit):
+            return URL(string: String(baseURLString+"medical-reminder/today?skip=\(skip)&limit=\(limit)"))!
+        case .deleteReminderByID(let id):
+            return URL(string: String(baseURLString+"medical-reminder/\(id)"))!
         }
     }
 }

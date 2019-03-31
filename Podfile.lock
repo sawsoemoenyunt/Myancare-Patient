@@ -9,6 +9,7 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - EMAlertController (1.0.2)
   - FacebookCore (0.5.0):
     - Bolts (~> 1.9)
     - FBSDKCoreKit (~> 4.37)
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - AccountKit
   - Alamofire
   - AlamofireImage
+  - EMAlertController
   - FacebookCore
   - FacebookLogin
   - FacebookShare
@@ -64,6 +66,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - Bolts
+    - EMAlertController
     - FacebookCore
     - FacebookLogin
     - FacebookShare
@@ -85,6 +88,7 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  EMAlertController: 471e4630309e5ae843ef71f502d6b58525b22c60
   FacebookCore: 74288d0add931d361b1596beae787ab72c438249
   FacebookLogin: ebcf34714a1cb9f0759d9f071cfb01ed500996cf
   FacebookShare: 963b4bb1124a64a395b1e428163d70b5774116e8
@@ -101,6 +105,6 @@ SPEC CHECKSUMS:
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
 
-PODFILE CHECKSUM: c9c13276ae550cfa2ab41ea5a9f1e2f15a2e6fc5
+PODFILE CHECKSUM: a8dd4bd097db236efef8e9805ffdeaa795785174
 
 COCOAPODS: 1.6.1

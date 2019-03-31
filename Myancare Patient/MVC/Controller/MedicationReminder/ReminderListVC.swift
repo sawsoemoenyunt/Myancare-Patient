@@ -7,10 +7,20 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class ReminderListVC: UIViewController {
+enum ReminderType {
+    case today
+    case all
+}
+
+class ReminderListVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
+    var reminderList = [MedicalReminderModel]()
+    var isPaging = true
+    var type = ReminderType.today
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,7 +53,12 @@ class ReminderListVC: UIViewController {
     }()
     
     @objc func handleSegment(){
-        
+        if typeSegment.selectedSegmentIndex == 0{
+            type = .today
+        } else {
+            type = .all
+        }
+        refreshData()
     }
     
     lazy var addBtn: UIButton = {
@@ -62,9 +77,23 @@ class ReminderListVC: UIViewController {
         self.navigationController?.pushViewController(AddReminderVC(), animated: true)
     }
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshData() {
+        isPaging = true
+        reminderList.removeAll()
+        self.getReminders()
+        self.refreshControl1.endRefreshing()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        getReminders()
     }
     
     func setupViews(){
@@ -81,17 +110,26 @@ class ReminderListVC: UIViewController {
         addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
         
         collectionView.register(ReminderListCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.refreshControl = refreshControl1
     }
 }
 
 extension ReminderListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
+        return reminderList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReminderListCell
         cell.reminderListVC = self
+        if reminderList.count > 0{
+            cell.reminderData = reminderList[indexPath.row]
+        }
+        
+        if isPaging && indexPath.row == reminderList.count - 1{
+            self.getReminders()
+        }
+        
         return cell
     }
     
@@ -101,8 +139,87 @@ extension ReminderListVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let reminderVC = ReminderVC()
+        reminderVC.reminderData = reminderList[indexPath.row]
         self.navigationController?.pushViewController(reminderVC, animated: true)
     }
 }
 
+extension ReminderListVC{
+    func getReminders(){
+        
+        if reminderList.count == 0{
+            self.startAnimating()
+        }
+        
+        let skip = reminderList.count > 0 ? reminderList.count : 0
+        let limit = 10
+        let url = type == .all ? EndPoints.getReminders(skip, limit).path : EndPoints.getRemindersToday(skip, limit).path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200{
+                    if let responseDataArr = response.result.value as? NSArray{
+                        self.assignData(responseDataArr)
+                    }
+                }
+                else {
+                    print("\(responseStatus ?? 0) Failed to get reminder list...")
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func assignData(_ dataArr:NSArray){
+        self.isPaging = dataArr.count == 0 ? false : true
+        
+        for data in dataArr{
+            if let dataDict = data as? [String:Any]{
+                let reminder = MedicalReminderModel()
+                reminder.updateModelUsingDict(dataDict)
+                
+                reminderList.append(reminder)
+            }
+        }
+        self.collectionView.reloadData()
+    }
+    
+    func confirmDelete(_ id:String){
+        let actionSheet = UIAlertController(title: "Are you sure to delete this reminder!", message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirm = UIAlertAction(title: "Confrim", style: .default) { (action) in
+            self.deleteReminderFromServer(id)
+        }
+        
+        actionSheet.addAction(confirm)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func deleteReminderFromServer(_ id:String){
+        if id != ""{
+            let url = EndPoints.deleteReminderByID(id).path
+            let heads = ["Authorization":"\(jwtTkn)"]
+            
+            Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    print("reminder deleted")
+                    self.refreshData()
+                case .failure(let error):
+                    print("\(error)")
+                }
+            }
+        }
+    }
+}
 

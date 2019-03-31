@@ -84,6 +84,7 @@
 		526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD4392242591D0035D757 /* ChatListCell.swift */; };
 		526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526FD43B224259240035D757 /* ChatRecordCell.swift */; };
 		52716F7F224F2D670048C4CD /* ArticleCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52716F7E224F2D670048C4CD /* ArticleCategoryModel.swift */; };
+		527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A1D44225104C100B1D775 /* MedicalReminder.swift */; };
 		527FAD0B224B8C9C00484DD1 /* AboutusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */; };
 		528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528BFB28224D22DC00CC8986 /* SpecializationModel.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
@@ -204,6 +205,7 @@
 		526FD4392242591D0035D757 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		526FD43B224259240035D757 /* ChatRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordCell.swift; sourceTree = "<group>"; };
 		52716F7E224F2D670048C4CD /* ArticleCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoryModel.swift; sourceTree = "<group>"; };
+		527A1D44225104C100B1D775 /* MedicalReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReminder.swift; sourceTree = "<group>"; };
 		527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutusVC.swift; sourceTree = "<group>"; };
 		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
 		528BFB28224D22DC00CC8986 /* SpecializationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationModel.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 				52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */,
 				52716F7E224F2D670048C4CD /* ArticleCategoryModel.swift */,
 				52554416224F576B00E23340 /* PaymentRateModel.swift */,
+				527A1D44225104C100B1D775 /* MedicalReminder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/EMAlertController/EMAlertController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -833,6 +837,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EMAlertController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -961,6 +966,7 @@
 				524D8EB62237962100B7AEAB /* RescheduleSlotsCell.swift in Sources */,
 				524D8EC72237977E00B7AEAB /* NotiListCell.swift in Sources */,
 				52085D5A2249376A00A7FB46 /* SocketModel.swift in Sources */,
+				527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */,
 				526E08952237D58700FECD70 /* NotificationModel.swift in Sources */,
 				526E08992237D5D800FECD70 /* PaymentHistoryModel.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,

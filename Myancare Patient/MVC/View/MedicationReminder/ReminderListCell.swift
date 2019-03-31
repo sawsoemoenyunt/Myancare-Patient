@@ -7,10 +7,24 @@
 //
 
 import UIKit
+import Alamofire
 
 class ReminderListCell: UICollectionViewCell {
     
     var reminderListVC : ReminderListVC?
+    
+    var reminderData: MedicalReminderModel?{
+        didSet{
+            if let data = reminderData{
+                typelabel.text = "\(data.title!)"
+                var dateText = "Daily "
+                for time in data.frequency_time!{
+                    dateText = "\(dateText) , \(time)"
+                }
+                dateLabel.text = dateText
+            }
+        }
+    }
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -56,17 +70,6 @@ class ReminderListCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var editBtn: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage.init(named: "icons8-edit_property"), for: .normal)
-        btn.addTarget(self, action: #selector(editBtnclick), for: .touchUpInside)
-        return btn
-    }()
-    
-    @objc func editBtnclick() {
-        self.reminderListVC?.navigationController?.pushViewController(EditReminderVC(), animated: true)
-    }
-    
     let bgView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -74,6 +77,20 @@ class ReminderListCell: UICollectionViewCell {
         view.layer.masksToBounds = true
         return view
     }()
+    
+    lazy var editBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage.init(named: "icons8-delete_trash")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = UIColor.red
+        btn.addTarget(self, action: #selector(editBtnclick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func editBtnclick() {
+        if let id = reminderData?.id{
+            self.reminderListVC?.confirmDelete(id)
+        }
+    }
     
     func setupViews(){
         
