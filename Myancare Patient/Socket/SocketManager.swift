@@ -43,12 +43,14 @@ class SocketManagerHandler: NSObject {
         socket?.connect()
         
         self.getAllChatRoomsListener()
+        self.getChatRecordsListener()
+        self.getChatMessageListener()
     }
     
     override init() {
         super.init()
         
-        let url = "http://192.168.1.188:5500"
+        let url = "http://159.65.10.176:5500"
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         print("Socket server url : \(urlString!)")
@@ -94,12 +96,40 @@ class SocketManagerHandler: NSObject {
         return socket!.status == SocketIOStatus.connected
     }
     
-    func getChatRecords(roomID:String, skip:Int, limit:Int, result: @escaping ([ChatRecordModel]) -> ()){
-        //send with arrry index 0 = id, index 1 = skip, index 2 = limit
-        socket?.emit("join", [roomID, skip, limit])
-        
-        socket?.on("messages", callback: { (dataArray, socketAck) in
+    //Send message
+    func emitChatMessage(roomID:String, messageString:String, imageType:Int){
+        socket?.emit("message", [roomID, messageString, imageType])
+    }
+    
+    func getChatMessageListener(){
+        socket?.on("message", callback: { (dataArray, socketAck) in
+            if let dataFirstIndex = dataArray[0] as? String{
+                if let data = dataFirstIndex.data(using: .utf8){
+                    do{
+                        if let jsonData = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]{
 
+                            let message = ChatRecordModel()
+                            message.updateModelUsingDict(jsonData)
+                            
+                            let userInfo = ["data":message]
+                            NotificationCenter.default.post(name: Notification.Name.didReceiveDataForNewChatMessage, object: nil, userInfo: userInfo)
+                        }
+                    } catch let error{
+                        print("\(error)")
+                    }
+                }
+            }
+        })
+    }
+    
+    ///Chat records
+    func emitChatRecords(roomID:String, skip:Int, limit:Int){
+        socket?.emit("join", [roomID, skip, limit])
+    }
+    
+    func getChatRecordsListener(){
+        socket?.on("messages", callback: { (dataArray, socketAck) in
+            
             if let dataFirstIndex = dataArray[0] as? String{
                 if let data = dataFirstIndex.data(using: .utf8){
                     do{
@@ -113,7 +143,8 @@ class SocketManagerHandler: NSObject {
                                     chatRecords.append(record)
                                 }
                             }
-                            result(chatRecords)
+                            let userInfo = ["data":chatRecords]
+                            NotificationCenter.default.post(name: Notification.Name.didReceiveDataForChatRecord, object: nil, userInfo: userInfo)
                         }
                     } catch let error{
                         print("\(error)")
@@ -123,6 +154,7 @@ class SocketManagerHandler: NSObject {
         })
     }
     
+    ///Chat rooms
     func emitChatRooms(skip:Int, limit:Int){
         socket?.emit("rooms", [skip,limit]) //skip,limit
     }

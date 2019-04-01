@@ -18,6 +18,7 @@ class ChatRoomModel {
     var last_messageStatus : Int?
     var last_messageType : Int?
     var createdAt : String?
+    var timeAgo : String?
     
     init() {
         id = ""
@@ -28,6 +29,7 @@ class ChatRoomModel {
         last_messageStatus = 1
         last_messageType = 1
         createdAt = ""
+        timeAgo = ""
     }
     
     func updateModelUsingDict(_ dict:[String:Any]){
@@ -64,6 +66,11 @@ class ChatRoomModel {
             }
             
             if let date = message.object(forKey: "createdAt") as? String{
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                if let createdDate = formatter.date(from: date){
+                    timeAgo = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
+                }
                 createdAt = date
             }
         }

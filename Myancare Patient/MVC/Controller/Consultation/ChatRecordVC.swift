@@ -13,7 +13,9 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     
     let cellID = "cellId"
     var roomID = ""
+    var docName = ""
     var chatRecords = [ChatRecordModel]()
+    var isPaging = true
     
     let reminderView: UIView = {
         let view = UIView()
@@ -56,10 +58,24 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         return view
     }()
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshData() {
+        
+        chatRecords.removeAll()
+        isPaging = true
+        self.getChatRecords()
+        self.refreshControl1.endRefreshing()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Dr.Kaung Mon"
+        self.title = docName
         view.backgroundColor = UIColor.white
         
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 78, right: 0)
@@ -67,8 +83,11 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = .white
         collectionView?.register(ChatRecordCell.self, forCellWithReuseIdentifier: cellID)
+        
         setupViews()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name.didReceiveDataForChatRecord, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveDataForNewMessage(_:)), name: Notification.Name.didReceiveDataForNewChatMessage, object: nil)
         getChatRecords()
     }
     
@@ -87,6 +106,10 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         }
         setupCell(cell: cell, message: message, isSender: senderType)
         
+        if isPaging && indexPath.row == chatRecords.count - 1{
+            getChatRecords()
+        }
+        
         return cell
     }
     
@@ -104,6 +127,8 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
             cell.bubbleViewConstraints[3].isActive = false
             cell.profileImageView.isHidden = false
         }
+        //reverse cell
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -137,14 +162,17 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         containerView.addSubview(sendButton)
         inputTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 2, leftConstant: 20, bottomConstant: 0, rightConstant: 70, widthConstant: 0, heightConstant: 50)
         sendButton.anchor(inputTextField.topAnchor, left: nil, bottom: inputTextField.bottomAnchor, right: containerView.rightAnchor, topConstant: 5, leftConstant: 0, bottomConstant: 5, rightConstant: 20, widthConstant: 40, heightConstant: 40)
+        
+        //reverse collectionview
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.transform = CGAffineTransform.init(rotationAngle: (-(CGFloat)(Double.pi)))
     }
     
     @objc func handleSend() {
-//        self.inputTextField.text = nil
-//        self.cellCount = cellCount + 1
-//        self.collectionView.reloadData()
-//        self.collectionView.scrollToItem(at: IndexPath(row: cellCount-1, section: 0), at: .top, animated: true)
-        view.endEditing(true)
+        if inputTextField.text != ""{
+            SocketManagerHandler.sharedInstance().emitChatMessage(roomID: roomID, messageString: inputTextField.text!, imageType: 0)
+        }
+        self.inputTextField.text = nil
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -155,16 +183,40 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
 
 extension ChatRecordVC{
     func getChatRecords(){
-        let skip = 0
+        let skip = chatRecords.count
         let limit = 20
         
-        SocketManagerHandler.sharedInstance().getChatRecords(roomID: roomID, skip: skip, limit: limit) { (records) in
-            
-            if records.count > 0 {
-                self.chatRecords = records
+        SocketManagerHandler.sharedInstance().emitChatRecords(roomID: roomID, skip: skip, limit: limit)
+    }
+    
+    @objc func onDidReceiveData(_ notification:Notification){
+        if let data = notification.userInfo as? [String:[ChatRecordModel]]{
+            for (key, dataArr) in data{
+                print("\(key)")
+                for record in dataArr{
+                    self.chatRecords.append(record)
+                }
                 self.collectionView.reloadData()
+                
+                if chatRecords.count > 0{
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
+                self.isPaging = dataArr.count > 0 ? true : false
             }
-            return
+        }
+    }
+    
+    @objc func onDidReceiveDataForNewMessage(_ notification:Notification){
+        if let data = notification.userInfo as? [String:ChatRecordModel]{
+            for (key, message) in data{
+                print("\(key)")
+                self.chatRecords.insert(message, at: 0)
+                self.collectionView.reloadData()
+                
+                if chatRecords.count > 0{
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
+            }
         }
     }
 }

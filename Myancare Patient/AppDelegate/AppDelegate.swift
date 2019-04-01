@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         registerPushyDevice()
         
         //connect socket
-        //connect socket
         SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
             print(dataArray)
             print(socAck)

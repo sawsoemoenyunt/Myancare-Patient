@@ -48,8 +48,12 @@ class ChatListVC: UIViewController {
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name.didReceiveDataForChatRoomList, object: nil)
-        getRooms()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        refreshData()
     }
     
     func setupViews(){
@@ -65,7 +69,7 @@ class ChatListVC: UIViewController {
     
     func getRooms(){
         let skip = roomList.count > 0 ? roomList.count : 0
-        let limit = 1
+        let limit = 10
         SocketManagerHandler.sharedInstance().emitChatRooms(skip: skip, limit: limit)
         
     }
@@ -105,9 +109,13 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let chatRoom = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
-        chatRoom.roomID = roomList[indexPath.row].id!
-        self.navigationController?.pushViewController(chatRoom, animated: true)
+        
+        if roomList.count > 0{
+            let chatRoom = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
+            chatRoom.roomID = roomList[indexPath.row].id!
+            chatRoom.docName = roomList[indexPath.row].doctor_name!
+            self.navigationController?.pushViewController(chatRoom, animated: true)
+        }
     }
 }
 
@@ -118,7 +126,7 @@ class ChatListCell: UICollectionViewCell {
             if let data = roomData{
                 nameLabel.text = data.doctor_name!
                 specializeLabel.text = data.last_message!
-                addressLabel.text = data.createdAt!
+                addressLabel.text = data.timeAgo!
                 loadImage(data.doctor_imageUrl!)
             }
         }
@@ -190,8 +198,8 @@ class ChatListCell: UICollectionViewCell {
         profileImage.anchor(nil, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 64, heightConstant: 64)
         profileImage.anchorCenterYToSuperview()
         nameLabel.anchor(profileImage.topAnchor, left: profileImage.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 0, leftConstant: 24, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        specializeLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nameLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        addressLabel.anchor(specializeLabel.bottomAnchor, left: specializeLabel.leftAnchor, bottom: nil, right: specializeLabel.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addressLabel.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        specializeLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: nil, right: addressLabel.leftAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
         lineView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
     }
     
