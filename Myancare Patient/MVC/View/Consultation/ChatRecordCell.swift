@@ -16,6 +16,7 @@ class ChatRecordCell: UICollectionViewCell {
         tv.font = UIFont.MyanCareFont.type4
         tv.backgroundColor = .clear
         tv.textColor = .white
+        tv.isEditable = false
         return tv
     }()
     
@@ -36,6 +37,14 @@ class ChatRecordCell: UICollectionViewCell {
         return img
     }()
     
+    let imageView: UIImageView = {
+        let img = UIImageView()
+        img.backgroundColor = UIColor.gray
+        img.clipsToBounds = true
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
     var bubbleViewConstraints = [NSLayoutConstraint]()
     
     static let greenColor = UIColor.MyanCareColor.green
@@ -46,11 +55,13 @@ class ChatRecordCell: UICollectionViewCell {
         addSubview(bubbleView)
         addSubview(profileImageView)
         bubbleView.addSubview(textView)
+        bubbleView.addSubview(imageView)
         
         bubbleViewConstraints = bubbleView.anchorWithReturnAnchors(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 48, bottomConstant: 0, rightConstant: 8, widthConstant: 200, heightConstant: 0)
         profileImageView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 0, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 32, heightConstant: 32)
         
         textView.anchor(bubbleView.topAnchor, left: bubbleView.leftAnchor, bottom: bubbleView.bottomAnchor, right: bubbleView.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        imageView.anchor(bubbleView.topAnchor, left: bubbleView.leftAnchor, bottom: bubbleView.bottomAnchor, right: bubbleView.rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
     }
     

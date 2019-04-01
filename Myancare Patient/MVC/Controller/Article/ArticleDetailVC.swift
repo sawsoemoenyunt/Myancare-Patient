@@ -59,15 +59,15 @@ extension ArticleDetailVC: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let estimatedHeight = self.view.calculateHeightofTextView(dummyText: articleData.description!, fontSize: 16, viewWdith: collectionView.bounds.width)
-        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height + estimatedHeight)
+        let estimatedHeight = self.view.calculateHeightofTextView(dummyText: articleData.short_description!, fontSize: 16, viewWdith: collectionView.bounds.width)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height/2 + estimatedHeight)
     }
 }
 
 extension ArticleDetailVC{
     func getArticleData(){
         let url = EndPoints.getArticleByID(articleID).path
-        let heads = ["Authentication" : "\(jwtTkn)"]
+        let heads = ["Authorization" : "\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             
@@ -75,9 +75,7 @@ extension ArticleDetailVC{
             case .success:
                 print("Success")
                 let responseStatus = response.response?.statusCode
-                print("Response status : \(responseStatus ?? 0)")
-                
-                if responseStatus == 400 || responseStatus == 404 || responseStatus == 403{
+                if responseStatus == 400{
                     print("data not found")
                     
                 } else if responseStatus == 200 {

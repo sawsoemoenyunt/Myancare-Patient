@@ -15,10 +15,13 @@ class ArticleDetailCell: UICollectionViewCell {
         didSet{
             if let data = articleData{
                 titlelabel.text = data.title!
-                infoLabel.text = data.description!
+                infoLabel.text = data.short_description!
                 UIImage.loadImage(data.image_url!) { (image) in
                     self.articleImage.image = image
                     return
+                }
+                if let htmlString = data.short_description?.htmlToAttributedString{
+                    infoLabel.attributedText = htmlString
                 }
             }
         }

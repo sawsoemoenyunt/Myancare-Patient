@@ -178,24 +178,17 @@ extension HomeViewController{
             break
         }
         
-        print("Your doc request link : \(url)")
-        
         let heads = ["Authorization":"\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             
             switch response.result{
             case .success:
-                print("Request successful!")
-                
                 let responseStatus = response.response?.statusCode
-                print("Response status: \(responseStatus ?? 0)")
                 
                 if responseStatus == 400{
                     print("Record not found!")
-                    
                 } else if responseStatus == 200{
-                    print("Docots found!")
                     if let responseDataArr = response.result.value as? NSArray{
                         self.assignDocArray(docType, dataArr: responseDataArr)
                     }

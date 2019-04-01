@@ -53,6 +53,7 @@ class ArticleModel{
         
         if let short_description1 = articleDict["short_description"] as? String{
             short_description = short_description1
+            
         }
         
         if let description_my1 = articleDict["description_my"] as? String{
