@@ -14,6 +14,7 @@ class ChatListVC: UIViewController {
     
     let cellID = "cellID"
     var roomList = [ChatRoomModel]()
+    var isPaging = true
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,10 +29,27 @@ class ChatListVC: UIViewController {
         return cv
     }()
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshData() {
+        
+        roomList.removeAll()
+        isPaging = true
+        self.getRooms()
+        self.refreshControl1.endRefreshing()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name.didReceiveDataForChatRoomList, object: nil)
         getRooms()
+        
     }
     
     func setupViews(){
@@ -41,14 +59,27 @@ class ChatListVC: UIViewController {
         view.addSubview(collectionView)
         collectionView.fillSuperview()
         
+        collectionView.refreshControl = refreshControl1
         collectionView.register(ChatListCell.self, forCellWithReuseIdentifier: cellID)
     }
     
     func getRooms(){
-        SocketManagerHandler.sharedInstance().getAllChatRooms { (rooms) in
-            self.roomList = rooms
-            self.collectionView.reloadData()
-            return
+        let skip = roomList.count > 0 ? roomList.count : 0
+        let limit = 1
+        SocketManagerHandler.sharedInstance().emitChatRooms(skip: skip, limit: limit)
+        
+    }
+    
+    @objc func onDidReceiveData(_ notification:Notification){
+        if let data = notification.userInfo as? [String:[ChatRoomModel]]{
+            for (key, dataArr) in data{
+                print("\(key)")
+                for room in dataArr{
+                    roomList.append(room)
+                }
+                self.collectionView.reloadData()
+                self.isPaging = dataArr.count > 0 ? true : false
+            }
         }
     }
 }
@@ -61,6 +92,11 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatListCell
         cell.roomData = roomList[indexPath.row]
+        
+        if isPaging && indexPath.row == roomList.count - 1 {
+            self.getRooms()
+        }
+        
         return cell
     }
     
@@ -70,6 +106,7 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let chatRoom = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
+        chatRoom.roomID = roomList[indexPath.row].id!
         self.navigationController?.pushViewController(chatRoom, animated: true)
     }
 }

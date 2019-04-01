@@ -61,6 +61,7 @@
 		524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8ED12237985500B7AEAB /* AmountCell.swift */; };
 		524D8ED422379BE600B7AEAB /* PaymentGateWayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */; };
 		52554417224F576B00E23340 /* PaymentRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52554416224F576B00E23340 /* PaymentRateModel.swift */; };
+		526829692251FC9E00070BC4 /* ChatRecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526829682251FC9E00070BC4 /* ChatRecordModel.swift */; };
 		5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268C553222F7DC6001CF258 /* UserProfileVC.swift */; };
 		52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269115F222AE0450082FCC6 /* UserInterestVC.swift */; };
 		526C568622363828003F2C66 /* RecordBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C568522363828003F2C66 /* RecordBookVC.swift */; };
@@ -182,6 +183,7 @@
 		524D8ED12237985500B7AEAB /* AmountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountCell.swift; sourceTree = "<group>"; };
 		524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentGateWayVC.swift; sourceTree = "<group>"; };
 		52554416224F576B00E23340 /* PaymentRateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRateModel.swift; sourceTree = "<group>"; };
+		526829682251FC9E00070BC4 /* ChatRecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordModel.swift; sourceTree = "<group>"; };
 		5268C553222F7DC6001CF258 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		5269115F222AE0450082FCC6 /* UserInterestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterestVC.swift; sourceTree = "<group>"; };
 		526C568522363828003F2C66 /* RecordBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordBookVC.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 				5233D535224C865400E7A2E0 /* ExchangeRateModel.swift */,
 				528BFB28224D22DC00CC8986 /* SpecializationModel.swift */,
 				52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */,
+				526829682251FC9E00070BC4 /* ChatRecordModel.swift */,
 				52716F7E224F2D670048C4CD /* ArticleCategoryModel.swift */,
 				52554416224F576B00E23340 /* PaymentRateModel.swift */,
 				527A1D44225104C100B1D775 /* MedicalReminder.swift */,
@@ -905,6 +908,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526829692251FC9E00070BC4 /* ChatRecordModel.swift in Sources */,
 				526C571022364113003F2C66 /* AddPhotoVC.swift in Sources */,
 				524D8EA92237953200B7AEAB /* CalendarCell.swift in Sources */,
 				528DA56F221D98E400140CFF /* MenuCell.swift in Sources */,
@@ -1188,7 +1192,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.myancarepatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "MyanCare-Patient-2-Jan";
+				PROVISIONING_PROFILE_SPECIFIER = "Patient App Development 1Apr2019";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

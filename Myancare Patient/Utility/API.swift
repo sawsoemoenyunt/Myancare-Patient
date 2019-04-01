@@ -8,7 +8,7 @@
 
 import Foundation
 
-let baseURLString = "http://192.168.1.188:5000/api/"
+let baseURLString = "http://159.65.10.176/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {

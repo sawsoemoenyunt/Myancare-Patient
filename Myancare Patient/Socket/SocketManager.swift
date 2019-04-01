@@ -15,6 +15,7 @@ class SocketManagerHandler: NSObject {
     //MARK:- SocketClient (Private)
     private var socket : SocketIOClient?
     private var socketMngr : SocketManager?
+    static let shared = SocketManagerHandler()
     
     //MARK:- Instance Creation (Private)
     private static var instance : SocketManagerHandler =
@@ -40,6 +41,8 @@ class SocketManagerHandler: NSObject {
         })
     
         socket?.connect()
+        
+        self.getAllChatRoomsListener()
     }
     
     override init() {
@@ -91,19 +94,48 @@ class SocketManagerHandler: NSObject {
         return socket!.status == SocketIOStatus.connected
     }
     
-    func getAllChatRooms(result: @escaping ([ChatRoomModel]) -> ()){
-        socket?.emit("rooms", [0,10]) //skip,limit
+    func getChatRecords(roomID:String, skip:Int, limit:Int, result: @escaping ([ChatRecordModel]) -> ()){
+        //send with arrry index 0 = id, index 1 = skip, index 2 = limit
+        socket?.emit("join", [roomID, skip, limit])
+        
+        socket?.on("messages", callback: { (dataArray, socketAck) in
+
+            if let dataFirstIndex = dataArray[0] as? String{
+                if let data = dataFirstIndex.data(using: .utf8){
+                    do{
+                        if let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [Any]{
+                            var chatRecords = [ChatRecordModel]()
+                            
+                            for data in jsonArray{
+                                if let dataDict = data as? [String:Any]{
+                                    let record = ChatRecordModel()
+                                    record.updateModelUsingDict(dataDict)
+                                    chatRecords.append(record)
+                                }
+                            }
+                            result(chatRecords)
+                        }
+                    } catch let error{
+                        print("\(error)")
+                    }
+                }
+            }
+        })
+    }
+    
+    func emitChatRooms(skip:Int, limit:Int){
+        socket?.emit("rooms", [skip,limit]) //skip,limit
+    }
+    
+    func getAllChatRoomsListener(){
         
         socket?.on("rooms", callback: { (dataArray, socketAck) in
-//            print("Return data from socket : \(dataArray)")
-//            print("Return socket ack : \(socketAck)")
            
             if let dataFirstIndex = dataArray[0] as? String{
                 if let data = dataFirstIndex.data(using: .utf8){
                     do{
                         if let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [Any]{
                             var chatRoomList = [ChatRoomModel]()
-                            
                             for data in jsonArray{
                                 if let dataDict = data as? [String:Any]{
                                     let room = ChatRoomModel()
@@ -111,7 +143,8 @@ class SocketManagerHandler: NSObject {
                                     chatRoomList.append(room)
                                 }
                             }
-                            result(chatRoomList)
+                            let userInfo = ["data":chatRoomList]
+                            NotificationCenter.default.post(name: .didReceiveDataForChatRoomList, object: nil, userInfo: userInfo)
                         }
                     } catch let error{
                         print("\(error)")

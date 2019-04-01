@@ -11,6 +11,11 @@ import Localize_Swift
 import Alamofire
 import AlamofireImage
 
+extension Notification.Name {
+    static let didReceiveDataForChatRoomList = Notification.Name("didReceiveDataForChatRoomList")
+    static let didReceiveDataForChatRecord = Notification.Name("didReceiveDataForChatRecord")
+}
+
 extension UIColor {
     //colors from Myancare UI
     struct MyanCareColor {

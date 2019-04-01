@@ -12,7 +12,8 @@ import IQKeyboardManagerSwift
 class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellId"
-    var cellCount = 10
+    var roomID = ""
+    var chatRecords = [ChatRecordModel]()
     
     let reminderView: UIView = {
         let view = UIView()
@@ -67,18 +68,23 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         collectionView?.backgroundColor = .white
         collectionView?.register(ChatRecordCell.self, forCellWithReuseIdentifier: cellID)
         setupViews()
+        
+        getChatRecords()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellCount
+        return chatRecords.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatRecordCell
-        let message = indexPath.row%3 == 0 ? "Lorem Ipsum is simply dummy text of the printing and typesetting industry" : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        let message = chatRecords[indexPath.row].message!
         cell.textView.text = message
         cell.bubbleViewConstraints[4].constant = estimateFrameForText(text: message).width + 32
-        let senderType = indexPath.row%3 == 0 ? true : false
+        let senderType = chatRecords[indexPath.row].userRole?.lowercased() == "patient" ? true : false
+        UIImage.loadImage(chatRecords[indexPath.row].userImage!) { (image) in
+            cell.profileImageView.image = image
+        }
         setupCell(cell: cell, message: message, isSender: senderType)
         
         return cell
@@ -102,7 +108,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat = 80
-        let message = indexPath.row%3 == 0 ? "Lorem Ipsum is simply dummy text of the printing and typesetting industry" : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        let message = chatRecords[indexPath.row].message!
         
         height = estimateFrameForText(text: message).height + 20
         
@@ -134,16 +140,32 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     }
     
     @objc func handleSend() {
-        self.inputTextField.text = nil
-        self.cellCount = cellCount + 1
-        self.collectionView.reloadData()
-        self.collectionView.scrollToItem(at: IndexPath(row: cellCount-1, section: 0), at: .top, animated: true)
-//        view.endEditing(true)
+//        self.inputTextField.text = nil
+//        self.cellCount = cellCount + 1
+//        self.collectionView.reloadData()
+//        self.collectionView.scrollToItem(at: IndexPath(row: cellCount-1, section: 0), at: .top, animated: true)
+        view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSend()
         return true
+    }
+}
+
+extension ChatRecordVC{
+    func getChatRecords(){
+        let skip = 0
+        let limit = 20
+        
+        SocketManagerHandler.sharedInstance().getChatRecords(roomID: roomID, skip: skip, limit: limit) { (records) in
+            
+            if records.count > 0 {
+                self.chatRecords = records
+                self.collectionView.reloadData()
+            }
+            return
+        }
     }
 }
 
