@@ -60,6 +60,7 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatListCell
+        cell.roomData = roomList[indexPath.row]
         return cell
     }
     
@@ -80,6 +81,7 @@ class ChatListCell: UICollectionViewCell {
             if let data = roomData{
                 nameLabel.text = data.doctor_name!
                 specializeLabel.text = data.last_message!
+                addressLabel.text = data.createdAt!
                 loadImage(data.doctor_imageUrl!)
             }
         }

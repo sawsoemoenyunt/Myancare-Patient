@@ -51,13 +51,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         //register pushy
         registerPushyDevice()
         
+        //connect socket
+        //connect socket
+        SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
+            print(dataArray)
+            print(socAck)
+        }
+        
         //choose screen to show first
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        window?.rootViewController = UINavigationController.init(rootViewController: ReminderListVC())
+        window?.rootViewController = StartScreenViewController()
         
         return true
     }
@@ -134,18 +141,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        SocketManagerHandler.sharedInstance().disconnectSocket()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        
-        //connect socket
-        
-        SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
-            print(dataArray)
-            print(socAck)
-        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -156,6 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        SocketManagerHandler.sharedInstance().disconnectSocket()
     }
 
 }

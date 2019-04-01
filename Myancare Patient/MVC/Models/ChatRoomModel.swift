@@ -17,6 +17,7 @@ class ChatRoomModel {
     var last_message : String?
     var last_messageStatus : Int?
     var last_messageType : Int?
+    var createdAt : String?
     
     init() {
         id = ""
@@ -26,6 +27,7 @@ class ChatRoomModel {
         last_message = ""
         last_messageStatus = 1
         last_messageType = 1
+        createdAt = ""
     }
     
     func updateModelUsingDict(_ dict:[String:Any]){
@@ -59,6 +61,10 @@ class ChatRoomModel {
             
             if let msg = message.object(forKey: "message") as? String{
                 last_message = msg
+            }
+            
+            if let date = message.object(forKey: "createdAt") as? String{
+                createdAt = date
             }
         }
     }

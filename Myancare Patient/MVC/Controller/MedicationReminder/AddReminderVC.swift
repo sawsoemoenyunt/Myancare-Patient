@@ -11,6 +11,7 @@ import UIKit
 class AddReminderVC: UIViewController {
     
     let cellID = "cellID"
+    var reminderData = MedicalReminderModel()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -190,7 +191,15 @@ class AddNewReminderCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func hideKeyboard(){
+        setupData()
         self.endEditing(true)
+    }
+    
+    func setupData(){
+        addreminderVC?.reminderData.drug_for = reasonTextField.text!
+        addreminderVC?.reminderData.drug_name = drugsTextView.text!
+        addreminderVC?.reminderData.from_date = startdateTextField.text!
+        addreminderVC?.reminderData.drug_for = enddateTextField.text!
     }
     
     func setupViews(){

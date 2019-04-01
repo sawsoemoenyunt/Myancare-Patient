@@ -44,15 +44,17 @@ class SocketManagerHandler: NSObject {
     
     override init() {
         super.init()
-        let url = "http://159.65.10.176?token=\(jwtTkn)"
+        
+        let url = "http://192.168.1.188:5500"
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         print("Socket server url : \(urlString!)")
         
         socketMngr = SocketManager(socketURL: URL(string: "\(urlString!)")!, config: [.log(true),.compress])
+        socketMngr?.config = SocketIOClientConfiguration(
+            arrayLiteral: .compress, .connectParams(["token": "\(jwtTkn)"])
+        )
         socket = socketMngr?.defaultSocket
-        
-        socket?.connect()
         
         setupErrorListner()
         setupDisconnectListner()
@@ -90,22 +92,32 @@ class SocketManagerHandler: NSObject {
     }
     
     func getAllChatRooms(result: @escaping ([ChatRoomModel]) -> ()){
-        socket?.emit("rooms", [0,10])
+        socket?.emit("rooms", [0,10]) //skip,limit
         
         socket?.on("rooms", callback: { (dataArray, socketAck) in
-            print("Return data from socket : \(dataArray)")
-            print("Return socket ack : \(socketAck)")
-            
-            var chatRoomList = [ChatRoomModel]()
-            
-            for data in dataArray{
-                if let dataDict = data as? [String:Any]{
-                    let room = ChatRoomModel()
-                    room.updateModelUsingDict(dataDict)
-                    chatRoomList.append(room)
+//            print("Return data from socket : \(dataArray)")
+//            print("Return socket ack : \(socketAck)")
+           
+            if let dataFirstIndex = dataArray[0] as? String{
+                if let data = dataFirstIndex.data(using: .utf8){
+                    do{
+                        if let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [Any]{
+                            var chatRoomList = [ChatRoomModel]()
+                            
+                            for data in jsonArray{
+                                if let dataDict = data as? [String:Any]{
+                                    let room = ChatRoomModel()
+                                    room.updateModelUsingDict(dataDict)
+                                    chatRoomList.append(room)
+                                }
+                            }
+                            result(chatRoomList)
+                        }
+                    } catch let error{
+                        print("\(error)")
+                    }
                 }
             }
-            result(chatRoomList)
         })
     }
 }

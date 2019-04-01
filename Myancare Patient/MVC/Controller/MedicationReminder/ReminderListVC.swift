@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import NVActivityIndicatorView
+import EMAlertController
 
 enum ReminderType {
     case today
@@ -192,16 +193,14 @@ extension ReminderListVC{
     }
     
     func confirmDelete(_ id:String){
-        let actionSheet = UIAlertController(title: "Are you sure to delete this reminder!", message: nil, preferredStyle: .alert)
+        let actionController = UIAlertController(title: "Warning", message: "Please confirm to delete this reminder!", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let confirm = UIAlertAction(title: "Confrim", style: .default) { (action) in
+        let confirm = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteReminderFromServer(id)
         }
-        
-        actionSheet.addAction(confirm)
-        actionSheet.addAction(cancel)
-        
-        self.present(actionSheet, animated: true, completion: nil)
+        actionController.addAction(cancel)
+        actionController.addAction(confirm)
+        self.present(actionController, animated: true, completion: nil)
     }
     
     func deleteReminderFromServer(_ id:String){
