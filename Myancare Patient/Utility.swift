@@ -65,6 +65,18 @@ func getComingDates(days: Int) -> NSMutableArray {
 
 class UtilityClass: NSObject {
     
+    class func get24Hour(_ date:Date) -> String{
+        let hour = Calendar.current.component(.hour, from: date)
+        let min = Calendar.current.component(.minute, from: date)
+        return "\(String(format: "%02d", hour)) : \(String(format: "%02d", min))"
+    }
+    
+    class func get12Hour(_ date:Date) -> String{
+        let fm = DateFormatter()
+        fm.dateFormat = "h:mm a"
+        return fm.string(from: date)
+    }
+    
     class func timeAgoSinceDate(_ date:Date,currentDate:Date, numericDates:Bool) -> String {
         let calendar = Calendar.current
         let now = currentDate

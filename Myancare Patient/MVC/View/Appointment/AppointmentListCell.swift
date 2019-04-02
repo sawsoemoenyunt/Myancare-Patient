@@ -26,19 +26,19 @@ class AppointmentListCell: UICollectionViewCell {
                     dateLabel.text = dateTime
                 }
                 typeBtn.setTitle("\(data.type!)", for: .normal)
-                conditionBtn.setTitle("\(data.booking_status!)", for: .normal)
+                conditionBtn.setTitle("\(data.booking_status)", for: .normal)
                 
                 switch data.booking_status{
-                case AppointmentStatus.waiting.rawValue:
+                case .PENDING:
                     conditionBtn.backgroundColor = UIColor.MyanCareColor.blue
                     break
-                case AppointmentStatus.rejected.rawValue:
+                case .REJECTED:
                     conditionBtn.backgroundColor = UIColor.red
                     break
-                case AppointmentStatus.reschedule.rawValue:
+                case .RESCHEDULE_BY_PATIENT, .RESCHEDULE_BY_DOCTOR:
                     conditionBtn.backgroundColor = UIColor.MyanCareColor.yellow
                     break
-                case AppointmentStatus.accepted.rawValue, AppointmentStatus.completed.rawValue:
+                case .APPROVED, .COMPLETED:
                     conditionBtn.backgroundColor = UIColor.MyanCareColor.green
                     break
                 default:

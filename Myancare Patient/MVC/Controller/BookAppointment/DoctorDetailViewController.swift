@@ -18,6 +18,12 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     var doctorID = ""
     var doctorData = DoctorModel()
     
+    lazy var likeButton : UIBarButtonItem = {
+        let btn = UIBarButtonItem(image: UIImage(named: "icons8-like")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(likeButtonClick))
+        btn.tintColor = UIColor.MyanCareColor.lightGray
+        return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,13 +32,15 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.register(DoctorDetailProfileCell.self, forCellWithReuseIdentifier: profileCellID)
         collectionView?.register(DoctorDetailAdditionCell.self, forCellWithReuseIdentifier: additionalCellID)
         
+        self.navigationItem.rightBarButtonItem = likeButton
+        
         if doctorID != "" {
             self.getDoctorData(doctorID)
         }
     }
     
     @objc func likeButtonClick(){
-        
+        likeButton.tintColor = UIColor.red
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -11,10 +11,18 @@ import UIKit
 ///slot cell
 class SlotsCell: UICollectionViewCell {
     
+    var operationHour: OperationHourModel?{
+        didSet{
+            if let data = operationHour{
+                timeLabel.text = "\(data.slot_start_time!) - \(data.slot_end_time!)"
+            }
+        }
+    }
+    
     let timeLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "1:45 PM - 2:00 PM"
-        lbl.font = UIFont.mmFontRegular(ofSize: 12)
+        lbl.font = UIFont.MyanCareFont.type4
         lbl.textAlignment = .center
         lbl.textColor = .gray
         return lbl

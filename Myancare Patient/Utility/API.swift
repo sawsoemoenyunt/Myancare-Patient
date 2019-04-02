@@ -9,6 +9,7 @@
 import Foundation
 
 let baseURLString = "http://159.65.10.176/api/"
+//let baseURLString = "http://192.168.1.188:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -38,10 +39,11 @@ enum EndPoints : ApiEndpoint {
     case getNotifications(Int,Int) //limit, skip
     case getArticles(Int,Int) //skip, limit
     case getArticleByID(String)
-    case getAppointmentHistory
+    case getAppointments(String,Int,Int) // skip ,limit
     case getReminders(Int,Int)
     case getRemindersToday(Int,Int)
     case deleteReminderByID(String)
+    case getOperationHours(String,String) //date, docID
     
     var path: URL
     {
@@ -86,14 +88,16 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"articles?skip=\(skip)&limit=\(limit)"))!
         case .getArticleByID(let id):
             return URL(string: String(baseURLString+"articles/\(id)"))!
-        case .getAppointmentHistory:
-            return URL(string: String(baseURLString+"appointments/history"))!
+        case .getAppointments(let type, let skip, let limit):
+            return URL(string: String(baseURLString+"appointments/\(type)?skip=\(skip)&limit=\(limit)"))!
         case .getReminders(let skip, let limit):
             return URL(string: String(baseURLString+"medical-reminder?skip=\(skip)&limit=\(limit)"))!
         case .getRemindersToday(let skip, let limit):
             return URL(string: String(baseURLString+"medical-reminder/today?skip=\(skip)&limit=\(limit)"))!
         case .deleteReminderByID(let id):
             return URL(string: String(baseURLString+"medical-reminder/\(id)"))!
+        case .getOperationHours(let date, let docID):
+            return URL(string: String(baseURLString+"operation-hours?date=\(date)&doctor=\(docID)"))!
         }
     }
 }

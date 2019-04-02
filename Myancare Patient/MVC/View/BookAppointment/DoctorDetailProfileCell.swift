@@ -171,7 +171,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         let btn = UIButton()
         btn.setTitle("Voice", for: .normal)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //yellow
+        btn.backgroundColor = UIColor.MyanCareColor.flamingo
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
@@ -179,14 +179,18 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     }()
     
     @objc func bookAppointment(){
-        doctorDetailViewController?.navigationController?.pushViewController(BookAppointmentViewController(), animated: true)
+       let bookVC = BookAppointmentViewController()
+        if let id = docData?.id!{
+            bookVC.doctorID = id
+            doctorDetailViewController?.navigationController?.pushViewController(bookVC, animated: true)
+        }
     }
     
     lazy var videoBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Video", for: .normal)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor(red:0.82, green:0.31, blue:0.16, alpha:1) //orange
+        btn.backgroundColor = UIColor.MyanCareColor.mantis //orange
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
@@ -197,7 +201,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         let btn = UIButton()
         btn.setTitle("Chat", for: .normal)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor(red:0.54, green:0.77, blue:0.45, alpha:1) //green
+        btn.backgroundColor = UIColor.MyanCareColor.lightSeaGreen //green
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)

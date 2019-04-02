@@ -24,18 +24,18 @@ class AppointmentDetailCell: UICollectionViewCell {
                     }
                 }
                 
-                statusBtn.setTitle("\(data.booking_status!.capitalized)", for: .normal)
+                statusBtn.setTitle("\(data.booking_status)", for: .normal)
                 
                 switch data.booking_status{
-                case AppointmentStatus.accepted.rawValue:
+                case .APPROVED:
                     statusBtn.backgroundColor = UIColor.MyanCareColor.green
-                case AppointmentStatus.completed.rawValue:
+                case .COMPLETED:
                     statusBtn.backgroundColor = UIColor.MyanCareColor.green
-                case AppointmentStatus.rejected.rawValue:
+                case .REJECTED:
                     statusBtn.backgroundColor = UIColor.red
-                case AppointmentStatus.waiting.rawValue:
+                case .PENDING:
                     statusBtn.backgroundColor = UIColor.MyanCareColor.yellow
-                case AppointmentStatus.reschedule.rawValue:
+                case .RESCHEDULE_BY_PATIENT, .RESCHEDULE_BY_DOCTOR:
                     scheduleLabel.text = "Reschedule Date/Time"
                     statusBtn.backgroundColor = UIColor.MyanCareColor.yellow
                 default:

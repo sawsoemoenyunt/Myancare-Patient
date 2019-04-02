@@ -8,6 +8,28 @@
 
 import Foundation
 
+enum BookingStatus : Int{
+    case PENDING = 0
+    case APPROVED = 1
+    case REJECTED = 2
+    case COMPLETED = 3
+    case CANCELED = 4
+    case CANCELEDBYSYSTEM = 5
+    case CALL_ONCE_SUCCESSFULL = 6
+    case CALL_INITIATED = 7
+    case DOCTIR_CALL_PATIENT_GOT_ALERTED = 8
+    case PATIENT_MISSED_THE_CALL = 9
+    case PATIENT_PICKS_THE_CALL = 10
+    case PATIENT_REJECTS_THE_CALL = 11
+    case DOCTOR_HUNGS_THE_CALL = 12
+    case PATIENT_HUNGS_THE_CALL = 13
+    case SOCKET_DISCONNECTED_CANCELED_BY_SYSTEM = 14
+    case DOCTOR_NOT_REPLY = 15
+    case PATIENT_NOT_REPLY = 16
+    case RESCHEDULE_BY_DOCTOR = 17
+    case RESCHEDULE_BY_PATIENT = 18
+}
+
 class AppointmentModel {
     
     var createdAt : String?
@@ -24,7 +46,7 @@ class AppointmentModel {
     var date_of_issue_utc : NSDictionary?
     var remarks : String?
     var reason : String?
-    var booking_status : String?
+    var booking_status  = BookingStatus.PENDING
     
     init() {
         createdAt = ""
@@ -41,7 +63,7 @@ class AppointmentModel {
         date_of_issue_utc = NSDictionary()
         remarks = ""
         reason = ""
-        booking_status = ""
+        booking_status = BookingStatus.PENDING
     }
     
     func updateModleUsingDict(_ dict:[String:Any]){
@@ -101,8 +123,65 @@ class AppointmentModel {
             reason = reason1
         }
         
-        if let booking_status1 = dict["booking_status"] as? String{
-            booking_status = booking_status1
+        if let booking_status1 = dict["booking_status"] as? Int{
+            switch booking_status1{
+            case BookingStatus.PENDING.rawValue:
+                booking_status = BookingStatus.PENDING
+            
+            case BookingStatus.APPROVED.rawValue:
+                booking_status = BookingStatus.APPROVED
+                
+            case BookingStatus.REJECTED.rawValue:
+                booking_status = BookingStatus.REJECTED
+                
+            case BookingStatus.COMPLETED.rawValue:
+                booking_status = BookingStatus.COMPLETED
+                
+            case BookingStatus.CANCELED.rawValue:
+                booking_status = BookingStatus.CANCELED
+                
+            case BookingStatus.CANCELEDBYSYSTEM.rawValue:
+                booking_status = BookingStatus.CANCELEDBYSYSTEM
+                
+            case BookingStatus.CALL_ONCE_SUCCESSFULL.rawValue:
+                booking_status = BookingStatus.CALL_ONCE_SUCCESSFULL
+                
+            case BookingStatus.CALL_INITIATED.rawValue:
+                booking_status = BookingStatus.CALL_INITIATED
+                
+            case BookingStatus.DOCTIR_CALL_PATIENT_GOT_ALERTED.rawValue:
+                booking_status = BookingStatus.DOCTIR_CALL_PATIENT_GOT_ALERTED
+                
+            case BookingStatus.PATIENT_MISSED_THE_CALL.rawValue:
+                booking_status = BookingStatus.PATIENT_MISSED_THE_CALL
+                
+            case BookingStatus.PATIENT_PICKS_THE_CALL.rawValue:
+                booking_status = BookingStatus.PATIENT_PICKS_THE_CALL
+                
+            case BookingStatus.PATIENT_REJECTS_THE_CALL.rawValue:
+                booking_status = BookingStatus.PATIENT_REJECTS_THE_CALL
+                
+            case BookingStatus.DOCTOR_HUNGS_THE_CALL.rawValue:
+                booking_status = BookingStatus.DOCTOR_HUNGS_THE_CALL
+                
+            case BookingStatus.PATIENT_HUNGS_THE_CALL.rawValue:
+                booking_status = BookingStatus.PATIENT_HUNGS_THE_CALL
+                
+            case BookingStatus.SOCKET_DISCONNECTED_CANCELED_BY_SYSTEM.rawValue:
+                booking_status = BookingStatus.SOCKET_DISCONNECTED_CANCELED_BY_SYSTEM
+                
+            case BookingStatus.DOCTOR_NOT_REPLY.rawValue:
+                booking_status = BookingStatus.DOCTOR_NOT_REPLY
+                
+            case BookingStatus.RESCHEDULE_BY_DOCTOR.rawValue:
+                booking_status = BookingStatus.RESCHEDULE_BY_DOCTOR
+                
+            case BookingStatus.RESCHEDULE_BY_PATIENT.rawValue:
+                booking_status = BookingStatus.RESCHEDULE_BY_PATIENT
+                
+            default:
+                break
+            }
         }
     }
 }

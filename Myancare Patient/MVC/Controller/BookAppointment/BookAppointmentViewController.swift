@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class BookAppointmentViewController: UIViewController {
+class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewable {
     
+    var doctorID = ""
     let cellID = "cellID"
     let cellIDCalender = "cellIDCalender"
     let dates = getComingDates(days: 30) //next 30 days
+    var slots = [OperationHourModel]()
+    var selectedDate = ""
+    var currentIndex = 0
     
     let datelabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Jan 2019"
-        lbl.font = UIFont.mmFontBold(ofSize: 16)
+        lbl.font = UIFont.MyanCareFont.type2
         return lbl
     }()
     
@@ -44,7 +50,6 @@ class BookAppointmentViewController: UIViewController {
         return btn
     }()
     
-    var currentIndex = 0
     @objc func nextBtnClick(){
         if currentIndex < 29 {
             currentIndex = currentIndex + 1
@@ -56,7 +61,10 @@ class BookAppointmentViewController: UIViewController {
                 let year = date.object(forKey: "year") as! Int
                 let weekday = date.object(forKey: "weekday") as! Int
                 datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
-                print("\(day)/\(month)/\(year) : weekday \(weekday)")
+                selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
+                if doctorID != "" && selectedDate != "" {
+                    self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
+                }
             }
         }
     }
@@ -81,14 +89,17 @@ class BookAppointmentViewController: UIViewController {
                 let year = date.object(forKey: "year") as! Int
                 let weekday = date.object(forKey: "weekday") as! Int
                 datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
-                print("\(day)/\(month)/\(year) : weekday \(weekday)")
+                selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
+                if doctorID != "" && selectedDate != "" {
+                    self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
+                }
             }
         }
     }
     
     let slotLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Slots Available"
+        lbl.text = "No Slots Available"
         lbl.font = UIFont.mmFontBold(ofSize: 16)
         return lbl
     }()
@@ -129,8 +140,14 @@ class BookAppointmentViewController: UIViewController {
             let date = dates[0] as! NSMutableDictionary
             let month = date.object(forKey: "month") as! Int
             let year = date.object(forKey: "year") as! Int
+            let day = date.object(forKey: "day") as! Int
             datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
             calendarView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top)
+            selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
+        }
+        
+        if doctorID != "" && selectedDate != "" {
+            self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
         }
     }
     
@@ -167,7 +184,10 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             let weekday = date.object(forKey: "weekday") as! Int
             datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
             currentIndex = indexPath.row
-            print("\(day)/\(month)/\(year) : weekday \(weekday)")
+            selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
+            if doctorID != "" && selectedDate != "" {
+                self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
+            }
         }
     }
     
@@ -176,7 +196,7 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
         if collectionView == calendarView {
             cellCount = dates.count > 0 ? dates.count : 0
         } else {
-            cellCount = 10
+            cellCount = slots.count
         }
         return cellCount
     }
@@ -191,6 +211,7 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             cell = calCell
         } else {
             let slotCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SlotsCell
+            slotCell.operationHour = slots[indexPath.row]
             cell = slotCell
         }
         return cell
@@ -207,5 +228,50 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
     }
 }
 
+extension BookAppointmentViewController{
+    func getSlotbyDateAndDoctorID(date:String, docID:String){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.getOperationHours(date, docID).path
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        print("REquested url for op ; \(url)")
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200{
+                    if let responseDataArray = response.result.value as? NSArray{
+                        self.assginData(responseDataArray)
+                    }
+                    
+                } else if responseStatus == 400{
+                    print("No operation hour found!")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func assginData(_ dataArray:NSArray){
+        
+        self.slots.removeAll()
+        
+        for data in dataArray{
+            if let dataDict = data as? [String:Any]{
+                let slot = OperationHourModel()
+                slot.updateModelUsingDict(dataDict)
+                self.slots.append(slot)
+            }
+        }
+        slotLabel.text = slots.count > 0 ? "Slots Available" : "No Slot Available"
+        self.slotCollectionView.reloadData()
+    }
+}
 
 

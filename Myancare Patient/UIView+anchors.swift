@@ -28,6 +28,16 @@ extension String {
     }
 }
 
+extension Date {
+    var millisecondsSince1970:Int {
+        return Int((self.timeIntervalSince1970 * 1000.0).rounded())
+    }
+    
+    init(milliseconds:Int) {
+        self = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
+    }
+}
+
 extension UIColor {
     //colors from Myancare UI
     struct MyanCareColor {
@@ -43,6 +53,9 @@ extension UIColor {
         static let font1 = UIColor(red:0.53, green:0.53, blue:0.53, alpha:1)
         static let font2 = UIColor(red:0.71, green:0.71, blue:0.71, alpha:1)
         static let font3 = UIColor(red:0.26, green:0.26, blue:0.26, alpha:1)
+        static let lightSeaGreen = UIColor(red:0.11, green:0.69, blue:0.65, alpha:1) //green blue
+        static let mantis = UIColor(red:0.53, green:0.76, blue:0.38, alpha:1) //green
+        static let flamingo = UIColor(red:0.93, green:0.36, blue:0.19, alpha:1) //orange
     }
 }
 

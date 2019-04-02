@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 
-enum AppointmentType{
-    case history
-    case ongoing
-    case upcoming
+enum AppointmentType:String{
+    case history = "history"
+    case ongoing = "ongoing"
+    case upcoming = "upcoming"
 }
 
 enum AppointmentStatus:String{
@@ -29,6 +29,8 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
     let cellID = "cellID"
     var numberofCell = 5
     var appointmentList = [AppointmentModel]()
+    var isPaging = true
+    var appointmentType = AppointmentType.upcoming
     
     lazy var listTypeSegment:UISegmentedControl = {
         let sg = UISegmentedControl(items: ["Upcoming","Ongoing", "History"])
@@ -52,23 +54,24 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
     }()
     
     @objc func refreshAppointment() {
-        numberofCell = Int.random(in: 1..<10)
+        isPaging = true
+        self.appointmentList.removeAll()
         refreshControl1.endRefreshing()
-        appointmentListCollectionView.reloadData()
+        self.getAppointments(appointmentType)
     }
     
     @objc func handleSegment(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             appointmentTypeLabel.text = "Upcoming Appointment"
-            numberofCell = 5
+            appointmentType = .upcoming
         } else if sender.selectedSegmentIndex == 1{
             appointmentTypeLabel.text = "Ongoing Appointment"
-            numberofCell = 2
+            appointmentType = .ongoing
         } else {
             appointmentTypeLabel.text = "Appointment History"
-            numberofCell = 10
+            appointmentType = .history
         }
-        self.appointmentListCollectionView.reloadData()
+        refreshAppointment()
     }
     
     let appointmentTypeLabel: UILabel = {
@@ -94,7 +97,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
         view.backgroundColor = .white
         appointmentListCollectionView.register(AppointmentListCell.self, forCellWithReuseIdentifier: cellID)
         setupViews()
-        addCutomData()
+        getAppointments(appointmentType)
     }
 
     func setupViews(){
@@ -118,12 +121,28 @@ extension AppointmentListViewController: UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if appointmentList.count == 0 {
+            let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
+            notDataLabel.text = "No \(appointmentType) appointment available!"
+            notDataLabel.textColor = UIColor.MyanCareColor.darkGray
+            notDataLabel.textAlignment = .center
+            appointmentListCollectionView.backgroundView = notDataLabel
+        }else{
+            appointmentListCollectionView.backgroundView = nil
+        }
         return appointmentList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AppointmentListCell
-       cell.appointmentData = appointmentList[indexPath.row]
+        if appointmentList.count > 0 {
+            cell.appointmentData = appointmentList[indexPath.row]
+        }
+        
+        if isPaging && indexPath.row == appointmentList.count - 1{
+            getAppointments(appointmentType)
+        }
+        
         return cell
     }
     
@@ -133,47 +152,29 @@ extension AppointmentListViewController: UICollectionViewDataSource, UICollectio
 }
 
 extension AppointmentListViewController{
-    func addCutomData(){
-        for item in 1...10{
-            let appointment = AppointmentModel()
-            appointment.doctor = ["name":"Dr.Phyo Phyo Maung", "image_url":"www.imagelink.com"]
-            appointment.patient = ["name":"Saw Soe Moe Nyunt"]
-            appointment.date_of_issue = ["date":"2019-3-30"]
-            appointment.reason = "I'm sick like a sick"
-            appointment.type = item%2 == 0 ? "voice" : "chat"
-            appointment.service_fees = 1500
-            appointment.total_appointment_fees = 2500
-            appointment.date_of_issue_utc = ["date":"019-03-30T15:34:29Z"]
-            
-            switch item{
-            case 0:
-                appointment.booking_status = "reschedule"
-                break
-            case 1:
-                appointment.booking_status = "waiting"
-                break
-            case 2:
-                appointment.booking_status = "accepted"
-                break
-            case 3:
-                appointment.booking_status = "completed"
-                break
-            default:
-                appointment.booking_status = "waiting"
-                break
-            }
-            
-            appointmentList.append(appointment)
-        }
-        self.appointmentListCollectionView.reloadData()
-    }
     
     func getAppointments(_ type:AppointmentType){
         
         self.startAnimating()
         
-        let url = EndPoints.getAppointmentHistory.path
-        let heads = ["Authorazations" : "\(jwtTkn)"]
+        let skip = appointmentList.count
+        let limit = 10
+        
+        var url = URL(string: "w")!
+        
+        switch type {
+        case .upcoming:
+            url = EndPoints.getAppointments(AppointmentType.upcoming.rawValue, skip, limit).path
+            break
+        case .ongoing:
+            url = EndPoints.getAppointments(AppointmentType.ongoing.rawValue, skip, limit).path
+            break
+        default:
+            url = EndPoints.getAppointments(AppointmentType.history.rawValue, skip, limit).path
+            break
+        }
+        
+        let heads = ["Authorization" : "\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             
@@ -195,6 +196,7 @@ extension AppointmentListViewController{
                                 self.appointmentList.append(appointment)
                             }
                         }
+                        self.isPaging = responseDataArray.count > 0 ? true : false
                         self.appointmentListCollectionView.reloadData()
                     }
                 }

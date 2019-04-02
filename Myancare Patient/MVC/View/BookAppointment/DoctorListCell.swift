@@ -82,6 +82,8 @@ class DoctorListCell: UICollectionViewCell{
         view.backgroundColor = UIColor.gray
         view.layer.cornerRadius = 7 // 14
         view.layer.masksToBounds = true
+        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderWidth = 0.5
         return view
     }()
     
