@@ -107,6 +107,7 @@
 		528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */; };
 		528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */; };
 		529490462237CE2200507240 /* EnterPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529490452237CE2200507240 /* EnterPasscodeVC.swift */; };
+		52A5774422531F3D00CD54F2 /* OperationHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5774322531F3D00CD54F2 /* OperationHourModel.swift */; };
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
 		52AE88942236197600867151 /* ShareBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE88932236197600867151 /* ShareBookVC.swift */; };
 		52AE889622361F8700867151 /* SelectBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AE889522361F8700867151 /* SelectBookVC.swift */; };
@@ -232,6 +233,7 @@
 		528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewEditProfileCell.swift; sourceTree = "<group>"; };
 		529490452237CE2200507240 /* EnterPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasscodeVC.swift; sourceTree = "<group>"; };
+		52A5774322531F3D00CD54F2 /* OperationHourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourModel.swift; sourceTree = "<group>"; };
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		52AE88932236197600867151 /* ShareBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareBookVC.swift; sourceTree = "<group>"; };
 		52AE889522361F8700867151 /* SelectBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBookVC.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 				52716F7E224F2D670048C4CD /* ArticleCategoryModel.swift */,
 				52554416224F576B00E23340 /* PaymentRateModel.swift */,
 				527A1D44225104C100B1D775 /* MedicalReminder.swift */,
+				52A5774322531F3D00CD54F2 /* OperationHourModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -943,6 +946,7 @@
 				5221AADA2250B3370090120A /* ReminderVC.swift in Sources */,
 				524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */,
 				524D8EC42237975200B7AEAB /* ReminderListCell.swift in Sources */,
+				52A5774422531F3D00CD54F2 /* OperationHourModel.swift in Sources */,
 				52C1973C224EA68F004AD6E9 /* ChatRoomModel.swift in Sources */,
 				524D8EA72237950200B7AEAB /* DoctorSearchSpecializationCell.swift in Sources */,
 				528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */,

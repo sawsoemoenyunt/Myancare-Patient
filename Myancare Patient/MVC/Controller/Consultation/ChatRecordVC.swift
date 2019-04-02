@@ -361,7 +361,7 @@ extension ChatRecordVC: UIImagePickerControllerDelegate, UINavigationControllerD
             switch responseStatus{
             case 200:
                 print("Image uploaded to s3 success...")
-                SocketManagerHandler.sharedInstance().emitChatMessage(roomID: self.roomID, messageString: self.imageUrl, imageType: 1)
+                SocketManagerHandler.sharedInstance().emitChatMessage(roomID: self.roomID, messageString: self.imageKey, imageType: 1)
                 print(self.imageUrl)
             default:
                 print("Failed uploading Image to s3...")

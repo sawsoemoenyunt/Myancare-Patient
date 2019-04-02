@@ -96,7 +96,8 @@ class ArticleCell: UICollectionViewCell {
     
     let icon1: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .gray
+        img.image = UIImage(named: "icons8-like")?.withRenderingMode(.alwaysTemplate)
+        img.tintColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         return img
@@ -104,7 +105,8 @@ class ArticleCell: UICollectionViewCell {
     
     let icon2: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .gray
+        img.image = UIImage(named: "icons8-share")?.withRenderingMode(.alwaysTemplate)
+        img.tintColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         return img
@@ -135,8 +137,8 @@ class ArticleCell: UICollectionViewCell {
         introlabel.anchor(articleImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 14, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         readBtn.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 20, rightConstant: 0, widthConstant: 50, heightConstant: 25)
         bookMarkBtn.anchor(nil, left: readBtn.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 20, rightConstant: 0, widthConstant: 100, heightConstant: 25)
-        icon2.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 30, heightConstant: 30)
-        icon1.anchor(nil, left: nil, bottom: bottomAnchor, right: icon2.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 10, widthConstant: 30, heightConstant: 30)
+        icon2.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 25, heightConstant: 25)
+        icon1.anchor(nil, left: nil, bottom: bottomAnchor, right: icon2.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 10, widthConstant: 25, heightConstant: 25)
         
         
         //        layer.borderColor = UIColor.MyanCareColor.lightGray.cgColor

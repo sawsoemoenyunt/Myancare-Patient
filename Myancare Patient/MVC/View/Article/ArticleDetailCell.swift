@@ -47,7 +47,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     lazy var likeBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("BOOKMARK", for: .normal)
+        btn.setTitle("10 Likes", for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
