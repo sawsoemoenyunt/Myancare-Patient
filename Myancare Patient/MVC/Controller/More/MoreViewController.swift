@@ -24,7 +24,8 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
                                    MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
                                    MenuButton(title: "Invite your Friend", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
                                    MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-ask_question_filled")),
-                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about"))]
+                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about")),
+                                   MenuButton(title: "Voice & Video Test", icon: UIImage(named: "icons8-phone")!)]
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -137,9 +138,26 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             
         }else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)
-        } else if indexPath.row == 2{
-            actionButtonAction()
+        } else if indexPath.row == 7{
+            showCallTypePicker()
         }
+    }
+    
+    func showCallTypePicker(){
+        let actionSheet = UIAlertController(title: "Choose option to test", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let mmBtn = UIAlertAction(title: "Voice", style: .default) { (action) in
+            self.actionButtonAction("Voice")
+        }
+        let enBtn = UIAlertAction(title: "Video", style: .default) { (action) in
+            self.actionButtonAction("Video")
+        }
+        
+        actionSheet.addAction(mmBtn)
+        actionSheet.addAction(enBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     /// funcion to initialize SINCH Client variable
@@ -150,22 +168,33 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
         return ((UIApplication.shared.delegate as? AppDelegate)?.client)!
     }
     
-    @objc func actionButtonAction()
+    @objc func actionButtonAction(_ type:String)
     {
         let myDictOfDict = [
-            "CALLER_NAME" : "Saw Soe MOe Nyunt",
+            "CALLER_NAME" : "Saw Soe Moe Nyunt",
             "CALL_ID" : "whyouwannknowmyid",
             "CALLER_IMAGE" : "http://portal.bilardo.gov.tr/assets/pages/media/profile/profile_user.jpg",
-            "RECEIVER_NAME" : "Ay Aye",
+            "RECEIVER_NAME" : "Aye Aye",
             "RECEIVER_IMAGE" : "https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg",
             "APPOINTMENT_ID" : "NOAPPIDBLBALBALBLA"
             ]
-        
-        if(self.client().isStarted())
-        {
-            weak var call: SINCall? = self.client().call().callUser(withId:"5c32d818870ffa2f826a6ea3",headers: myDictOfDict as [AnyHashable : Any])
+//        let id = "5c236db0477cf001e3979321"
+        let id = "5c32d818870ffa2f826a6ea3"
+        if type == "Voice"{
+            if(self.client().isStarted())
+            {
+                weak var call: SINCall? = self.client().call().callUser(withId:id,headers: myDictOfDict as [AnyHashable : Any])
+                
+                ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
+            }
             
-            ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
+        } else {
+            if(self.client().isStarted())
+            {
+                weak var call: SINCall? = self.client().call().callUserVideo(withId:id, headers: myDictOfDict as [AnyHashable : Any])
+                
+                ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
+            }
         }
     }
     

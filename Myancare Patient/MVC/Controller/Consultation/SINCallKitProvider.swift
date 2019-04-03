@@ -136,9 +136,17 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         let dicData = call?.headers
         print(" outgoing user headers====== \(dicData ?? [:])")
         
-        let nameCallee = "Aye Aye"
+        let nameCallee : String
+        if (dicData != nil && !(dicData?.isEmpty)!)
+        {
+            nameCallee = (dicData!["RECEIVER_NAME"] as? String)!
+        }
+        else
+        {
+            nameCallee = (call?.remoteUserId)!
+        }
         
-        let callHandle = CXHandle(type: .generic, value: nameCallee as String )
+        let callHandle = CXHandle(type: .generic, value: nameCallee)
         let controller = CXCallController()
         let transaction = CXTransaction(action: CXStartCallAction(call: UUID(uuidString: call?.callId ?? "")!, handle: callHandle))
         
@@ -216,8 +224,8 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
     
     func activeCalls() -> [SINCall]?
     {
-//        return _calls.compactMap{$0.value}
-        return _calls.flatMap{$0.value}
+        return _calls.compactMap{$0.value}
+//        return _calls.flatMap{$0.value}
     }
     
     func currentEstablishedCall() -> SINCall?
@@ -251,7 +259,6 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction)
     {
         
-        print("WIN LAR PAR TL")
         call(for: action)?.answer()
         
         guard let appD = appDelegate as? AppDelegate else {
@@ -261,9 +268,16 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         let topController = appD.window?.visibleViewController()
         let call1 = _calls[(action.callUUID)]
         
-        let voiceCallHandlingVc = VoiceCallHandlingVC()
-        voiceCallHandlingVc.setCall(call1!)
-        topController?.present(voiceCallHandlingVc, animated: true, completion: nil)
+        if (call1?.details.isVideoOffered)! {
+            let videoCallHandlingVc = VideoCallHandlingVC()
+            videoCallHandlingVc.setCall(call1!)
+            topController?.navigationController?.pushViewController (videoCallHandlingVc, animated: true)
+            
+        } else {
+            let voiceCallHandlingVc = VoiceCallHandlingVC()
+            voiceCallHandlingVc.setCall(call1!)
+            topController?.present(voiceCallHandlingVc, animated: true, completion: nil)
+        }
         
         action.fulfill()
     }
@@ -326,6 +340,17 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         if (call1?.details.isVideoOffered)!
         {
             //video call
+            let videoCallHandlingVC = VideoCallHandlingVC()
+            videoCallHandlingVC.setCall(call1!)
+            
+            topController?.present(videoCallHandlingVC, animated: false, completion:
+                {
+                    DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 5)
+                    {
+                        self._provider?.reportOutgoingCall(with: action.callUUID, connectedAt:date)
+                        action .fulfill()
+                    }
+            })
         }
         else
         {

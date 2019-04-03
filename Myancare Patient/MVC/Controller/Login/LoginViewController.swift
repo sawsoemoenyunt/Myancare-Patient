@@ -263,6 +263,13 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        countryCode = ""
+        pohoneID = ""
+        facebookID = ""
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         animateViews()

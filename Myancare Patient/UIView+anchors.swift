@@ -63,7 +63,7 @@ extension UIColor {
 extension UIImage{
     class func loadImage(_ urlString:String, result: @escaping (UIImage) -> ()){
         if urlString != ""{
-            let url = URL(string: "\(urlString)")!
+            let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
             Alamofire.request(url).responseImage { response in
                 
                 if let image = response.result.value {

@@ -34,6 +34,12 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         }
     }
     
+    func initSinch(){
+        if let userID = UserDefaults.standard.getUserData().object(forKey: "_id") as? String{
+            (UIApplication.shared.delegate as? AppDelegate)?.initSinchClient(withUserId: userID)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +56,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         
         UNUserNotificationCenter.current().delegate = self
         updateDeviceToken()
+        initSinch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
