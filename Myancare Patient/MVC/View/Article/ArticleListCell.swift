@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
 
 ///cell for article list
 class ArticleCell: UICollectionViewCell {
@@ -18,21 +16,13 @@ class ArticleCell: UICollectionViewCell {
         didSet{
             if let data = articleData{
                 titlelabel.text = data.title!
-                introlabel.text = data.short_description!
-                loadImage(data.image_url!)
-            }
-        }
-    }
-    
-    func loadImage(_ urlString:String){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.articleImage.image = image
+                if let htmlString = data.short_description?.htmlToAttributedString{
+                    introlabel.attributedText = htmlString
+                }
+                
+                UIImage.loadImage(data.image_url!) { (image) in
+                    self.articleImage.image = image
+                }
             }
         }
     }
@@ -67,9 +57,9 @@ class ArticleCell: UICollectionViewCell {
     lazy var readBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("READ", for: .normal)
-        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 16)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
+//        btn.setTitleColor(UIColor.MyanCareColor.curiousBlue, for: .normal)
+        btn.backgroundColor = UIColor.MyanCareColor.curiousBlue
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(readBtnClick), for: .touchUpInside)
@@ -86,9 +76,9 @@ class ArticleCell: UICollectionViewCell {
     lazy var bookMarkBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("BOOKMARK", for: .normal)
-        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 16)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
+//        btn.setTitleColor(UIColor.MyanCareColor.curiousBlue, for: .normal)
+        btn.backgroundColor = UIColor.MyanCareColor.curiousBlue
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
         return btn

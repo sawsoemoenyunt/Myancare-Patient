@@ -15,11 +15,15 @@ class NotiCell: UICollectionViewCell {
     var notiData:NotificationModel?{
         didSet{
             if let data = notiData{
-                let body = Localize.currentLanguage() == "en" ? data.message_en! : data.message_my!
-                let title = Localize.currentLanguage() == "en" ? data.title_en! : data.title_my!
+                let body = data.message_body!
+                let title = data.message_title!
                 self.setupAttributeString(title, body: body)
                 
-                dateLabel.text = data.createdAt!
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                if let createdDate = formatter.date(from: data.createdAt!){
+                    dateLabel.text = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
+                }
                 icon.image = UIImage.init(named: "icons8-alarm_clock")?.withRenderingMode(.alwaysTemplate)
                 
                 let notiTypeString = data.notification_type!.rawValue

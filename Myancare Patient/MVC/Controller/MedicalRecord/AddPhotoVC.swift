@@ -10,11 +10,13 @@ import UIKit
 
 class AddPhotoVC: UIViewController {
     
+    var recordBookID = ""
+    
     let icon: UIImageView = {
         let img = UIImageView()
+        img.image = UIImage(named: "hand-camera")
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.backgroundColor = .gray
         return img
     }()
     
@@ -68,6 +70,10 @@ class AddPhotoVC: UIViewController {
         return btn
     }()
     
+    @objc func skipBtnClick(){
+        self.navigationController?.pushViewController(PhotoGalleryVC(), animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -77,8 +83,8 @@ class AddPhotoVC: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(icon)
-        view.addSubview(photolabel)
-        view.addSubview(infolabel)
+//        view.addSubview(photolabel)
+//        view.addSubview(infolabel)
         view.addSubview(chooseBtn)
         view.addSubview(skipBtn)
         
@@ -86,9 +92,9 @@ class AddPhotoVC: UIViewController {
         chooseBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         skipBtn.anchor(nil, left: v.leftAnchor, bottom: chooseBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 10, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         
-        photolabel.anchorCenterSuperview()
-        icon.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 250)
-        icon.anchorCenterXToSuperview()
-        infolabel.anchor(photolabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+//        photolabel.anchorCenterSuperview()
+        icon.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width, heightConstant: 300)
+        icon.anchorCenterSuperview()
+//        infolabel.anchor(photolabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
     }
 }

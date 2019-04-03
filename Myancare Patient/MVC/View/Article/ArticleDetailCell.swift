@@ -47,34 +47,40 @@ class ArticleDetailCell: UICollectionViewCell {
     
     lazy var likeBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("10 Likes", for: .normal)
+        btn.setTitle(" 10 Likes", for: .normal)
+        btn.setImage(UIImage(named: "icons8-like")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.setTitleColor(UIColor.MyanCareColor.darkGray, for: .normal)
+        btn.tintColor = UIColor.MyanCareColor.darkGray
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.isEnabled = true
         return btn
     }()
     
     lazy var bookmarkBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("BOOKMARK", for: .normal)
+        btn.setTitle(" Bookmark", for: .normal)
+        btn.setImage(UIImage(named: "icons8-bookmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.tintColor = UIColor.MyanCareColor.darkGray
+        btn.setTitleColor(UIColor.MyanCareColor.darkGray, for: .normal)
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.isEnabled = true
         return btn
     }()
     
     lazy var shareBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SHARE", for: .normal)
+        btn.setTitle(" Share", for: .normal)
+        btn.setImage(UIImage(named: "icons8-share")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
-        btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.green
+        btn.tintColor = UIColor.MyanCareColor.darkGray
+        btn.setTitleColor(UIColor.MyanCareColor.darkGray, for: .normal)
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.isEnabled = true
         return btn
     }()
     

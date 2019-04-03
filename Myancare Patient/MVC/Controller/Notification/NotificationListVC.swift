@@ -9,12 +9,14 @@
 import UIKit
 import Alamofire
 import NVActivityIndicatorView
+import Localize_Swift
 
 ///Notifiction list view to show notifications loaded from server
 class NotificationListVC: UIViewController, NVActivityIndicatorViewable{
     
     let cellID = "cellID"
     var notiList = [NotificationModel]()
+    var isPaging = true
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,11 +30,25 @@ class NotificationListVC: UIViewController, NVActivityIndicatorViewable{
         return cv
     }()
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshDoctorData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshDoctorData() {
+        isPaging = true
+        notiList.removeAll()
+        getAllNotis()
+        self.refreshControl1.endRefreshing()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         
         self.getAllNotis()
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     func setupViews(){
@@ -42,6 +58,7 @@ class NotificationListVC: UIViewController, NVActivityIndicatorViewable{
         view.addSubview(collectionView)
         let v = view.safeAreaLayoutGuide
         collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        collectionView.refreshControl = refreshControl1
         
         collectionView.register(NotiCell.self, forCellWithReuseIdentifier: cellID)
     }
@@ -55,7 +72,13 @@ extension NotificationListVC: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! NotiCell
-        cell.notiData = notiList[indexPath.row]
+        
+        if notiList.count > 0{
+            cell.notiData = notiList[indexPath.row]
+            if isPaging && indexPath.row == notiList.count-1 {
+                getAllNotis()
+            }
+        }
         
         return cell
     }
@@ -79,11 +102,14 @@ extension NotificationListVC: UICollectionViewDelegate, UICollectionViewDataSour
 extension NotificationListVC{
     func getAllNotis(){
         
-        self.startAnimating()
+        if notiList.count == 0{
+            self.startAnimating()
+        }
         
         let limit = 10
-        let skip = notiList.count > 0 ? notiList.count : 0
-        let url = EndPoints.getNotifications(limit, skip).path
+        let skip = notiList.count
+        let language = Localize.currentLanguage() == "en" ? "en" : "mm"
+        let url = EndPoints.getNotifications(limit, skip, language).path
         
         let heads = ["Authorization":"\(jwtTkn)"]
         
@@ -110,6 +136,7 @@ extension NotificationListVC{
                                 self.notiList.append(noti)
                             }
                         }
+                        self.isPaging = responseDataArr.count > 0 ? true : false
                         self.collectionView.reloadData()
                     }
                 }

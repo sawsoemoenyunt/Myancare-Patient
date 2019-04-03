@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class RecordBookVC: UIViewController {
+class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
+    var isPaging = true
+    var recordBooks = [MedicalRecordBookModel]()
+    var popupTopConstraint:NSLayoutConstraint?
+    var isUpdate = false
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,6 +65,8 @@ class RecordBookVC: UIViewController {
     }()
     
     @objc func addBtnClick(){
+        isUpdate = false
+        popupdatelabel.text = "Add Book Cover"
         showPopUpView(true)
     }
     
@@ -148,7 +156,30 @@ class RecordBookVC: UIViewController {
         hideKeyboard()
     }
     
-    var popupTopConstraint:NSLayoutConstraint?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        setupPopupView()
+        popupBackgroundView.isHidden = true
+        
+        getAllMedicalRecords()
+    }
+    
+    func setupViews(){
+        self.title = "Record Book"
+        view.backgroundColor = .white
+        
+        view.addSubview(typeSegment)
+        view.addSubview(collectionView)
+        view.addSubview(addBtn)
+        
+        let v = view.safeAreaLayoutGuide
+        typeSegment.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
+        collectionView.anchor(typeSegment.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
+        
+        collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
+    }
     
     func setupPopupView(){
         popupBackgroundView.tag = 100
@@ -196,48 +227,36 @@ class RecordBookVC: UIViewController {
     
     func animatePopView(constant:CGFloat){
         popupTopConstraint?.constant = constant
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        setupPopupView()
-        popupBackgroundView.isHidden = true
-    }
-    
-    func setupViews(){
-        self.title = "Record Book"
-        view.backgroundColor = .white
-        
-        view.addSubview(typeSegment)
-        view.addSubview(collectionView)
-        view.addSubview(addBtn)
-        
-        let v = view.safeAreaLayoutGuide
-        typeSegment.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
-        collectionView.anchor(typeSegment.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
-        
-        collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
-    }
 }
 
+///handle collectionview delegate and datasource
 extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(PhotoGalleryVC(), animated: true)
+        let addPhotoVC = AddPhotoVC()
+        addPhotoVC.recordBookID = recordBooks[indexPath.row].id!
+        self.navigationController?.pushViewController(addPhotoVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
+        return recordBooks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MedicalRecordCell
-        cell.medicalRecordVC = self
+
+        if recordBooks.count > 0 {
+            cell.recordData = recordBooks[indexPath.row]
+            cell.medicalRecordVC = self
+            
+            if isPaging && indexPath.row == recordBooks.count - 1{
+                self.getAllMedicalRecords()
+            }
+        }
         return cell
     }
     
@@ -246,6 +265,7 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
 }
 
+///handle textfield properties and functions
 extension RecordBookVC: UITextFieldDelegate{
     
     func hideKeyboard(){
@@ -266,3 +286,49 @@ extension RecordBookVC: UITextFieldDelegate{
     }
 }
 
+///fetch medical records from server
+extension RecordBookVC{
+    
+    func getAllMedicalRecords(){
+        
+        if recordBooks.count == 0{
+            self.startAnimating()
+        }
+        
+        let skip = recordBooks.count
+        let limit = 10
+        
+        let url = EndPoints.getMedicalRecordBooks(skip, limit).path
+        let heads = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                
+                if responseStatus == 200{
+                    if let responseArray = response.result.value as? NSArray{
+                        for responseData in responseArray{
+                            if let dataDict = responseData as? [String:Any]{
+                                let book = MedicalRecordBookModel()
+                                book.updateModelUsingDict(dataDict)
+                                
+                                self.recordBooks.append(book)
+                            }
+                        }
+                        self.isPaging = responseArray.count > 0 ? true : false
+                        self.collectionView.reloadData()
+                    }
+                    
+                } else {
+                    print("Data not found!")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+}

@@ -41,10 +41,8 @@ class NotificationModel
     var user : String?
     var notification_type : NotiTypeEnum?
     var from_user : String?
-    var message_en : String?
-    var message_my : String?
-    var title_en : String?
-    var title_my : String?
+    var message_title : String?
+    var message_body : String?
     var createdAt : String?
     var updatedAt : String?
     
@@ -56,10 +54,8 @@ class NotificationModel
         user = ""
         notification_type = NotiTypeEnum.DEFAULT
         from_user = ""
-        message_en = ""
-        message_my = ""
-        title_en = ""
-        title_my = ""
+        message_title = ""
+        message_body = ""
         createdAt = ""
         updatedAt = ""
     }
@@ -166,24 +162,13 @@ class NotificationModel
         }
         
         if let messageDict = dict["message"] as? NSDictionary{
-            if let messageEnDict = messageDict.object(forKey: "en") as? NSDictionary{
-                if let message = messageEnDict.object(forKey: "body") as? String{
-                    message_en = message
-                }
-                
-                if let title = messageEnDict.object(forKey: "title") as? String{
-                    title_en = title
-                }
+            
+            if let message = messageDict.object(forKey: "body") as? String{
+                message_title = message
             }
             
-            if let messageMyDict = messageDict.object(forKey: "my") as? NSDictionary{
-                if let message = messageMyDict.object(forKey: "body") as? String{
-                    message_my = message
-                }
-                
-                if let title = messageMyDict.object(forKey: "title") as? String{
-                    title_my = title
-                }
+            if let title = messageDict.object(forKey: "title") as? String{
+                message_body = title
             }
         }
     }

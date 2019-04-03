@@ -11,6 +11,15 @@ import UIKit
 class MedicalRecordCell: UICollectionViewCell {
     
     var medicalRecordVC: RecordBookVC?
+    var recordData : MedicalRecordBookModel?{
+        didSet{
+            if let data = recordData{
+                docNamelabel.text = data.doctor_name!
+                dateLabel.text = data.hospital_name!
+                infolabel.text  = data.description!
+            }
+        }
+    }
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -67,7 +76,10 @@ class MedicalRecordCell: UICollectionViewCell {
     }()
     
     @objc func editBtnclick() {
+        medicalRecordVC?.isUpdate = true
         medicalRecordVC?.popuptitlelabel.text = "Edit Book Cover"
+        medicalRecordVC?.docNameTextField.text = recordData?.doctor_name
+        medicalRecordVC?.reasonTextField.text = recordData?.description
         medicalRecordVC?.showPopUpView(true)
     }
     

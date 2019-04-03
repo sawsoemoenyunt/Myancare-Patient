@@ -36,7 +36,7 @@ enum EndPoints : ApiEndpoint {
     case getDoctorFilter(String)
     case getSpecializations
     case getDocotrBySpecialiation(String)
-    case getNotifications(Int,Int) //limit, skip
+    case getNotifications(Int,Int, String) //limit, skip, lan
     case getArticles(Int,Int) //skip, limit
     case getArticleByID(String)
     case getAppointments(String,Int,Int) // skip ,limit
@@ -44,6 +44,7 @@ enum EndPoints : ApiEndpoint {
     case getRemindersToday(Int,Int)
     case deleteReminderByID(String)
     case getOperationHours(String,String) //date, docID
+    case getMedicalRecordBooks(Int,Int) //skip, limit
     
     var path: URL
     {
@@ -82,8 +83,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"specializations"))!
         case .getDocotrBySpecialiation(let specID):
             return URL(string: String(baseURLString+"doctors?specialization=\(specID)"))!
-        case .getNotifications(let limit, let skip):
-            return URL(string: String(baseURLString+"notifications?limit=\(limit)&skip=\(skip)"))!
+        case .getNotifications(let limit, let skip, let language):
+            return URL(string: String(baseURLString+"notifications?limit=\(limit)&skip=\(skip)&language=\(language)"))!
         case .getArticles(let skip, let limit):
             return URL(string: String(baseURLString+"articles?skip=\(skip)&limit=\(limit)"))!
         case .getArticleByID(let id):
@@ -98,6 +99,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"medical-reminder/\(id)"))!
         case .getOperationHours(let date, let docID):
             return URL(string: String(baseURLString+"operation-hours?date=\(date)&doctor=\(docID)"))!
+        case .getMedicalRecordBooks(let skip, let limit):
+            return URL(string: String(baseURLString+"medical-record-book?skip=\(skip)&limit=\(limit)"))!
         }
     }
 }

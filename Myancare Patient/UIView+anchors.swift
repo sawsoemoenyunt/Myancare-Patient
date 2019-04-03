@@ -45,6 +45,7 @@ extension UIColor {
         static let orange = UIColor(red:0.94, green:0.36, blue:0.19, alpha:1) //orange
         static let gray = UIColor(red:0.4, green:0.4, blue:0.4, alpha:1) //gray
         static let blue = UIColor(red:0.07, green:0.42, blue:0.98, alpha:1) //blue
+        static let curiousBlue = UIColor(red:0.14, green:0.61, blue:0.82, alpha:1)
         static let lightGray = UIColor(red:0.81, green:0.8, blue:0.8, alpha:1) //light gray
         static let fbBlue = UIColor(red:0.31, green:0.45, blue:0.65, alpha:1) //facebook blue
         static let yellow = UIColor(red:0.98, green:0.83, blue:0.19, alpha:1) //yellow

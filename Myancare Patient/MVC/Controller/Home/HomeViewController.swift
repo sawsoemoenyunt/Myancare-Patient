@@ -10,6 +10,7 @@ import UIKit
 import Localize_Swift
 import Alamofire
 import NVActivityIndicatorView
+import UserNotifications
 
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
@@ -45,6 +46,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.collectionView?.register(MenuOnlineCell.self, forCellWithReuseIdentifier: collectionViewCellID_Online)
         self.collectionView?.register(MenuTodayCell.self, forCellWithReuseIdentifier: collectionViewCellID_Today)
         
+        UNUserNotificationCenter.current().delegate = self
         updateDeviceToken()
     }
     
@@ -220,5 +222,12 @@ extension HomeViewController{
         }
         
         self.collectionView.reloadData()
+    }
+}
+
+extension HomeViewController: UNUserNotificationCenterDelegate{
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert,.sound,.badge])
     }
 }

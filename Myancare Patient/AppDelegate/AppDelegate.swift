@@ -15,9 +15,10 @@ import IQKeyboardManagerSwift
 import PKHUD
 import AudioToolbox
 import Sinch
+import UserNotifications
 
-let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
-//let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
+//let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
+let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
 
 var appDelegate = UIApplication.shared.delegate
@@ -68,6 +69,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         return true
     }
     
+    func registerNotification(){
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge,.alert,.sound]) { (success, error) in
+            if error != nil{
+                return
+            }
+        }
+    }
+    
     func registerPushyDevice(){
         
         // Initialize Pushy SDK
@@ -92,30 +101,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
             // Print notification payload data
             print("Received notification: \(data)")
             
+            
             // Fallback message containing data payload
             var message = "\(data)"
             
             // Attempt to extract "message" key from APNs payload
             if let aps = data["aps"] as? [AnyHashable : Any] {
+                print("aps : \(aps)")
                 if let payloadMessage = aps["alert"] as? String {
                     message = payloadMessage
                 }
             }
             
-            // Display the notification as an alert
-            let alert = UIAlertController(title: "Incoming Notification", message: message, preferredStyle: UIAlertController.Style.alert)
+            if let ms = data[AnyHashable("message")] as? NSDictionary {
+                print("ms : \(ms)")
+                if let payloadMessage = ms["title"] as Any? {
+                   print(payloadMessage)
+                }
+            }
             
-            // Add an action button
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            print("message : \(message)")
             
-            // Show the alert dialog
-            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            var messageTitle = ""
+            var messageBody = ""
+            if let msg = data["message"] as? [AnyHashable:Any]{
+                print("msg dict : \(msg)")
+//                if let msg = msgDict as? [String:Any]{
+                    if let msgTitle = msg["title"] as? String{
+                        messageTitle = msgTitle
+                    }
+                    
+                    if Localize.currentLanguage() == "en"{
+                        if let msgBody = msg["body_en"] as? String{
+                            messageBody = msgBody
+                        }
+                    } else {
+                        if let msgBody = msg["body_mm"] as? String{
+                            messageBody = msgBody
+                        }
+                    }
+//                }
+            }
+            print("your message : \(messageTitle)")
+            let content = UNMutableNotificationContent()
+            content.title = messageTitle
+            content.body = messageBody
+            content.sound = UNNotificationSound.default
             
-            // Play notification sound (cute tweet noise)
-            AudioServicesPlaySystemSound(1016)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+            let request = UNNotificationRequest(identifier: "Identifier", content: content, trigger: trigger)
             
-            // Vibrate the device
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                print("\(error)")
+            })
             
             // You must call this completion handler when you finish processing
             // the notification (after fetching background data, if applicable)
