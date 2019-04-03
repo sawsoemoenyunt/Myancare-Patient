@@ -51,7 +51,7 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>"Myancare need your permission to access photo library"</string>
+	<string>&quot;Myancare need your permission to access photo library&quot;</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pyidaungsu.ttf</string>
@@ -77,5 +77,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>voip</string>
+	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>&quot;Myancare need your permission to access microphone&quot;</string>
+	<key>NSCameraUsageDescription</key>
+	<string>&quot;Myancare need your permision to access camera&quot;</string>
 </dict>
 </plist>

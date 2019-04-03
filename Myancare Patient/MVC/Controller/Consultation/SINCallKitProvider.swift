@@ -128,6 +128,46 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         }
     }
     
+    /// function called when there is a new outgoing call
+    ///
+    /// - Parameter call: sinch call reference
+    func reportNewOutgoingCall(_ call: SINCall?)
+    {
+        let dicData = call?.headers
+        print(" outgoing user headers====== \(dicData ?? [:])")
+        
+        let nameCallee = "Aye Aye"
+        
+        let callHandle = CXHandle(type: .generic, value: nameCallee as String )
+        let controller = CXCallController()
+        let transaction = CXTransaction(action: CXStartCallAction(call: UUID(uuidString: call?.callId ?? "")!, handle: callHandle))
+        
+        controller.request(transaction, completion: { error in
+            
+            if error == nil
+            {
+                let update = CXCallUpdate()
+                update.remoteHandle = callHandle
+                update.supportsDTMF = true
+                update.supportsHolding = false
+                update.supportsGrouping = false
+                update.supportsUngrouping = false
+                
+                if (call?.details.isVideoOffered)!
+                {
+                    update.hasVideo = true
+                }
+                else
+                {
+                    update.hasVideo = false
+                }
+                
+                self.addNewCall(call)
+                self._provider?.reportCall(with: UUID(uuidString: (call?.callId)!)!, updated: update)
+            }
+        })
+    }
+    
     func addNewCall(_ call: SINCall?)
     {
         print("addNewCall: Adding call: \(call?.callId ?? "")")
@@ -176,7 +216,8 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
     
     func activeCalls() -> [SINCall]?
     {
-        return _calls.compactMap{$0.value}
+//        return _calls.compactMap{$0.value}
+        return _calls.flatMap{$0.value}
     }
     
     func currentEstablishedCall() -> SINCall?
@@ -209,6 +250,8 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction)
     {
+        
+        print("WIN LAR PAR TL")
         call(for: action)?.answer()
         
         guard let appD = appDelegate as? AppDelegate else {
@@ -218,20 +261,9 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         let topController = appD.window?.visibleViewController()
         let call1 = _calls[(action.callUUID)]
         
-        if (call1?.details.isVideoOffered)!
-        {
-//            let videoCallHandlingVC = UIStoryboard.getCallHandlingStoryBoard().instantiateViewController(withIdentifier: "videoCallHandlingVC") as! VideoCallHandlingVC
-//            videoCallHandlingVC.setCall(call1!)
-//            topController?.present(videoCallHandlingVC, animated: false, completion: nil)
-            //present video call view
-        }
-        else
-        {
-//            let callHandlingVC = UIStoryboard.getCallHandlingStoryBoard().instantiateViewController(withIdentifier: "CallHandlingVC") as! CallHandlingVC
-//            callHandlingVC.setCall(call1!)
-//            topController?.present(callHandlingVC, animated: false, completion: nil)
-            //present voice call view
-        }
+        let voiceCallHandlingVc = VoiceCallHandlingVC()
+        voiceCallHandlingVc.setCall(call1!)
+        topController?.present(voiceCallHandlingVc, animated: true, completion: nil)
         
         action.fulfill()
     }
@@ -269,5 +301,45 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
     func providerDidReset(_ provider: CXProvider)
     {
         print("-[CXProviderDelegate providerDidReset:]")
+    }
+    
+    /// delegate method of cxprovider -> perform action -> start call
+    ///
+    /// - Parameters:
+    ///   - provider: CXProvider reference
+    ///   - action: CXStartCallAction reference
+    func provider(_ provider: CXProvider, perform action: CXStartCallAction)
+    {
+        print("Provider performs the start call action")
+        
+        guard let appD = appDelegate as? AppDelegate else {
+            return
+        }
+        
+        let topController = appD.window?.visibleViewController()
+        
+        let date = Date()
+        self._provider?.reportOutgoingCall(with: action.callUUID, startedConnectingAt: date)
+        
+        let call1 = _calls[(action.callUUID)]
+        
+        if (call1?.details.isVideoOffered)!
+        {
+            //video call
+        }
+        else
+        {
+            let callHandlingVC = VoiceCallHandlingVC()
+            callHandlingVC.setCall(call1!)
+            
+            topController?.present(callHandlingVC, animated: false, completion:
+                {
+                    DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 5)
+                    {
+                        self._provider?.reportOutgoingCall(with: action.callUUID, connectedAt:date)
+                        action .fulfill()
+                    }
+            })
+        }
     }
 }

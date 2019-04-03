@@ -79,7 +79,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
         btn.backgroundColor = UIColor.red
         btn.layer.cornerRadius = 35 //70
         btn.clipsToBounds = true
-//        btn.addTarget(self, action: #selector(hangupBtnClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(hangup(_:)), for: .touchUpInside)
         return btn
     }()
     
@@ -95,6 +95,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
         btn.backgroundColor = UIColor.gray
         btn.layer.cornerRadius = 35 //70
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(muteUnmute(_:)), for: .touchUpInside)
         return btn
     }()
     
@@ -106,6 +107,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 35 //70
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(speaker(_:)), for: .touchUpInside)
         return btn
     }()
     

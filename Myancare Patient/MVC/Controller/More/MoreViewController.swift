@@ -10,9 +10,12 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import Localize_Swift
+import CallKit
+import Sinch
 
 class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
+    var appointmentModelData = AppointmentModel()
     let cellID = "cellID"
     let cellID_profile = "cellID_profile"
     let buttonList:[MenuButton] = [MenuButton(title: "Username", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
@@ -134,6 +137,35 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             
         }else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)
+        } else if indexPath.row == 2{
+            actionButtonAction()
+        }
+    }
+    
+    /// funcion to initialize SINCH Client variable
+    ///
+    /// - Returns: return SINClient value
+    func client() -> SINClient
+    {
+        return ((UIApplication.shared.delegate as? AppDelegate)?.client)!
+    }
+    
+    @objc func actionButtonAction()
+    {
+        let myDictOfDict = [
+            "CALLER_NAME" : "Saw Soe MOe Nyunt",
+            "CALL_ID" : "whyouwannknowmyid",
+            "CALLER_IMAGE" : "http://portal.bilardo.gov.tr/assets/pages/media/profile/profile_user.jpg",
+            "RECEIVER_NAME" : "Ay Aye",
+            "RECEIVER_IMAGE" : "https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg",
+            "APPOINTMENT_ID" : "NOAPPIDBLBALBALBLA"
+            ]
+        
+        if(self.client().isStarted())
+        {
+            weak var call: SINCall? = self.client().call().callUser(withId:"5c32d818870ffa2f826a6ea3",headers: myDictOfDict as [AnyHashable : Any])
+            
+            ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
         }
     }
     

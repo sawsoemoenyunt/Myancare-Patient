@@ -17,8 +17,10 @@ import AudioToolbox
 import Sinch
 import UserNotifications
 import Alamofire
+import PushKit
+import CallKit
 
-let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
+let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTU0MjgzNjYyfQ.ZSBCbJu1soHAGH6CGq9h0yg7pliYbSqAphMu1Hw-s9U" //akm
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
 
@@ -26,7 +28,7 @@ var appDelegate = UIApplication.shared.delegate
 var callDuration: String = ""
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout {
+class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateFlowLayout, UNUserNotificationCenterDelegate, SINClientDelegate, SINCallClientDelegate, SINManagedPushDelegate, SINCallDelegate {
 
     var window: UIWindow?
     var client: SINClient?
@@ -50,6 +52,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         //IQKeyboardmanager
         IQKeyboardManager.shared.enable = true
         
+        // sinch work
+        if let spush = Sinch.managedPush(with: SINAPSEnvironment.production)
+        {
+            self.push = spush
+        }
+        //register for voip notifications
+//        let voipRegistry = PKPushRegistry(queue: DispatchQueue.main)
+//        voipRegistry.desiredPushTypes = Set([PKPushType.voIP])
+//        voipRegistry.delegate = self
+        
+        self.push?.delegate = self
+        self.push?.setDesiredPushTypeAutomatically()
+        
         //register pushy
         registerPushyDevice()
         
@@ -61,6 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
         //update user data
         if UserDefaults.standard.isLoggedIn(){
+            if let userID = UserDefaults.standard.getUserData().object(forKey: "_id") as? String{
+                self.initSinchClient(withUserId: userID)
+            }
             updateUserData()
         }
         
@@ -173,6 +191,185 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         SocketManagerHandler.sharedInstance().disconnectSocket()
     }
 
+}
+
+extension AppDelegate{
+    /* ====================== Sinch Work =============================== */
+    // Sinch SDK 3.12.4
+    //konstantinfo02@gmail.com/konstant123
+    // MARK: -  Sinch Init
+    func initSinchClient(withUserId userId: String)
+    {
+        if !(self.client != nil)
+        {
+            if userId.isEmpty
+            {
+                
+            }
+            else
+            {
+                self.client = Sinch.client(withApplicationKey: "d68d658e-b5d6-4617-b12f-968fba671bb6", applicationSecret: "IYAVEU82qUabQ7U/ynqbsQ==", environmentHost: "clientapi.sinch.com", userId: userId)
+                
+                client?.delegate = self
+                client?.call().delegate = self
+                
+                client?.setSupportCalling(true)
+                client?.setSupportPushNotifications(true)
+                client?.enableManagedPushNotifications()
+                
+                client?.start()
+                
+                client?.startListeningOnActiveConnection()
+                
+                callKitProvider = SINCallKitProvider(client: client)
+            }
+        }
+    }
+    
+    func stopSinchClient()
+    {
+        client?.stop()
+    }
+    
+    // MARK: -  SINManagedPushDelegate
+    func managedPush(_ unused: SINManagedPush, didReceiveIncomingPushWithPayload payload: [AnyHashable: Any], forType pushType: String)
+    {
+        print("SINManagedPush Incoming call")
+        self.handleRemoteNotification(payload)
+    }
+    
+    func handleRemoteNotification(_ userInfo: [AnyHashable: Any])
+    {
+        print("Handle Remote notificaiton")
+        
+        if !(client != nil)
+        {
+            if let userId = UserDefaults.standard.getUserData().object(forKey: "_id") as? String{
+                
+                self.initSinchClient(withUserId: userId)
+            }
+        }
+        
+        print("userinfo Managed Push===== \(userInfo)")
+        
+        let dic = userInfo
+        let sinchinfo = dic["sin"] as? String
+        
+        if sinchinfo == nil
+        {
+            return
+        }
+        
+        let aps = dic[AnyHashable("sin")] as? String
+        
+        var dictonary:NSDictionary?
+        
+        if let data = aps?.data(using: String.Encoding.utf8)
+        {
+            do
+            {
+                dictonary = try JSONSerialization.jsonObject(with: data, options: []) as? [String:AnyObject] as! NSDictionary
+                
+                if let myDictionary = dictonary
+                {
+                    let dict = myDictionary["public_headers"] as! NSDictionary
+                    if let val = dict["CALLER_NAME"]
+                    {
+                        print(val)
+                        //userDefaults.set(userInfo, forKey: "sinchUserInfo")
+                        userDefaults.set(myDictionary, forKey: "pushUserInfo")
+                        userDefaults.synchronize()
+                    }
+                }
+            }
+            catch let error as NSError
+            {
+                print(error)
+            }
+        }
+        
+        _ = SINNotificationResult.self
+        
+        if let result = client?.relayRemotePushNotification(userInfo)
+        {
+            if (result.isCall()) && (result.call()?.isCallCanceled)!
+            {
+//                setMissedNotification()
+            }
+            else if (result.isCall()) && (result.call()?.isTimedOut)!
+            {
+//                setMissedNotification()
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    
+    //MARK: - Sinch Call Fire Socket Event
+    func sinchSocketCallEvent(_ eventType:String, appointmentID: String)
+    {
+        if !SocketManagerHandler.sharedInstance().isSocketConnected()
+        {
+            return
+        }
+        
+//        SocketManagerHandler.sharedInstance().manageCallSocketEvent (callDuration, eventType: eventType, appointmentID: appointmentID) { (dataDict, statusCode) in
+//
+//        }
+    }
+    
+    // MARK: -  SINCallClientDelegate
+    func client(_ client: SINCallClient, didReceiveIncomingCall call: SINCall)
+    {
+        //Find MainViewController and present CallViewController from it.
+        
+        print(" didReceiveIncomingCall Incoming call")
+        
+        if !(callKitProvider?._calls.isEmpty)!
+        {
+            
+        }
+        else
+        {
+            let state: UIApplication.State = UIApplication.shared.applicationState
+            print("call description==== \(call)")
+            
+            if state == .active
+            {
+                callKitProvider?.reportNewIncomingCall(call)
+            }
+            
+            callSin = call
+        }
+    }
+    
+    func client(_ client: SINCallClient, willReceiveIncomingCall call: SINCall)
+    {
+        print("willReceiveIncomingCall")
+        callKitProvider?.reportNewIncomingCall(call)
+    }
+    
+    // MARK: - SINClientDelegate
+    func clientDidStart(_ client: SINClient)
+    {
+        print("Sinch client started successfully (version: \(Sinch.version()))")
+        //voipRegistration()
+    }
+    
+    func clientDidFail(_ client: SINClient!, error: Error!)
+    {
+        print("Sinch client error: \(error.localizedDescription)")
+    }
+    
+    func client(_ client: SINClient, logMessage message: String, area: String, severity: SINLogSeverity, timestamp: Date)
+    {
+        if severity == SINLogSeverity.critical
+        {
+            print("\(message)")
+        }
+    }
 }
 
 extension AppDelegate{

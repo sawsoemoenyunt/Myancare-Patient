@@ -120,6 +120,8 @@
 		52C1973C224EA68F004AD6E9 /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */; };
 		52C19B0D224BE97900624368 /* MenuTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C19B0C224BE97900624368 /* MenuTodayCell.swift */; };
 		52C6FD63225498AC005A3944 /* BookAppointmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */; };
+		52C6FD662254DBD4005A3944 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52C6FD642254DBD3005A3944 /* ringback.wav */; };
+		52C6FD672254DBD4005A3944 /* incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52C6FD652254DBD4005A3944 /* incoming.wav */; };
 		52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59691223F841C0071BE52 /* UserDefaults.swift */; };
 		52D59694223F8EE90071BE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59693223F8EE90071BE52 /* API.swift */; };
 		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
@@ -249,6 +251,8 @@
 		52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomModel.swift; sourceTree = "<group>"; };
 		52C19B0C224BE97900624368 /* MenuTodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTodayCell.swift; sourceTree = "<group>"; };
 		52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAppointmentModel.swift; sourceTree = "<group>"; };
+		52C6FD642254DBD3005A3944 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
+		52C6FD652254DBD4005A3944 /* incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incoming.wav; sourceTree = "<group>"; };
 		52D59691223F841C0071BE52 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		52D59693223F8EE90071BE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
@@ -558,6 +562,8 @@
 				528DA57E221D9B0C00140CFF /* AppDelegate */,
 				528DA561221D970C00140CFF /* MVC */,
 				528DA553221D96DA00140CFF /* Main.storyboard */,
+				52C6FD652254DBD4005A3944 /* incoming.wav */,
+				52C6FD642254DBD3005A3944 /* ringback.wav */,
 				528DA556221D96DC00140CFF /* Assets.xcassets */,
 				528DA558221D96DC00140CFF /* LaunchScreen.storyboard */,
 				528DA55B221D96DC00140CFF /* Info.plist */,
@@ -800,11 +806,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				52C07C8F22226594003D12BD /* Localizable.strings in Resources */,
+				52C6FD662254DBD4005A3944 /* ringback.wav in Resources */,
 				523415372222858600CE2A91 /* Pyidaungsu-Bold.ttf in Resources */,
 				52C07C86222254EF003D12BD /* Logo-Motion_Gif.gif in Resources */,
 				528DA55A221D96DC00140CFF /* LaunchScreen.storyboard in Resources */,
 				523415362222858600CE2A91 /* Pyidaungsu.ttf in Resources */,
 				528DA557221D96DC00140CFF /* Assets.xcassets in Resources */,
+				52C6FD672254DBD4005A3944 /* incoming.wav in Resources */,
 				528DA555221D96DA00140CFF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
