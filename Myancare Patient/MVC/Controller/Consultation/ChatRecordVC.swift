@@ -309,8 +309,8 @@ extension ChatRecordVC: UIImagePickerControllerDelegate, UINavigationControllerD
     }
     
     func getImageUploadLinkFromServer(){
-//        let url = EndPoints.imagesUpload.path
-        let url = URL(string: "http://159.65.10.176:5000/api/images/upload")!
+        let url = EndPoints.imagesUpload.path
+//        let url = URL(string: "http://159.65.10.176:5000/api/images/upload")!
         let heads = ["Authorization":"\(jwtTkn)"]
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             switch response.result{

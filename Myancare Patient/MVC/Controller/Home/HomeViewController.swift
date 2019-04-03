@@ -25,9 +25,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     func updateDeviceToken(){
         if let deviceToken = UserDefaults.standard.getPushyToken(){
-            let url = EndPoints.updateDeviceToken(deviceToken).path
-            Alamofire.request(url, method: HTTPMethod.put, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
-                print("Update device token result = \(response.result)")
+            let url = EndPoints.updateDeviceToken.path
+            let params = ["device_token":"\(deviceToken)"]
+            Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                let status = response.response?.statusCode
+                print("Update device token response status : \(status ?? 0)")
             }
         }
     }
@@ -228,6 +230,7 @@ extension HomeViewController{
 extension HomeViewController: UNUserNotificationCenterDelegate{
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        self.navigationController?.pushViewController(NotificationListVC(), animated: true)
         completionHandler([.alert,.sound,.badge])
     }
 }

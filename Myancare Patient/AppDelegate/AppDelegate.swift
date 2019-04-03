@@ -16,9 +16,10 @@ import PKHUD
 import AudioToolbox
 import Sinch
 import UserNotifications
+import Alamofire
 
-//let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
-let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
+let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE" //akm
+//let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
 
 var appDelegate = UIApplication.shared.delegate
@@ -56,6 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
             print(dataArray)
             print(socAck)
+        }
+        
+        //update user data
+        if UserDefaults.standard.isLoggedIn(){
+            updateUserData()
         }
         
         //choose screen to show first
@@ -107,53 +113,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
             
             // Attempt to extract "message" key from APNs payload
             if let aps = data["aps"] as? [AnyHashable : Any] {
-                print("aps : \(aps)")
                 if let payloadMessage = aps["alert"] as? String {
                     message = payloadMessage
                 }
             }
-            
-            if let ms = data[AnyHashable("message")] as? NSDictionary {
-                print("ms : \(ms)")
-                if let payloadMessage = ms["title"] as Any? {
-                   print(payloadMessage)
-                }
-            }
-            
             print("message : \(message)")
             
-            var messageTitle = ""
-            var messageBody = ""
-            if let msg = data["message"] as? [AnyHashable:Any]{
-                print("msg dict : \(msg)")
-//                if let msg = msgDict as? [String:Any]{
-                    if let msgTitle = msg["title"] as? String{
-                        messageTitle = msgTitle
-                    }
-                    
-                    if Localize.currentLanguage() == "en"{
-                        if let msgBody = msg["body_en"] as? String{
-                            messageBody = msgBody
-                        }
-                    } else {
-                        if let msgBody = msg["body_mm"] as? String{
-                            messageBody = msgBody
-                        }
-                    }
-//                }
-            }
-            print("your message : \(messageTitle)")
-            let content = UNMutableNotificationContent()
-            content.title = messageTitle
-            content.body = messageBody
-            content.sound = UNNotificationSound.default
+            self.window?.rootViewController?.navigationController?.pushViewController(NotificationListVC(), animated: true)
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
-            let request = UNNotificationRequest(identifier: "Identifier", content: content, trigger: trigger)
-            
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
-                print("\(error)")
-            })
+//            let content = UNMutableNotificationContent()
+//            content.title = messageTitle
+//            content.body = messageBody
+//            content.sound = UNNotificationSound.default
+//
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+//            let request = UNNotificationRequest(identifier: "Identifier", content: content, trigger: trigger)
+//
+//            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+//                print("\(error)")
+//            })
             
             // You must call this completion handler when you finish processing
             // the notification (after fetching background data, if applicable)
@@ -195,6 +173,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         SocketManagerHandler.sharedInstance().disconnectSocket()
     }
 
+}
+
+extension AppDelegate{
+    func updateUserData(){
+        let url = EndPoints.getPatient.path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200{
+                    if let responseData = response.result.value as? [String:Any]{
+                        let user = PatientModel()
+                        user.updateModel(usingDictionary: responseData)
+                        let info:NSDictionary = ["name":user.name!,
+                                                 "wallet_balance":user.wallet_balance!,
+                                                 "image_url":user.image_url!,
+                                                 "height":user.height!,
+                                                 "age":user.age!,
+                                                 "weight":user.weight!,
+                                                 "facebook_id":user.facebook_id!,
+                                                 "country_code":user.country_code!,
+                                                 "_id":user._id!,
+                                                 "createdAt":user.createdAt!,
+                                                 "gender":user.gender!,
+                                                 "dob":user.dob!,
+                                                 "email":user.email!,
+                                                 "mobile":user.mobile!,
+                                                 "blood_type":user.bloodType!,
+                                                 "username":user.username!,
+                                                 "updatedAt":user.updatedAt!]
+                        UserDefaults.standard.setUserData(value: info)
+                    }
+                } else if responseStatus == 400 || responseStatus == 404{
+                    print("Failed to get user data")
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
 }
 
 //MARK:-

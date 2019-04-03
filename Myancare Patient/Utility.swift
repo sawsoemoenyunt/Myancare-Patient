@@ -65,6 +65,10 @@ func getComingDates(days: Int) -> NSMutableArray {
 
 class UtilityClass: NSObject {
     
+    class func getHeads()->[String:Any]{
+        return ["Authorization":"\(jwtTkn)"]
+    }
+    
     class func get24Hour(_ date:Date) -> String{
         let hour = Calendar.current.component(.hour, from: date)
         let min = Calendar.current.component(.minute, from: date)

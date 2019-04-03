@@ -8,8 +8,8 @@
 
 import Foundation
 
-let baseURLString = "http://159.65.10.176/api/"
-//let baseURLString = "http://192.168.1.188:5000/api/"
+//let baseURLString = "http://159.65.10.176/api/"
+let baseURLString = "http://192.168.0.253:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -19,13 +19,14 @@ protocol ApiEndpoint {
 //MARK:- Enum Endpoint Final Path
 enum EndPoints : ApiEndpoint {
     
+    case getPatient
     case checkfb(String)
     case checkmobile(String)
     case articles
     case imagesProfile
     case imagesUpload
     case patientCreate
-    case updateDeviceToken(String)
+    case updateDeviceToken
     case get_transactions(Int,Int)
     case getDoctors
     case getRecommandDoctors
@@ -49,6 +50,8 @@ enum EndPoints : ApiEndpoint {
     var path: URL
     {
         switch self {
+        case .getPatient:
+            return URL(string: String(baseURLString+"patients"))!
         case .checkfb(let id):
             return URL(string: String(baseURLString+"patients/checkfb?fb_acc=\(id)"))!
         case .checkmobile(let id):
@@ -61,8 +64,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"images/upload"))!
         case .patientCreate:
             return URL(string: String(baseURLString+"patients/create"))!
-        case .updateDeviceToken(let token):
-            return URL(string: String(baseURLString+"patients/update_device/\(token)"))!
+        case .updateDeviceToken:
+            return URL(string: String(baseURLString+"patients/update_device"))!
         case .get_transactions(let skip, let limit):
             return URL(string: String(baseURLString+"transactions/patient?skip=\(skip)&limit=\(limit)"))!
         case .getDoctors:

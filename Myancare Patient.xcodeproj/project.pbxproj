@@ -119,6 +119,7 @@
 		52C07C8F22226594003D12BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C07C9122226594003D12BD /* Localizable.strings */; };
 		52C1973C224EA68F004AD6E9 /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */; };
 		52C19B0D224BE97900624368 /* MenuTodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C19B0C224BE97900624368 /* MenuTodayCell.swift */; };
+		52C6FD63225498AC005A3944 /* BookAppointmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */; };
 		52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59691223F841C0071BE52 /* UserDefaults.swift */; };
 		52D59694223F8EE90071BE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59693223F8EE90071BE52 /* API.swift */; };
 		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
@@ -247,6 +248,7 @@
 		52C07C92222265C3003D12BD /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52C1973B224EA68F004AD6E9 /* ChatRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomModel.swift; sourceTree = "<group>"; };
 		52C19B0C224BE97900624368 /* MenuTodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTodayCell.swift; sourceTree = "<group>"; };
+		52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAppointmentModel.swift; sourceTree = "<group>"; };
 		52D59691223F841C0071BE52 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		52D59693223F8EE90071BE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 				526E089A2237D5F300FECD70 /* ProfileModel.swift */,
 				528BFB28224D22DC00CC8986 /* SpecializationModel.swift */,
 				52AB8E2F2253B44700ECE4F4 /* MedicalRecordBookModel.swift */,
+				52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52C6FD63225498AC005A3944 /* BookAppointmentModel.swift in Sources */,
 				526829692251FC9E00070BC4 /* ChatRecordModel.swift in Sources */,
 				526C571022364113003F2C66 /* AddPhotoVC.swift in Sources */,
 				524D8EA92237953200B7AEAB /* CalendarCell.swift in Sources */,

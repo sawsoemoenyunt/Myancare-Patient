@@ -163,11 +163,11 @@ class NotificationModel
         
         if let messageDict = dict["message"] as? NSDictionary{
             
-            if let message = messageDict.object(forKey: "body") as? String{
+            if let message = messageDict.object(forKey: "title") as? String{
                 message_title = message
             }
             
-            if let title = messageDict.object(forKey: "title") as? String{
+            if let title = messageDict.object(forKey: "body") as? String{
                 message_body = title
             }
         }
