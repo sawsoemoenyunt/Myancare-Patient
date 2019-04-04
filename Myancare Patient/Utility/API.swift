@@ -8,8 +8,8 @@
 
 import Foundation
 
-//let baseURLString = "http://159.65.10.176/api/"
-let baseURLString = "http://192.168.0.253:5000/api/"
+let baseURLString = "http://159.65.10.176/api/"
+//let baseURLString = "http://192.168.0.253:5000/api/"
 
 //MARK:- Protocol Endpoint path
 protocol ApiEndpoint {
@@ -50,6 +50,7 @@ enum EndPoints : ApiEndpoint {
     case getAppointment // for home view
     case getServiceFees(Int) //amount
     case addSheet
+    case getSheet(String)
     case addBookPermission
     
     var path: URL
@@ -115,6 +116,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"service-fees/amount?amount=\(amount)"))!
         case .addSheet:
             return URL(string: String(baseURLString+"medical-record-book/addSheet"))!
+        case .getSheet(let recordID):
+            return URL(string: String(baseURLString+"medical-record-book/sheet?record_id=\(recordID)"))!
         case .addBookPermission:
             return URL(string: String(baseURLString+"medical-record-book/addBookPermission"))!
         case .getAppointment:

@@ -33,6 +33,8 @@
 		523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1377224F913800914BA5 /* SINUIViewController.swift */; };
 		523B137A224F922000914BA5 /* SINCallKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B1379224F922000914BA5 /* SINCallKitProvider.swift */; };
 		523B137C224F9AE300914BA5 /* VoiceCallHandlingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */; };
+		523B6FAB22566575001991F8 /* MedicalRecordSheetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B6FAA22566575001991F8 /* MedicalRecordSheetModel.swift */; };
+		523B6FAD2256777D001991F8 /* UserProfileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B6FAC2256777D001991F8 /* UserProfileEditVC.swift */; };
 		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
 		5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */; };
@@ -159,6 +161,8 @@
 		523B1377224F913800914BA5 /* SINUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINUIViewController.swift; sourceTree = "<group>"; };
 		523B1379224F922000914BA5 /* SINCallKitProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINCallKitProvider.swift; sourceTree = "<group>"; };
 		523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallHandlingVC.swift; sourceTree = "<group>"; };
+		523B6FAA22566575001991F8 /* MedicalRecordSheetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalRecordSheetModel.swift; sourceTree = "<group>"; };
+		523B6FAC2256777D001991F8 /* UserProfileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditVC.swift; sourceTree = "<group>"; };
 		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
 		5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
@@ -473,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				5268C553222F7DC6001CF258 /* UserProfileVC.swift */,
+				523B6FAC2256777D001991F8 /* UserProfileEditVC.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -608,6 +613,7 @@
 				528BFB28224D22DC00CC8986 /* SpecializationModel.swift */,
 				52AB8E2F2253B44700ECE4F4 /* MedicalRecordBookModel.swift */,
 				52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */,
+				523B6FAA22566575001991F8 /* MedicalRecordSheetModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -951,6 +957,7 @@
 				5221AADC2250B5410090120A /* EditReminderVC.swift in Sources */,
 				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */,
+				523B6FAD2256777D001991F8 /* UserProfileEditVC.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
 				523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */,
 				5221AADA2250B3370090120A /* ReminderVC.swift in Sources */,
@@ -976,6 +983,7 @@
 				526C571422364A54003F2C66 /* ViewSheetVC.swift in Sources */,
 				524D8EBF2237971400B7AEAB /* PhotoGalleryCell.swift in Sources */,
 				524D8EBA2237969200B7AEAB /* UserInterestListCel.swift in Sources */,
+				523B6FAB22566575001991F8 /* MedicalRecordSheetModel.swift in Sources */,
 				5221AAD622509F1B0090120A /* AddReminderVC.swift in Sources */,
 				526C571222364369003F2C66 /* PhotoGalleryVC.swift in Sources */,
 				524D8ED02237983A00B7AEAB /* PaymentCell.swift in Sources */,

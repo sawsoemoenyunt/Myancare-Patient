@@ -119,6 +119,7 @@ class MedicalRecordCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 1, height: 1)
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 2.0
+        
     }
     
     override init(frame: CGRect) {

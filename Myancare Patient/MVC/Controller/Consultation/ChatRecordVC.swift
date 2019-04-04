@@ -412,6 +412,12 @@ class ChatImageZoomVC: UIViewController, UIScrollViewDelegate {
         imageView.anchorCenterXToSuperview()
         imageView.anchorCenterYToSuperview(constant: -30)
         
+        if imageUrl != ""{
+            loadImage()
+        }
+    }
+    
+    func loadImage(){
         UIImage.loadImage(imageUrl) { (image) in
             self.imageView.image = image
         }

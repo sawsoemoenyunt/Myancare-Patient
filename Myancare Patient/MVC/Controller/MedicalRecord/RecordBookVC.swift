@@ -20,7 +20,7 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -179,6 +179,9 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
         addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
         
         collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
+        
+        //hide addbtn for now
+        addBtn.isHidden = true
     }
     
     func setupPopupView(){
@@ -238,7 +241,7 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let addPhotoVC = AddPhotoVC()
-        addPhotoVC.recordBookID = recordBooks[indexPath.row].id!
+        addPhotoVC.recordBook = recordBooks[indexPath.row]
         self.navigationController?.pushViewController(addPhotoVC, animated: true)
     }
     
@@ -257,6 +260,10 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 self.getAllMedicalRecords()
             }
         }
+        
+        //hide edit btn for now
+        cell.editBtn.isHidden = true
+        
         return cell
     }
     

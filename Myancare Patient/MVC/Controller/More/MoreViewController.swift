@@ -19,12 +19,12 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     let cellID = "cellID"
     let cellID_profile = "cellID_profile"
     let buttonList:[MenuButton] = [MenuButton(title: "Username", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Change Language", icon: #imageLiteral(resourceName: "icons8-geography")),
-                                   MenuButton(title: "Security", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
-                                   MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
-                                   MenuButton(title: "Invite your Friend", icon: #imageLiteral(resourceName: "icons8-stopwatch")),
-                                   MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-ask_question_filled")),
-                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about")),
+                                   MenuButton(title: "Change Language", icon: UIImage(named: "icons8-language")!),
+                                   MenuButton(title: "Security", icon: UIImage(named: "icons8-filled_message")!),
+                                   MenuButton(title: "Feedback Us", icon: UIImage(named: "icons8-filled_message")!),
+                                   MenuButton(title: "Invite your Friend", icon: UIImage(named: "icons8-share")!),
+                                   MenuButton(title: "Help", icon: UIImage(named: "icons8-filled_help")!),
+                                   MenuButton(title: "About", icon: UIImage(named: "icons8-about")!),
                                    MenuButton(title: "Voice & Video Test", icon: UIImage(named: "icons8-phone")!)]
     
     lazy var collectionView: UICollectionView = {
@@ -44,7 +44,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         btn.backgroundColor = UIColor(red:0.94, green:0.36, blue:0.19, alpha:1) //orange
         btn.layer.cornerRadius = 23
         btn.clipsToBounds = true
-        btn.addTarget(self, action: #selector(signOutButtonClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(showLogoutOption), for: .touchUpInside)
         return btn
     }()
     
@@ -54,6 +54,19 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         UserDefaults.standard.setIsLoggedIn(value: false)
         UserDefaults.standard.setUserData(value: NSDictionary())
         UtilityClass.changeRootViewController(with: LoginViewController())
+    }
+    
+    @objc func showLogoutOption(){
+        let actionSheet = UIAlertController(title: "Are you sure to signout?", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirm = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            signOutButtonClick()
+        }
+        
+        actionSheet.addAction(confirm)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     let infoLabel: UILabel = {
@@ -125,7 +138,7 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             self.showLanguagePicker()
             
         } else if indexPath.row == 4{
-            if let name = NSURL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8") {
+            if let name = NSURL(string: "https://itunes.apple.com/us/app/myancare/id1396490288?mt=8") {
                 let objectsToShare = [name]
                 let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                 
