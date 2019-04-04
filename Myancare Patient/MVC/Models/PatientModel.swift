@@ -51,6 +51,7 @@ class PatientModel {
         avatar = ""
         avatarUrl = ""
         facebook_id = ""
+        image_url = ""
     }
     
     deinit {

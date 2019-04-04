@@ -27,7 +27,8 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         if let deviceToken = UserDefaults.standard.getPushyToken(){
             let url = EndPoints.updateDeviceToken.path
             let params = ["device_token":"\(deviceToken)"]
-            Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 let status = response.response?.statusCode
                 print("Update device token response status : \(status ?? 0)")
             }

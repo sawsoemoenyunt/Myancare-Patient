@@ -13,6 +13,7 @@ class BookAppointmentModel {
     var old_appointment_id : String?
     var rescheduleBy : String?
     var doctor : String?
+    var doctor_name : String?
     var patient : String?
     var type : String?
     var date_of_issue : String?
@@ -21,6 +22,8 @@ class BookAppointmentModel {
     var total_appointment_fees : Int?
     var slotStartTime : Int?
     var slotEndTime : Int?
+    var slotStartTimeString : String?
+    var slotEndTimeString : String?
     var date_of_issue_utc : String?
     var slot : String? //slot
     var reason :String?
@@ -30,6 +33,7 @@ class BookAppointmentModel {
         old_appointment_id = ""
         rescheduleBy = ""
         doctor = ""
+        doctor_name = ""
         patient = ""
         type = ""
         date_of_issue = ""
@@ -38,6 +42,8 @@ class BookAppointmentModel {
         total_appointment_fees = 0
         slotStartTime = 0
         slotEndTime = 0
+        slotStartTimeString = ""
+        slotEndTimeString = ""
         date_of_issue = ""
         slot = ""
         reason = ""

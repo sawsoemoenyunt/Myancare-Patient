@@ -174,14 +174,18 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         btn.backgroundColor = UIColor.MyanCareColor.flamingo
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
-        btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(bookVoiceAppointment), for: .touchUpInside)
         return btn
     }()
     
-    @objc func bookAppointment(){
-       let bookVC = BookAppointmentViewController()
+    @objc func bookVoiceAppointment(){
+        let bookVC = BookAppointmentViewController()
         if let id = docData?.id!{
-            bookVC.doctorID = id
+            bookAppointmentData.doctor = id
+            bookAppointmentData.doctor_name = docData?.name
+            bookAppointmentData.type = "voice"
+            bookAppointmentData.amount = docData?.voice_rate
+            bookVC.consultationType = .voice
             doctorDetailViewController?.navigationController?.pushViewController(bookVC, animated: true)
         }
     }
@@ -193,9 +197,21 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         btn.backgroundColor = UIColor.MyanCareColor.mantis //orange
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
-        btn.addTarget(self, action: #selector(bookAppointment), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(bookVideoAppointment), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func bookVideoAppointment(){
+        let bookVC = BookAppointmentViewController()
+        if let id = docData?.id!{
+            bookAppointmentData.doctor = id
+            bookAppointmentData.doctor_name = docData?.name
+            bookAppointmentData.type = "video"
+            bookAppointmentData.amount = docData?.video_rate
+            bookVC.consultationType = .video
+            doctorDetailViewController?.navigationController?.pushViewController(bookVC, animated: true)
+        }
+    }
     
     lazy var chatBtn: UIButton = {
         let btn = UIButton()

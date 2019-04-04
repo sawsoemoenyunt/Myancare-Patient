@@ -23,6 +23,10 @@ class DoctorModel
     var video : Bool?
     var voice : Bool?
     var favorite : Bool?
+    var voice_rate : Int?
+    var video_rate : Int?
+    var chat_rate : Int?
+    var rate : NSDictionary?
     
     init() {
         online_status = false
@@ -38,6 +42,9 @@ class DoctorModel
         video = false
         voice = false
         favorite = false
+        voice_rate = 0
+        video_rate = 0
+        rate = NSDictionary()
     }
     
     func updateUsingDict(_ dict:[String:Any]){
@@ -98,6 +105,22 @@ class DoctorModel
         
         if let favorite1 = dict["favorite"] as? Bool{
             favorite = favorite1
+        }
+        
+        if let rate1 = dict["rate"] as? NSDictionary{
+            rate = rate1
+            
+            if let voiceRate = rate?.object(forKey: "voice") as? Int{
+                voice_rate = voiceRate
+            }
+            
+            if let videoRate = rate?.object(forKey: "video") as? Int{
+                video_rate = videoRate
+            }
+            
+            if let chatRate1 = rate?.object(forKey: "chat") as? Int{
+                chat_rate = chatRate1
+            }
         }
     }
 }

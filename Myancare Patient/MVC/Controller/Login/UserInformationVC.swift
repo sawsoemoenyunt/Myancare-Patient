@@ -108,7 +108,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             
         } else {
             print("validate form failed!")
-            showAlert(title: "Information required!", message: "Please fill all form with correct format!")
+            self.showAlert(title: "Information required!", message: "Please fill all form with correct format!")
         }
     }
     
@@ -240,15 +240,6 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         let isValid: Bool = emailTest.evaluate(with: email)
         
         return isValid
-    }
-    
-    func showAlert(title:String, message:String) {
-        // create the alert
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
     }
     
     func getImageUploadLinkFromServer(){

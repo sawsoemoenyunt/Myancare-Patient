@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class InvoiceViewController: UIViewController {
+class InvoiceViewController: UIViewController, NVActivityIndicatorViewable{
     
     let bgView:UIView = {
         let view = UIView()
@@ -26,7 +28,7 @@ class InvoiceViewController: UIViewController {
     
     let dateIssueLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Dr.John Doe"
+        lbl.text = "today date"
         lbl.textAlignment = .center
         lbl.font = UIFont.mmFontRegular(ofSize: 12)
         return lbl
@@ -148,7 +150,8 @@ class InvoiceViewController: UIViewController {
     }()
     
     @objc func confirmBtnClick(){
-        self.navigationController?.pushViewController(ShareBookVC(), animated: true)
+        sendBooking()
+//        self.navigationController?.pushViewController(ShareBookVC(), animated: true)
     }
     
     override func viewDidLoad() {
@@ -157,8 +160,23 @@ class InvoiceViewController: UIViewController {
         self.title = "Service Invoice"
         
         setupViews()
+        setupData()
     }
     
+    func setupData(){
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateOfIssue = formatter.string(from: date)
+        
+        doctorNameLabel.text = bookAppointmentData.doctor_name
+        dateIssueLabel.text = "\(dateOfIssue)"
+        scheduleDataLabel.text = bookAppointmentData.date_of_issue_utc
+        reasonDataLabel.text = bookAppointmentData.reason
+        typeDataLabel.text = bookAppointmentData.type?.uppercased()
+        totalDataLabel.text = "\(bookAppointmentData.total_appointment_fees!) coin"
+    }
     
     func setupViews(){
         
@@ -201,5 +219,43 @@ class InvoiceViewController: UIViewController {
         dottedLine3.anchor(totalDataLabel.bottomAnchor, left: bgView.leftAnchor, bottom: nil, right: bgView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
         confirmBtn.anchor(nil, left: nil, bottom: bgView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: -25, rightConstant: 0, widthConstant: 120, heightConstant: 50)
         confirmBtn.anchorCenterXToSuperview()
+    }
+}
+
+extension InvoiceViewController{
+    
+    func sendBooking(){
+        self.startAnimating()
+        let url = EndPoints.appointmentCreate.path
+        let params = ["doctor": bookAppointmentData.doctor!,
+                      "type" : bookAppointmentData.type!,
+                      "date_of_issue" : bookAppointmentData.date_of_issue!,
+                      "amount" : bookAppointmentData.amount!,
+                      "service_fees" : bookAppointmentData.service_fees!,
+                      "total_appointment_fees" : bookAppointmentData.total_appointment_fees!,
+                      "slotStartTime" : bookAppointmentData.slotStartTime!,
+                      "slotEndTime" : bookAppointmentData.slotEndTime!,
+                      "date_of_issue_utc" : bookAppointmentData.date_of_issue_utc!,
+                      "slot" : bookAppointmentData.slot!,
+                      "reason" : bookAppointmentData.reason!] as [String:Any]
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200{
+                    print("SUccess booking")
+                    print(response.result.value)
+                } else {
+                    print("Failed booking")
+                    print(response.result.value)
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
     }
 }

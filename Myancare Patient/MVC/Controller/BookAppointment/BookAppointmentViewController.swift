@@ -10,9 +10,17 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 
+enum ConsultationType: String{
+    case voice = "voice"
+    case video = "video"
+    case chat = "chat"
+    case none = "none"
+}
+
 class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewable {
     
     var doctorID = ""
+    var consultationType = ConsultationType.none
     let cellID = "cellID"
     let cellIDCalender = "cellIDCalender"
     let dates = getComingDates(days: 30) //next 30 days
@@ -59,7 +67,7 @@ class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewab
                 let day = date.object(forKey: "day") as! Int
                 let month = date.object(forKey: "month") as! Int
                 let year = date.object(forKey: "year") as! Int
-                let weekday = date.object(forKey: "weekday") as! Int
+//                let weekday = date.object(forKey: "weekday") as! Int
                 datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
                 selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
                 if doctorID != "" && selectedDate != "" {
@@ -87,7 +95,7 @@ class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewab
                 let day = date.object(forKey: "day") as! Int
                 let month = date.object(forKey: "month") as! Int
                 let year = date.object(forKey: "year") as! Int
-                let weekday = date.object(forKey: "weekday") as! Int
+//                let weekday = date.object(forKey: "weekday") as! Int
                 datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
                 selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
                 if doctorID != "" && selectedDate != "" {
@@ -126,7 +134,13 @@ class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewab
     }()
     
     @objc func bookBtnClick(){
-        self.navigationController?.pushViewController(ReasonVC(), animated: true)
+        
+        if bookAppointmentData.slotStartTime! > 0 {
+            let reasonVC = ReasonVC()
+            self.navigationController?.pushViewController(reasonVC, animated: true)
+        } else {
+            self.showAlert(title: "Slot time required!", message: "Please choose slot time!")
+        }
     }
     
     override func viewDidLoad() {
@@ -146,6 +160,7 @@ class BookAppointmentViewController: UIViewController, NVActivityIndicatorViewab
             selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
         }
         
+        doctorID = bookAppointmentData.doctor!
         if doctorID != "" && selectedDate != "" {
             self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
         }
@@ -181,13 +196,21 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             let day = date.object(forKey: "day") as! Int
             let month = date.object(forKey: "month") as! Int
             let year = date.object(forKey: "year") as! Int
-            let weekday = date.object(forKey: "weekday") as! Int
+//            let weekday = date.object(forKey: "weekday") as! Int
             datelabel.text = "\(DateFormatter().monthSymbols[month-1].capitalized) \(year)"
             currentIndex = indexPath.row
             selectedDate = "\(year)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
             if doctorID != "" && selectedDate != "" {
                 self.getSlotbyDateAndDoctorID(date: selectedDate, docID: doctorID)
             }
+        } else {
+            bookAppointmentData.slotStartTime = slots[indexPath.row].slot_start_time_mililisecond
+            bookAppointmentData.slotEndTime = slots[indexPath.row].slot_end_time_mililisecond
+            bookAppointmentData.slotStartTimeString = slots[indexPath.row].slot_start_time
+            bookAppointmentData.slotEndTimeString = slots[indexPath.row].slot_end_time
+            bookAppointmentData.date_of_issue = slots[indexPath.row].date_utc
+            bookAppointmentData.date_of_issue_utc = slots[indexPath.row].date_utc
+            bookAppointmentData.slot = slots[indexPath.row].id
         }
     }
     

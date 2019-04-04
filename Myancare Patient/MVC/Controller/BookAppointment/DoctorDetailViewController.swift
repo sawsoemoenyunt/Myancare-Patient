@@ -11,6 +11,8 @@ import Alamofire
 import AlamofireImage
 import NVActivityIndicatorView
 
+var bookAppointmentData = BookAppointmentModel()
+
 class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
     let profileCellID = "cellID_Profile"

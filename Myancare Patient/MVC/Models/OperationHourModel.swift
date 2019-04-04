@@ -13,6 +13,8 @@ class OperationHourModel {
     var date_utc : String?
     var slot_start_time : String?
     var slot_end_time : String?
+    var slot_start_time_mililisecond : Int?
+    var slot_end_time_mililisecond : Int?
     var isConfirmed : Bool?
     var id :String?
     
@@ -30,11 +32,13 @@ class OperationHourModel {
         }
         
         if let slot_start_time1 = dict["slot_start_time"] as? Int{
+            slot_start_time_mililisecond = slot_start_time1
             let date = Date(milliseconds: slot_start_time1)
             slot_start_time = UtilityClass.get12Hour(date)
         }
         
         if let slot_end_time1 = dict["slot_end_time"] as? Int{
+            slot_end_time_mililisecond = slot_end_time1
             let date = Date(milliseconds: slot_end_time1)
             slot_end_time = UtilityClass.get12Hour(date)
         }

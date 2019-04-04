@@ -7,13 +7,20 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import NVActivityIndicatorView
 
-class ReasonVC: UIViewController {
+var imageKeys = ["", "", "", "", "", "", "", ""]
+
+class ReasonVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var imageList = [UIImage(),UIImage(),UIImage(),UIImage(),UIImage(),UIImage(),UIImage(),UIImage()]
     var imagePicker = UIImagePickerController()
     var selectedIndex = 0
+    var imageKey = ""
+    var imageUrl = ""
     
     let labelReason: UILabel = {
         let lbl = UILabel()
@@ -71,13 +78,52 @@ class ReasonVC: UIViewController {
     }()
     
     @objc func confrimBtnClick(){
-        self.navigationController?.pushViewController(InvoiceViewController(), animated: true)
+        
+//        if reasonTextView.text == ""{
+            bookAppointmentData.reason = reasonTextView.text
+            let invoiceVC = InvoiceViewController()
+            self.navigationController?.pushViewController(invoiceVC, animated: true)
+//        } else {
+//            self.showAlert(title: "Reason text required!", message: "Please fill reason for visit.")
+//        }
+    }
+    
+    func getServiceFees(){
+        
+        let ddd = bookAppointmentData
+        
+        let url = EndPoints.getServiceFees(bookAppointmentData.amount!).path
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200{
+                    if let responseDict = response.result.value as? NSDictionary{
+                        if let serviceFees = responseDict.object(forKey: "service_fees") as? Int{
+                            bookAppointmentData.service_fees = serviceFees
+                        }
+                        if let serviceTotal = responseDict.object(forKey: "total") as? Int{
+                            bookAppointmentData.total_appointment_fees = serviceTotal
+                        }
+                    }
+                    
+                } else {
+                    print("\(responseStatus ?? 0)")
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         collectionView.register(ReasonImageCell.self, forCellWithReuseIdentifier: cellID)
+        getServiceFees()
     }
     
     func setupViews(){
@@ -142,10 +188,83 @@ extension ReasonVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         imageList[selectedIndex] = image
-        
+        self.getImageUploadLinkFromServer()
         self.dismiss(animated: true) {
             self.collectionView.reloadData()
         }
+    }
+}
+
+extension ReasonVC{
+    func getImageUploadLinkFromServer(){
+        let url = EndPoints.imagesUpload.path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                print("Response status: \(responseStatus ?? 0)")
+                
+                if responseStatus == 400 || responseStatus == 404{
+                    print("Failed to get image upload link")
+                    self.imageList[self.selectedIndex] = UIImage()
+                    
+                } else if responseStatus == 200{
+                    if let result = response.result.value as? NSDictionary{
+                        if let key = result.object(forKey: "key") as? String{
+                            self.imageKey = key
+                        }
+                        if let url = result.object(forKey: "url") as? String{
+                            self.imageUrl = url
+                            print("Image url return from server: \(url)")
+                        }
+                        
+                        if self.imageUrl != "" && self.imageKey != ""{
+                            self.uploadImageToS3(self.imageUrl)
+                            
+                        } else {
+                            print("image url was nil")
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
+    
+    func uploadImageToS3(_ urlString:String){
+        
+        self.startAnimating()
+        
+        let url = urlString
+        let selectedImage = imageList[selectedIndex]
+        guard let imageData = selectedImage.jpegData(compressionQuality: 0.7) else {
+            return
+        }
+        
+        print("Image Data : -> \(imageData)")
+        
+        let heads = ["Content-Type":"image/jpeg"]
+        
+        Alamofire.upload(imageData, to: URL(string: url)!, method: .put, headers: heads).response { (response) in
+            
+            print("RAW RESPONSE S3 -> \(response)")
+            
+            let responseStatus = response.response?.statusCode
+            print("RESPONSE STATUS CODE FROM S3 : \(responseStatus ?? 0)")
+            
+            switch responseStatus{
+            case 200:
+                print("Image uploaded to s3 success...")
+                imageKeys[self.selectedIndex] = self.imageKey
+            default:
+                print("Failed uploading Image to s3...")
+                self.imageList[self.selectedIndex] = UIImage()
+            }
+            self.stopAnimating()
+        }
+        
     }
 }
 
