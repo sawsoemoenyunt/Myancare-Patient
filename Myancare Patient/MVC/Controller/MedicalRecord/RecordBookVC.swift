@@ -299,7 +299,7 @@ extension RecordBookVC{
         let limit = 10
         
         let url = EndPoints.getMedicalRecordBooks(skip, limit).path
-        let heads = ["Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzOTQ0ODE3fQ.4lWrKiJZ0m5TRkOsOjKHascSBm4l4p3hwQ3Y0JkCVqE"]
+        let heads = ["Authorization":"\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             

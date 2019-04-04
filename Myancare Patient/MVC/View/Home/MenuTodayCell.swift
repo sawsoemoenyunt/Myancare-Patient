@@ -12,6 +12,7 @@ class MenuTodayCell: UICollectionViewCell {
     
     var homeViewController:HomeViewController?
     let cellID = "cellID"
+    var appointmentList = [AppointmentModel]()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -79,11 +80,15 @@ class MenuTodayCell: UICollectionViewCell {
 
 extension MenuTodayCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! TodayAppointmentCell
+        if appointmentList.count > 0 {
+            cell.appointmentData = appointmentList[indexPath.row]
+        }
+
         return cell
     }
     
@@ -97,11 +102,35 @@ extension MenuTodayCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        homeViewController?.navigationController?.pushViewController(AppointmentDetailVC(), animated: true)
+        let appointmentDetail = AppointmentDetailVC()
+        appointmentDetail.appointmentData = appointmentList[indexPath.row]
+        homeViewController?.navigationController?.pushViewController(appointmentDetail, animated: true)
     }
 }
 
 class TodayAppointmentCell: UICollectionViewCell {
+    
+    var appointmentData: AppointmentModel?{
+        didSet{
+            if let data = appointmentData{
+                dateLabel.text = data.date_of_issue
+                if let patientName = data.patient?.object(forKey: "name") as? String{
+                    patientnameLabel.text = patientName
+                }
+                
+                if let doctorImageUrl = data.doctor?.object(forKey: "image_url") as? String{
+                    UIImage.loadImage(doctorImageUrl) { (image) in
+                        self.patientImage.image = image
+                    }
+                }
+                
+                let date = Date(milliseconds: data.slotStartTime!)
+                timeLabel.text = UtilityClass.get12Hour(date)
+                
+                reasonLabel.text = data.reason!
+            }
+        }
+    }
     
     let bgView: UIView = {
         let view = UIView()

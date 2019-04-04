@@ -171,7 +171,7 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable{
         let dateOfIssue = formatter.string(from: date)
         
         doctorNameLabel.text = bookAppointmentData.doctor_name
-        dateIssueLabel.text = "\(dateOfIssue)"
+        dateIssueLabel.text = "Date of issue \(dateOfIssue)"
         scheduleDataLabel.text = bookAppointmentData.date_of_issue_utc
         reasonDataLabel.text = bookAppointmentData.reason
         typeDataLabel.text = bookAppointmentData.type?.uppercased()
@@ -245,17 +245,54 @@ extension InvoiceViewController{
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
-                if responseStatus == 200{
+                if responseStatus == 201 || responseStatus == 200{
                     print("SUccess booking")
-                    print(response.result.value)
+                    if let responseDict = response.result.value as? NSDictionary{
+                        if let recordBookID = responseDict.object(forKey: "recordBook") as? String{
+                            let alert = UIAlertController(title: "Success", message: "Your booking for appointment was successfully created!", preferredStyle: UIAlertController.Style.alert)
+                            // add an action (button)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                                self.uploadSheets(recordBookID)
+                            }))
+                            // show the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
                 } else {
                     print("Failed booking")
-                    print(response.result.value)
+                    print(response.result.value as Any)
+                    
+                    var messageString = "An error occur. You appointment was failed to book."
+                    if let responseDict = response.result.value as? NSDictionary{
+                        if let message = responseDict.object(forKey: "message") as? String{
+                            messageString = message
+                        }
+                    }
+                    self.showAlert(title: "Failed", message: messageString)
                 }
             case .failure(let error):
                 print("\(error)")
             }
             self.stopAnimating()
         }
+    }
+    
+    func uploadSheets(_ recordBookID:String){
+        let url = EndPoints.addSheet.path
+        imageKeys.removeAll {$0 == ""}
+        let params = ["medicalbook_id" : recordBookID,
+        "image" : imageKeys] as [String:Any]
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            print(response.result.value as Any)
+            
+            let shareVC = ShareBookVC()
+            shareVC.doctorID = bookAppointmentData.doctor!
+            self.navigationController?.pushViewController(shareVC, animated: true)
+            //doctor_id
+            //medical_record_book
+        }
+        
     }
 }

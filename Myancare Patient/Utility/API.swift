@@ -47,7 +47,10 @@ enum EndPoints : ApiEndpoint {
     case getOperationHours(String,String) //date, docID
     case getMedicalRecordBooks(Int,Int) //skip, limit
     case appointmentCreate
+    case getAppointment // for home view
     case getServiceFees(Int) //amount
+    case addSheet
+    case addBookPermission
     
     var path: URL
     {
@@ -110,6 +113,12 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"appointments/create"))!
         case .getServiceFees(let amount):
             return URL(string: String(baseURLString+"service-fees/amount?amount=\(amount)"))!
+        case .addSheet:
+            return URL(string: String(baseURLString+"medical-record-book/addSheet"))!
+        case .addBookPermission:
+            return URL(string: String(baseURLString+"medical-record-book/addBookPermission"))!
+        case .getAppointment:
+            return URL(string: String(baseURLString+"appointments"))!
         }
     }
 }

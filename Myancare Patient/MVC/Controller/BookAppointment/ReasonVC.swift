@@ -78,19 +78,17 @@ class ReasonVC: UIViewController, NVActivityIndicatorViewable {
     }()
     
     @objc func confrimBtnClick(){
+        bookAppointmentData.reason = reasonTextView.text
         
-//        if reasonTextView.text == ""{
-            bookAppointmentData.reason = reasonTextView.text
+        if bookAppointmentData.reason != ""{
             let invoiceVC = InvoiceViewController()
             self.navigationController?.pushViewController(invoiceVC, animated: true)
-//        } else {
-//            self.showAlert(title: "Reason text required!", message: "Please fill reason for visit.")
-//        }
+        } else {
+            self.showAlert(title: "Reason text required!", message: "Please fill reason for visit.")
+        }
     }
     
     func getServiceFees(){
-        
-        let ddd = bookAppointmentData
         
         let url = EndPoints.getServiceFees(bookAppointmentData.amount!).path
         

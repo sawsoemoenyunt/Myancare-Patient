@@ -10,6 +10,16 @@ import UIKit
 
 class MedicalRecordSelectCell: UICollectionViewCell {
     
+    var recordData: MedicalRecordBookModel?{
+        didSet{
+            if let data = recordData{
+                docNamelabel.text = recordData?.doctor_name!
+                dateLabel.text = recordData?.hospital_name!
+                infolabel.text = recordData?.description!
+            }
+        }
+    }
+    
     let icon: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill

@@ -45,18 +45,12 @@ class AppointmentDetailCell: UICollectionViewCell {
                 if let patientName = data.patient?.object(forKey: "name") as? String{
                     patientNameLabel.text = patientName
                 }
-                
-                if let issueDate = data.date_of_issue?.object(forKey: "date") as? String{
-                    dateNameLabel.text = issueDate
-                }
-                
+
+                dateNameLabel.text = data.date_of_issue!
                 reasonDataLabel.text = data.reason!
-                serviceTypeLabel.text = data.type!.capitalized
+                serviceTypeLabel.text = data.type!.uppercased()
                 totalAmountDataLabel.text = "\(data.total_appointment_fees!) coin"
-                if let sDateTime = data.date_of_issue_utc?.object(forKey: "date") as? String{
-                    scheduleDataLabel.text = sDateTime
-                }
-                
+                scheduleDataLabel.text = data.date_of_issue_utc!
             }
         }
     }
@@ -145,7 +139,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     let reasonDataLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Sick"
-        lbl.numberOfLines = 0
+        lbl.numberOfLines = 1
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.black
         return lbl

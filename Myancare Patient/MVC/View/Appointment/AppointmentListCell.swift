@@ -22,9 +22,8 @@ class AppointmentListCell: UICollectionViewCell {
                         return
                     }
                 }
-                if let dateTime = data.date_of_issue_utc?.object(forKey: "date") as? String{
-                    dateLabel.text = dateTime
-                }
+                
+                dateLabel.text = data.date_of_issue_utc!
                 typeBtn.setTitle("\(data.type!)", for: .normal)
                 conditionBtn.setTitle("\(data.booking_status)", for: .normal)
                 

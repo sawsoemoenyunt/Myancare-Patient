@@ -8,8 +8,11 @@
 
 import UIKit
 
+
 //share medical book view controller
-class ShareBookVC: UIViewController {
+class ShareBookVC: UIViewController{
+    
+    var doctorID = ""
     
     let icon: UIImageView = {
        let img = UIImageView()
@@ -52,7 +55,9 @@ class ShareBookVC: UIViewController {
     }()
     
     @objc func handleChooseBtnClick(){
-        self.navigationController?.pushViewController(SelectBookVC(), animated: true)
+        let selectBookVC = SelectBookVC()
+        selectBookVC.doctorID = self.doctorID
+        self.navigationController?.pushViewController(selectBookVC, animated: true)
     }
     
     lazy var skipBtn: UIButton = {
@@ -63,9 +68,13 @@ class ShareBookVC: UIViewController {
         btn.backgroundColor = UIColor.MyanCareColor.yellow
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
-//        btn.addTarget(self, action: #selector(confrimBtnClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(skipBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func skipBtnClick(){
+        UtilityClass.switchToHomeViewController()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,3 +100,4 @@ class ShareBookVC: UIViewController {
         infolabel.anchor(sharelabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
     }
 }
+

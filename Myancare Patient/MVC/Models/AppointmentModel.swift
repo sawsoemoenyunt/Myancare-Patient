@@ -37,13 +37,13 @@ class AppointmentModel {
     var doctor : NSDictionary?
     var patient : NSDictionary?
     var type : String?
-    var date_of_issue : NSDictionary?
+    var date_of_issue : String?
     var amount : Int?
     var service_fees : Int?
     var total_appointment_fees : Int?
-    var slotStartTime : NSDictionary?
-    var slotEndTime : NSDictionary?
-    var date_of_issue_utc : NSDictionary?
+    var slotStartTime : Int?
+    var slotEndTime : Int?
+    var date_of_issue_utc : String?
     var remarks : String?
     var reason : String?
     var booking_status  = BookingStatus.PENDING
@@ -54,13 +54,13 @@ class AppointmentModel {
         doctor = NSDictionary()
         patient = NSDictionary()
         type = ""
-        date_of_issue = NSDictionary()
+        date_of_issue = ""
         amount = 0
         service_fees = 0
         total_appointment_fees = 0
-        slotStartTime = NSDictionary()
-        slotEndTime = NSDictionary()
-        date_of_issue_utc = NSDictionary()
+        slotStartTime = 0
+        slotEndTime = 0
+        date_of_issue_utc = ""
         remarks = ""
         reason = ""
         booking_status = BookingStatus.PENDING
@@ -87,7 +87,7 @@ class AppointmentModel {
             type = type1
         }
         
-        if let date_of_issue1 = dict["date_of_issue"] as? NSDictionary{
+        if let date_of_issue1 = dict["date_of_issue"] as? String{
             date_of_issue = date_of_issue1
         }
         
@@ -103,15 +103,15 @@ class AppointmentModel {
             total_appointment_fees = total_appointment_fees1
         }
         
-        if let slotStartTime1 = dict["slotStartTime"] as? NSDictionary{
+        if let slotStartTime1 = dict["slotStartTime"] as? Int{
             slotStartTime = slotStartTime1
         }
         
-        if let slotEndTime1 = dict["slotEndTime"] as? NSDictionary{
+        if let slotEndTime1 = dict["slotEndTime"] as? Int{
             slotEndTime = slotEndTime1
         }
         
-        if let date_of_issue_utc1 = dict["date_of_issue_utc"] as? NSDictionary{
+        if let date_of_issue_utc1 = dict["date_of_issue_utc"] as? String{
             date_of_issue_utc = date_of_issue_utc1
         }
         

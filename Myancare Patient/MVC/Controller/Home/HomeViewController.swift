@@ -20,7 +20,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     let collectionViewCellID_Today = "collectionViewCellID_Today"
     var favoriteDoctorArr = [DoctorListModel]()
     var recommandDoctorArr = [DoctorListModel]()
-    var todayAppointmentArr = [DoctorListModel]()
+    var todayAppointmentArr = [AppointmentModel]()
     var notiCount = 0
     
     func updateDeviceToken(){
@@ -76,6 +76,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         setupNavBarItems()
         getDoctors(.recommand)
         getDoctors(.favourite)
+        getAppointments()
     }
     
     func setupNavBarItems(){
@@ -125,6 +126,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         case 1:
             let todayCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Today, for: indexPath) as! MenuTodayCell
             todayCell.homeViewController = self
+            todayCell.appointmentList = todayAppointmentArr
             todayCell.viewmoreLabel.isHidden = todayAppointmentArr.count == 0 ? true : false
             cell = todayCell
         case 2:
@@ -232,6 +234,40 @@ extension HomeViewController{
         }
         
         self.collectionView.reloadData()
+    }
+    
+    func getAppointments(){
+        
+        let url = EndPoints.getAppointment.path
+        
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let status = response.response?.statusCode
+                print("Status code : \(status ?? 0)")
+                
+                if status == 400{
+                    print("Record Not found!")
+                    
+                } else if status == 200{
+                    var appointmentarray = [AppointmentModel]()
+                    if let responseDict = response.result.value as? [String:Any]{
+                        let appointment = AppointmentModel()
+                        appointment.updateModleUsingDict(responseDict)
+                        appointmentarray.append(appointment)
+                        
+                    }
+                    self.todayAppointmentArr = appointmentarray
+                    self.collectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
     }
 }
 
