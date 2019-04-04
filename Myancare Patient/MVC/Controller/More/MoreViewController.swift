@@ -18,14 +18,14 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     var appointmentModelData = AppointmentModel()
     let cellID = "cellID"
     let cellID_profile = "cellID_profile"
-    let buttonList:[MenuButton] = [MenuButton(title: "Username", icon: #imageLiteral(resourceName: "icons8-vegan_food")),
-                                   MenuButton(title: "Change Language", icon: UIImage(named: "icons8-language")!),
-                                   MenuButton(title: "Security", icon: UIImage(named: "icons8-filled_message")!),
-                                   MenuButton(title: "Feedback Us", icon: UIImage(named: "icons8-filled_message")!),
-                                   MenuButton(title: "Invite your Friend", icon: UIImage(named: "icons8-share")!),
-                                   MenuButton(title: "Help", icon: UIImage(named: "icons8-filled_help")!),
-                                   MenuButton(title: "About", icon: UIImage(named: "icons8-about")!),
-                                   MenuButton(title: "Voice & Video Test", icon: UIImage(named: "icons8-phone")!)]
+    let buttonList:[MenuButton] = [MenuButton(title: "User Name", icon: #imageLiteral(resourceName: "pablo-profile")),
+                                   MenuButton(title: "Change Language", icon: #imageLiteral(resourceName: "icons8-language")),
+                                   MenuButton(title: "Security", icon: #imageLiteral(resourceName: "icons8-security_checked_filled")),
+                                   MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-filled_message")),
+                                   MenuButton(title: "Invite your Friend", icon: #imageLiteral(resourceName: "icons8-share")),
+                                   MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-help")),
+                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about")),
+                                   MenuButton(title: "Voice & Video Test", icon: #imageLiteral(resourceName: "icons8-phone"))]
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -60,7 +60,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         let actionSheet = UIAlertController(title: "Are you sure to signout?", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let confirm = UIAlertAction(title: "Confirm", style: .default) { (action) in
-            signOutButtonClick()
+            self.signOutButtonClick()
         }
         
         actionSheet.addAction(confirm)
@@ -71,7 +71,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     let infoLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Copyright © 2018-2019\nAllright reserved by MyanCare\nVersion 2.1.1"
+        lbl.text = "Copyright © 2018-2019\nAllright reserved by MyanCare\nVersion 3.0"
         lbl.numberOfLines = 3
         lbl.textAlignment = .center
         lbl.font = UIFont.mmFontRegular(ofSize: 11)
@@ -86,8 +86,10 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
         self.view.backgroundColor = UIColor.white
         self.navigationItem.largeTitleDisplayMode = .never
         
-        
         setupViews()
+        
+//        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+//        infoLabel.text = "Copyright © 2018-2019\nAllright reserved by MyanCare\nVersion \(appVersion ?? "x.x.x")"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -229,19 +231,15 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
         var cell = UICollectionViewCell()
         if indexPath.row == 0 {
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID_profile, for: indexPath) as! MoreCollectionViewEditProfileCell
-            let userName = UserDefaults.standard.getUserData().object(forKey: "name") as! String
-            let image_url = UserDefaults.standard.getUserData().object(forKey: "image_url") as! String
-
-            profilecell.namelabel.text = userName
-            
-            Alamofire.request(URL(string: "\(image_url)")!).responseImage { response in
-                debugPrint(response.result)
-                
-                if let image = response.result.value {
-                    print("image downloaded: \(image)")
+            if let userName = UserDefaults.standard.getUserData().object(forKey: "name") as? String{
+                    profilecell.namelabel.text = userName
+            }
+            if let image_url = UserDefaults.standard.getUserData().object(forKey: "image_url") as? String{
+                UIImage.loadImage(image_url) { (image) in
                     profilecell.icon.image = image
                 }
             }
+            
             
             cell = profilecell
         } else {
