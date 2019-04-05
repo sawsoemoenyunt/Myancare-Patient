@@ -155,7 +155,9 @@ extension AppointmentListViewController{
     
     func getAppointments(_ type:AppointmentType){
         
-        self.startAnimating()
+        if appointmentList.count == 0{
+            self.startAnimating()
+        }
         
         let skip = appointmentList.count
         let limit = 10

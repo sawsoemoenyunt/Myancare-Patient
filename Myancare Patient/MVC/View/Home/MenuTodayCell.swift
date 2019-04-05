@@ -113,7 +113,19 @@ class TodayAppointmentCell: UICollectionViewCell {
     var appointmentData: AppointmentModel?{
         didSet{
             if let data = appointmentData{
-                dateLabel.text = data.date_of_issue
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                
+                if let date = formatter.date(from: data.date_of_issue!){
+                    let fm1 = DateFormatter()
+                    fm1.dateFormat = "dd MMM"
+                    let dateString = fm1.string(from: date)
+                    let dateRes = dateString.replacingOccurrences(of: " ", with: "\n")
+                    dateLabel.text = dateRes
+                }
+                
+                
                 if let patientName = data.patient?.object(forKey: "name") as? String{
                     patientnameLabel.text = patientName
                 }

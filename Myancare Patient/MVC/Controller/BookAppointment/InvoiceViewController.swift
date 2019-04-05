@@ -134,7 +134,7 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable{
         let lbl = UILabel()
         lbl.text = "2400.00 Coin"
         lbl.textAlignment = .center
-        lbl.font = UIFont.mmFontBold(ofSize: 32)
+        lbl.font = UIFont.mmFontBold(ofSize: 27)
         return lbl
     }()
     

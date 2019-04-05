@@ -15,6 +15,7 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
     let cellID = "cellID"
     var walletbalance = 0
     var paymentHistories = [PaymentHistoryModel]()
+    var isPaging = true
     
     let coinlabel: UILabel = {
         let lbl = UILabel()
@@ -63,6 +64,19 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
         return cv
     }()
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshDoctorData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshDoctorData() {
+        paymentHistories.removeAll()
+        isPaging = true
+        getTransactions()
+        self.refreshControl1.endRefreshing()
+    }
+    
     @objc func topUpBtnClick(){
        self.navigationController?.pushViewController(PaymentMethodVC(), animated: true)
     }
@@ -90,6 +104,7 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
         self.title = "Wallet"
         view.backgroundColor = .white
         collectionView.register(WalletCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.refreshControl = refreshControl1
         
         setupViews()
         setupData()
@@ -150,6 +165,7 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         cell.transactionData = paymentHistories[indexPath.row]
         
         if indexPath.row > paymentHistories.count - 1{
+            isPaging = true
             getTransactions()
         }
         
@@ -157,7 +173,7 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 80)
+        return CGSize(width: collectionView.frame.width, height: 90)
     }
 }
 
@@ -194,6 +210,7 @@ extension WalletVC{
                                     self.paymentHistories.append(paymentHistory)
                                 }
                             }
+                            self.isPaging = responseDataArray.count > 0 ? true : false
                             self.collectionView.reloadData()
                         }
                     }

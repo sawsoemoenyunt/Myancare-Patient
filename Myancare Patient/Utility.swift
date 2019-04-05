@@ -65,6 +65,20 @@ func getComingDates(days: Int) -> NSMutableArray {
 
 class UtilityClass: NSObject {
     
+    class func getUtcDate()->String{
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return formatter.string(from: date)
+    }
+    
+    class func getDate()->String{
+        let date = Date()
+        let fm2 = DateFormatter()
+        fm2.dateFormat = "yyyy-MM-dd"
+        return fm2.string(from: date)
+    }
+    
     class func getHeads()->[String:Any]{
         return ["Authorization":"\(jwtTkn)"]
     }

@@ -20,7 +20,7 @@ class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
             if let name = gateWayName{
                 self.icon.image = UIImage(named: "\(name)")
                 self.gateWayNameLabel.text = "Pay with \(name.capitalized)"
-                self.infoLabel.text = "Please select the amount that you want to purchase to pay with \(name.capitalized) bank."
+                self.infoLabel.text = "Please select the amount that you want to purchase to pay with \(name.capitalized)."
                 self.getAllAmount("\(name)")
             }
         }
@@ -131,6 +131,8 @@ class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
         costLabel.anchor(lineView.bottomAnchor, left: costAmountLabel.rightAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         confirmBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         collectionView.anchor(lineView.bottomAnchor, left: v.leftAnchor, bottom: confirmBtn.topAnchor, right: v.rightAnchor, topConstant: 50, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        
+        confirmBtn.isHidden = true
     }
 }
 
@@ -148,16 +150,51 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 60)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let exchangeRate = amountList[indexPath.row]
+        self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+    }
 }
 
 extension SelectAmountVC{
+    
+    func requestTransactions(gateWay:String, coin:Int, amount:Int){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.transactionsRequest.path
+        let params = ["coin" : coin,
+                      "amount" : amount,
+        "payment_gateway" : gateWay] as [String:Any]
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    self.showAlert(title: "Success", message: "Your manual payment was requested to Myancare!")
+                } else {
+                    self.showAlert(title: "Failed", message: "An error occured while requesting manual payment")
+                }
+                
+            case .failure(let error):
+                self.showAlert(title: "Failed", message: "An error occured while requesting manual payment")
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func getAllAmount(_ gateWayName: String){
         
         startAnimating()
         
         if let token = UserDefaults.standard.getToken(){
             let url = EndPoints.getExchangeRatesByPaymentGateway(gateWayName).path
-            let heads = ["Authorization":"Bearer \(token)"]
+            let heads = ["Authorization":"\(jwtTkn)"]
             Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 
                 switch response.result{

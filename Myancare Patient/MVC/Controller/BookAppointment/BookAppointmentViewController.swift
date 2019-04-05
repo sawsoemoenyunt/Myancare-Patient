@@ -208,8 +208,8 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             bookAppointmentData.slotEndTime = slots[indexPath.row].slot_end_time_mililisecond
             bookAppointmentData.slotStartTimeString = slots[indexPath.row].slot_start_time
             bookAppointmentData.slotEndTimeString = slots[indexPath.row].slot_end_time
-            bookAppointmentData.date_of_issue = slots[indexPath.row].date_utc
-            bookAppointmentData.date_of_issue_utc = slots[indexPath.row].date_utc
+            bookAppointmentData.date_of_issue = UtilityClass.getDate()
+            bookAppointmentData.date_of_issue_utc = UtilityClass.getUtcDate()
             bookAppointmentData.slot = slots[indexPath.row].id
         }
     }
@@ -259,7 +259,7 @@ extension BookAppointmentViewController{
         let url = EndPoints.getOperationHours(date, docID).path
         let heads = ["Authorization" : "\(jwtTkn)"]
         
-        print("REquested url for op ; \(url)")
+        print("Requested url for op ; \(url)")
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             

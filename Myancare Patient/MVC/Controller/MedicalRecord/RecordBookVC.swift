@@ -30,6 +30,19 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
         return cv
     }()
     
+    lazy var refreshControl1 : UIRefreshControl = {
+        let  rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(refreshDoctorData), for: .valueChanged)
+        return rc
+    }()
+    
+    @objc func refreshDoctorData() {
+        recordBooks.removeAll()
+        isPaging = true
+        self.getAllMedicalRecords()
+        self.refreshControl1.endRefreshing()
+    }
+    
     lazy var typeSegment:UISegmentedControl = {
         let sg = UISegmentedControl(items: ["All Record","My Record"])
         //        sg.setImage( #imageLiteral(resourceName: "icons8-magazine"), forSegmentAt: 0)
@@ -179,7 +192,7 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
         addBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
         
         collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
-        
+        collectionView.refreshControl = refreshControl1
         //hide addbtn for now
         addBtn.isHidden = true
     }

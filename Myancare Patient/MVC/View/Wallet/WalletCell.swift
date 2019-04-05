@@ -56,7 +56,7 @@ class WalletCell: UICollectionViewCell {
                     
                     let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
                     let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: UIColor.MyanCareColor.green, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
-                    let yourOtherAttributes2 = [NSAttributedString.Key.foregroundColor: statusColor, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 16)]
+                    let yourOtherAttributes2 = [NSAttributedString.Key.foregroundColor: statusColor, NSAttributedString.Key.font: UIFont.mmFontRegular(ofSize: 14)]
                     let remark = NSMutableAttributedString(string: "Top up wallet", attributes: yourAttributes)
                     let coin = NSMutableAttributedString(string: "\n+ Coin \(data.coin!)", attributes: yourOtherAttributes)
                     let status = NSMutableAttributedString(string: "\nStatus : \(data.manual_payment_status!)", attributes: yourOtherAttributes2)

@@ -170,6 +170,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     lazy var voiceBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Voice", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-phone").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.flamingo
         btn.layer.cornerRadius = 25 //height 50
@@ -179,6 +180,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     }()
     
     @objc func bookVoiceAppointment(){
+        bookAppointmentData = BookAppointmentModel()
         let bookVC = BookAppointmentViewController()
         if let id = docData?.id!{
             bookAppointmentData.doctor = id
@@ -193,6 +195,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     lazy var videoBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Video", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-video_call").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.mantis //orange
         btn.layer.cornerRadius = 25 //height 50
@@ -202,6 +205,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     }()
     
     @objc func bookVideoAppointment(){
+        bookAppointmentData = BookAppointmentModel()
         let bookVC = BookAppointmentViewController()
         if let id = docData?.id!{
             bookAppointmentData.doctor = id
@@ -216,6 +220,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     lazy var chatBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Chat", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-chat").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.lightSeaGreen //green
         btn.layer.cornerRadius = 25 //height 50
@@ -225,7 +230,17 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     }()
     
     @objc func chatBtnClick(){
-        doctorDetailViewController?.navigationController?.pushViewController(ChatListVC(), animated: true)
+        let bookVC = ReasonVC()
+        bookAppointmentData = BookAppointmentModel()
+        if let id = docData?.id!{
+            bookAppointmentData.doctor = id
+            bookAppointmentData.doctor_name = docData?.name
+            bookAppointmentData.type = "chat"
+            bookAppointmentData.amount = docData?.chat_rate
+            bookAppointmentData.date_of_issue = UtilityClass.getDate()
+            bookAppointmentData.date_of_issue_utc = UtilityClass.getUtcDate()
+            doctorDetailViewController?.navigationController?.pushViewController(bookVC, animated: true)
+        }
     }
     
     func setupViews(){
