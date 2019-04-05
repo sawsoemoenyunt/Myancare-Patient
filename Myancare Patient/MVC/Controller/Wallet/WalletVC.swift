@@ -162,7 +162,10 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! WalletCell
-        cell.transactionData = paymentHistories[indexPath.row]
+        
+        if paymentHistories.count > 0{
+            cell.transactionData = paymentHistories[indexPath.row]
+        }
         
         if indexPath.row > paymentHistories.count - 1{
             isPaging = true

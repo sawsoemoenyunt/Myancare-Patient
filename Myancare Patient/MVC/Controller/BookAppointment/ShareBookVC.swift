@@ -16,6 +16,7 @@ class ShareBookVC: UIViewController{
     
     let icon: UIImageView = {
        let img = UIImageView()
+        img.image = UIImage(named: "u4160")
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         img.backgroundColor = .gray

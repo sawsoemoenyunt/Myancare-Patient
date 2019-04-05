@@ -126,7 +126,8 @@ class TodayAppointmentCell: UICollectionViewCell {
                 }
                 
                 
-                if let patientName = data.patient?.object(forKey: "name") as? String{
+                if let patientName = data.doctor?.object(forKey: "name") as? String{
+                    //set doctor name
                     patientnameLabel.text = patientName
                 }
                 
@@ -139,7 +140,7 @@ class TodayAppointmentCell: UICollectionViewCell {
                 let date = Date(milliseconds: data.slotStartTime!)
                 timeLabel.text = UtilityClass.get12Hour(date)
                 
-                reasonLabel.text = data.reason!
+                reasonLabel.text = " | \(data.reason!)"
             }
         }
     }

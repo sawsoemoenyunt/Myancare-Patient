@@ -368,6 +368,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                         if let userToken = responseData.object(forKey: "token") as? String{
                             print("USER TOKEN WAS : \(userToken)")
                             UserDefaults.standard.setToken(value: userToken)
+                            jwtTkn = "Bearer \(userToken)"
                         }
                         
                         if let userData = responseData.object(forKey: "user") as? [String:Any]{

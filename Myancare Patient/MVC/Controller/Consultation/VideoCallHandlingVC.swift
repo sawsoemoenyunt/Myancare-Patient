@@ -388,7 +388,7 @@ extension VideoCallHandlingVC{
         
         self.localView.addSubview(videoController().localView())
         
-        self.remoteView.isHidden = true
+//        self.remoteView.isHidden = true
         // self.localVideoView.isHidden = true
         
         self.audioController().unmute()
