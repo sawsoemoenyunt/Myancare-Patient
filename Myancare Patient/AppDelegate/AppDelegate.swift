@@ -20,7 +20,8 @@ import Alamofire
 import PushKit
 import CallKit
 
-var jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTU0MjgzNjYyfQ.ZSBCbJu1soHAGH6CGq9h0yg7pliYbSqAphMu1Hw-s9U" //akm
+var jwtTkn = ""
+//var jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTU0MjgzNjYyfQ.ZSBCbJu1soHAGH6CGq9h0yg7pliYbSqAphMu1Hw-s9U" //akm
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYjg3MmZlNjhhOTExMmIwNDYyMjdkMCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzNzY0ODQ2fQ.YuAP4usQdaPMCrZWABHpDCTHY0XRX8r7PeNkPjt-tL8" //nmh
 //let jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTUzMjI4Mzk5fQ.4a0POJTeBdl70PLBRomm4VVmEKrPMsDkZauClaRBDxY" //mtm
 
@@ -375,7 +376,8 @@ extension AppDelegate{
 extension AppDelegate{
     func updateUserData(){
         let url = EndPoints.getPatient.path
-        let heads = ["Authorization":"\(jwtTkn)"]
+        let userToken = UserDefaults.standard.getToken()
+        let heads = ["Authorization":"Bearer \(userToken ?? "")"]
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             switch response.result{
             case .success:

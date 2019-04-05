@@ -42,7 +42,12 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func likeButtonClick(){
-        likeButton.tintColor = UIColor.red
+        if doctorData.favorite!{
+            self.deleteFavourite()
+        } else {
+            self.setFavourite()
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -129,6 +134,53 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
 
 extension DoctorDetailVC{
     
+    func setFavourite(){
+        self.startAnimating()
+        let url = EndPoints.setFavourites.path
+        let params = ["doctor":doctorData.id!]
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            print("DOC FAV : \(response)")
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    self.likeButton.tintColor = UIColor.red
+                    self.doctorData.favorite = true
+                } else {
+                    print("\(responseStatus ?? 0)")
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func deleteFavourite(){
+        self.startAnimating()
+        let url = EndPoints.deleteFavourites(doctorData.id!).path
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    self.likeButton.tintColor = UIColor.gray
+                    self.doctorData.favorite = false
+                } else {
+                    print("\(responseStatus ?? 0)")
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func getDoctorData(_ docID:String){
         
         startAnimating()
@@ -151,6 +203,11 @@ extension DoctorDetailVC{
                     print("Record found")
                     if let responseData = response.result.value as? [String:Any]{
                         self.doctorData.updateUsingDict(responseData)
+                        if self.doctorData.favorite!{
+                            self.likeButton.tintColor = UIColor.red
+                        } else {
+                            self.likeButton.tintColor = UIColor.gray
+                        }
                         self.collectionView.reloadData()
                     }
                 }

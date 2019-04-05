@@ -38,7 +38,7 @@ class SpecializationModel{
             name_my = name_my1
         }
         
-        if let image1 = dict["image"] as? String{
+        if let image1 = dict["image_url"] as? String{
             image = image1
         }
         

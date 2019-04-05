@@ -23,8 +23,8 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
 //        self.navigationController?.navigationBar.topItem?.title = ""
         
         //add right barbuttonitem
-        let questionButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-ask_question_filled"), style: .plain, target: self, action: nil)
-        self.navigationItem.rightBarButtonItems = [questionButton]
+//        let questionButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-ask_question_filled"), style: .plain, target: self, action: nil)
+//        self.navigationItem.rightBarButtonItems = [questionButton]
         
         //setup collectionview
         collectionView?.backgroundColor = .white
@@ -45,7 +45,7 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.collectionView!.frame.width/2-10, height: 120)
+        return CGSize(width: self.collectionView!.frame.width/2-10, height: 150)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -53,6 +53,10 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
         cell.specData = specList[indexPath.row]
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

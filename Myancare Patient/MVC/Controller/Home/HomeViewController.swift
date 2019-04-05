@@ -67,6 +67,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         ///MARK : CHANGE LATER
         if let token = UserDefaults.standard.getToken(){
             print("Login token : \(token)")
+            jwtTkn = "Bearer \(token)"
         }
     }
     

@@ -18,10 +18,13 @@ class DoctorListCell: UICollectionViewCell{
                 nameLabel.text = data.name!
                 specializeLabel.text = data.specialization!
                 addressLabel.text = data.online_status == true ? "Online" : "Offline"
-                statusView.backgroundColor = data.online_status == true ? UIColor.MyanCareColor.green : UIColor.gray
+                statusView.backgroundColor = data.online_status == true ? UIColor.MyanCareColor.green : UIColor.MyanCareColor.darkGray
                 
                 //load image
-                loadImage(data.image_url!)
+                print("Docotor iamge url : \(data.image_url!)")
+                UIImage.loadImage(data.image_url!) { (image) in
+                    self.profileImage.image = image
+                }
             }
         }
     }
@@ -83,7 +86,7 @@ class DoctorListCell: UICollectionViewCell{
         view.layer.cornerRadius = 7 // 14
         view.layer.masksToBounds = true
         view.layer.borderColor = UIColor.white.cgColor
-        view.layer.borderWidth = 0.5
+        view.layer.borderWidth = 2
         return view
     }()
     

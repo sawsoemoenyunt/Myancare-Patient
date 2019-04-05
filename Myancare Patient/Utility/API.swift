@@ -53,6 +53,8 @@ enum EndPoints : ApiEndpoint {
     case getSheet(String)
     case addBookPermission
     case transactionsRequest
+    case setFavourites //docotor favourite
+    case deleteFavourites(String) //docotor favourite
     
     var path: URL
     {
@@ -125,6 +127,10 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"appointments"))!
         case .transactionsRequest:
             return URL(string: String(baseURLString+"transactions/request"))!
+        case .setFavourites:
+            return URL(string: String(baseURLString+"favorites"))!
+        case .deleteFavourites(let docID):
+            return URL(string: String(baseURLString+"favorites/\(docID)"))!
         }
     }
 }

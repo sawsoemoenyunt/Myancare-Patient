@@ -17,20 +17,10 @@ class SpecializationCell: UICollectionViewCell {
         didSet{
             if let data = specData{
                 label.text = data.name!
-                loadImage(data.image!)
-            }
-        }
-    }
-    
-    func loadImage(_ urlString:String){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.icon.image = image
+                
+                UIImage.loadImage(data.image!) { (image) in
+                    self.icon.image = image
+                }
             }
         }
     }
@@ -39,7 +29,7 @@ class SpecializationCell: UICollectionViewCell {
         let img = UIImageView()
         img.backgroundColor = .white
         img.layer.borderColor = UIColor.lightGray.cgColor
-        img.layer.borderWidth = 1
+        img.layer.borderWidth = 1 
         img.clipsToBounds = true
         return img
     }()
@@ -55,7 +45,9 @@ class SpecializationCell: UICollectionViewCell {
     let label: UILabel = {
         let lbl = UILabel()
         lbl.text = "SP1"
+        lbl.numberOfLines = 2
         lbl.textAlignment = .center
+        lbl.font = UIFont.MyanCareFont.type2
         return lbl
     }()
     
@@ -65,7 +57,7 @@ class SpecializationCell: UICollectionViewCell {
         
         backView.anchor(self.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 100)
         backView.anchorCenterXToSuperview()
-        label.anchor(backView.bottomAnchor, left: self.leftAnchor, bottom: nil, right: self.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        label.anchor(backView.bottomAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         backView.layer.cornerRadius = 50
         backView.clipsToBounds = true
