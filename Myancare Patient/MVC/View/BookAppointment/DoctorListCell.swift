@@ -21,7 +21,6 @@ class DoctorListCell: UICollectionViewCell{
                 statusView.backgroundColor = data.online_status == true ? UIColor.MyanCareColor.green : UIColor.MyanCareColor.darkGray
                 
                 //load image
-                print("Docotor iamge url : \(data.image_url!)")
                 UIImage.loadImage(data.image_url!) { (image) in
                     self.profileImage.image = image
                 }
