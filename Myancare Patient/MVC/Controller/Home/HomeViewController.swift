@@ -78,6 +78,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         getDoctors(.recommand)
         getDoctors(.favourite)
         getAppointments()
+        
     }
     
     func setupNavBarItems(){

@@ -50,12 +50,23 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>"Myancare need your permision to access camera"</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>"Myancare need your permission to access microphone"</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&quot;Myancare need your permission to access photo library&quot;</string>
+	<string>"Myancare need your permission to access photo library"</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pyidaungsu.ttf</string>
 		<string>Pyidaungsu-Bold.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -77,14 +88,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>voip</string>
-	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>&quot;Myancare need your permission to access microphone&quot;</string>
-	<key>NSCameraUsageDescription</key>
-	<string>&quot;Myancare need your permision to access camera&quot;</string>
 </dict>
 </plist>

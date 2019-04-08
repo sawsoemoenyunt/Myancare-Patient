@@ -92,6 +92,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         
         self.title = docName
         view.backgroundColor = UIColor.white
+        self.navigationItem.largeTitleDisplayMode = .never
         
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 78, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
@@ -130,7 +131,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
             cell.imageView.isHidden = false
             cell.textView.isHidden = true
             
-            UIImage.loadImage(chatRecords[indexPath.row].message!) { (image) in
+            UIImage.loadImage(chatRecords[indexPath.row].image_url!) { (image) in
                 cell.imageView.image = image
             }
         }
@@ -180,7 +181,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if chatRecords[indexPath.row].image_type! == 1{
             let zoomVC = ChatImageZoomVC()
-            zoomVC.imageUrl = chatRecords[indexPath.row].message!
+            zoomVC.imageUrl = chatRecords[indexPath.row].image_url!
             self.view.endEditing(true)
             self.navigationController?.pushViewController(zoomVC, animated: true)
         }
