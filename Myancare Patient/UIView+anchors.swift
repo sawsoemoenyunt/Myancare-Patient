@@ -71,16 +71,27 @@ extension UIColor {
     }
 }
 
+let imageCache = AutoPurgingImageCache()
+
 extension UIImage{
     class func loadImage(_ urlString:String, result: @escaping (UIImage) -> ()){
         if urlString != ""{
-            let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
-            Alamofire.request(url).responseImage { response in
+            
+            let urlRequest = URLRequest(url: URL(string: "\(urlString)")!)
+            
+            if let cachedImage = imageCache.image(for: urlRequest, withIdentifier: "\(urlString)"){
+                result(cachedImage)
                 
-                if let image = response.result.value {
-                    result(image)
-                } else {
-                    result(UIImage(named: "no-image")!)
+            } else {
+                let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
+                Alamofire.request(url).responseImage { response in
+                    
+                    if let image = response.result.value {
+                        imageCache.add(image, for: urlRequest, withIdentifier: "\(urlString)")
+                        result(image)
+                    } else {
+                        result(UIImage(named: "no-image")!)
+                    }
                 }
             }
         } else {
