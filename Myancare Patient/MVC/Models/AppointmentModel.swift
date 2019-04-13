@@ -32,6 +32,7 @@ enum BookingStatus : Int{
 
 class AppointmentModel {
     
+    var id : String?
     var createdAt : String?
     var updatedAt : String?
     var doctor : NSDictionary?
@@ -49,6 +50,7 @@ class AppointmentModel {
     var booking_status  = BookingStatus.PENDING
     
     init() {
+        id = ""
         createdAt = ""
         updatedAt = ""
         doctor = NSDictionary()
@@ -67,6 +69,10 @@ class AppointmentModel {
     }
     
     func updateModleUsingDict(_ dict:[String:Any]){
+        if let id1 = dict["id"] as? String{
+            id = id1
+        }
+        
         if let createdAt1 = dict["createdAt"] as? String{
             createdAt = createdAt1
         }

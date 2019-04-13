@@ -17,7 +17,7 @@ class ArticleCell: UICollectionViewCell {
             if let data = articleData{
                 titlelabel.text = data.title!
                 if let htmlString = data.short_description?.htmlToAttributedString{
-                    introlabel.attributedText = htmlString
+                    introlabel.text = htmlString.string
                 }
                 
                 UIImage.loadImage(data.image_url!) { (image) in

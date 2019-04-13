@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Sinch
 
 class AppointmentDetailVC: UIViewController {
     
@@ -94,7 +95,7 @@ class AppointmentDetailVC: UIViewController {
         view.addSubview(acceptBtn)
         
         let v = view.safeAreaLayoutGuide
-        let buttonWidth = view.bounds.width/3
+        let buttonWidth = view.frame.width/3
         
         switch appointmentData.booking_status{
         case .RESCHEDULE_BY_PATIENT, .RESCHEDULE_BY_DOCTOR:
@@ -169,8 +170,89 @@ class AppointmentDetailVC: UIViewController {
         self.navigationController?.pushViewController(rescheduleVC, animated: true)
     }
     
+    /// funcion to initialize SINCH Client variable
+    ///
+    /// - Returns: return SINClient value
+    func client() -> SINClient
+    {
+        return ((UIApplication.shared.delegate as? AppDelegate)?.client)!
+    }
+    
+    ///start the conversation
     @objc func start(){
+        
+        var callerName = ""
+        var callerID = ""
+        var callerImage = ""
+        var receiverName = ""
+        var receiverID = ""
+        var receiverImage = ""
+        
+        if let callName = appointmentData.patient?.object(forKey: "name") as? String{
+            callerName = callName
+        }
+        
+        if let callID = appointmentData.patient?.object(forKey: "id") as? String{
+            callerID = callID
+        }
+        
+        if let callImage = appointmentData.patient?.object(forKey: "image_url") as? String{
+            callerImage = callImage
+        }
+        
+        if let receiveName = appointmentData.doctor?.object(forKey: "name") as? String{
+            receiverName = receiveName
+        }
+        
+        if let receiveID = appointmentData.doctor?.object(forKey: "id") as? String{
+            receiverID = receiveID
+        }
+        
+        if let receiveImage = appointmentData.doctor?.object(forKey: "image_url") as? String{
+            receiverImage = receiveImage
+        }
+        
         //start conversation chat, voice, video
+        let myDictOfDict = [
+            "CALLER_NAME" : callerName,
+            "CALL_ID" : callerID,
+            "CALLER_IMAGE" : callerImage,
+            "RECEIVER_NAME" : receiverName,
+            "RECEIVER_IMAGE" : receiverImage,
+            "APPOINTMENT_ID" : appointmentData.id
+        ]
+        
+        
+        switch appointmentData.type?.lowercased() {
+        case "chat":
+            //start chat conversation with doctor
+            let layout = UICollectionViewFlowLayout()
+            let homeVC = HomeViewController(collectionViewLayout:layout)
+            let navController = UINavigationController(rootViewController: homeVC)
+            homeVC.pushToVC(vc: ChatListVC())
+            UtilityClass.changeRootViewController(with: navController)
+            
+        case "voice":
+            //call voice
+            if(self.client().isStarted())
+            {
+                weak var call: SINCall? = self.client().call().callUser(withId:receiverID,headers: myDictOfDict as [AnyHashable : Any])
+                
+                ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
+            }
+        
+        case "video":
+            //call video
+            print("video call")
+            if(self.client().isStarted())
+            {
+                weak var call: SINCall? = self.client().call().callUserVideo(withId:receiverID, headers: myDictOfDict as [AnyHashable : Any])
+                
+                ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
+            }
+        default:
+            break
+        }
     }
 }
 

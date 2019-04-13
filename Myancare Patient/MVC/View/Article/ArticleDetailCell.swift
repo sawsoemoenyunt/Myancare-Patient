@@ -21,7 +21,7 @@ class ArticleDetailCell: UICollectionViewCell {
                     return
                 }
                 if let htmlString = data.short_description?.htmlToAttributedString{
-                    infoLabel.attributedText = htmlString
+                    infoLabel.text = htmlString.string
                 }
             }
         }
@@ -92,7 +92,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     let infoLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.mmFontRegular(ofSize: 14)
+        lbl.font = UIFont.MyanCareFont.type3
         lbl.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt."
         lbl.numberOfLines = 0
         return lbl

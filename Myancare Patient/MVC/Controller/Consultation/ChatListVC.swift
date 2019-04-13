@@ -157,14 +157,14 @@ class ChatListCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Doctor Name"
-        lbl.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lbl.font = UIFont.MyanCareFont.type2
         return lbl
     }()
     
     let specializeLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "This is last message"
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.gray
         return lbl
     }()
@@ -172,7 +172,7 @@ class ChatListCell: UICollectionViewCell {
     let addressLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "5 min ago"
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.gray
         lbl.textAlignment = .right
         return lbl

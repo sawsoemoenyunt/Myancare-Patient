@@ -153,7 +153,20 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let exchangeRate = amountList[indexPath.row]
-        self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+        showConfirmActionSheet(exchangeRate)
+    }
+    
+    func showConfirmActionSheet(_ exchangeRate:ExchangeRateModel){
+        let actionSheet = UIAlertController(title: "Please confirm to request manuel payment", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+        }
+        
+        actionSheet.addAction(confirmBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
 }
 
