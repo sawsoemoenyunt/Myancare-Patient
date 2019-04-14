@@ -17,6 +17,7 @@
 		52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2022216E040035C257 /* InvoiceViewController.swift */; };
 		52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2222217DFB0035C257 /* AppointmentListViewController.swift */; };
 		521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521015F6222C4D6F004119E6 /* SelectAmountVC.swift */; };
+		5220DB842262C8E8009026C5 /* PatientRecordBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */; };
 		5221AAD622509F1B0090120A /* AddReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221AAD522509F1B0090120A /* AddReminderVC.swift */; };
 		5221AAD82250A98B0090120A /* RepeatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221AAD72250A98B0090120A /* RepeatingVC.swift */; };
 		5221AADA2250B3370090120A /* ReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221AAD92250B3370090120A /* ReminderVC.swift */; };
@@ -145,6 +146,7 @@
 		52092D2022216E040035C257 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		52092D2222217DFB0035C257 /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		521015F6222C4D6F004119E6 /* SelectAmountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAmountVC.swift; sourceTree = "<group>"; };
+		5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientRecordBookVC.swift; sourceTree = "<group>"; };
 		5221AAD522509F1B0090120A /* AddReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderVC.swift; sourceTree = "<group>"; };
 		5221AAD72250A98B0090120A /* RepeatingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingVC.swift; sourceTree = "<group>"; };
 		5221AAD92250B3370090120A /* ReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVC.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				52092D2222217DFB0035C257 /* AppointmentListViewController.swift */,
 				52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */,
 				52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */,
+				5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */,
 			);
 			path = Appointment;
 			sourceTree = "<group>";
@@ -1020,6 +1023,7 @@
 				524D8EAF223795A600B7AEAB /* MedicalRecordSelectCell.swift in Sources */,
 				524D8EA12237943400B7AEAB /* ArticleCategoryCell.swift in Sources */,
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
+				5220DB842262C8E8009026C5 /* PatientRecordBookVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
 				52D59694223F8EE90071BE52 /* API.swift in Sources */,
 				526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */,

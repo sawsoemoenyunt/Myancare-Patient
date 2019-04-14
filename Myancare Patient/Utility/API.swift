@@ -55,6 +55,7 @@ enum EndPoints : ApiEndpoint {
     case transactionsRequest
     case setFavourites //docotor favourite
     case deleteFavourites(String) //docotor favourite
+    case getMedicalRecordBooksByPatientID(String,Int,Int)
     
     var path: URL
     {
@@ -131,6 +132,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"favorites"))!
         case .deleteFavourites(let docID):
             return URL(string: String(baseURLString+"favorites/\(docID)"))!
+        case .getMedicalRecordBooksByPatientID(let id, let limit, let skip):
+            return URL(string: String(baseURLString+"medical-record-book/patient?patient_id=\(id)&limit=\(limit)&skip=\(skip)"))!
         }
     }
 }

@@ -53,14 +53,14 @@ class DoctorListCell: UICollectionViewCell{
     let nameLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Doctor Name"
-        lbl.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lbl.font = UIFont.MyanCareFont.type7
         return lbl
     }()
     
     let specializeLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Specialization"
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.font = UIFont.MyanCareFont.textBox
         lbl.textColor = UIColor.gray
         return lbl
     }()
@@ -68,7 +68,7 @@ class DoctorListCell: UICollectionViewCell{
     let addressLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Address"
-        lbl.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbl.font = UIFont.MyanCareFont.textBox
         lbl.textColor = UIColor.gray
         return lbl
     }()

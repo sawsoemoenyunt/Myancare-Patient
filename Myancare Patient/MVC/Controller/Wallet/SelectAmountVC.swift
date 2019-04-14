@@ -118,7 +118,7 @@ class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
         view.addSubview(infoLabel)
         view.addSubview(lineView)
         view.addSubview(collectionView)
-        view.addSubview(confirmBtn)
+//        view.addSubview(confirmBtn)
         view.addSubview(costLabel)
         view.addSubview(costAmountLabel)
         
@@ -129,8 +129,8 @@ class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
         lineView.anchor(infoLabel.bottomAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
         costAmountLabel.anchor(lineView.bottomAnchor, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 24, bottomConstant: 0, rightConstant: 0, widthConstant: view.bounds.width/2 - 4, heightConstant: 0)
         costLabel.anchor(lineView.bottomAnchor, left: costAmountLabel.rightAnchor, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        confirmBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-        collectionView.anchor(lineView.bottomAnchor, left: v.leftAnchor, bottom: confirmBtn.topAnchor, right: v.rightAnchor, topConstant: 50, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+//        confirmBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+        collectionView.anchor(lineView.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 50, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         
         confirmBtn.isHidden = true
     }

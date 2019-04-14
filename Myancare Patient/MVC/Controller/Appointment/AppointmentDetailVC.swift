@@ -264,6 +264,7 @@ extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AppointmentDetailCell
         cell.appointmentData = self.appointmentData
+        cell.appointmentDetailVC = self
         return cell
     }
     

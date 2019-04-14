@@ -247,11 +247,14 @@ class AppointmentDetailCell: UICollectionViewCell {
         btn.layer.borderWidth = 1
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(medicalRecordBtnClick), for: .touchUpInside)
         return btn
     }()
     
     @objc func medicalRecordBtnClick(){
-        
+        let medicalRecordVC = PatientRecordBookVC()
+        medicalRecordVC.patientID = (self.appointmentData?.patient?.object(forKey: "id") as? String)!
+        self.appointmentDetailVC?.navigationController?.pushViewController(medicalRecordVC, animated: true)
     }
     
     func setupViews(){

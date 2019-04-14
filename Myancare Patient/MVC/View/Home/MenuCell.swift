@@ -119,7 +119,7 @@ class MenuButtonCell: UICollectionViewCell {
         lbl.text = "Button Text"
         lbl.textColor = .black
         lbl.textAlignment = .center
-        lbl.font = UIFont.boldSystemFont(ofSize: 11)
+        lbl.font = UIFont.MyanCareFont.type6
         return lbl
     }()
     
