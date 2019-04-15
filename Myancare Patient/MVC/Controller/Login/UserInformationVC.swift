@@ -328,7 +328,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "facebook_id": self.facebookID,
             "avatar": self.imageKey,
             "device_os": "iOS",
-            "user_device_info": ""
+            "user_device_info": "\(UIDevice.current.name)"
         ]
         
         print("Requested params : \(params)")

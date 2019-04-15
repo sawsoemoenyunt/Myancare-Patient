@@ -26,6 +26,7 @@ enum EndPoints : ApiEndpoint {
     case imagesProfile
     case imagesUpload
     case patientCreate
+    case patientUpdate
     case updateDeviceToken
     case get_transactions(Int,Int)
     case getDoctors
@@ -74,6 +75,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"images/upload"))!
         case .patientCreate:
             return URL(string: String(baseURLString+"patients/create"))!
+        case .patientUpdate:
+            return URL(string: String(baseURLString+"patients"))!
         case .updateDeviceToken:
             return URL(string: String(baseURLString+"patients/update_device"))!
         case .get_transactions(let skip, let limit):

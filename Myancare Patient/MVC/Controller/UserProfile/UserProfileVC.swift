@@ -45,6 +45,10 @@ class UserProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         
         if let user = UserDefaults.standard.getUserData() as? [String:Any]{
             userData.updateModel(usingDictionary: user)
@@ -66,7 +70,13 @@ class UserProfileVC: UIViewController {
         collectionViewTopAnchor = collectionView.anchorWithReturnAnchors(v.topAnchor, left: v.leftAnchor, bottom: editInterestBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)[0]
         editInterestBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(profileEditBtnClick))
+    }
+    
+    @objc func profileEditBtnClick(){
+        let editVC = UserProfileEditVC()
+        editVC.userData = self.userData
+        self.navigationController?.pushViewController(editVC, animated: true)
     }
     
     func moveViewToTopWithConstant(_ constant:CGFloat){
