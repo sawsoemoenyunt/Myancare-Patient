@@ -130,8 +130,20 @@
 		52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59691223F841C0071BE52 /* UserDefaults.swift */; };
 		52D59694223F8EE90071BE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59693223F8EE90071BE52 /* API.swift */; };
 		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
+		52E6B7A4226BF9CE0002193D /* EHRListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7A3226BF9CE0002193D /* EHRListVC.swift */; };
+		52E6B7A6226C0F8A0002193D /* PatientInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7A5226C0F8A0002193D /* PatientInfoCell.swift */; };
+		52E6B7A8226C0F980002193D /* LifeStyleCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7A7226C0F980002193D /* LifeStyleCellCollectionView.swift */; };
+		52E6B7AA226C0FF80002193D /* CurrentMedicineCellCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7A9226C0FF80002193D /* CurrentMedicineCellCollectionView.swift */; };
+		52E6B7AC226C16810002193D /* AvoidMedicineCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7AB226C16810002193D /* AvoidMedicineCollectionView.swift */; };
+		52E6B7AE226C18CE0002193D /* DiseaseCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6B7AD226C18CE0002193D /* DiseaseCellViewController.swift */; };
 		52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */; };
 		52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */; };
+		52EE83AA226821F1000ECBCC /* UnlockPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83A9226821F1000ECBCC /* UnlockPasscodeVC.swift */; };
+		52EE83AC2268220E000ECBCC /* KeyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83AB2268220E000ECBCC /* KeyCell.swift */; };
+		52EE83AE226822D6000ECBCC /* DailedNumbersHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83AD226822D6000ECBCC /* DailedNumbersHeader.swift */; };
+		52EE83B0226840A4000ECBCC /* SetupNewPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83AF226840A4000ECBCC /* SetupNewPasscodeVC.swift */; };
+		52EE83B222684C03000ECBCC /* LoginPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83B122684C03000ECBCC /* LoginPasscodeVC.swift */; };
+		52EE83B4226858E9000ECBCC /* EnterOldPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83B3226858E9000ECBCC /* EnterOldPasscodeVC.swift */; };
 		52F98DC222439A230040D1F5 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F98DC122439A230040D1F5 /* SocketIOManager.swift */; };
 		78874FA114DC211CF82CC53F /* Pods_Myancare_Patient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */; };
 /* End PBXBuildFile section */
@@ -266,8 +278,20 @@
 		52D59691223F841C0071BE52 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		52D59693223F8EE90071BE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
+		52E6B7A3226BF9CE0002193D /* EHRListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EHRListVC.swift; sourceTree = "<group>"; };
+		52E6B7A5226C0F8A0002193D /* PatientInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientInfoCell.swift; sourceTree = "<group>"; };
+		52E6B7A7226C0F980002193D /* LifeStyleCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeStyleCellCollectionView.swift; sourceTree = "<group>"; };
+		52E6B7A9226C0FF80002193D /* CurrentMedicineCellCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMedicineCellCollectionView.swift; sourceTree = "<group>"; };
+		52E6B7AB226C16810002193D /* AvoidMedicineCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvoidMedicineCollectionView.swift; sourceTree = "<group>"; };
+		52E6B7AD226C18CE0002193D /* DiseaseCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiseaseCellViewController.swift; sourceTree = "<group>"; };
 		52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailVC.swift; sourceTree = "<group>"; };
 		52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointmentVC.swift; sourceTree = "<group>"; };
+		52EE83A9226821F1000ECBCC /* UnlockPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPasscodeVC.swift; sourceTree = "<group>"; };
+		52EE83AB2268220E000ECBCC /* KeyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCell.swift; sourceTree = "<group>"; };
+		52EE83AD226822D6000ECBCC /* DailedNumbersHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailedNumbersHeader.swift; sourceTree = "<group>"; };
+		52EE83AF226840A4000ECBCC /* SetupNewPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNewPasscodeVC.swift; sourceTree = "<group>"; };
+		52EE83B122684C03000ECBCC /* LoginPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasscodeVC.swift; sourceTree = "<group>"; };
+		52EE83B3226858E9000ECBCC /* EnterOldPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterOldPasscodeVC.swift; sourceTree = "<group>"; };
 		52F98DC122439A230040D1F5 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.release.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.release.xcconfig"; sourceTree = "<group>"; };
 		6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -647,6 +671,7 @@
 		528DA565221D972A00140CFF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				52E6B7A2226BF9B40002193D /* EHR */,
 				526FD4332242583D0035D757 /* Consultation */,
 				529490442237CE0900507240 /* Passcode */,
 				52162CD12224EE25001F054E /* Appointment */,
@@ -678,6 +703,12 @@
 			isa = PBXGroup;
 			children = (
 				529490452237CE2200507240 /* EnterPasscodeVC.swift */,
+				52EE83A9226821F1000ECBCC /* UnlockPasscodeVC.swift */,
+				52EE83AB2268220E000ECBCC /* KeyCell.swift */,
+				52EE83AD226822D6000ECBCC /* DailedNumbersHeader.swift */,
+				52EE83AF226840A4000ECBCC /* SetupNewPasscodeVC.swift */,
+				52EE83B122684C03000ECBCC /* LoginPasscodeVC.swift */,
+				52EE83B3226858E9000ECBCC /* EnterOldPasscodeVC.swift */,
 			);
 			path = Passcode;
 			sourceTree = "<group>";
@@ -709,6 +740,19 @@
 				523415342222858600CE2A91 /* Pyidaungsu.ttf */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		52E6B7A2226BF9B40002193D /* EHR */ = {
+			isa = PBXGroup;
+			children = (
+				52E6B7A3226BF9CE0002193D /* EHRListVC.swift */,
+				52E6B7A5226C0F8A0002193D /* PatientInfoCell.swift */,
+				52E6B7A7226C0F980002193D /* LifeStyleCellCollectionView.swift */,
+				52E6B7A9226C0FF80002193D /* CurrentMedicineCellCollectionView.swift */,
+				52E6B7AB226C16810002193D /* AvoidMedicineCollectionView.swift */,
+				52E6B7AD226C18CE0002193D /* DiseaseCellViewController.swift */,
+			);
+			path = EHR;
 			sourceTree = "<group>";
 		};
 		52EBC3C622368EA7009AFEBE /* BookAppointment */ = {
@@ -935,6 +979,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52C6FD63225498AC005A3944 /* BookAppointmentModel.swift in Sources */,
+				52EE83AC2268220E000ECBCC /* KeyCell.swift in Sources */,
 				526829692251FC9E00070BC4 /* ChatRecordModel.swift in Sources */,
 				526C571022364113003F2C66 /* AddPhotoVC.swift in Sources */,
 				524D8EA92237953200B7AEAB /* CalendarCell.swift in Sources */,
@@ -955,17 +1000,21 @@
 				52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */,
 				524D8EAB2237954900B7AEAB /* SlotCell.swift in Sources */,
 				52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */,
+				52E6B7A4226BF9CE0002193D /* EHRListVC.swift in Sources */,
 				524D8EB2223795D800B7AEAB /* AppointmentListCell.swift in Sources */,
 				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,
 				528DA577221D99CD00140CFF /* DoctorSearchViewController.swift in Sources */,
 				526FD435224258810035D757 /* ChatListVC.swift in Sources */,
 				52F98DC222439A230040D1F5 /* SocketIOManager.swift in Sources */,
+				52E6B7AC226C16810002193D /* AvoidMedicineCollectionView.swift in Sources */,
 				5221AADC2250B5410090120A /* EditReminderVC.swift in Sources */,
+				52EE83B4226858E9000ECBCC /* EnterOldPasscodeVC.swift in Sources */,
 				52EBC3C822368F06009AFEBE /* AppointmentDetailVC.swift in Sources */,
 				524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */,
 				523B6FAD2256777D001991F8 /* UserProfileEditVC.swift in Sources */,
 				523415392222862700CE2A91 /* LanguageViewController.swift in Sources */,
 				523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */,
+				52EE83AA226821F1000ECBCC /* UnlockPasscodeVC.swift in Sources */,
 				5221AADA2250B3370090120A /* ReminderVC.swift in Sources */,
 				524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */,
 				524D8EC42237975200B7AEAB /* ReminderListCell.swift in Sources */,
@@ -979,6 +1028,7 @@
 				52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */,
 				524D8EB82237966400B7AEAB /* WalthroughCell.swift in Sources */,
 				524D8ECC223797F900B7AEAB /* WalletCell.swift in Sources */,
+				52EE83B0226840A4000ECBCC /* SetupNewPasscodeVC.swift in Sources */,
 				526FD437224258C10035D757 /* ChatRecordVC.swift in Sources */,
 				527FAD0B224B8C9C00484DD1 /* AboutusVC.swift in Sources */,
 				52C6FD692254DF92005A3944 /* VideoCallHandlingVC.swift in Sources */,
@@ -995,6 +1045,7 @@
 				526C571222364369003F2C66 /* PhotoGalleryVC.swift in Sources */,
 				524D8ED02237983A00B7AEAB /* PaymentCell.swift in Sources */,
 				5234153B2222919700CE2A91 /* LoginViewController.swift in Sources */,
+				52E6B7A6226C0F8A0002193D /* PatientInfoCell.swift in Sources */,
 				52AB8E302253B44700ECE4F4 /* MedicalRecordBookModel.swift in Sources */,
 				52C07C882222553C003D12BD /* StartScreenViewController.swift in Sources */,
 				5233D536224C865400E7A2E0 /* ExchangeRateModel.swift in Sources */,
@@ -1005,7 +1056,9 @@
 				526E08952237D58700FECD70 /* NotificationModel.swift in Sources */,
 				526E08992237D5D800FECD70 /* PaymentHistoryModel.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
+				52E6B7AA226C0FF80002193D /* CurrentMedicineCellCollectionView.swift in Sources */,
 				52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */,
+				52E6B7AE226C18CE0002193D /* DiseaseCellViewController.swift in Sources */,
 				52092D1D2221524B0035C257 /* UIView+anchors.swift in Sources */,
 				524D8ECA223797BF00B7AEAB /* ProfileCell.swift in Sources */,
 				524D8EB42237960200B7AEAB /* AppointmentDetailCell.swift in Sources */,
@@ -1020,6 +1073,7 @@
 				523B1374224F8D5400914BA5 /* AudioContollerDelegate.swift in Sources */,
 				526E08932237D56A00FECD70 /* ModelDoctorFilter.swift in Sources */,
 				528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */,
+				52E6B7A8226C0F980002193D /* LifeStyleCellCollectionView.swift in Sources */,
 				5221AAD82250A98B0090120A /* RepeatingVC.swift in Sources */,
 				526E088D2237D4AE00FECD70 /* AppointmentModel.swift in Sources */,
 				524D8EBD223796E700B7AEAB /* MedicalRecordCell.swift in Sources */,
@@ -1032,6 +1086,7 @@
 				52D59694223F8EE90071BE52 /* API.swift in Sources */,
 				526FD43C224259240035D757 /* ChatRecordCell.swift in Sources */,
 				52716F7F224F2D670048C4CD /* ArticleCategoryModel.swift in Sources */,
+				52EE83AE226822D6000ECBCC /* DailedNumbersHeader.swift in Sources */,
 				528DA567221D982300140CFF /* HomeViewController.swift in Sources */,
 				52EBC3CA2236A2F9009AFEBE /* RescheduleAppointmentVC.swift in Sources */,
 				526E08892237D44400FECD70 /* DoctorModel.swift in Sources */,
@@ -1050,6 +1105,7 @@
 				523B137A224F922000914BA5 /* SINCallKitProvider.swift in Sources */,
 				526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */,
 				526E08912237D54B00FECD70 /* ModelAppointment.swift in Sources */,
+				52EE83B222684C03000ECBCC /* LoginPasscodeVC.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

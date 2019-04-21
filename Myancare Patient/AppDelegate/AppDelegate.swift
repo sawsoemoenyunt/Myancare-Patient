@@ -87,9 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-//        let layout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        window?.rootViewController = StartScreenViewController()
+        window?.rootViewController = UINavigationController(rootViewController: EHRListVC())
+        
         
         return true
     }
@@ -174,7 +175,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

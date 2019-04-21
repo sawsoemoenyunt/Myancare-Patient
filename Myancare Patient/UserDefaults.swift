@@ -14,6 +14,7 @@ extension UserDefaults{
         case token
         case userInfoData
         case isLoggedIn
+        case passcode
     }
     
     func setIsLoggedIn(value: Bool) {
@@ -50,5 +51,14 @@ extension UserDefaults{
     
     func getUserData() -> NSDictionary {
         return object(forKey: UserDefaultsKeys.userInfoData.rawValue) as! NSDictionary
+    }
+    
+    func setLoginPasscode(value: String){
+        set(value, forKey: UserDefaultsKeys.passcode.rawValue)
+        synchronize()
+    }
+    
+    func getLoginPsscode() -> String?{
+        return string(forKey: UserDefaultsKeys.passcode.rawValue)
     }
 }
