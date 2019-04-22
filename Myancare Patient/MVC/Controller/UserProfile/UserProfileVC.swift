@@ -102,8 +102,10 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.emailTextField.text = userData.email!
         if userData.gender == "male" {
             cell.maleBtn.backgroundColor = UIColor.MyanCareColor.orange
+            cell.femaleBtn.backgroundColor = UIColor.white
         } else {
             cell.femaleBtn.backgroundColor = UIColor.MyanCareColor.orange
+            cell.maleBtn.backgroundColor = UIColor.white
         }
         cell.heightTextField.text = "\(userData.height!)"
         cell.weightTextField.text = "\(userData.weight!)"
@@ -111,6 +113,16 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         UIImage.loadImage(userData.image_url!) { (image) in
             cell.profileImage.image = image   
         }
+        
+        cell.phoneUserIDTextField.isEnabled = false
+        cell.nameTextField.isEnabled = false
+        cell.dobTextField.isEnabled = false
+        cell.emailTextField.isEnabled = false
+        cell.maleBtn.isEnabled = false
+        cell.femaleBtn.isEnabled = false
+        cell.heightTextField.isEnabled = false
+        cell.weightTextField.isEnabled = false
+        cell.bloodtypeTextField.isEnabled = false
         
         return cell
     }

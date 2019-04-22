@@ -89,6 +89,7 @@
 		527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A1D44225104C100B1D775 /* MedicalReminder.swift */; };
 		527FAD0B224B8C9C00484DD1 /* AboutusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */; };
 		528129FE2264124300ADCD81 /* UserProfileEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528129FD2264124300ADCD81 /* UserProfileEditCell.swift */; };
+		528B07A7226DB0CA00F149F6 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B07A6226DB0CA00F149F6 /* FeedbackVC.swift */; };
 		528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528BFB28224D22DC00CC8986 /* SpecializationModel.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
 		528DA555221D96DA00140CFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 528DA553221D96DA00140CFF /* Main.storyboard */; };
@@ -232,6 +233,7 @@
 		527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutusVC.swift; sourceTree = "<group>"; };
 		528129FD2264124300ADCD81 /* UserProfileEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditCell.swift; sourceTree = "<group>"; };
 		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
+		528B07A6226DB0CA00F149F6 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
 		528BFB28224D22DC00CC8986 /* SpecializationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationModel.swift; sourceTree = "<group>"; };
 		528DA54C221D96DA00140CFF /* Myancare Patient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Myancare Patient.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		528DA54F221D96DA00140CFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -767,6 +769,7 @@
 				52092D2022216E040035C257 /* InvoiceViewController.swift */,
 				52AE88932236197600867151 /* ShareBookVC.swift */,
 				52AE889522361F8700867151 /* SelectBookVC.swift */,
+				528B07A6226DB0CA00F149F6 /* FeedbackVC.swift */,
 			);
 			path = BookAppointment;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				528DA57D221D9ACE00140CFF /* DoctorDetailAdditionCell.swift in Sources */,
 				5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */,
 				521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */,
+				528B07A7226DB0CA00F149F6 /* FeedbackVC.swift in Sources */,
 				52B1E01C222B02B10080243A /* WalletVC.swift in Sources */,
 				528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */,
 				5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */,
