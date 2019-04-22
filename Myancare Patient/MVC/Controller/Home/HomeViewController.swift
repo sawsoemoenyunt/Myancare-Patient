@@ -131,7 +131,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             todayCell.appointmentList = todayAppointmentArr
             todayCell.viewmoreLabel.isHidden = todayAppointmentArr.count == 0 ? true : false
             cell = todayCell
+            break
         case 2:
+            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Category, for: indexPath) as! MenuCategoryCell
+            categoryCell.homeViewController = self
+            cell = categoryCell
+            break
+        case 3:
             let onlinecell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Online, for: indexPath) as! MenuOnlineCell
             onlinecell.labe1.text = "Online".localized()
             onlinecell.labe2.text = "View all".localized()+" >"
@@ -140,18 +146,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             onlinecell.docList = recommandDoctorArr
             cell = onlinecell
             break
-        case 3:
+        case 4:
             let mydocCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Online, for: indexPath) as! MenuOnlineCell
             mydocCell.labe1.text = "Favourite".localized()
             mydocCell.homeViewController = self
             mydocCell.docType = DoctorType.favourite
             mydocCell.docList = favoriteDoctorArr
             cell = mydocCell
-            break
-        case 4:
-            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Category, for: indexPath) as! MenuCategoryCell
-            categoryCell.homeViewController = self
-            cell = categoryCell
             break
         default:
             break

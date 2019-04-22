@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
         let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-        window?.rootViewController = UINavigationController(rootViewController: EHRListVC())
+        window?.rootViewController = StartScreenViewController()
         
         
         return true

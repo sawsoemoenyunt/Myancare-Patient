@@ -152,7 +152,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         
         startAnimating()
         
-        let urlToHit = isFB == true ? EndPoints.checkfb(id).path : EndPoints.checkmobile(id).path
+        let urlToHit = isFB == true ? EndPoints.checkfb(id).path : EndPoints.checkmobile(id, facebookID).path
         let header = ["Content-Type":"application/json"]
         
         Alamofire.request(urlToHit, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
@@ -268,7 +268,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewDidDisappear(true)
         countryCode = ""
         pohoneID = ""
-        facebookID = ""
+//        facebookID = ""
     }
     
     override func viewDidAppear(_ animated: Bool) {

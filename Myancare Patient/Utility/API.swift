@@ -20,8 +20,10 @@ protocol ApiEndpoint {
 enum EndPoints : ApiEndpoint {
     
     case getPatient
+    
     case checkfb(String)
-    case checkmobile(String)
+    case checkmobile(String, String)
+    
     case articles
     case imagesProfile
     case imagesUpload
@@ -65,8 +67,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"patients"))!
         case .checkfb(let id):
             return URL(string: String(baseURLString+"patients/checkfb?fb_acc=\(id)"))!
-        case .checkmobile(let id):
-            return URL(string: String(baseURLString+"patients/checkmobile?mobile=\(id)"))!
+        case .checkmobile(let id, let fb):
+            return URL(string: String(baseURLString+"patients/checkmobile?mobile=\(id)&fb_acc=\(fb)"))!
         case .articles:
             return URL(string: String(baseURLString+"patients/checkmobile?article"))!
         case .imagesProfile:

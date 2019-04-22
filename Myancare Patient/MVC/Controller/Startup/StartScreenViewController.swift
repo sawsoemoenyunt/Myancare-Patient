@@ -26,7 +26,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
         //setup views
         view.backgroundColor = .white
         view.addSubview(logo)
-        logo.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 200)
+        logo.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 140, heightConstant: 140)
         logo.anchorCenterSuperview()
         
         //init gif
