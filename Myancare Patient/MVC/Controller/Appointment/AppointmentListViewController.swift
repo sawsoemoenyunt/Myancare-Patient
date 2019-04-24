@@ -97,7 +97,16 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
         view.backgroundColor = .white
         appointmentListCollectionView.register(AppointmentListCell.self, forCellWithReuseIdentifier: cellID)
         setupViews()
-        getAppointments(appointmentType)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        refreshAppointment()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
 
     func setupViews(){
@@ -107,7 +116,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
         
         listTypeSegment.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 34)
         appointmentTypeLabel.anchor(listTypeSegment.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        appointmentListCollectionView.anchor(appointmentTypeLabel.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        appointmentListCollectionView.anchor(appointmentTypeLabel.bottomAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         appointmentListCollectionView.refreshControl = refreshControl1
     }
 }

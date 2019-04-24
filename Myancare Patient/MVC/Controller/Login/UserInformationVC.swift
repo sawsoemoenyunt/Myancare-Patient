@@ -327,7 +327,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "country_code": self.countryCode,
             "facebook_id": self.facebookID,
             "avatar": self.imageKey,
-            "device_os": "iOS",
+            "device_os": "ios",
             "user_device_info": "\(UIDevice.current.name)"
         ]
         

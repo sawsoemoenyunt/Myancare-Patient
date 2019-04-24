@@ -24,8 +24,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
                                    MenuButton(title: "Feedback Us", icon: #imageLiteral(resourceName: "icons8-filled_message")),
                                    MenuButton(title: "Invite your Friend", icon: #imageLiteral(resourceName: "icons8-share")),
                                    MenuButton(title: "Help", icon: #imageLiteral(resourceName: "icons8-help")),
-                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about")),
-                                   MenuButton(title: "Voice & Video Test", icon: #imageLiteral(resourceName: "icons8-phone"))]
+                                   MenuButton(title: "About", icon: #imageLiteral(resourceName: "icons8-about"))]
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -153,8 +152,6 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             
         }else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)
-        } else if indexPath.row == 7{
-            showCallTypePicker()
         }
     }
     

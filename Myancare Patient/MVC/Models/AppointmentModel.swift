@@ -47,6 +47,7 @@ class AppointmentModel {
     var date_of_issue_utc : String?
     var remarks : String?
     var reason : String?
+    var rescheduleBy : String?
     var booking_status  = BookingStatus.PENDING
     
     init() {
@@ -65,6 +66,7 @@ class AppointmentModel {
         date_of_issue_utc = ""
         remarks = ""
         reason = ""
+        rescheduleBy = ""
         booking_status = BookingStatus.PENDING
     }
     
@@ -127,6 +129,10 @@ class AppointmentModel {
         
         if let reason1 = dict["reason"] as? String{
             reason = reason1
+        }
+        
+        if let reschedule = dict["rescheduleBy"] as? String{
+            rescheduleBy = reschedule
         }
         
         if let booking_status1 = dict["booking_status"] as? Int{

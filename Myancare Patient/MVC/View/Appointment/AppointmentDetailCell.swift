@@ -46,11 +46,16 @@ class AppointmentDetailCell: UICollectionViewCell {
                     patientNameLabel.text = patientName
                 }
 
-                dateNameLabel.text = data.date_of_issue!
-                reasonDataLabel.text = data.reason!
+                dateNameLabel.text = UtilityClass.getDateTimeStringFromUTC(data.date_of_issue!)
+                reasonDataLabel.text = "- \(data.reason!)"
+                serviceUnitLabel.text = "-"
                 serviceTypeLabel.text = data.type!.uppercased()
                 totalAmountDataLabel.text = "\(data.total_appointment_fees!) coin"
-                scheduleDataLabel.text = data.date_of_issue_utc!
+                
+                let dFormatter = DateFormatter()
+                dFormatter.dateFormat = "dd-MMM-yyyy h:mm a"
+                let startDate = Date(milliseconds: data.slotStartTime!)
+                scheduleDataLabel.text = dFormatter.string(from: startDate)
             }
         }
     }
@@ -61,14 +66,25 @@ class AppointmentDetailCell: UICollectionViewCell {
         return v
     }()
     
-    let doctorImage: UIImageView = {
+    lazy var doctorImage: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.backgroundColor = UIColor.gray
         img.layer.cornerRadius = 25 //size 50
         img.clipsToBounds = true
+        img.isUserInteractionEnabled = true
+        img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(showDoctorDetail)))
         return img
     }()
+    
+    @objc func showDoctorDetail(){
+        if let docID = appointmentData?.doctor?.object(forKey: "id") as? String{
+            let doctorDetailVC = DoctorDetailVC(collectionViewLayout:UICollectionViewFlowLayout())
+            doctorDetailVC.doctorID = docID
+
+            appointmentDetailVC?.navigationController?.pushViewController(doctorDetailVC, animated: true)
+        }
+    }
     
     lazy var statusBtn: UIButton = {
         let btn = UIButton()
@@ -139,8 +155,8 @@ class AppointmentDetailCell: UICollectionViewCell {
     let reasonDataLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Sick"
-        lbl.numberOfLines = 1
-        lbl.font = UIFont.MyanCareFont.type2
+        lbl.numberOfLines = 0
+        lbl.font = UIFont.MyanCareFont.type4
         lbl.textColor = UIColor.black
         return lbl
     }()
@@ -252,9 +268,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     }()
     
     @objc func medicalRecordBtnClick(){
-        let medicalRecordVC = PatientRecordBookVC()
-        medicalRecordVC.patientID = (self.appointmentData?.patient?.object(forKey: "id") as? String)!
-        self.appointmentDetailVC?.navigationController?.pushViewController(medicalRecordVC, animated: true)
+        appointmentDetailVC?.navigationController?.pushViewController(RecordBookVC(), animated: true)
     }
     
     func setupViews(){
@@ -300,7 +314,7 @@ class AppointmentDetailCell: UICollectionViewCell {
         dateLabel.anchor(patientNameLabel.bottomAnchor, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         dateNameLabel.anchor(patientNameLabel.bottomAnchor, left: dateLabel.rightAnchor, bottom: nil, right: bgView.rightAnchor, topConstant: 20, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         reasonLabel.anchor(dateLabel.bottomAnchor, left: bgView.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        reasonDataLabel.anchor(dateLabel.bottomAnchor, left: reasonLabel.rightAnchor, bottom: nil, right: bgView.rightAnchor, topConstant: 20, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        reasonDataLabel.anchor(reasonLabel.bottomAnchor, left: bgView.leftAnchor, bottom: nil, right: bgView.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         lineView2.anchor(reasonDataLabel.bottomAnchor, left: bgView.leftAnchor, bottom: nil, right: bgView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         
         centerView.anchor(lineView2.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 1, heightConstant: 1)

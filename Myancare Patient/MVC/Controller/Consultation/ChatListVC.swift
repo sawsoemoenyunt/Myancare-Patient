@@ -127,27 +127,18 @@ class ChatListCell: UICollectionViewCell {
                 nameLabel.text = data.doctor_name!
                 specializeLabel.text = data.last_message!
                 addressLabel.text = data.timeAgo!
-                loadImage(data.doctor_imageUrl!)
-            }
-        }
-    }
-    
-    func loadImage(_ urlString:String){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.profileImage.image = image
+                
+                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
+                    self.profileImage.image = image
+                }
+                
             }
         }
     }
     
     let profileImage: UIImageView = {
         let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
-        img.image = UIImage.init(named: "pablo-profile")
+        img.image = UIImage.init(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
         img.clipsToBounds = true

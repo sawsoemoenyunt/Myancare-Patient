@@ -23,7 +23,7 @@ class AppointmentListCell: UICollectionViewCell {
                     }
                 }
                 
-                dateLabel.text = data.date_of_issue_utc!
+                dateLabel.text = UtilityClass.getDateTimeStringFromUTC(data.date_of_issue_utc!)
                 typeBtn.setTitle("\(data.type!)", for: .normal)
                 conditionBtn.setTitle("\(data.booking_status)", for: .normal)
                 

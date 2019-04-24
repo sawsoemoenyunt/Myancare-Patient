@@ -8,8 +8,10 @@
 
 import UIKit
 import Sinch
+import Alamofire
+import NVActivityIndicatorView
 
-class AppointmentDetailVC: UIViewController {
+class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var appointmentData = AppointmentModel()
@@ -112,10 +114,16 @@ class AppointmentDetailVC: UIViewController {
             break
             
         case .PENDING:
-            closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
-            rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
-            acceptBtn.anchor(nil, left: rejectBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
-            collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+            if appointmentData.rescheduleBy != ""{
+                closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width/2, heightConstant: 50)
+                rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+                collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+            } else {
+                closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                acceptBtn.anchor(nil, left: rejectBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+            }
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
             rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
@@ -163,10 +171,12 @@ class AppointmentDetailVC: UIViewController {
     
     @objc func cancel(){
         //appointent cancel
+        showConfirmActionSheet()
     }
     
     @objc func reschedule(){
-        let rescheduleVC = RescheduleAppointmentVC()
+        let rescheduleVC = RescheduleVC()
+        rescheduleVC.appointmentData = self.appointmentData
         self.navigationController?.pushViewController(rescheduleVC, animated: true)
     }
     
@@ -222,7 +232,6 @@ class AppointmentDetailVC: UIViewController {
             "APPOINTMENT_ID" : appointmentData.id
         ]
         
-        
         switch appointmentData.type?.lowercased() {
         case "chat":
             //start chat conversation with doctor
@@ -254,6 +263,19 @@ class AppointmentDetailVC: UIViewController {
             break
         }
     }
+    
+    func showConfirmActionSheet(){
+        let actionSheet = UIAlertController(title: "Please confirm to cancel appointment", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            self.cancelAppointment()
+        }
+        
+        actionSheet.addAction(confirmBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -269,7 +291,56 @@ extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 690)
+        let estimatedReasonHeight = self.view.calculateHeightofTextView(dummyText: self.appointmentData.reason!, fontSize: 16, viewWdith: self.view.frame.width)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 120)
+    }
+}
+
+extension AppointmentDetailVC{
+    
+    func rescheduleAppointment(){
+        
+    }
+    
+    func cancelAppointment(){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.cancelAppointment.path
+        
+        let params = ["id" : "\(appointmentData.id!)"]
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            self.stopAnimating()
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    
+                    self.showAlert(title: "Success", message: "Successfully cancel this appointment!")
+                    
+                    if let responseDict = response.result.value as? [String:Any]{
+                        let appointment = AppointmentModel()
+                        appointment.updateModleUsingDict(responseDict)
+                        self.appointmentData = appointment
+                        
+                        //reload view
+                        self.collectionView.reloadData()
+                        self.viewDidLoad()
+                        self.viewWillAppear(true)
+                    }
+                } else {
+                    self.showAlert(title: "Error occured", message: "Failed to process your request!")
+                }
+                
+            case .failure(let error):
+                self.showAlert(title: "Error occured", message: "Failed to process your request!")
+                print("\(error)")
+            }
+        }
     }
 }
 

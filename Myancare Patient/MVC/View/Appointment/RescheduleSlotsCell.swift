@@ -10,6 +10,14 @@ import UIKit
 
 class RescheduleSlotsCell: UICollectionViewCell {
     
+    var slotData: OperationHourModel?{
+        didSet{
+            if let data = slotData{
+                timeLabel.text = "\(data.slot_start_time!) - \(data.slot_end_time!)"
+            }
+        }
+    }
+    
     let radio: UIView = {
         let view = UIView()
         view.backgroundColor = .white

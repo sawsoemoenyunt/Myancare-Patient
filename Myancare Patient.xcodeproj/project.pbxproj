@@ -145,6 +145,8 @@
 		52EE83B0226840A4000ECBCC /* SetupNewPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83AF226840A4000ECBCC /* SetupNewPasscodeVC.swift */; };
 		52EE83B222684C03000ECBCC /* LoginPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83B122684C03000ECBCC /* LoginPasscodeVC.swift */; };
 		52EE83B4226858E9000ECBCC /* EnterOldPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE83B3226858E9000ECBCC /* EnterOldPasscodeVC.swift */; };
+		52F03298226EDF270031B212 /* ServiceInvoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F03297226EDF270031B212 /* ServiceInvoiceCell.swift */; };
+		52F0329A226F141E0031B212 /* RescheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F03299226F141E0031B212 /* RescheduleVC.swift */; };
 		52F98DC222439A230040D1F5 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F98DC122439A230040D1F5 /* SocketIOManager.swift */; };
 		78874FA114DC211CF82CC53F /* Pods_Myancare_Patient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD670D29C23FF059D78E63 /* Pods_Myancare_Patient.framework */; };
 /* End PBXBuildFile section */
@@ -294,6 +296,8 @@
 		52EE83AF226840A4000ECBCC /* SetupNewPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupNewPasscodeVC.swift; sourceTree = "<group>"; };
 		52EE83B122684C03000ECBCC /* LoginPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasscodeVC.swift; sourceTree = "<group>"; };
 		52EE83B3226858E9000ECBCC /* EnterOldPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterOldPasscodeVC.swift; sourceTree = "<group>"; };
+		52F03297226EDF270031B212 /* ServiceInvoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInvoiceCell.swift; sourceTree = "<group>"; };
+		52F03299226F141E0031B212 /* RescheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleVC.swift; sourceTree = "<group>"; };
 		52F98DC122439A230040D1F5 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		63984FB1A4953C5395266F48 /* Pods-Myancare Patient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.release.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.release.xcconfig"; sourceTree = "<group>"; };
 		6427EE60F7DB686F04207471 /* Pods-Myancare Patient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Myancare Patient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Myancare Patient/Pods-Myancare Patient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -353,6 +357,7 @@
 			children = (
 				52092D2222217DFB0035C257 /* AppointmentListViewController.swift */,
 				52EBC3C722368F06009AFEBE /* AppointmentDetailVC.swift */,
+				52F03299226F141E0031B212 /* RescheduleVC.swift */,
 				52EBC3C92236A2F9009AFEBE /* RescheduleAppointmentVC.swift */,
 				5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */,
 			);
@@ -408,6 +413,7 @@
 				524D8EAA2237954900B7AEAB /* SlotCell.swift */,
 				524D8EAC2237957100B7AEAB /* ReasonImageCell.swift */,
 				524D8EAE223795A600B7AEAB /* MedicalRecordSelectCell.swift */,
+				52F03297226EDF270031B212 /* ServiceInvoiceCell.swift */,
 			);
 			path = BookAppointment;
 			sourceTree = "<group>";
@@ -1019,6 +1025,7 @@
 				523B1378224F913800914BA5 /* SINUIViewController.swift in Sources */,
 				52EE83AA226821F1000ECBCC /* UnlockPasscodeVC.swift in Sources */,
 				5221AADA2250B3370090120A /* ReminderVC.swift in Sources */,
+				52F03298226EDF270031B212 /* ServiceInvoiceCell.swift in Sources */,
 				524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */,
 				524D8EC42237975200B7AEAB /* ReminderListCell.swift in Sources */,
 				52A5774422531F3D00CD54F2 /* OperationHourModel.swift in Sources */,
@@ -1058,6 +1065,7 @@
 				527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */,
 				526E08952237D58700FECD70 /* NotificationModel.swift in Sources */,
 				526E08992237D5D800FECD70 /* PaymentHistoryModel.swift in Sources */,
+				52F0329A226F141E0031B212 /* RescheduleVC.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
 				52E6B7AA226C0FF80002193D /* CurrentMedicineCellCollectionView.swift in Sources */,
 				52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */,
