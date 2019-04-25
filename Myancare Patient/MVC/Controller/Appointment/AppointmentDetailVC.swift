@@ -292,7 +292,7 @@ extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let estimatedReasonHeight = self.view.calculateHeightofTextView(dummyText: self.appointmentData.reason!, fontSize: 16, viewWdith: self.view.frame.width)
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 120)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 220)
     }
 }
 

@@ -90,7 +90,7 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         btn.setTitle("CONFIRM", for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
-        btn.backgroundColor = UIColor.MyanCareColor.darkGray
+        btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(confrimBtnClick), for: .touchUpInside)
@@ -305,7 +305,7 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         
         startAnimating()
         
-        let params = [
+        var params = [
             "name": self.name,
             "dob": self.dob,
             "mobile": self.phoneID,
@@ -314,24 +314,27 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             "height": self.height,
             "weight": self.weight,
             "blood_type": self.bloodType,
-            "device_tokens": "",
-            "country_code": self.countryCode,
-            "facebook_id": self.facebookID,
-            "avatar": self.imageKey,
             "device_os": "iOS",
             "user_device_info": "\(UIDevice.current.name)"
         ]
         
+        if self.imageKey != ""{
+            params.updateValue(self.imageKey, forKey: "avatar")
+        }
+        
+        
         print("Requested params : \(params)")
         
-        let heads = ["Authorization": "\(jwtTkn)"]
+        let heads = ["Authorization":"\(jwtTkn)"]
         
         let url = EndPoints.patientUpdate.path
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+        
+        Alamofire.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
 
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
+                print("Response : \(responseStatus)")
                 
                 if responseStatus == 400 || responseStatus == 404{
                     if let responseData = response.result.value as? NSDictionary{
@@ -377,9 +380,16 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                                                      "username":user.username!,
                                                      "updatedAt":user.updatedAt!]
                             UserDefaults.standard.setUserData(value: info)
-                            self.showAlert(title: "Success", message: "Your information was updated!")
                         }
                     }
+                    let alert = UIAlertController(title: "Success", message: "Your information was updated!", preferredStyle: UIAlertController.Style.alert)
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.navigationController?.popViewController(animated: true)
+                    }))
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
+                    
                 }
             case .failure(let error):
                 print("failed to upload user data")
@@ -415,6 +425,7 @@ extension UserProfileEditVC: UICollectionViewDelegate, UICollectionViewDataSourc
         UIImage.loadImage(userData.image_url!) { (image) in
             cell.profileImage.image = image
         }
+        cell.setUerInfo()
         
         return cell
     }
