@@ -22,11 +22,18 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         img.clipsToBounds = true
         img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(profileImageClick)))
         img.isUserInteractionEnabled = true
+        
+        let label = UILabel()
+        label.text = "+"
+        label.textAlignment = .center
+        img.addSubview(label)
+        label.fillSuperview()
+        
         return img
     }()
     
     @objc func profileImageClick(){
-        userInfoVC?.showImagePicker()
+        userInfoVC?.showSourceOption()
     }
     
     let phoneIDlabel: UILabel = {

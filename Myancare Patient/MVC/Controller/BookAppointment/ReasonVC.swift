@@ -174,14 +174,6 @@ extension ReasonVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 }
 
 extension ReasonVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func chooseImage(){
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
@@ -189,6 +181,32 @@ extension ReasonVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         self.getImageUploadLinkFromServer()
         self.dismiss(animated: true) {
             self.collectionView.reloadData()
+        }
+    }
+    
+    @objc func showSourceOption(){
+        let actionSheet = UIAlertController(title: "Choose Photo", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cameraBtn = UIAlertAction(title: "From Camera", style: .default) { (action) in
+            self.chooseImage(type: .camera)
+        }
+        let galleryBtn = UIAlertAction(title: "From Gallery", style: .default) { (action) in
+            self.chooseImage(type: .savedPhotosAlbum)
+        }
+        
+        actionSheet.addAction(cameraBtn)
+        actionSheet.addAction(galleryBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func chooseImage(type:UIImagePickerController.SourceType){
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            imagePicker.delegate = self
+            imagePicker.sourceType = type;
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
 }

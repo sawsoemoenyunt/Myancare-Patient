@@ -427,11 +427,31 @@ extension UserInformationVC: UICollectionViewDelegate, UICollectionViewDataSourc
 
 extension UserInformationVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-    func showImagePicker(){
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
+    @objc func showSourceOption(){
+        let actionSheet = UIAlertController(title: "Choose Photo", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cameraBtn = UIAlertAction(title: "From Camera", style: .default) { (action) in
+            self.chooseImage(type: .camera)
+        }
+        let galleryBtn = UIAlertAction(title: "From Gallery", style: .default) { (action) in
+            self.chooseImage(type: .savedPhotosAlbum)
+        }
+        
+        actionSheet.addAction(cameraBtn)
+        actionSheet.addAction(galleryBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func chooseImage(type:UIImagePickerController.SourceType){
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = type;
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

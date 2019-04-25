@@ -33,7 +33,7 @@ class ReasonImageCell: UICollectionViewCell {
     
     @objc func iconClick(){
         reasonVC?.selectedIndex = index!
-        reasonVC?.chooseImage()
+        reasonVC?.showSourceOption()
     }
     
     func setupViews(){
