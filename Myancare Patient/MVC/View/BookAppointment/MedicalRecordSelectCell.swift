@@ -13,9 +13,9 @@ class MedicalRecordSelectCell: UICollectionViewCell {
     var recordData: MedicalRecordBookModel?{
         didSet{
             if let data = recordData{
-                docNamelabel.text = recordData?.doctor_name!
-                dateLabel.text = recordData?.hospital_name!
-                infolabel.text = recordData?.description!
+                docNamelabel.text = data.doctor_name!
+                dateLabel.text = data.description!
+                infolabel.text = UtilityClass.getDateTimeStringFromUTC(data.createdAt!)
             }
         }
     }
@@ -24,7 +24,7 @@ class MedicalRecordSelectCell: UICollectionViewCell {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.backgroundColor = .gray
+        img.image = UIImage.init(named: "book")
         return img
     }()
     
@@ -47,7 +47,7 @@ class MedicalRecordSelectCell: UICollectionViewCell {
     let infolabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Dr.Thomas"
-        lbl.font = UIFont.MyanCareFont.type4
+        lbl.font = UIFont.MyanCareFont.type5
         lbl.textColor = UIColor.black
         return lbl
     }()

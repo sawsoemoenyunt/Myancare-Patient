@@ -16,6 +16,7 @@ class MedicalRecordBookModel{
     var doctor_name : String?
     var description : String?
     var patient_id : String?
+    var createdAt : String?
     
     init() {
         id = ""
@@ -49,6 +50,10 @@ class MedicalRecordBookModel{
         
         if let patient_id1 = dict["patient_id"] as? String{
             patient_id = patient_id1
+        }
+        
+        if let createdAt1 = dict["createdAt"] as? String{
+            createdAt = createdAt1
         }
     }
 }

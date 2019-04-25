@@ -59,6 +59,11 @@ class PhotoGalleryVC: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        if medicalRecordBook.doctor_id != ""{
+            self.addBtn.isHidden = true
+        }
+        
         getRecordSheet()
     }
     

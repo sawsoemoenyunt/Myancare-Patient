@@ -69,10 +69,13 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     @objc func viewBookList(){
-        //show medical record book list vc
-        let homeVC = HomeViewController.init(collectionViewLayout: UICollectionViewLayout())
-        homeVC.navigationController?.pushViewController(RecordBookVC(), animated: true)
-        UtilityClass.changeRootViewController(with: UINavigationController.init(rootViewController: homeVC))
+        
+        //start chat conversation with doctor
+        let layout = UICollectionViewFlowLayout()
+        let homeVC = HomeViewController(collectionViewLayout:layout)
+        let navController = UINavigationController(rootViewController: homeVC)
+        homeVC.pushToVC(vc: RecordBookVC())
+        UtilityClass.changeRootViewController(with: navController)
     }
 }
 
@@ -166,7 +169,7 @@ extension SelectBookVC{
             case .success:
                 let responseStatus = response.response?.statusCode
                 if responseStatus == 200 || responseStatus == 201{
-                    let alert = UIAlertController(title: "Success", message: "Your selected medical record books successfully shared to \(bookAppointmentData.doctor_name!)", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Success", message: "Your selected medical record books shared to \(bookAppointmentData.doctor_name!)", preferredStyle: UIAlertController.Style.alert)
                     // add an action (button)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                         //redirect to homeview controller

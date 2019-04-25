@@ -32,11 +32,11 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var refreshControl1 : UIRefreshControl = {
         let  rc = UIRefreshControl()
-        rc.addTarget(self, action: #selector(refreshDoctorData), for: .valueChanged)
+        rc.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return rc
     }()
     
-    @objc func refreshDoctorData() {
+    @objc func refreshData() {
         recordBooks.removeAll()
         isPaging = true
         self.getAllMedicalRecords()
@@ -79,7 +79,9 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     
     @objc func addBtnClick(){
         isUpdate = false
-        popupdatelabel.text = "Add Book Cover"
+        popuptitlelabel.text = "Add Book Cover"
+        docNameTextField.text = ""
+        reasonTextField.text = ""
         showPopUpView(true)
     }
     
@@ -132,19 +134,29 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     }()
     
     lazy var dateTextField: UITextField = {
+        let todayDate = Date()
+        let dFormatter = DateFormatter()
+        dFormatter.dateFormat = "yyyy-MM-dd"
+        
         let tf = UITextField()
         tf.placeholder = "Date"
+        tf.text = "\(dFormatter.string(from: todayDate))"
         tf.borderStyle = .roundedRect
         tf.delegate = self
-        tf.isUserInteractionEnabled = false
+        tf.isEnabled = false
         return tf
     }()
     
     lazy var popupBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(white: 0, alpha: 0.3)
+        view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(popupBackgroundTap)))
         return view
     }()
+    
+    @objc func popupBackgroundTap(){
+        showPopUpView(false)
+    }
     
     lazy var popupView: UIView = {
         let view = UIView()
@@ -165,8 +177,17 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     }()
     
     @objc func handleConfirmBtnClick(){
-        showPopUpView(false)
-        hideKeyboard()
+        
+        let docName = docNameTextField.text
+        let description = reasonTextField.text
+        
+        if docName != "" && description != "" {
+            self.uploadNewMedicalRecordBook()
+            showPopUpView(false)
+            hideKeyboard()
+        } else {
+            self.showAlert(title: "Information required", message: "Please fill all form")
+        }
     }
     
     override func viewDidLoad() {
@@ -193,8 +214,6 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
         
         collectionView.register(MedicalRecordCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.refreshControl = refreshControl1
-        //hide addbtn for now
-        addBtn.isHidden = true
     }
     
     func setupPopupView(){
@@ -247,15 +266,39 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    
+    func showConfirmActionSheet(_ bookID:String){
+        let actionSheet = UIAlertController(title: "Please confirm to delete a medical record book", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            self.deleteMedicalRecordBook(bookID)
+        }
+        
+        actionSheet.addAction(confirmBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 ///handle collectionview delegate and datasource
 extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let addPhotoVC = AddPhotoVC()
-        addPhotoVC.recordBook = recordBooks[indexPath.row]
-        self.navigationController?.pushViewController(addPhotoVC, animated: true)
+        
+        let medicalRecord = recordBooks[indexPath.row]
+        
+        if medicalRecord.doctor_id == ""{
+            let addPhotoVC = AddPhotoVC()
+            addPhotoVC.recordBook = medicalRecord
+            self.navigationController?.pushViewController(addPhotoVC, animated: true)
+            
+        } else {
+            let galleryVC = PhotoGalleryVC()
+            galleryVC.medicalRecordBook = medicalRecord
+            self.navigationController?.pushViewController(galleryVC, animated: true)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -273,9 +316,6 @@ extension RecordBookVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 self.getAllMedicalRecords()
             }
         }
-        
-        //hide edit btn for now
-        cell.editBtn.isHidden = true
         
         return cell
     }
@@ -308,6 +348,54 @@ extension RecordBookVC: UITextFieldDelegate{
 
 ///fetch medical records from server
 extension RecordBookVC{
+    
+    func deleteMedicalRecordBook(_ bookID:String){
+        self.startAnimating()
+        
+        let url = EndPoints.deleteMedicalRecordBook(bookID).path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200 || responseStatus == 201{
+                    self.refreshData()
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
+    func uploadNewMedicalRecordBook(){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.addMedicalRecordBook.path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        let params = ["doctor_name": docNameTextField.text!,
+                      "description": reasonTextField.text!]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    self.showPopUpView(false)
+                    self.refreshData()
+                } else {
+                    self.showAlert(title: "An error occured", message: "Failed to add new medical record book")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
     
     func getAllMedicalRecords(){
         

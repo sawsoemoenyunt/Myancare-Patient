@@ -15,8 +15,10 @@ class MedicalRecordCell: UICollectionViewCell {
         didSet{
             if let data = recordData{
                 docNamelabel.text = data.doctor_name!
-                dateLabel.text = data.hospital_name!
-                infolabel.text  = data.description!
+                dateLabel.text = data.description!
+                infolabel.text  = UtilityClass.getDateTimeStringFromUTC(data.createdAt!)
+                
+                editBtn.isHidden = recordData?.doctor_id != "" ? true : false
             }
         }
     }
@@ -48,7 +50,7 @@ class MedicalRecordCell: UICollectionViewCell {
     let infolabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Dr.Thomas"
-        lbl.font = UIFont.MyanCareFont.type4
+        lbl.font = UIFont.MyanCareFont.type5
         lbl.textColor = UIColor.black
         return lbl
     }()
@@ -70,17 +72,16 @@ class MedicalRecordCell: UICollectionViewCell {
     
     lazy var editBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage.init(named: "icons8-edit_property"), for: .normal)
+        btn.setImage(UIImage.init(named: "icons8-delete_trash")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = UIColor.red
         btn.addTarget(self, action: #selector(editBtnclick), for: .touchUpInside)
         return btn
     }()
     
     @objc func editBtnclick() {
-        medicalRecordVC?.isUpdate = true
-        medicalRecordVC?.popuptitlelabel.text = "Edit Book Cover"
-        medicalRecordVC?.docNameTextField.text = recordData?.doctor_name
-        medicalRecordVC?.reasonTextField.text = recordData?.description
-        medicalRecordVC?.showPopUpView(true)
+        
+        let bookID = recordData?.id
+        medicalRecordVC?.showConfirmActionSheet(bookID!)
     }
     
     let bgView: UIView = {
