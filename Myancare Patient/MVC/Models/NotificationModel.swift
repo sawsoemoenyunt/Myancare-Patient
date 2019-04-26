@@ -45,6 +45,7 @@ class NotificationModel
     var message_body : String?
     var createdAt : String?
     var updatedAt : String?
+    var notification_type_string : String?
     
     init() {
         isRead = false
@@ -58,6 +59,7 @@ class NotificationModel
         message_body = ""
         createdAt = ""
         updatedAt = ""
+        notification_type_string = ""
     }
     
     func updateModelUsingDic(_ dict:[String:Any]){
@@ -82,6 +84,8 @@ class NotificationModel
         }
         
         if let notification_type1 = dict["notification_type"] as? String{
+            notification_type_string = notification_type1
+            
             switch notification_type1{
             case NotiTypeEnum.APPOINTMENT_ACCEPTED.rawValue:
                 notification_type = NotiTypeEnum.APPOINTMENT_ACCEPTED

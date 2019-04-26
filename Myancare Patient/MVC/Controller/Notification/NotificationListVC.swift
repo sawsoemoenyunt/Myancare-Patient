@@ -89,11 +89,23 @@ extension NotificationListVC: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let layout = UICollectionViewFlowLayout()
-//        let homeVC = HomeViewController(collectionViewLayout:layout)
-//        let navController = UINavigationController(rootViewController: homeVC)
-//        homeVC.pushToVC(vc: AppointmentListViewController())
-//        UtilityClass.changeRootViewController(with: navController)
+        
+        let notiTypeString = notiList[indexPath.row].notification_type_string?.lowercased()
+        
+        if (notiTypeString?.contains("chat"))!{
+            let layout = UICollectionViewFlowLayout()
+            let homeVC = HomeViewController(collectionViewLayout:layout)
+            let navController = UINavigationController(rootViewController: homeVC)
+            homeVC.pushToVC(vc: ChatListVC())
+            UtilityClass.changeRootViewController(with: navController)
+
+        } else if (notiTypeString?.contains("appointment"))! || (notiTypeString?.contains("consultation"))!{
+            let layout = UICollectionViewFlowLayout()
+            let homeVC = HomeViewController(collectionViewLayout:layout)
+            let navController = UINavigationController(rootViewController: homeVC)
+            homeVC.pushToVC(vc: AppointmentListViewController())
+            UtilityClass.changeRootViewController(with: navController)
+        }
         
     }
     

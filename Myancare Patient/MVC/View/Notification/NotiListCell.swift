@@ -26,7 +26,7 @@ class NotiCell: UICollectionViewCell {
                 }
                 icon.image = UIImage.init(named: "icons8-alarm_clock")?.withRenderingMode(.alwaysTemplate)
                 
-                let notiTypeString = data.notification_type!.rawValue
+                let notiTypeString = data.notification_type_string!.lowercased()
                 if notiTypeString.contains("rejected") || notiTypeString.contains("cancel"){
                     icon.tintColor = UIColor.red
                     
@@ -35,6 +35,20 @@ class NotiCell: UICollectionViewCell {
                     
                 } else {
                     icon.tintColor = UIColor.MyanCareColor.green
+                }
+                
+                if (notiTypeString.contains("chat")){
+                    icon.image = #imageLiteral(resourceName: "icons8-sms").withRenderingMode(.alwaysTemplate)
+                    
+                } else if notiTypeString.contains("voice"){
+                    icon.image = #imageLiteral(resourceName: "icons8-phone").withRenderingMode(.alwaysTemplate)
+                    
+                } else if notiTypeString.contains("video"){
+                    icon.image = #imageLiteral(resourceName: "icons8-video_call").withRenderingMode(.alwaysTemplate)
+                } else if notiTypeString.contains("cancelled"){
+                    icon.image = #imageLiteral(resourceName: "icons8-cancel").withRenderingMode(.alwaysTemplate)
+                } else if notiTypeString.contains("reminder"){
+                    icon.image = #imageLiteral(resourceName: "icons8-alarm_clock").withRenderingMode(.alwaysTemplate)
                 }
             }
         }
