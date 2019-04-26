@@ -73,7 +73,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var hangupBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("X", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-call_disconnected").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.red
@@ -89,7 +89,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var muteBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("M", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-microphone").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.gray
@@ -101,7 +101,7 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var speakerBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("S", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
@@ -324,10 +324,12 @@ extension VoiceCallHandlingVC{
         if(isMute){
             isMute = false
             self.audioController().unmute()
+            self.muteBtn.setImage(#imageLiteral(resourceName: "icons8-microphone").withRenderingMode(.alwaysTemplate), for: .normal)
             
         } else {
             isMute = true
             self.audioController().mute()
+            self.muteBtn.setImage(#imageLiteral(resourceName: "icons8-no_microphone").withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
     
@@ -339,11 +341,13 @@ extension VoiceCallHandlingVC{
         {
             isSpeaker = true
             self.audioController().enableSpeaker()
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
         }
         else
         {
             isSpeaker = false
             self.audioController().disableSpeaker()
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-speaker").withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
     

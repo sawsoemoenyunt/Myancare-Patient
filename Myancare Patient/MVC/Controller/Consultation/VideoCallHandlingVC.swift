@@ -19,6 +19,7 @@ enum EButtonsBar
 class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     var isMute : Bool = false
+    var isDisableCamera : Bool = false
     var appointmentID : String = ""
     var doctorID : String = ""
     var durationTimer: Timer?
@@ -54,7 +55,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         lbl.text = "Dr.Kaung Mon"
         lbl.font = UIFont.mmFontBold(ofSize: 22)
         lbl.textAlignment = .center
-        lbl.textColor = UIColor.white
+        lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
     }()
     
@@ -62,14 +63,14 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         let lbl = UILabel()
         lbl.text = "Ringing..."
         lbl.font = UIFont.mmFontBold(ofSize: 18)
-        lbl.textColor = UIColor.white
+        lbl.textColor = UIColor.MyanCareColor.darkGray
         lbl.textAlignment = .center
         return lbl
     }()
     
     lazy var hangupBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("X", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-call_disconnected").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.red
@@ -79,7 +80,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         return btn
     }()
     
-    let localView: UIView = {
+    lazy var localView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.MyanCareColor.lightGray
         return view
@@ -141,7 +142,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var speakerBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("S", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-microphone").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
@@ -153,7 +154,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var cameraFlipBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("CF", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-rotate_camera").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.gray
@@ -165,7 +166,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     lazy var someBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SC", for: .normal)
+        btn.setImage(#imageLiteral(resourceName: "icons8-video_call").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.gray
@@ -177,18 +178,31 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
     var localViewIsOn = true
     @objc func localViewOnOff(){
-        if localViewIsOn {
-            localViewHeightConstraint?.constant = 0
-            localViewIsOn = false
-            someBtn.setTitle("HC", for: .normal)
+        
+        if isDisableCamera{
+            isDisableCamera = false
+            videoController().localView()?.isHidden = false
+            self.localView.isHidden = false
+            self.someBtn.setImage(#imageLiteral(resourceName: "icons8-video_call").withRenderingMode(.alwaysTemplate), for: .normal)
         } else {
-            localViewHeightConstraint?.constant = 190
-            localViewIsOn = true
-            someBtn.setTitle("SC", for: .normal)
+            isDisableCamera = true
+            videoController().localView()?.isHidden = true
+            self.localView.isHidden = true
+            self.someBtn.setImage(#imageLiteral(resourceName: "icons8-no_video").withRenderingMode(.alwaysTemplate), for: .normal)
         }
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        
+//        if localViewIsOn {
+//            localViewHeightConstraint?.constant = 0
+//            localViewIsOn = false
+////            someBtn.setTitle("HC", for: .normal)
+//        } else {
+//            localViewHeightConstraint?.constant = 190
+//            localViewIsOn = true
+////            someBtn.setTitle("SC", for: .normal)
+//        }
+//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//            self.view.layoutIfNeeded()
+//        }, completion: nil)
     }
     
     let centerView: UIView = {
@@ -202,6 +216,15 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         setupVideoController()
 //        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(secondLayout), userInfo: nil, repeats: false)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        videoController().localView().contentMode = .scaleAspectFill
+        videoController().remoteView().contentMode = .scaleAspectFill
+        
+        self.localView.addSubview(videoController().localView())
     }
     
     func setupViews(){
@@ -250,7 +273,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         view.addSubview(doctornamelabel)
         view.addSubview(callinglabel)
         view.addSubview(hangupBtn)
-        view.addSubview(muteBtn)
+//        view.addSubview(muteBtn)
         view.addSubview(speakerBtn)
         view.addSubview(someBtn)
         view.addSubview(cameraFlipBtn)
@@ -261,7 +284,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         remoteView.fillSuperview()
         cameraFlipBtn.anchor(v.topAnchor, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 46, heightConstant: 46)
         someBtn.anchor(v.topAnchor, left: nil, bottom: nil, right: cameraFlipBtn.leftAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: 46, heightConstant: 46)
-        muteBtn.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 46, heightConstant: 46)
+//        muteBtn.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 46, heightConstant: 46)
         localViewHeightConstraint = localView.anchorWithReturnAnchors(cameraFlipBtn.bottomAnchor, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 140, heightConstant: 190).last
         callinglabel.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 130, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         doctornamelabel.anchor(nil, left: v.leftAnchor, bottom: callinglabel.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 20, rightConstant: 20, widthConstant: 0, heightConstant: 0)
@@ -383,11 +406,6 @@ extension VideoCallHandlingVC{
     {
         super.viewWillAppear(animated)
         
-        videoController().localView().contentMode = .scaleAspectFill
-        videoController().remoteView().contentMode = .scaleAspectFill
-        
-        self.localView.addSubview(videoController().localView())
-        
 //        self.remoteView.isHidden = true
         // self.localVideoView.isHidden = true
         
@@ -505,13 +523,15 @@ extension VideoCallHandlingVC{
         {
             isMute = false
             self.audioController().unmute()
-            self.muteBtn.setTitle("Mute", for: .normal)
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-microphone").withRenderingMode(.alwaysTemplate), for: .normal)
+//            self.muteBtn.setTitle("Mute", for: .normal)
         }
         else
         {
             isMute = true
             self.audioController().mute()
-            self.muteBtn.setTitle("Unmute", for: .normal)
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-no_microphone").withRenderingMode(.alwaysTemplate), for: .normal)
+//            self.muteBtn.setTitle("Unmute", for: .normal)
         }
     }
     
@@ -569,6 +589,8 @@ extension VideoCallHandlingVC{
         
 //        doctorCallEvent (SocketManageCallEventKeyword.callEventInitiated.rawValue)
         
+        self.callinglabel.textColor = UIColor.MyanCareColor.darkGray
+        self.doctornamelabel.textColor = UIColor.MyanCareColor.darkGray
         self.setCallStatusText("ringing...")
         self.audioController().startPlayingSoundFile(path(forSound: "ringback"), loop: true)
     }
@@ -578,12 +600,15 @@ extension VideoCallHandlingVC{
     /// - Parameter call: SINCall reference
     func callDidEstablish(_ call: SINCall)
     {
+        
+        self.callinglabel.textColor = UIColor.white
+        self.doctornamelabel.textColor = UIColor.white
+        
         self.remoteView.isHidden = false
         //   self.localVideoView.isHidden = false
-        self.doctornamelabel.isHidden = true
-        self.doctornamelabel.isHidden = true
-        self.doctorImage.isHidden = true
-        self.callinglabel.isHidden = true
+//        self.doctornamelabel.isHidden = true
+//        self.doctorImage.isHidden = true
+//        self.callinglabel.isHidden = true
         
         print("did establish call detail ===== \(String(describing: self.call?.details))")
         

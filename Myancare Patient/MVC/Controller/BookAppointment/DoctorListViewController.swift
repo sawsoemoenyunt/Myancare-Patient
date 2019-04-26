@@ -16,6 +16,7 @@ enum DoctorType{
     case all
     case specialize
     case filter
+    case recent
 }
 
 class DoctorListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
@@ -38,6 +39,59 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         doctors.removeAll()
         self.getAllDoctors(doctorType)
         self.refreshControl1.endRefreshing()
+    }
+    
+    lazy var filterBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(#imageLiteral(resourceName: "icons8-filter").withRenderingMode(.alwaysTemplate), for: .normal)
+        btn.tintColor = .white
+        btn.backgroundColor = UIColor.MyanCareColor.orange
+        btn.layer.cornerRadius = 28 //56
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(filterButtonClick), for: .touchUpInside)
+        btn.isHidden = true
+        return btn
+    }()
+    
+    @objc func filterButtonClick(){
+        showFilterList()
+    }
+    
+    func showFilterList(){
+        let actionSheet = UIAlertController(title: "Choose option to filter doctors", message: nil, preferredStyle: .actionSheet)
+        
+        let cancel = UIAlertAction(title: "Close", style: .cancel) { (action) in
+            self.title = "Doctors"
+        }
+        let allBtn = UIAlertAction(title: "All Doctors", style: .default) { (action) in
+            self.doctorType = .all
+            self.title = "Doctors"
+            self.refreshDoctorData()
+        }
+        let filterBtn = UIAlertAction(title: "Filter", style: .default) { (action) in
+            self.doctorType = .filter
+            docSearch.isSearch = true
+            self.title = "Doctors"
+            self.navigationController?.pushViewController(DoctorSearchViewController(), animated: true)
+        }
+        let favBtn = UIAlertAction(title: "Favourite", style: .default) { (action) in
+            self.doctorType = .favourite
+            self.title = "Favourite"
+            self.refreshDoctorData()
+        }
+        let recentBtn = UIAlertAction(title: "Recent", style: .default) { (action) in
+            self.doctorType = .recent
+            self.title = "Recent"
+            self.refreshDoctorData()
+        }
+        
+        actionSheet.addAction(allBtn)
+        actionSheet.addAction(filterBtn)
+        actionSheet.addAction(favBtn)
+        actionSheet.addAction(recentBtn)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -73,11 +127,16 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         default:
             self.title = "General Practitioners"
             self.navigationItem.rightBarButtonItems = [searchButton]
+            self.filterBtn.isHidden = false
             break
         }
         
         //load doctors
         self.getAllDoctors(doctorType)
+        
+        view.addSubview(filterBtn)
+        let v = view.safeAreaLayoutGuide
+        filterBtn.anchor(nil, left: nil, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 56, heightConstant: 56)
     }
     
     @objc func searchButtonClick(){
@@ -152,6 +211,8 @@ extension DoctorListViewController{
         case .filter:
             url = EndPoints.getDoctorFilter(docSearch.name).path
             docSearch.isSearch = false
+        case .recent:
+            url = EndPoints.getRecentDoctors.path
         default:
             url = EndPoints.getDoctors.path
             break

@@ -65,7 +65,7 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         _client?.audioController().delegate = _acDelegate
         
         let config = CXProviderConfiguration(localizedName: "MyanCare")
-        config.iconTemplateImageData = UIImage(named: "pablo-image")?.jpegData(compressionQuality: 1)
+        config.iconTemplateImageData = UIImage(named: "no-image")?.jpegData(compressionQuality: 1)
         config.supportsVideo = true;
         config.maximumCallGroups = 1
         config.maximumCallsPerCallGroup = 1
@@ -271,7 +271,8 @@ class SINCallKitProvider: NSObject, CXProviderDelegate {
         if (call1?.details.isVideoOffered)! {
             let videoCallHandlingVc = VideoCallHandlingVC()
             videoCallHandlingVc.setCall(call1!)
-            topController?.navigationController?.pushViewController (videoCallHandlingVc, animated: true)
+//            topController?.navigationController?.pushViewController (videoCallHandlingVc, animated: true)
+            topController?.present(videoCallHandlingVc, animated: true, completion: nil)
             
         } else {
             let voiceCallHandlingVc = VoiceCallHandlingVC()

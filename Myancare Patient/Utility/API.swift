@@ -34,6 +34,7 @@ enum EndPoints : ApiEndpoint {
     case getDoctors
     case getRecommandDoctors
     case getFavoriteDoctors
+    case getRecentDoctors
     case getPaymentMethods
     case getExchangeRatesByPaymentGateway(String)
     case getDoctorData(String)
@@ -99,6 +100,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"doctors?recommand=true"))!
         case .getFavoriteDoctors:
             return URL(string: String(baseURLString+"doctors?favorite=true"))!
+        case .getRecentDoctors:
+            return URL(string: String(baseURLString+"doctors?recent=true"))!
         case .getDoctorFilter(let nameString):
             return URL(string: String(baseURLString+"doctors?name=\(nameString)"))!
         case .getSpecializations:
