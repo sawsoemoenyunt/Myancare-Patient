@@ -13,6 +13,8 @@ import NVActivityIndicatorView
 class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     let cellID = "cellID"
+    var discount_value = 0
+    var discount_percent = 0
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,6 +23,7 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICo
         cv.dataSource = self
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
+        cv.showsHorizontalScrollIndicator = false
         cv.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
         return cv
     }()
@@ -72,17 +75,62 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ServiceInvoiceCell
+        cell.invoiceVC = self
         cell.appointmentData = bookAppointmentData
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let estimatedReasonHeight = self.view.calculateHeightofTextView(dummyText: bookAppointmentData.reason!, fontSize: 16, viewWdith: self.view.frame.width)
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 120)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 140)
     }
 }
 
 extension InvoiceViewController{
+    
+    func getCoupon(couponID:String){
+        self.startAnimating()
+        let url = EndPoints.getCoupon(couponID.replacingOccurrences(of: " ", with: "")).path
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    print("SUCCESS COUPON")
+                    print("\(response)")
+                    if let responseData = response.result.value as? NSDictionary{
+                        
+                        if let value1 = responseData.object(forKey: "value") as? Int{
+                            self.discount_value = value1
+                        }
+                        
+                        if let percent1 = responseData.object(forKey: "percent") as? Int{
+                            self.discount_percent = percent1
+                        }
+                        
+                        if self.discount_percent > 0 {
+                            let discountAmount = bookAppointmentData.total_appointment_fees! * (self.discount_percent/100)
+                            bookAppointmentData.total_appointment_fees = bookAppointmentData.total_appointment_fees! - discountAmount
+                            
+                        } else if self.discount_value > 0{
+                            bookAppointmentData.total_appointment_fees = bookAppointmentData.total_appointment_fees! - self.discount_value
+                        }
+                        self.collectionView.reloadData()
+                    }
+                    
+                } else {
+                    self.showAlert(title: "An error occured", message: "Invalid Coupon")
+                    print("\(responseStatus ?? 0)")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
     
     func sendBooking(){
         self.startAnimating()

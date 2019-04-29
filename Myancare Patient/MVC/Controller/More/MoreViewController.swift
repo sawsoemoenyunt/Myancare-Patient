@@ -150,7 +150,12 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
                 print("sharing not available...")
             }
             
-        }else if indexPath.row == 6{
+        } else if indexPath.row == 5{
+            if let openUrl = URL(string: "https://www.myancare.org/"){
+                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                print("Redirect to myancare website...")
+            }
+        } else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)
         }
     }

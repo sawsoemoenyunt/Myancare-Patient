@@ -9,8 +9,9 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import NVActivityIndicatorView
 
-class ChatListVC: UIViewController {
+class ChatListVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var roomList = [ChatRoomModel]()
@@ -36,7 +37,6 @@ class ChatListVC: UIViewController {
     }()
     
     @objc func refreshData() {
-        
         roomList.removeAll()
         isPaging = true
         self.getRooms()

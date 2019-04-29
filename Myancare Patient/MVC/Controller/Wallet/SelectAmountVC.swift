@@ -160,7 +160,12 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
         let actionSheet = UIAlertController(title: "Please confirm to request manuel payment", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
-            self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+            
+            if (self.gateWayName?.contains("telenor"))!{
+                self.requestAuthKeyForTelenorPayment()
+            } else {
+                self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+            }
         }
         
         actionSheet.addAction(confirmBtn)
@@ -171,6 +176,57 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 extension SelectAmountVC{
+    
+    func requestAuthKeyForTelenorPayment(){
+        let authUrl: URL = URL.init(string: "http://sandbox-apigw.mytelenor.com.mm/oauth/v1/userAuthorize?client_id=W7Ibwz5KXWOoAjTvfxPfa5EsSPAcV81J&response_type=code&scope=READ&redirect_uri=https://myancare.org/api/transactions/telenor/callback")!
+        
+        Alamofire.request(authUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
+            
+            switch response.result{
+            case .success:
+                if let authKey = response.result.value{
+                    self.requestTokenForTelenorPayment(authKey: authKey)
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
+    
+    func requestTokenForTelenorPayment(authKey:String){
+        let tokenUrl: URL = URL.init(string: "sandbox-apigw.mytelenor.com.mm/oauth/v1/token")!
+        let heads = ["Content-Type" : "application/x-www-form-urlencoded"]
+        let params = ["code" : authKey,
+                      "grant_type" : "authorization_code",
+                      "client_secret" : "kHLUe0zKcTdRHNhQ",
+                      "client_id" : "W7Ibwz5KXWOoAjTvfxPfa5EsSPAcV81J"]
+        Alamofire.request(tokenUrl, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                if let responseData = response.result.value as? NSDictionary{
+                    if let accessToken = responseData.object(forKey: "accessToken") as? String{
+                        self.chargePaymentWithTelenorPayment(token: accessToken)
+                    }
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
+    
+    func chargePaymentWithTelenorPayment(token:String){
+        let heads = ["Content-Type" : "application/json",
+                     "Authorization" : "Bearer \(token)"]
+        let params = ["chargeMsisdn":"9790305105",
+                      "clientTransactionId": "myancare59089",
+                      "productCode": "MC_800",
+                      "chargeAmount": 800,
+                      "Cpid": 58,
+                      "loginName": "myancare",
+                      "password": "m49ncare",
+        "isContentProvider": true] as [String:Any]
+    }
     
     func requestTransactions(gateWay:String, coin:Int, amount:Int){
         

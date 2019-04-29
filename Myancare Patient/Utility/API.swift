@@ -64,6 +64,7 @@ enum EndPoints : ApiEndpoint {
     case rescheduleAppointment
     case addMedicalRecordBook
     case deleteMedicalRecordBook(String)//record id
+    case getCoupon(String) //coupon
     
     var path: URL
     {
@@ -154,6 +155,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"medical-record-book"))!
         case .deleteMedicalRecordBook(let bookID):
             return URL(string: String(baseURLString+"medical-record-book/\(bookID)"))!
+        case .getCoupon(let couponID):
+            return URL(string: String(baseURLString+"coupon/use/\(couponID)"))!
         }
     }
 }

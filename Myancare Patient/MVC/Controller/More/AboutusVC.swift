@@ -53,11 +53,15 @@ class AboutusVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 0 {
-            if let openUrl = URL(string: "https://www.myancare.org/"){
-                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-                print("Redirect to myancare website...")
-            }
+//        if indexPath.section == 0 && indexPath.row == 0 {
+//            if let openUrl = URL(string: "https://www.myancare.org/"){
+//                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+//                print("Redirect to myancare website...")
+//            }
+//        }
+        if let openUrl = URL(string: "https://www.myancare.org/"){
+            UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+            print("Redirect to myancare website...")
         }
     }
 }
