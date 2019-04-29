@@ -178,6 +178,11 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension SelectAmountVC{
     
     func requestAuthKeyForTelenorPayment(){
+        
+        print("requesting auth key")
+        
+        self.startAnimating()
+        
         let authUrl: URL = URL.init(string: "http://sandbox-apigw.mytelenor.com.mm/oauth/v1/userAuthorize?client_id=W7Ibwz5KXWOoAjTvfxPfa5EsSPAcV81J&response_type=code&scope=READ&redirect_uri=https://myancare.org/api/transactions/telenor/callback")!
         
         Alamofire.request(authUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseString { (response) in
@@ -185,37 +190,51 @@ extension SelectAmountVC{
             switch response.result{
             case .success:
                 if let authKey = response.result.value{
+                    print("Auth key : \(authKey)")
                     self.requestTokenForTelenorPayment(authKey: authKey)
                 }
             case .failure(let error):
                 print("\(error)")
             }
+            self.stopAnimating()
         }
     }
     
     func requestTokenForTelenorPayment(authKey:String){
-        let tokenUrl: URL = URL.init(string: "sandbox-apigw.mytelenor.com.mm/oauth/v1/token")!
+        print("requesting token")
+        
+        self.startAnimating()
+        
+        let tokenUrl: URL = URL.init(string: "http://sandbox-apigw.mytelenor.com.mm/oauth/v1/token")!
         let heads = ["Content-Type" : "application/x-www-form-urlencoded"]
         let params = ["code" : authKey,
                       "grant_type" : "authorization_code",
                       "client_secret" : "kHLUe0zKcTdRHNhQ",
-                      "client_id" : "W7Ibwz5KXWOoAjTvfxPfa5EsSPAcV81J"]
+                      "client_id" : "W7Ibwz5KXWOoAjTvfxPfa5EsSPAcV81J",
+                      "redirect_uri" : "https://myancare.org/api/transactions/telenor/callback"]
         Alamofire.request(tokenUrl, method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: heads).responseJSON { (response) in
             
             switch response.result{
             case .success:
                 if let responseData = response.result.value as? NSDictionary{
                     if let accessToken = responseData.object(forKey: "accessToken") as? String{
+                        print("Token : \(accessToken)")
                         self.chargePaymentWithTelenorPayment(token: accessToken)
                     }
                 }
             case .failure(let error):
                 print("\(error)")
             }
+            self.stopAnimating()
         }
     }
     
     func chargePaymentWithTelenorPayment(token:String){
+        
+        print("requesting telenor payment charges")
+        
+        self.startAnimating()
+        
         let heads = ["Content-Type" : "application/json",
                      "Authorization" : "Bearer \(token)"]
         let params = ["chargeMsisdn":"9790305105",
@@ -225,7 +244,26 @@ extension SelectAmountVC{
                       "Cpid": 58,
                       "loginName": "myancare",
                       "password": "m49ncare",
-        "isContentProvider": true] as [String:Any]
+                      "isContentProvider": true] as [String:Any]
+        let url:URL = URL.init(string: "http://sandbox-apigw.mytelenor.com.mm/payments/v1/charge")!
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            print("\(response)")
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                print("\(responseStatus ?? 0)")
+                if responseStatus == 201 || responseStatus == 200{
+                    self.showAlert(title: "Success", message: "Your payment with telenor was success")
+                } else {
+                    self.showAlert(title: "Failed", message: "An error occured while requesting payment")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
     }
     
     func requestTransactions(gateWay:String, coin:Int, amount:Int){
