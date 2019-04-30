@@ -94,7 +94,8 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
         case 3:
             homeViewController?.navigationController?.pushViewController(ArticleVC(), animated: true)
         case 4:
-            homeViewController?.navigationController?.pushViewController(ReminderListVC(), animated: true)
+//            homeViewController?.navigationController?.pushViewController(ReminderListVC(), animated: true)
+            homeViewController?.navigationController?.showAlert(title: "Available Soon", message: "...")
         case 5:
             homeViewController?.navigationController?.pushViewController(MoreViewController(), animated: true)
         default:

@@ -13,7 +13,7 @@ import NVActivityIndicatorView
 class WalletVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    var walletbalance = 0
+    var walletbalance = "0"
     var paymentHistories = [PaymentHistoryModel]()
     var isPaging = true
     
@@ -110,10 +110,12 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
         setupData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.getWalletAmount()
+    }
+    
     func setupData(){
-        if let wBalance = UserDefaults.standard.getUserData().object(forKey: "wallet_balance") as? Int{
-            walletbalance = wBalance
-        }
         setupAttributeString()
         getTransactions()
     }
@@ -181,6 +183,27 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 }
 
 extension WalletVC{
+    
+    func getWalletAmount(){
+        self.startAnimating()
+        
+        let url = EndPoints.getUserWallet.path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseString { (response) in
+            
+            switch response.result{
+            case .success:
+                if let walletAmount = response.result.value{
+                    self.walletbalance = walletAmount
+                    self.setupAttributeString()
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func getTransactions(){
         
         startAnimating()

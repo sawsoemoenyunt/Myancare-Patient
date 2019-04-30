@@ -93,6 +93,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        self.collectionView.reloadData()
     }
     
     func setupViews(){
@@ -137,6 +138,15 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
         } else if indexPath.row == 1{
             print("language picker action sheet appear...")
             self.showLanguagePicker()
+            
+        } else if indexPath.row == 2{
+            self.showAlert(title: "Avilable soon", message: "...")
+            
+        } else if indexPath.row == 3{
+            if let openUrl = URL(string: "https://www.myancare.org/"){
+                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                print("Redirect to myancare website...")
+            }
             
         } else if indexPath.row == 4{
             if let name = NSURL(string: "https://itunes.apple.com/us/app/myancare/id1396490288?mt=8") {

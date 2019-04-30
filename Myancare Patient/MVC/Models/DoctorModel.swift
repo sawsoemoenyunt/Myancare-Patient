@@ -44,6 +44,7 @@ class DoctorModel
         favorite = false
         voice_rate = 0
         video_rate = 0
+        chat_rate = 0
         rate = NSDictionary()
     }
     

@@ -138,6 +138,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
         maleBtn.backgroundColor = UIColor.white
         femaleBtn.backgroundColor = UIColor.MyanCareColor.orange
         isFemaleSelected = true
+        userInfoVC?.gender = "female"
     }
     
     lazy var maleBtn: UIButton = {
@@ -164,6 +165,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
         femaleBtn.backgroundColor = UIColor.white
         maleBtn.backgroundColor = UIColor.MyanCareColor.orange
         isFemaleSelected = false
+        userInfoVC?.gender = "male"
     }
     
     let heightlabel: UILabel = {
@@ -285,7 +287,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
         userInfoVC?.name = nameTextField.text!
         userInfoVC?.email = emailTextField.text!
         userInfoVC?.dob = dobTextField.text!
-        userInfoVC?.gender = isFemaleSelected == true ? "female" : "male"
+//        userInfoVC?.gender = isFemaleSelected == true ? "female" : "male"
         userInfoVC?.height = heightTextField.text!
         userInfoVC?.weight = weightTextField.text!
         userInfoVC?.bloodType = bloodtypeTextField.text!

@@ -23,6 +23,7 @@ class RescheduleVC: UIViewController, NVActivityIndicatorViewable {
     var slots = [OperationHourModel]()
     var appointmentData = AppointmentModel()
     var bookingAppointmentData = BookAppointmentModel()
+    var appointmentDetailVC : AppointmentDetailVC?
     
     let datelabel: UILabel = {
         let lbl = UILabel()

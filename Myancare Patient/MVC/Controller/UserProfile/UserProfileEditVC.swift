@@ -23,7 +23,7 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     var name = ""
     var dob = ""
     var email = ""
-    var gender = ""
+    var gender = "male"
     var height = ""
     var weight = ""
     var bloodType = ""
@@ -353,34 +353,30 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                 } else if responseStatus == 201 || responseStatus == 200{
                     //apply login process here
                     
-                    if let responseData = response.result.value as? NSDictionary{
-                        if let userToken = responseData.object(forKey: "token") as? String{
-                            print("USER TOKEN WAS : \(userToken)")
-                            UserDefaults.standard.setToken(value: userToken)
-                            jwtTkn = "Bearer \(userToken)"
-                        }
+                    if let responseData = response.result.value as? [String:Any]{
                         
-                        if let userData = responseData.object(forKey: "user") as? [String:Any]{
-                            let user = PatientModel()
-                            user.updateModel(usingDictionary: userData)
-                            
-                            let info:NSDictionary = ["name":user.name!, "wallet_balance":user.wallet_balance!, "image_url":user.image_url!,
-                                                     "height":user.height!,
-                                                     "age":user.age!,
-                                                     "weight":user.weight!,
-                                                     "facebook_id":user.facebook_id!,
-                                                     "country_code":user.country_code!,
-                                                     "_id":user._id!,
-                                                     "createdAt":user.createdAt!,
-                                                     "gender":user.gender!,
-                                                     "dob":user.gender!,
-                                                     "email":user.email!,
-                                                     "mobile":user.mobile!,
-                                                     "blood_type":user.bloodType!,
-                                                     "username":user.username!,
-                                                     "updatedAt":user.updatedAt!]
-                            UserDefaults.standard.setUserData(value: info)
-                        }
+                        let user = PatientModel()
+                        user.updateModel(usingDictionary: responseData)
+                        
+                        let info:NSDictionary = ["name":user.name!, "wallet_balance":user.wallet_balance!, "image_url":user.image_url!,
+                                                 "height":user.height!,
+                                                 "age":user.age!,
+                                                 "weight":user.weight!,
+                                                 "facebook_id":user.facebook_id!,
+                                                 "country_code":user.country_code!,
+                                                 "_id":user._id!,
+                                                 "id":user._id!,
+                                                 "createdAt":user.createdAt!,
+                                                 "gender":user.gender!,
+                                                 "dob":user.dob!,
+                                                 "email":user.email!,
+                                                 "mobile":user.mobile!,
+                                                 "blood_type":user.bloodType!,
+                                                 "username":user.username!,
+                                                 "updatedAt":user.updatedAt!]
+                        UserDefaults.standard.setUserData(value: info)
+                        print("user data : \(UserDefaults.standard.getUserData())")
+                        
                     }
                     let alert = UIAlertController(title: "Success", message: "Your information was updated!", preferredStyle: UIAlertController.Style.alert)
                     // add an action (button)

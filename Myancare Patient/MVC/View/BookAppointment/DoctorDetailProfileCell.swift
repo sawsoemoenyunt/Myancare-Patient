@@ -232,8 +232,8 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     @objc func chatBtnClick(){
         let bookVC = ReasonVC()
         bookAppointmentData = BookAppointmentModel()
-        if let id = docData?.id!{
-            bookAppointmentData.doctor = id
+        if docData?.id != ""{
+            bookAppointmentData.doctor = docData?.id
             bookAppointmentData.doctor_name = docData?.name
             bookAppointmentData.type = "chat"
             bookAppointmentData.amount = docData?.chat_rate

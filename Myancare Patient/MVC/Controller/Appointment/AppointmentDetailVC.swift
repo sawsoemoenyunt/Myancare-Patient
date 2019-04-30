@@ -78,6 +78,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        self.checkAppointment()
     }
     
     func setupViews(){
@@ -298,8 +299,36 @@ extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSou
 
 extension AppointmentDetailVC{
     
-    func rescheduleAppointment(){
+    func checkAppointment(){
+        self.startAnimating()
         
+        let url = EndPoints.checkAppointment(self.appointmentData.id!).path
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                let statusCode = response.response?.statusCode
+                if statusCode == 201 || statusCode == 200{
+                    if let responeData = response.result.value as? NSDictionary{
+                        if let isStart = responeData.object(forKey: "start") as? Bool{
+                            print("isstart : \(isStart)")
+                        }
+                        if let requireTime = responeData.object(forKey: "requireTime") as? Int{
+                            let date = Date(milliseconds: requireTime)
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "dd-MMM-yyyy h:mm a"
+                            let dt = formatter.string(from: date)
+                            //do some
+                        }
+                    }
+                }
+                
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
     }
     
     func cancelAppointment(){

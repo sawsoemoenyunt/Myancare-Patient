@@ -128,6 +128,7 @@
 		52C6FD662254DBD4005A3944 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52C6FD642254DBD3005A3944 /* ringback.wav */; };
 		52C6FD672254DBD4005A3944 /* incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52C6FD652254DBD4005A3944 /* incoming.wav */; };
 		52C6FD692254DF92005A3944 /* VideoCallHandlingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C6FD682254DF92005A3944 /* VideoCallHandlingVC.swift */; };
+		52CB784D2277F95400C82A42 /* UserInterestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB784C2277F95400C82A42 /* UserInterestModel.swift */; };
 		52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59691223F841C0071BE52 /* UserDefaults.swift */; };
 		52D59694223F8EE90071BE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59693223F8EE90071BE52 /* API.swift */; };
 		52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D59695223FADBD0071BE52 /* PatientModel.swift */; };
@@ -279,6 +280,7 @@
 		52C6FD642254DBD3005A3944 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
 		52C6FD652254DBD4005A3944 /* incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incoming.wav; sourceTree = "<group>"; };
 		52C6FD682254DF92005A3944 /* VideoCallHandlingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallHandlingVC.swift; sourceTree = "<group>"; };
+		52CB784C2277F95400C82A42 /* UserInterestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterestModel.swift; sourceTree = "<group>"; };
 		52D59691223F841C0071BE52 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		52D59693223F8EE90071BE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		52D59695223FADBD0071BE52 /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				52AB8E2F2253B44700ECE4F4 /* MedicalRecordBookModel.swift */,
 				52C6FD62225498AC005A3944 /* BookAppointmentModel.swift */,
 				523B6FAA22566575001991F8 /* MedicalRecordSheetModel.swift */,
+				52CB784C2277F95400C82A42 /* UserInterestModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1061,6 +1064,7 @@
 				5233D536224C865400E7A2E0 /* ExchangeRateModel.swift in Sources */,
 				524D8EB62237962100B7AEAB /* RescheduleSlotsCell.swift in Sources */,
 				524D8EC72237977E00B7AEAB /* NotiListCell.swift in Sources */,
+				52CB784D2277F95400C82A42 /* UserInterestModel.swift in Sources */,
 				52085D5A2249376A00A7FB46 /* SocketModel.swift in Sources */,
 				527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */,
 				526E08952237D58700FECD70 /* NotificationModel.swift in Sources */,

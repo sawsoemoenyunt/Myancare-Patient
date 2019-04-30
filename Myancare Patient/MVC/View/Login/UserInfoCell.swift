@@ -26,6 +26,8 @@ class UserInfoCell: UICollectionViewCell, UITextFieldDelegate {
         let label = UILabel()
         label.text = "+"
         label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(profileImageClick)))
         img.addSubview(label)
         label.fillSuperview()
         
