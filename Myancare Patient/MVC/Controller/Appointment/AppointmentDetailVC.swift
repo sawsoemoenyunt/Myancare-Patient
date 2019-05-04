@@ -40,6 +40,17 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         return btn
     }()
     
+    lazy var closeBtn2: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("CLOSE", for: .normal)
+        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.setTitleColor(UIColor.darkGray, for: .normal)
+        btn.backgroundColor = UIColor.MyanCareColor.lightGray
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
+        return btn
+    }()
+    
     lazy var rejectBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("REJECT", for: .normal)
@@ -78,7 +89,6 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        self.checkAppointment()
     }
     
     func setupViews(){
@@ -88,6 +98,16 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         collectionView.register(AppointmentDetailCell.self, forCellWithReuseIdentifier: cellID)
         
         setupButtons()
+        
+        let currentDate = Date()
+        let appointmentEndDate = Date(milliseconds: appointmentData.slotEndTime!)
+        
+        if appointmentEndDate < currentDate {
+            //close
+            let v = view.safeAreaLayoutGuide
+            view.addSubview(closeBtn2)
+            closeBtn2.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        }
     }
     
     func setupButtons(){
@@ -139,8 +159,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
-            acceptBtn.addTarget(self, action: #selector(start), for: .touchUpInside)
-            acceptBtn.setTitle("START \(appointmentData.type!.capitalized)", for: .normal)
+            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
+            acceptBtn.setTitle("START \(appointmentData.type!.uppercased())", for: .normal)
             break
         
         case .COMPLETED:
@@ -299,7 +319,7 @@ extension AppointmentDetailVC: UICollectionViewDelegate, UICollectionViewDataSou
 
 extension AppointmentDetailVC{
     
-    func checkAppointment(){
+    @objc func checkAppointment(){
         self.startAnimating()
         
         let url = EndPoints.checkAppointment(self.appointmentData.id!).path
@@ -313,13 +333,21 @@ extension AppointmentDetailVC{
                     if let responeData = response.result.value as? NSDictionary{
                         if let isStart = responeData.object(forKey: "start") as? Bool{
                             print("isstart : \(isStart)")
-                        }
-                        if let requireTime = responeData.object(forKey: "requireTime") as? Int{
-                            let date = Date(milliseconds: requireTime)
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = "dd-MMM-yyyy h:mm a"
-                            let dt = formatter.string(from: date)
-                            //do some
+                            
+                            if isStart{
+                                //allow to start
+                                self.start()
+                            } else {
+                                if let requireTime = responeData.object(forKey: "requireTime") as? Int{
+                                    let currentTimeInMilli = UtilityClass.currentTimeInMilliSeconds() + requireTime
+                                    let date = Date(milliseconds: currentTimeInMilli)
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "dd-MMM-yyyy h:mm a"
+                                    let dt = formatter.string(from: date)
+                                    //do some
+                                    self.showAlert(title: "Alert", message: "Consulation can start at \(dt).")
+                                }
+                            }
                         }
                     }
                 }

@@ -110,6 +110,7 @@
 		528DA580221D9B5300140CFF /* MoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */; };
 		528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */; };
 		529490462237CE2200507240 /* EnterPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529490452237CE2200507240 /* EnterPasscodeVC.swift */; };
+		529810C6227D48EE00535847 /* PaymentTransferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529810C5227D48EE00535847 /* PaymentTransferVC.swift */; };
 		52A5774422531F3D00CD54F2 /* OperationHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5774322531F3D00CD54F2 /* OperationHourModel.swift */; };
 		52A5B7E722224F6500AAE3D3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B7E622224F6500AAE3D3 /* Utility.swift */; };
 		52AB8E302253B44700ECE4F4 /* MedicalRecordBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB8E2F2253B44700ECE4F4 /* MedicalRecordBookModel.swift */; };
@@ -259,6 +260,7 @@
 		528DA57F221D9B5300140CFF /* MoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		528DA581221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCollectionViewEditProfileCell.swift; sourceTree = "<group>"; };
 		529490452237CE2200507240 /* EnterPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasscodeVC.swift; sourceTree = "<group>"; };
+		529810C5227D48EE00535847 /* PaymentTransferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransferVC.swift; sourceTree = "<group>"; };
 		52A5774322531F3D00CD54F2 /* OperationHourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationHourModel.swift; sourceTree = "<group>"; };
 		52A5B7E622224F6500AAE3D3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		52AB8E2F2253B44700ECE4F4 /* MedicalRecordBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalRecordBookModel.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				52B30394222BC26500BBFDA1 /* PaymentMethodVC.swift */,
 				521015F6222C4D6F004119E6 /* SelectAmountVC.swift */,
 				524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */,
+				529810C5227D48EE00535847 /* PaymentTransferVC.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1012,6 +1015,7 @@
 				52D59692223F841C0071BE52 /* UserDefaults.swift in Sources */,
 				524D8EAB2237954900B7AEAB /* SlotCell.swift in Sources */,
 				52B30395222BC26500BBFDA1 /* PaymentMethodVC.swift in Sources */,
+				529810C6227D48EE00535847 /* PaymentTransferVC.swift in Sources */,
 				52E6B7A4226BF9CE0002193D /* EHRListVC.swift in Sources */,
 				524D8EB2223795D800B7AEAB /* AppointmentListCell.swift in Sources */,
 				52AE889622361F8700867151 /* SelectBookVC.swift in Sources */,

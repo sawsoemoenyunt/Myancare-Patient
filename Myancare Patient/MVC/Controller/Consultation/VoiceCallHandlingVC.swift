@@ -9,6 +9,7 @@
 import UIKit
 import Sinch
 import AVKit
+import AudioToolbox
 
 class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     
@@ -114,6 +115,8 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(hangup(_:)), name: Notification.Name.didReceiveAppointmentTimeUp, object: nil)
     }
     
     func setupViews(){
@@ -337,17 +340,17 @@ extension VoiceCallHandlingVC{
     ///
     /// - Parameter sender: Speaker On/Off Button Refrence
     @objc func speaker(_ sender: Any){
-        if(!isSpeaker)
+        if(isSpeaker)
         {
-            isSpeaker = true
+            isSpeaker = false
             self.audioController().enableSpeaker()
-            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-speaker").withRenderingMode(.alwaysTemplate), for: .normal)
         }
         else
         {
-            isSpeaker = false
+            isSpeaker = true
             self.audioController().disableSpeaker()
-            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-speaker").withRenderingMode(.alwaysTemplate), for: .normal)
+            self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
         }
     }
     
@@ -480,6 +483,9 @@ extension VoiceCallHandlingVC{
                 
                 //show review vc
             }
+        } else if (seconds == 800){
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            self.showAlert(title: "Warning", message: "Consultation will end in next 2 mins")
         }
     }
     

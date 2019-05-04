@@ -100,6 +100,12 @@ class SocketManagerHandler: NSObject {
         return socket!.status == SocketIOStatus.connected
     }
     
+    func appointmentTimeupListener(){
+        socket?.on("appointmentTimeup", callback: { (data, socketAck) in
+            NotificationCenter.default.post(name: Notification.Name.didReceiveAppointmentTimeUp, object: nil, userInfo: nil)
+        })
+    }
+    
     //Send message
     func emitChatMessage(roomID:String, messageString:String, imageType:Int){
         socket?.emit("message", [roomID, messageString, imageType])

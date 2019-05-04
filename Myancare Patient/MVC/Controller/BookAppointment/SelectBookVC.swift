@@ -70,12 +70,7 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
     
     @objc func viewBookList(){
         
-        //start chat conversation with doctor
-        let layout = UICollectionViewFlowLayout()
-        let homeVC = HomeViewController(collectionViewLayout:layout)
-        let navController = UINavigationController(rootViewController: homeVC)
-        homeVC.pushToVC(vc: RecordBookVC())
-        UtilityClass.changeRootViewController(with: navController)
+        self.navigationController?.pushViewController(RecordBookVC(), animated: true)
     }
 }
 

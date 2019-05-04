@@ -80,6 +80,8 @@ class ShareBookVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        self.navigationItem.setHidesBackButton(true, animated: true)
     }
     
     func setupViews(){

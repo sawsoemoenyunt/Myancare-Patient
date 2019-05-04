@@ -215,7 +215,7 @@ class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
         secondLayout()
         setupVideoController()
 //        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(secondLayout), userInfo: nil, repeats: false)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(hangup), name: Notification.Name.didReceiveAppointmentTimeUp, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -695,6 +695,10 @@ extension VideoCallHandlingVC
         {
             self.call?.hangup()
             self.dismiss()
+            
+        } else if (seconds == 800){
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            self.showAlert(title: "Warning", message: "Consultation will end in next 2 mins")
         }
     }
     

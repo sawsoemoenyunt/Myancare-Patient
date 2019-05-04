@@ -65,6 +65,13 @@ func getComingDates(days: Int) -> NSMutableArray {
 
 class UtilityClass: NSObject {
     
+    class func currentTimeInMilliSeconds()-> Int
+    {
+        let currentDate = Date()
+        let since1970 = currentDate.timeIntervalSince1970
+        return Int(since1970 * 1000)
+    }
+    
     class func getDateTimeStringFromUTC(_ utcTime:String)->String{
         var dateString = ""
         let formatter = DateFormatter()
