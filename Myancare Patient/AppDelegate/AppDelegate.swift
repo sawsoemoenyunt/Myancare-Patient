@@ -89,8 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         
         let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
-//        window?.rootViewController = StartScreenViewController()
-        window?.rootViewController = UINavigationController(rootViewController: PaymentTransferVC())
+        window?.rootViewController = StartScreenViewController()
+        
         
         
         return true
