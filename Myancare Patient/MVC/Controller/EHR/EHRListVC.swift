@@ -69,6 +69,7 @@ class BMIModel{
         upperBloodPressure = _upBlood
         lowerBloodPressure = _lowBlood
         weight = _weight
+        bmi = 0
         
         self.calculateBMI()
     }
@@ -76,8 +77,11 @@ class BMIModel{
     func calculateBMI(){
         //bmi calculation
         let heightInches = (self.feet! * 12) + self.inch!
-        let calculatedBmi = 703 * weight! / (heightInches * heightInches)
-        self.bmi = calculatedBmi
+        
+        if heightInches > 0{
+            let calculatedBmi = 703 * weight! / (heightInches * heightInches)
+            self.bmi = calculatedBmi
+        }
     }
 }
 
@@ -90,7 +94,7 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
     let cellID_disease = "cellID_disease"
     let cellID_pregnantHistroy = "cellID_pregnantHistroy"
     
-    var bmiData = BMIModel(_feet: 5, _inch: 7, _upBlood: 100, _lowBlood: 100, _weight: 150)
+    var bmiData = BMIModel(_feet: 0, _inch: 0, _upBlood: 0, _lowBlood: 0, _weight: 0)
     
     var avoidMedicineList = [Disease]()
     var currentMedicineList = [Disease]()
@@ -100,42 +104,42 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
                          Disease.init(_checked: false, _data: "", _name: "အရက်သောက်ပါသလား?"),
                          Disease.init(_checked: false, _data: "", _name: "ကွမ်းစားပါသလား?")]
     
-    var diseasesList = [Disease(_checked: false, _data: "2003", _name: "သွေးတိုး"),
-                        Disease(_checked: false, _data: "2003", _name: "နှလုံး"),
-                        Disease(_checked: false, _data: "2003", _name: "ဆီးချို"),
-                        Disease(_checked: false, _data: "2003", _name: "ပန်းနာ၊ ရင်ကျပ်"),
-                        Disease(_checked: false, _data: "2003", _name: "တီဘီ"),
-                        Disease(_checked: false, _data: "2003", _name: "လေးဘက်နာ"),
-                        Disease(_checked: false, _data: "2003", _name: "အစာအိမ်အနာ"),
-                        Disease(_checked: false, _data: "2003", _name: "ကင်ဆာ"),
-                        Disease(_checked: false, _data: "2003", _name: "လေဖြတ်"),
-                        Disease(_checked: false, _data: "2003", _name: "ကျောက်ကပ်"),
-                        Disease(_checked: false, _data: "2003", _name: "အတွင်းတိမ် (မျက်စိ)")]
+    var diseasesList = [Disease(_checked: false, _data: "1990", _name: "သွေးတိုး"),
+                        Disease(_checked: false, _data: "1990", _name: "နှလုံး"),
+                        Disease(_checked: false, _data: "1990", _name: "ဆီးချို"),
+                        Disease(_checked: false, _data: "1990", _name: "ပန်းနာ၊ ရင်ကျပ်"),
+                        Disease(_checked: false, _data: "1990", _name: "တီဘီ"),
+                        Disease(_checked: false, _data: "1990", _name: "လေးဘက်နာ"),
+                        Disease(_checked: false, _data: "1990", _name: "အစာအိမ်အနာ"),
+                        Disease(_checked: false, _data: "1990", _name: "ကင်ဆာ"),
+                        Disease(_checked: false, _data: "1990", _name: "လေဖြတ်"),
+                        Disease(_checked: false, _data: "1990", _name: "ကျောက်ကပ်"),
+                        Disease(_checked: false, _data: "1990", _name: "အတွင်းတိမ် (မျက်စိ)")]
     var sortedDiseaseList = [Disease]()
     
-    var surgeryList = [Disease(_checked: false, _data: "2003", _name: "ဦးခေါင်း"),
-                       Disease(_checked: false, _data: "2003", _name: "မျက်စိ"),
-                       Disease(_checked: false, _data: "2003", _name: "နား၊ နှာခေါင်း၊ လည်ချောင်း"),
-                       Disease(_checked: false, _data: "2003", _name: "အဆုတ်"),
-                       Disease(_checked: false, _data: "2003", _name: "နှလုံး"),
-                       Disease(_checked: false, _data: "2003", _name: "ရင်သားအကျိတ်"),
-                       Disease(_checked: false, _data: "2003", _name: "အစာအိမ်၊ အူလမ်းကြောင်း၊ အူအတက်"),
-                       Disease(_checked: false, _data: "2003", _name: "ကျောက်ကပ်"),
-                       Disease(_checked: false, _data: "2003", _name: "သည်းခြေအိတ်"),
-                       Disease(_checked: false, _data: "2003", _name: "ဘေလုံး"),
-                       Disease(_checked: false, _data: "2003", _name: "သားအိမ်"),
-                       Disease(_checked: false, _data: "2003", _name: "လိပ်ခေါင်း၊ ဂရင်ဂျီနာ")]
+    var surgeryList = [Disease(_checked: false, _data: "1990", _name: "ဦးခေါင်း"),
+                       Disease(_checked: false, _data: "1990", _name: "မျက်စိ"),
+                       Disease(_checked: false, _data: "1990", _name: "နား၊ နှာခေါင်း၊ လည်ချောင်း"),
+                       Disease(_checked: false, _data: "1990", _name: "အဆုတ်"),
+                       Disease(_checked: false, _data: "1990", _name: "နှလုံး"),
+                       Disease(_checked: false, _data: "1990", _name: "ရင်သားအကျိတ်"),
+                       Disease(_checked: false, _data: "1990", _name: "အစာအိမ်၊ အူလမ်းကြောင်း၊ အူအတက်"),
+                       Disease(_checked: false, _data: "1990", _name: "ကျောက်ကပ်"),
+                       Disease(_checked: false, _data: "1990", _name: "သည်းခြေအိတ်"),
+                       Disease(_checked: false, _data: "1990", _name: "ဘေလုံး"),
+                       Disease(_checked: false, _data: "1990", _name: "သားအိမ်"),
+                       Disease(_checked: false, _data: "1990", _name: "လိပ်ခေါင်း၊ ဂရင်ဂျီနာ")]
     var sortedSurgeryList = [Disease]()
     
-    var familyHistory = [Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "ပန်းနာရင်ကျပ်"),
-                         Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "ကင်ဆာ"),
-                         Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "မျိုးရိုးဗီဇနှင့်ဆိုင်သောရောဂါ"),
-                         Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "နှလုံးရောဂါ"),
-                         Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "သွေးတိုး"),
-                         Disease(_checked: false, _data: "တော်စပ်ပုံ", _name: "ဆီးချို")]
+    var familyHistory = [Disease(_checked: false, _data: "မိဘများ", _name: "ပန်းနာရင်ကျပ်"),
+                         Disease(_checked: false, _data: "မိဘများ", _name: "ကင်ဆာ"),
+                         Disease(_checked: false, _data: "မိဘများ", _name: "မျိုးရိုးဗီဇနှင့်ဆိုင်သောရောဂါ"),
+                         Disease(_checked: false, _data: "မိဘများ", _name: "နှလုံးရောဂါ"),
+                         Disease(_checked: false, _data: "မိဘများ", _name: "သွေးတိုး"),
+                         Disease(_checked: false, _data: "မိဘများ", _name: "ဆီးချို")]
     var sortedFamilyHistory = [Disease]()
     
-    var pregnantHistory = [Disease(_checked: true, _data: "", _name: "လက်ရှိကိုယ်ဝန်ဆောင်နေပါသလား?"),
+    var pregnantHistory = [Disease(_checked: false, _data: "", _name: "လက်ရှိကိုယ်ဝန်ဆောင်နေပါသလား?"),
                            Disease(_checked: false, _data: "0", _name: "သားသမီးဦးရေ (ရှိပါက)")]
     
     lazy var collectionView: UICollectionView = {
@@ -150,11 +154,18 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Medical Book", style: .plain, target: self, action: #selector(showMedicalRecord))
+        
         setupViews()
         
         if let userID = UserDefaults.standard.getUserData().object(forKey: "_id") as? String{
             getEhrDataByUserID(userID)
         }
+    }
+    
+    @objc func showMedicalRecord(){
+        self.navigationController?.pushViewController(RecordBookVC(), animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -341,39 +352,48 @@ extension EHRListVC{
         
         self.startAnimating()
         
-//        let jsonUploadData = ["base_diseases" : self.getBaseDiseasesUploadData(),
-//                              "current_drink_medicine" : self.getCurrentDrinkMedicineUploadData(),
-//                              "family_hr_record" : self.getFamilyHrRecordUploadData(),
-//                              "normal_records" : self.getNormalRecordUploadData(),
-//                              "poison_medicine" : self.poisonMedicineRecordUploadData(),
-//                              "your_operations" : self.operationUploadData(),
-//                              "down_blood_pressure" : "\(self.bmiData.lowerBloodPressure!)",
-//            "upper_blood_pressure" : "\(self.bmiData.upperBloodPressure!)",
-//            "feet" : "\(self.bmiData.feet!)",
-//            "inches" : "\(self.bmiData.inch!)",
-//            "weight" : "\(self.bmiData.weight!)"
-//            ] as [String : Any]
+        let json = ["base_disease" : self.getBaseDiseasesUploadData(),
+                    "current_drink_medicine" : self.getCurrentDrinkMedicineUploadData(),
+                    "family_hr_record" : self.getFamilyHrRecordUploadData(),
+                    "normal_records" : self.getNormalRecordUploadData(),
+                    "poison_medicine" : self.poisonMedicineRecordUploadData(),
+                    "your_operations" : self.operationUploadData(),
+                    "down_blood_pressure" : "\(self.bmiData.lowerBloodPressure!)",
+            "upper_blood_pressure" : "\(self.bmiData.upperBloodPressure!)",
+            "feet" : "\(self.bmiData.feet!)",
+            "inches" : "\(self.bmiData.inch!)",
+            "weight" : "\(self.bmiData.weight!)"
+            ] as [String : Any]
         
-        let params = ["ehr":self.getJsonStringForUploadEhr()] as [String : Any]
-        let heads = ["Authorization" : "\(jwtTkn)"]
-        let url = EndPoints.uploadEhrDataByUser(userID).path
-        
-        Alamofire.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+        do {
+            let data1 =  try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
+            let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
+            let params = ["ehr":convertedString!] as [String : Any]
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            let url = EndPoints.uploadEhrDataByUser(userID).path
             
-            switch response.result{
-            case .success:
-                let responseStatus = response.response?.statusCode
-                if responseStatus == 200 || responseStatus == 201{
-                    print("upload ehr success")
-                } else {
-                    print("failed to upload ehr")
+            Alamofire.request(url, method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    let responseStatus = response.response?.statusCode
+                    if responseStatus == 200 || responseStatus == 201{
+                        print("upload ehr success")
+                    } else {
+                        print("failed to upload ehr")
+                    }
+                case .failure(let error):
+                    print("\(error)")
                 }
-            case .failure(let error):
-                print("\(error)")
+                self.stopAnimating()
+                self.navigationController?.popViewController(animated: true)
             }
-            self.stopAnimating()
-            self.navigationController?.popViewController(animated: true)
+            
+            
+        } catch let myJSONError {
+            print(myJSONError)
         }
+        
     }
     
     func getJsonStringForUploadEhr() -> String{
@@ -397,7 +417,7 @@ extension EHRListVC{
             let data1 =  try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
             let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
             jsonString = convertedString!
-            print("myjsonstring \(jsonString)")
+            
             
         } catch let myJSONError {
             print(myJSONError)
@@ -406,11 +426,152 @@ extension EHRListVC{
         return jsonString
     }
     
+    func getEhrDataByUserID2(_ userID:String){
+        
+        self.startAnimating()
+        let url = EndPoints.getEhrDataByUser(userID).path
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case  .success:
+                let reponseStatus = response.response?.statusCode
+                if reponseStatus == 201 || reponseStatus == 200{
+                    
+                    if let responseDict = response.result.value as? [String:Any]{
+                        if let baseDiseaseArrData = responseDict["base_diseases"] as? NSArray{
+                            var baseDiseaseArr = [Disease]()
+                            
+                            for bd in baseDiseaseArrData{
+                                if let baseDiseaseDict = bd as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(baseDiseaseDict)
+                                    
+                                    baseDiseaseArr.append(disease)
+                                }
+                            }
+                            if baseDiseaseArr.count > 0{
+                                self.diseasesList = baseDiseaseArr
+                            }
+                        }
+                        
+                        if let currentDrinkMedArrData = responseDict["current_drink_medicine"] as? NSArray{
+                            var currentDrinkMedArr = [Disease]()
+                            for med in currentDrinkMedArrData{
+                                if let currentDrinkMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(currentDrinkMedDict)
+                                    
+                                    currentDrinkMedArr.append(disease)
+                                }
+                            }
+                            if currentDrinkMedArr.count > 0{
+                                self.currentMedicineList = currentDrinkMedArr
+                            }
+                        }
+                        
+                        if let poisonMedArrData = responseDict["poison_medicine"] as? NSArray{
+                            var poisonMedArr = [Disease]()
+                            for med in poisonMedArrData{
+                                if let poisonMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(poisonMedDict)
+                                    
+                                    poisonMedArr.append(disease)
+                                }
+                            }
+                            if poisonMedArr.count > 0{
+                                self.avoidMedicineList = poisonMedArr
+                            }
+                        }
+                        
+                        if let normalRecordData = responseDict["normal_records"] as? NSArray{
+                            var normalRecordArr = [Disease]()
+                            for nr in normalRecordData{
+                                if let normalRecordDict = nr as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(normalRecordDict)
+                                    
+                                    normalRecordArr.append(disease)
+                                }
+                            }
+                            if normalRecordArr.count > 0{
+                                self.lifeStyleList = normalRecordArr
+                            }
+                        }
+                        
+                        if let yourOperationsData = responseDict["your_operations"] as? NSArray{
+                            var currentDrinkMedArr = [Disease]()
+                            for med in yourOperationsData{
+                                if let currentDrinkMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(currentDrinkMedDict)
+                                    
+                                    currentDrinkMedArr.append(disease)
+                                }
+                            }
+                            if currentDrinkMedArr.count > 0{
+                                self.surgeryList = currentDrinkMedArr
+                            }
+                        }
+                        
+                        if let yourOperationsData = responseDict["your_operations"] as? NSArray{
+                            var currentDrinkMedArr = [Disease]()
+                            for med in yourOperationsData{
+                                if let currentDrinkMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(currentDrinkMedDict)
+                                    
+                                    currentDrinkMedArr.append(disease)
+                                }
+                            }
+                            if currentDrinkMedArr.count > 0{
+                                self.surgeryList = currentDrinkMedArr
+                            }
+                        }
+                        
+                        if let familyHrData = responseDict["family_hr_record"] as? NSArray{
+                            var currentDrinkMedArr = [Disease]()
+                            for med in familyHrData{
+                                if let currentDrinkMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(currentDrinkMedDict)
+                                    
+                                    currentDrinkMedArr.append(disease)
+                                }
+                            }
+                            if currentDrinkMedArr.count > 0{
+                                self.familyHistory = currentDrinkMedArr
+                            }
+                            
+                        }
+                    }
+                    
+                } else {
+                    print("Failed to get data for ehr")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
+    
     func getEhrDataByUserID(_ userID:String){
         
         self.startAnimating()
         let url = EndPoints.getEhrDataByUser(userID).path
         let heads = ["Authorization" : "\(jwtTkn)"]
+
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
             

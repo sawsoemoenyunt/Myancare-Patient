@@ -23,7 +23,7 @@ class PaymentTransferVC: UIViewController, NVActivityIndicatorViewable {
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 5
         btn.clipsToBounds = true
-        btn.addTarget(self, action: #selector(showBankPicker), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(showConfirmActionSheet), for: .touchUpInside)
         return btn
     }()
     
@@ -59,6 +59,7 @@ class PaymentTransferVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     @objc func showBankPicker(){
+        
         let actionSheet = UIAlertController(title: "Choose Bank to transfer", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let aya = UIAlertAction(title: "AYA Bank", style: .default) { (action) in
@@ -68,12 +69,26 @@ class PaymentTransferVC: UIViewController, NVActivityIndicatorViewable {
             
         }
         let kbz = UIAlertAction(title: "KBZ Bank", style: .default) { (action) in
-            
+
         }
         
         actionSheet.addAction(aya)
         actionSheet.addAction(cb)
         actionSheet.addAction(kbz)
+        actionSheet.addAction(cancel)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    @objc func showConfirmActionSheet(){
+        let actionSheet = UIAlertController(title: "Please confirm to request payment", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            self.requestTransactions(gateWay: self.exchangeRate.payment_gateway!, coin: self.exchangeRate.coin_amount!, amount: self.exchangeRate.kyat_amount!)
+        }
+        
+        actionSheet.addAction(confirmBtn)
         actionSheet.addAction(cancel)
         
         self.present(actionSheet, animated: true, completion: nil)
@@ -87,6 +102,7 @@ extension PaymentTransferVC: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PaymentTransferCell
+        cell.paymentTransferVC = self
         return cell
     }
     
@@ -97,6 +113,7 @@ extension PaymentTransferVC: UICollectionViewDelegate, UICollectionViewDataSourc
 }
 
 extension PaymentTransferVC{
+
     func requestTransactions(gateWay:String, coin:Int, amount:Int){
         
         self.startAnimating()
@@ -113,7 +130,18 @@ extension PaymentTransferVC{
             case .success:
                 let responseStatus = response.response?.statusCode
                 if responseStatus == 201 || responseStatus == 200{
-                    self.showAlert(title: "Success", message: "Your manual payment was requested to Myancare!")
+                    let alert = UIAlertController(title: "Success", message: "Your manual payment with \(gateWay.uppercased()) was requested to Myancare!", preferredStyle: UIAlertController.Style.alert)
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                        let layout = UICollectionViewFlowLayout()
+                        let homeVC = HomeViewController(collectionViewLayout:layout)
+                        let navController = UINavigationController(rootViewController: homeVC)
+                        homeVC.pushToVC(vc: WalletVC())
+                        UtilityClass.changeRootViewController(with: navController)
+                    }))
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
+                    
                 } else {
                     self.showAlert(title: "Failed", message: "An error occured while requesting manual payment")
                 }
@@ -134,7 +162,7 @@ class PaymentTransferCell: UICollectionViewCell{
     let infoLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "Appsdflkjaslkdfjksajdfkjaskdfjlkasjdfklasjdfkjaskdfjkasjdfkajsldfkjsalkdfjlksdjf"
+        lbl.text = "ဘဏ်မှတဆင့်(သို့)မိုဘိုင်းဖြင့် အသုံးပြုရသော ဘဏ်စနစ်တစ်ခုခုနှင့် ငွေလွဲမည် ဆိုပါက အောက်ဖော်ပြပ် ဘဏ်နံပါတ် များသို့ငွေလွဲပေးပို့နိုင်ပါသည်။"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -151,13 +179,13 @@ class PaymentTransferCell: UICollectionViewCell{
     let kbzAccLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "KBZ Account Number\n0000 0000 0000 0000"
+        lbl.text = "KBZ Account Number\n2623 0102 1051 03101"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
     }()
     
-    let kbzCopyBtn: UIButton = {
+    lazy var kbzCopyBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("COPY", for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button1
@@ -165,8 +193,16 @@ class PaymentTransferCell: UICollectionViewCell{
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 6
         btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(kbzbtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func kbzbtnClick(){
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = "2623 0102 1051 03101"
+        self.paymentTransferVC?.exchangeRate.payment_gateway = "kbz"
+        self.paymentTransferVC?.showAlert(title: "Copied", message: "2623 0102 1051 03101")
+    }
     
     let cbIcon: UIImageView = {
         let img = UIImageView()
@@ -179,13 +215,13 @@ class PaymentTransferCell: UICollectionViewCell{
     let cbAccLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "CB Account Number\n0000 0000 0000 0000"
+        lbl.text = "CB Account Number\n0107 6001 0004 7608"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
     }()
     
-    let cbCopyBtn: UIButton = {
+    lazy var cbCopyBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("COPY", for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button1
@@ -193,8 +229,16 @@ class PaymentTransferCell: UICollectionViewCell{
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 6
         btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(cbBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func cbBtnClick(){
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = "0107 6001 0004 7608"
+        self.paymentTransferVC?.exchangeRate.payment_gateway = "cb"
+        self.paymentTransferVC?.showAlert(title: "Copied", message: "0107 6001 0004 7608")
+    }
     
     let ayaIcon: UIImageView = {
         let img = UIImageView()
@@ -207,13 +251,13 @@ class PaymentTransferCell: UICollectionViewCell{
     let ayaAccLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "AYA Account Number\n0000 0000 0000 0000"
+        lbl.text = "AYA Account Number\n0002 1190 1148 1712"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
     }()
     
-    let ayaCopyBtn: UIButton = {
+    lazy var ayaCopyBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("COPY", for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button1
@@ -221,13 +265,21 @@ class PaymentTransferCell: UICollectionViewCell{
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 6
         btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(ayaBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func ayaBtnClick(){
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = "0002 1190 1148 1712"
+        self.paymentTransferVC?.exchangeRate.payment_gateway = "aya"
+        self.paymentTransferVC?.showAlert(title: "Copied", message: "0002 1190 1148 1712")
+    }
     
     let infoLabel2: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type2
-        lbl.text = "Appsdflkjaslkdfjksajdfkjaskdfjlkasjdfklasjdfkjaskdfjkasjdfkajsldfkjsalkdfjlksdjf"
+        lbl.text = "Mobile Banking ဖြင့် ငွေလွှဲရာတွင် မည်သူမည်ဝါဖြစ်ကြောင်း သိရှိရန် မှတ်ချက်တွင် လူကြီးမင်း၏ ဖုန်းနံပါတ်ကို အင်္ဂလိပ်စာလုံးဖြင့် ရေးပေးပါရန် မေတ္တာရပ်ခံ အပ်ပါသည်။"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.black
         return lbl
@@ -236,7 +288,7 @@ class PaymentTransferCell: UICollectionViewCell{
     let infoLabel3: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "Appsdflkjaslkdfjksajdfkjaskdfjlkasjdfklasjdfkjaskdfjkasjdfkajsldfkjsalkdfjlksdjf"
+        lbl.text = "ငွေလွှဲပြီးပါက Screenshot ကို အောက်ပါတို့မှတဆင့်  ပေးပို့ထားနိုင်ပါသည်။"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -296,7 +348,7 @@ class PaymentTransferCell: UICollectionViewCell{
     let infoLabel4: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
-        lbl.text = "Appsdflkjaslkdfjksajdfkjaskdfjlkasjdfklasjdfkjaskdfjkasjdfkajsldfkjsalkdfjlksdjf"
+        lbl.text = "အဆင်မပြေမှုများရှိပါက အောက်ပါဖုန်းနံပါတ်များသို့ မနက် ၉ နာရီမှ ၆ နာရီအတွင်း ပိတ်ရက်မရှိ ဆက်သွယ်နိုင်ပါသည်။"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -313,7 +365,7 @@ class PaymentTransferCell: UICollectionViewCell{
     let phoneLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type1
-        lbl.text = "091236253633, 091523223333"
+        lbl.text = "09 79911 5566, 09 79922 5566"
         lbl.numberOfLines = 0
         lbl.textColor = UIColor.black
         return lbl

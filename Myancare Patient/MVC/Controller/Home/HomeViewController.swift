@@ -31,6 +31,13 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 let status = response.response?.statusCode
                 print("Update device token response status : \(status ?? 0)")
+                
+                if status == 403 || status == 500{
+                    UserDefaults.standard.setToken(value: "")
+                    UserDefaults.standard.setIsLoggedIn(value: false)
+                    UserDefaults.standard.setUserData(value: NSDictionary())
+                    UtilityClass.changeRootViewController(with: LoginViewController())
+                }
             }
         }
     }

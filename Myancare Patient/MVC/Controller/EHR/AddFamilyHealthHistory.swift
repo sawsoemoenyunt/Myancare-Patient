@@ -13,7 +13,7 @@ class AddFamilyHistory: UIViewController, UICollectionViewDelegate, UICollection
     let cellID = "cellID"
     var familyHistoryList = [Disease]()
     var ehrVC : EHRListVC?
-    var relativeTypeList = ["တော်စပ်ပုံ", "မိဘများ", "အဘိုးအဘွားများ", "မောင်နှမ", "သားသမီး", "အခြား"]
+    var relativeTypeList = ["မိဘများ", "အဘိုးအဘွားများ", "မောင်နှမ", "သားသမီး", "အခြား"]
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

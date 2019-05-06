@@ -12,8 +12,9 @@ import AlamofireImage
 import Localize_Swift
 import CallKit
 import Sinch
+import NVActivityIndicatorView
 
-class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
     var appointmentModelData = AppointmentModel()
     let cellID = "cellID"
@@ -49,10 +50,32 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     @objc func signOutButtonClick(){
         //logout user and delete token from userdefaults
+        self.logoutDeviceFromServer()
         UserDefaults.standard.setToken(value: "")
         UserDefaults.standard.setIsLoggedIn(value: false)
         UserDefaults.standard.setUserData(value: NSDictionary())
         UtilityClass.changeRootViewController(with: LoginViewController())
+    }
+    
+    @objc func logoutDeviceFromServer(){
+        self.startAnimating()
+        if let deviceToken = UserDefaults.standard.getPushyToken(){
+            let url = EndPoints.logout(deviceToken).path
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    let statusCode = response.response?.statusCode
+                    if statusCode == 200 || statusCode == 201{
+                        print("Logout success")
+                    }
+                case .failure(let error):
+                    print("\(error)")
+                }
+                self.stopAnimating()
+            }
+        }
     }
     
     @objc func showLogoutOption(){
@@ -161,9 +184,9 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
             
         } else if indexPath.row == 5{
-            if let openUrl = URL(string: "https://www.myancare.org/"){
+            if let openUrl = URL(string: "https://m.me/myancareapps"){
                 UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-                print("Redirect to myancare website...")
+                print("Redirect to myancare messenger...")
             }
         } else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)

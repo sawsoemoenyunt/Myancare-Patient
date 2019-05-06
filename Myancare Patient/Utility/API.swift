@@ -71,6 +71,7 @@ enum EndPoints : ApiEndpoint {
     case initCodaPay(String,Int) //gateway_name, amount kyat
     case getEhrDataByUser(String) //ehr
     case uploadEhrDataByUser(String)
+    case logout(String)
     
     var path: URL
     {
@@ -175,6 +176,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"users/ehr/\(id)"))!
         case .uploadEhrDataByUser(let id):
             return URL(string: String(baseURLString+"users/ehr/\(id)"))!
+        case .logout(let deviceToken):
+            return URL(string: String(baseURLString+"users/logout/\(deviceToken)"))!
         }
     }
 }
