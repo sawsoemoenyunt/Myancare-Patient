@@ -12,6 +12,11 @@ class DiseaseCellCollectionView: UICollectionViewCell, UICollectionViewDelegate,
     
     let cellID = "cellID"
     
+    var type = ""
+    var ehrVC : EHRListVC?
+    var dataList = [Disease]()
+    var diseaseList = [Disease]()
+    
     let titlelabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type1
@@ -29,8 +34,31 @@ class DiseaseCellCollectionView: UICollectionViewCell, UICollectionViewDelegate,
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 15
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func editBtnClick(){
+        
+        if type == "disease"{
+            let addVC = AddDiseaseVC()
+            addVC.ehrVC = self.ehrVC
+            addVC.diseaseList = self.diseaseList
+            ehrVC?.navigationController?.pushViewController(addVC, animated: true)
+            
+        } else if type == "surgery"{
+            let addVC = AddSurgeryHistoryVC()
+            addVC.ehrVC = self.ehrVC
+            addVC.surgeryList = self.diseaseList
+            ehrVC?.navigationController?.pushViewController(addVC, animated: true)
+            
+        } else if type == "family"{
+            let addVC = AddFamilyHistory()
+            addVC.ehrVC = self.ehrVC
+            addVC.familyHistoryList = self.diseaseList
+            ehrVC?.navigationController?.pushViewController(addVC, animated: true)
+        }
+    }
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,11 +77,16 @@ class DiseaseCellCollectionView: UICollectionViewCell, UICollectionViewDelegate,
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return dataList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DiseaseCell
+        
+        if dataList.count > 0{
+            cell.titlelabel.text = "\(dataList[indexPath.row].name!) - \(dataList[indexPath.row].data!)"
+        }
+        
         return cell
     }
     
@@ -109,5 +142,6 @@ class DiseaseCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 
 

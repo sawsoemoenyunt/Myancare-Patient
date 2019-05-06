@@ -415,7 +415,8 @@ extension UserProfileEditVC: UICollectionViewDelegate, UICollectionViewDataSourc
         } else {
             cell.femaleBtn.backgroundColor = UIColor.MyanCareColor.orange
         }
-        cell.heightTextField.text = "\(userData.height!)"
+        self.gender = userData.gender!
+        cell.heightTextField.text = "\(userData.height!.replacingOccurrences(of: ".", with: "'"))"
         cell.weightTextField.text = "\(userData.weight!)"
         cell.bloodtypeTextField.text = "\(userData.bloodType!)"
         UIImage.loadImage(userData.image_url!) { (image) in

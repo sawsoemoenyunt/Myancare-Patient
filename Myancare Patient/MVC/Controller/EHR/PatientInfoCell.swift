@@ -10,6 +10,22 @@ import UIKit
 
 class PatientInfoCell: UICollectionViewCell {
     
+    var ehrVC : EHRListVC?
+    var bmiInfoData : BMIModel?{
+        didSet{
+            if let data = bmiInfoData{
+                bmiButton.setTitle("\(data.bmi!)", for: .normal)
+                feetTextField.text = "\(data.feet!)"
+                inchTextField.text = "\(data.inch!)"
+                upperBloodTextField.text = "\(data.upperBloodPressure!)"
+                lowerBloodTextField.text = "\(data.lowerBloodPressure!)"
+                weightTextField.text = "\(data.weight!)"
+            }
+        }
+    }
+    
+    let inchList = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    
     let heightLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
@@ -22,6 +38,7 @@ class PatientInfoCell: UICollectionViewCell {
         let tf = UITextField()
         tf.placeholder = "Feet"
         tf.borderStyle = .roundedRect
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -33,10 +50,19 @@ class PatientInfoCell: UICollectionViewCell {
         return lbl
     }()
     
+    lazy var inchPicker: UIPickerView = {
+        let p = UIPickerView()
+        p.delegate = self
+        p.dataSource = self
+        return p
+    }()
+    
     lazy var inchTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Inch"
         tf.borderStyle = .roundedRect
+        //        tf.keyboardType = .numberPad
+        tf.inputView = inchPicker
         return tf
     }()
     
@@ -60,6 +86,7 @@ class PatientInfoCell: UICollectionViewCell {
         let tf = UITextField()
         tf.placeholder = ""
         tf.borderStyle = .roundedRect
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -75,6 +102,7 @@ class PatientInfoCell: UICollectionViewCell {
         let tf = UITextField()
         tf.placeholder = ""
         tf.borderStyle = .roundedRect
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -98,6 +126,7 @@ class PatientInfoCell: UICollectionViewCell {
         let tf = UITextField()
         tf.placeholder = "lbs"
         tf.borderStyle = .roundedRect
+        tf.keyboardType = .numberPad
         return tf
     }()
     
@@ -117,14 +146,34 @@ class PatientInfoCell: UICollectionViewCell {
         return lbl
     }()
     
-    let bmiButton: UIButton = {
+    lazy var bmiButton: UIButton = {
         let btn = UIButton()
-        btn.setTitle("12", for: .normal)
+        btn.setTitle("0", for: .normal)
         btn.layer.cornerRadius = 6
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.setTitleColor(UIColor.white, for: .normal)
+        btn.addTarget(self, action: #selector(bmitButtonClick), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func bmitButtonClick(){
+        feetTextField.text = feetTextField.text == "" ? "0" : feetTextField.text
+        inchTextField.text = inchTextField.text == "" ? "0" : inchTextField.text
+        upperBloodTextField.text = upperBloodTextField.text == "" ? "0" : upperBloodTextField.text
+        lowerBloodTextField.text = lowerBloodTextField.text == "" ? "0" : lowerBloodTextField.text
+        weightTextField.text = weightTextField.text == "" ? "0" : weightTextField.text
+        
+        let bmiData = BMIModel()
+        bmiData.feet = Int(feetTextField.text!)
+        bmiData.inch = Int(inchTextField.text!)
+        bmiData.upperBloodPressure = Int(upperBloodTextField.text!)
+        bmiData.lowerBloodPressure = Int(lowerBloodTextField.text!)
+        bmiData.weight = Int(weightTextField.text!)
+        bmiData.calculateBMI()
+        
+        bmiButton.setTitle("\(bmiData.bmi!)", for: .normal)
+        ehrVC?.bmiData = bmiData
+    }
     
     let lineView: UIView = {
         let view = UIView()
@@ -183,5 +232,24 @@ class PatientInfoCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension PatientInfoCell: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return inchList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(inchList[row])"
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        self.inchTextField.text = "\(inchList[row])"
     }
 }

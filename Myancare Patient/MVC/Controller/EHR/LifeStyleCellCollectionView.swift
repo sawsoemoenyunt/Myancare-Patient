@@ -11,6 +11,8 @@ import UIKit
 class LifeStyleCellCollectionView: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
+    var ehrVC : EHRListVC?
+    var lifeStyleList = [Disease]()
     
     let titlelabel: UILabel = {
         let lbl = UILabel()
@@ -37,11 +39,18 @@ class LifeStyleCellCollectionView: UICollectionViewCell, UICollectionViewDelegat
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return lifeStyleList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! LifeStyleCell
+        
+        if lifeStyleList.count > 0{
+            cell.questionlabel.text = lifeStyleList[indexPath.row].name!
+            cell.answerSwitch.isOn = lifeStyleList[indexPath.row].checked!
+            cell.ehrVC = self.ehrVC
+            cell.index = indexPath.row
+        }
         return cell
     }
     
@@ -73,6 +82,9 @@ class LifeStyleCellCollectionView: UICollectionViewCell, UICollectionViewDelegat
 
 class LifeStyleCell: UICollectionViewCell {
     
+    var ehrVC : EHRListVC?
+    var index : Int?
+    
     let questionlabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
@@ -81,10 +93,21 @@ class LifeStyleCell: UICollectionViewCell {
         return lbl
     }()
     
-    let answerSwitch: UISwitch = {
+    lazy var answerSwitch: UISwitch = {
         let sw = UISwitch()
+        sw.addTarget(self, action: #selector(changeAnswer), for: .valueChanged)
         return sw
     }()
+    
+    @objc func changeAnswer(){
+        if (self.ehrVC?.lifeStyleList[index!].checked!)!{
+            self.ehrVC?.lifeStyleList[index!].checked = false
+            
+        } else {
+            self.ehrVC?.lifeStyleList[index!].checked = true
+        }
+        self.ehrVC?.collectionView.reloadData()
+    }
     
     func setupViews(){
         addSubview(questionlabel)
@@ -104,3 +127,4 @@ class LifeStyleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

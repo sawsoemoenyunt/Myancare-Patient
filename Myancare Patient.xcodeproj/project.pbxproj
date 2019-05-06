@@ -17,6 +17,10 @@
 		52092D2122216E040035C257 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2022216E040035C257 /* InvoiceViewController.swift */; };
 		52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52092D2222217DFB0035C257 /* AppointmentListViewController.swift */; };
 		521015F7222C4D6F004119E6 /* SelectAmountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521015F6222C4D6F004119E6 /* SelectAmountVC.swift */; };
+		52181CA722801E7D0051ED63 /* PregnantHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52181CA622801E7D0051ED63 /* PregnantHistoryCell.swift */; };
+		52181CA922801E940051ED63 /* AddDiseaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52181CA822801E940051ED63 /* AddDiseaseVC.swift */; };
+		52181CAB22801EAA0051ED63 /* AddSurgeryHistroyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52181CAA22801EAA0051ED63 /* AddSurgeryHistroyVC.swift */; };
+		52181CAD22801EC60051ED63 /* AddFamilyHealthHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52181CAC22801EC60051ED63 /* AddFamilyHealthHistory.swift */; };
 		5220DB842262C8E8009026C5 /* PatientRecordBookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */; };
 		5221AAD622509F1B0090120A /* AddReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221AAD522509F1B0090120A /* AddReminderVC.swift */; };
 		5221AAD82250A98B0090120A /* RepeatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221AAD72250A98B0090120A /* RepeatingVC.swift */; };
@@ -165,6 +169,10 @@
 		52092D2022216E040035C257 /* InvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		52092D2222217DFB0035C257 /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		521015F6222C4D6F004119E6 /* SelectAmountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAmountVC.swift; sourceTree = "<group>"; };
+		52181CA622801E7D0051ED63 /* PregnantHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnantHistoryCell.swift; sourceTree = "<group>"; };
+		52181CA822801E940051ED63 /* AddDiseaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiseaseVC.swift; sourceTree = "<group>"; };
+		52181CAA22801EAA0051ED63 /* AddSurgeryHistroyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSurgeryHistroyVC.swift; sourceTree = "<group>"; };
+		52181CAC22801EC60051ED63 /* AddFamilyHealthHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyHealthHistory.swift; sourceTree = "<group>"; };
 		5220DB832262C8E8009026C5 /* PatientRecordBookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientRecordBookVC.swift; sourceTree = "<group>"; };
 		5221AAD522509F1B0090120A /* AddReminderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderVC.swift; sourceTree = "<group>"; };
 		5221AAD72250A98B0090120A /* RepeatingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingVC.swift; sourceTree = "<group>"; };
@@ -768,6 +776,10 @@
 				52E6B7A9226C0FF80002193D /* CurrentMedicineCellCollectionView.swift */,
 				52E6B7AB226C16810002193D /* AvoidMedicineCollectionView.swift */,
 				52E6B7AD226C18CE0002193D /* DiseaseCellViewController.swift */,
+				52181CA622801E7D0051ED63 /* PregnantHistoryCell.swift */,
+				52181CA822801E940051ED63 /* AddDiseaseVC.swift */,
+				52181CAA22801EAA0051ED63 /* AddSurgeryHistroyVC.swift */,
+				52181CAC22801EC60051ED63 /* AddFamilyHealthHistory.swift */,
 			);
 			path = EHR;
 			sourceTree = "<group>";
@@ -1043,6 +1055,8 @@
 				524D8EA72237950200B7AEAB /* DoctorSearchSpecializationCell.swift in Sources */,
 				528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */,
 				528129FE2264124300ADCD81 /* UserProfileEditCell.swift in Sources */,
+				52181CAB22801EAA0051ED63 /* AddSurgeryHistroyVC.swift in Sources */,
+				52181CA922801E940051ED63 /* AddDiseaseVC.swift in Sources */,
 				528DA56B221D984700140CFF /* DoctorDetailViewController.swift in Sources */,
 				52691160222AE0450082FCC6 /* UserInterestVC.swift in Sources */,
 				52D59696223FADBD0071BE52 /* PatientModel.swift in Sources */,
@@ -1103,6 +1117,7 @@
 				520337E9222ACA9E004B4103 /* UserInformationVC.swift in Sources */,
 				524D8EAF223795A600B7AEAB /* MedicalRecordSelectCell.swift in Sources */,
 				524D8EA12237943400B7AEAB /* ArticleCategoryCell.swift in Sources */,
+				52181CAD22801EC60051ED63 /* AddFamilyHealthHistory.swift in Sources */,
 				5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */,
 				5220DB842262C8E8009026C5 /* PatientRecordBookVC.swift in Sources */,
 				523326A2223259DF00DD3BB6 /* ArticleDetailVC.swift in Sources */,
@@ -1129,6 +1144,7 @@
 				523B137A224F922000914BA5 /* SINCallKitProvider.swift in Sources */,
 				526FD43A2242591D0035D757 /* ChatListCell.swift in Sources */,
 				526E08912237D54B00FECD70 /* ModelAppointment.swift in Sources */,
+				52181CA722801E7D0051ED63 /* PregnantHistoryCell.swift in Sources */,
 				52EE83B222684C03000ECBCC /* LoginPasscodeVC.swift in Sources */,
 				52092D1F2221634C0035C257 /* BookAppointmentViewController.swift in Sources */,
 			);

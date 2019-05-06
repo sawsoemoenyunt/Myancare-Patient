@@ -11,6 +11,8 @@ import UIKit
 class AvoidMedicineCellCollectionView: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let cellID = "cellID"
+    var ehrVC : EHRListVC?
+    var medicines = [Disease]()
     
     let titlelabel: UILabel = {
         let lbl = UILabel()
@@ -29,6 +31,7 @@ class AvoidMedicineCellCollectionView: UICollectionViewCell, UICollectionViewDel
         btn.backgroundColor = UIColor.MyanCareColor.orange
         btn.layer.cornerRadius = 15
         btn.clipsToBounds = true
+        btn.isHidden = true
         return btn
     }()
     
@@ -40,12 +43,35 @@ class AvoidMedicineCellCollectionView: UICollectionViewCell, UICollectionViewDel
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.layer.cornerRadius = 15
         btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(addBtnClick), for: .touchUpInside)
         return btn
     }()
     
+    @objc func addBtnClick(){
+        
+        let alert = UIAlertController(title: "Medicine", message: "", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Medicine Name"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            
+            if textField.text != ""{
+                let med = Disease()
+                med.name = "\(textField.text!)"
+                self.ehrVC?.avoidMedicineList.append(med)
+                self.ehrVC?.collectionView.reloadData()
+            }
+        }))
+        
+        ehrVC!.present(alert, animated: true, completion: nil)
+    }
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 2
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -60,11 +86,18 @@ class AvoidMedicineCellCollectionView: UICollectionViewCell, UICollectionViewDel
     }()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return medicines.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AvoidMedicineCell
+        
+        if medicines.count > 0{
+            cell.titlelabel.text = medicines[indexPath.row].name!
+            cell.index = indexPath.row
+            cell.ehrVC = self.ehrVC
+        }
+        
         return cell
     }
     
@@ -100,6 +133,9 @@ class AvoidMedicineCellCollectionView: UICollectionViewCell, UICollectionViewDel
 
 class AvoidMedicineCell: UICollectionViewCell {
     
+    var index: Int?
+    var ehrVC: EHRListVC?
+    
     let titlelabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont.MyanCareFont.type3
@@ -108,9 +144,27 @@ class AvoidMedicineCell: UICollectionViewCell {
         return lbl
     }()
     
+    lazy var deleteIcon: UIImageView = {
+        let img = UIImageView()
+        img.image = #imageLiteral(resourceName: "icons8-delete_sign").withRenderingMode(.alwaysTemplate)
+        img.tintColor = UIColor.red
+        img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(deleteItem)))
+        img.isUserInteractionEnabled = true
+        return img
+    }()
+    
+    @objc func deleteItem(){
+        ehrVC?.avoidMedicineList.remove(at: index!)
+        ehrVC?.collectionView.reloadData()
+    }
+    
     func setupViews(){
         addSubview(titlelabel)
-        titlelabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        addSubview(deleteIcon)
+        
+        deleteIcon.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 25, heightConstant: 25)
+        deleteIcon.anchorCenterYToSuperview()
+        titlelabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: deleteIcon.leftAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
     }
     
     override init(frame: CGRect) {
@@ -127,4 +181,5 @@ class AvoidMedicineCell: UICollectionViewCell {
         layer.borderColor = UIColor.gray.cgColor
     }
 }
+
 

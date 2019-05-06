@@ -69,6 +69,8 @@ enum EndPoints : ApiEndpoint {
     case getUserInterest
     case checkAppointment(String)
     case initCodaPay(String,Int) //gateway_name, amount kyat
+    case getEhrDataByUser(String) //ehr
+    case uploadEhrDataByUser(String)
     
     var path: URL
     {
@@ -169,6 +171,10 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"appointments/check/appointment?id=\(appointmentID)"))!
         case .initCodaPay(let gateWay, let kyatAmount):
             return URL(string: String(baseURLString+"transactions/codapay/init?type=\(gateWay)&amount=\(kyatAmount)"))!
+        case .getEhrDataByUser(let id):
+            return URL(string: String(baseURLString+"users/ehr/\(id)"))!
+        case .uploadEhrDataByUser(let id):
+            return URL(string: String(baseURLString+"users/ehr/\(id)"))!
         }
     }
 }

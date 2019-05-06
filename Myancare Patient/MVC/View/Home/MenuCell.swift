@@ -90,7 +90,7 @@ extension MenuCell: UICollectionViewDataSource, UICollectionViewDelegate{
         case 1:
             homeViewController?.navigationController?.pushViewController(AppointmentListViewController(), animated: true)
         case 2:
-            homeViewController?.navigationController?.pushViewController(RecordBookVC(), animated: true)
+            homeViewController?.navigationController?.pushViewController(EHRListVC(), animated: true)
         case 3:
             homeViewController?.navigationController?.pushViewController(ArticleVC(), animated: true)
         case 4:
