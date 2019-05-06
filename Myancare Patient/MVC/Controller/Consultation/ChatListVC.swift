@@ -114,6 +114,7 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             let chatRoom = ChatRecordVC.init(collectionViewLayout: UICollectionViewFlowLayout())
             chatRoom.roomID = roomList[indexPath.row].id!
             chatRoom.docName = roomList[indexPath.row].doctor_name!
+            chatRoom.docID = roomList[indexPath.row].doctor_id!
             self.navigationController?.pushViewController(chatRoom, animated: true)
         }
     }

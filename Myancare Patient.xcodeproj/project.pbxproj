@@ -63,6 +63,7 @@
 		524D8ED02237983A00B7AEAB /* PaymentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8ECF2237983A00B7AEAB /* PaymentCell.swift */; };
 		524D8ED22237985500B7AEAB /* AmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8ED12237985500B7AEAB /* AmountCell.swift */; };
 		524D8ED422379BE600B7AEAB /* PaymentGateWayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */; };
+		524FD57D22800D8100927CD3 /* CustomWebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524FD57C22800D8100927CD3 /* CustomWebViewVC.swift */; };
 		52554417224F576B00E23340 /* PaymentRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52554416224F576B00E23340 /* PaymentRateModel.swift */; };
 		526829692251FC9E00070BC4 /* ChatRecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526829682251FC9E00070BC4 /* ChatRecordModel.swift */; };
 		5268C554222F7DC6001CF258 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268C553222F7DC6001CF258 /* UserProfileVC.swift */; };
@@ -210,6 +211,7 @@
 		524D8ECF2237983A00B7AEAB /* PaymentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCell.swift; sourceTree = "<group>"; };
 		524D8ED12237985500B7AEAB /* AmountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountCell.swift; sourceTree = "<group>"; };
 		524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentGateWayVC.swift; sourceTree = "<group>"; };
+		524FD57C22800D8100927CD3 /* CustomWebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWebViewVC.swift; sourceTree = "<group>"; };
 		52554416224F576B00E23340 /* PaymentRateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRateModel.swift; sourceTree = "<group>"; };
 		526829682251FC9E00070BC4 /* ChatRecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRecordModel.swift; sourceTree = "<group>"; };
 		5268C553222F7DC6001CF258 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 				521015F6222C4D6F004119E6 /* SelectAmountVC.swift */,
 				524D8ED322379BE600B7AEAB /* PaymentGateWayVC.swift */,
 				529810C5227D48EE00535847 /* PaymentTransferVC.swift */,
+				524FD57C22800D8100927CD3 /* CustomWebViewVC.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1077,6 +1080,7 @@
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
 				52E6B7AA226C0FF80002193D /* CurrentMedicineCellCollectionView.swift in Sources */,
 				52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */,
+				524FD57D22800D8100927CD3 /* CustomWebViewVC.swift in Sources */,
 				52E6B7AE226C18CE0002193D /* DiseaseCellViewController.swift in Sources */,
 				52092D1D2221524B0035C257 /* UIView+anchors.swift in Sources */,
 				524D8ECA223797BF00B7AEAB /* ProfileCell.swift in Sources */,

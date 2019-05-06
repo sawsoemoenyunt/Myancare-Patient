@@ -17,6 +17,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     let cellID = "cellId"
     var roomID = ""
     var docName = ""
+    var docID = ""
     var chatRecords = [ChatRecordModel]()
     var isPaging = true
     var uploadImage = UIImage()
@@ -216,6 +217,16 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         //reverse collectionview
         collectionView.showsVerticalScrollIndicator = false
         collectionView.transform = CGAffineTransform.init(rotationAngle: (-(CGFloat)(Double.pi)))
+        
+        //add button on navigation bar
+        let newBackButton = UIBarButtonItem(title: "ရက်ချိန်းယူရန်", style: .plain, target: self, action: #selector(handleBookBtnClick))
+        self.navigationItem.rightBarButtonItem = newBackButton
+    }
+    
+    @objc func handleBookBtnClick(){
+        let docDetailVC = DoctorDetailVC(collectionViewLayout:UICollectionViewFlowLayout())
+        docDetailVC.doctorID = docID
+        self.navigationController?.pushViewController(docDetailVC, animated: true)
     }
     
     @objc func handleSend() {

@@ -159,7 +159,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
-            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
+//            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
+            acceptBtn.addTarget(self, action: #selector(start), for: .touchUpInside)
             acceptBtn.setTitle("START \(appointmentData.type!.uppercased())", for: .normal)
             break
         

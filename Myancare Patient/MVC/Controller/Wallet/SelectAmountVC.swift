@@ -15,16 +15,18 @@ class SelectAmountVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
     var amountList = [ExchangeRateModel]()
+    var selectedAmountString = ""
     var gateWayName: String?{
         didSet{
             if let name = gateWayName{
                 self.icon.image = UIImage(named: "\(name)")
-                self.gateWayNameLabel.text = "Pay with \(name.capitalized)"
+                self.gateWayNameLabel.text = "Pay with \(name.uppercased())"
                 self.infoLabel.text = "Please select the amount that you want to purchase to pay with \(name.capitalized)."
                 self.getAllAmount("\(name)")
             }
         }
     }
+    var payment = PaymentRateModel()
     
     let icon: UIImageView = {
         let img = UIImageView()
@@ -153,19 +155,32 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let exchangeRate = amountList[indexPath.row]
-        showConfirmActionSheet(exchangeRate)
+        selectedAmountString = "\(exchangeRate.kyat_amount!) kyats to buy \(exchangeRate.coin_amount!) coins"
+        
+        if (exchangeRate.payment_gateway_type?.lowercased().contains("bank"))!{
+            let paymentTransferVC = PaymentTransferVC()
+            paymentTransferVC.exchangeRate = exchangeRate
+            self.navigationController?.pushViewController(paymentTransferVC, animated: true)
+            
+        } else{
+            showConfirmActionSheet(exchangeRate)
+        }
+        
     }
     
     func showConfirmActionSheet(_ exchangeRate:ExchangeRateModel){
-        let actionSheet = UIAlertController(title: "Please confirm to request manuel payment", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Please confirm to request payment", message: "You've selected \(selectedAmountString)", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
+//
+//            if (self.gateWayName?.contains("telenor"))!{
+//                self.requestAuthKeyForTelenorPayment()
+//            } else {
+//                self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
+//            }
+//        }
         let confirmBtn = UIAlertAction(title: "Confirm", style: .default) { (action) in
-            
-            if (self.gateWayName?.contains("telenor"))!{
-                self.requestAuthKeyForTelenorPayment()
-            } else {
-                self.requestTransactions(gateWay: exchangeRate.payment_gateway!, coin: exchangeRate.coin_amount!, amount: exchangeRate.kyat_amount!)
-            }
+            self.initCodaFromServer(exchangeRate)
         }
         
         actionSheet.addAction(confirmBtn)
@@ -176,6 +191,42 @@ extension SelectAmountVC: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 extension SelectAmountVC{
+    
+    func initCodaFromServer(_ exchangeRate:ExchangeRateModel){
+        self.startAnimating()
+        let url = EndPoints.initCodaPay(exchangeRate.payment_gateway!, exchangeRate.kyat_amount!).path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 200 || responseStatus == 201{
+                    if let responseDict = response.result.value as? NSDictionary{
+                        if let initResult = responseDict.object(forKey: "initResult") as? NSDictionary{
+                            if let txnId = initResult.object(forKey: "txnId") as? String{
+//                                if let openUrl = URL(string: "https://sandbox.codapayments.com/airtime/checkout?type=3&txn_id=\(txnId)&browser_type=mobile-web"){
+//                                    UtilityClass.switchToHomeViewController()
+//                                    UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+//                                    print("Redirect to coda website...")
+//                                }
+                                let customWebVC = CustomWebViewVC()
+                                customWebVC.urlString = "https://sandbox.codapayments.com/airtime/checkout?type=3&txn_id=\(txnId)&browser_type=mobile-web"
+                                self.navigationController?.pushViewController(customWebVC, animated: true)
+                            }
+                        }
+                    }
+                    
+                } else {
+                    print("failed to init coda payment in server")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
     
     func requestAuthKeyForTelenorPayment(){
         

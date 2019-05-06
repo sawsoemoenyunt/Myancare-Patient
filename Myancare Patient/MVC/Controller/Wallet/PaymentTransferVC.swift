@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class PaymentTransferVC: UIViewController {
+class PaymentTransferVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
+    var exchangeRate = ExchangeRateModel()
     
     lazy var confirmBtn: UIButton = {
         let btn = UIButton()
@@ -91,6 +94,37 @@ extension PaymentTransferVC: UICollectionViewDelegate, UICollectionViewDataSourc
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + 300)
     }
     
+}
+
+extension PaymentTransferVC{
+    func requestTransactions(gateWay:String, coin:Int, amount:Int){
+        
+        self.startAnimating()
+        
+        let url = EndPoints.transactionsRequest.path
+        let params = ["coin" : coin,
+                      "amount" : amount,
+                      "payment_gateway" : gateWay] as [String:Any]
+        let heads = ["Authorization":"\(jwtTkn)"]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    self.showAlert(title: "Success", message: "Your manual payment was requested to Myancare!")
+                } else {
+                    self.showAlert(title: "Failed", message: "An error occured while requesting manual payment")
+                }
+                
+            case .failure(let error):
+                self.showAlert(title: "Failed", message: "An error occured while requesting manual payment")
+                print("\(error)")
+            }
+            self.stopAnimating()
+        }
+    }
 }
 
 class PaymentTransferCell: UICollectionViewCell{

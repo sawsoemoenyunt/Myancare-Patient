@@ -28,7 +28,7 @@ class PaymentMethodVC: UIViewController, NVActivityIndicatorViewable {
         cv.dataSource = self
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
-        cv.allowsMultipleSelection = true
+//        cv.allowsMultipleSelection = true
         return cv
     }()
     
@@ -113,9 +113,8 @@ extension PaymentMethodVC{
     
     func assignData(_ dataArray:NSArray){
         
-        var gateWayList = [PaymentList.init(paymentGroup: "PAY_WITH_BILL", paymentGateways: [PaymentRateModel]()),
-                           PaymentList.init(paymentGroup: "PAY_WITH_BANKING", paymentGateways: [PaymentRateModel]()),
-                           PaymentList.init(paymentGroup: "PAY_WITH_OTHER", paymentGateways: [PaymentRateModel]())]
+        var gateWayList = [PaymentList.init(paymentGroup: "PAY_WITH_CODA", paymentGateways: [PaymentRateModel]()),
+                           PaymentList.init(paymentGroup: "PAY_WITH_BANKING", paymentGateways: [PaymentRateModel]())]
         
         for data in dataArray{
             if let dataDict = data as? [String:Any]{
@@ -123,12 +122,10 @@ extension PaymentMethodVC{
                 paymentGateway.updateUsingDict(dataDict)
                 
                 switch paymentGateway.gatewayType{
-                case "PAY_WITH_BILL":
+                case "PAY_WITH_CODA":
                     gateWayList[0].paymentGateways.append(paymentGateway)
                 case "PAY_WITH_BANKING":
                     gateWayList[1].paymentGateways.append(paymentGateway)
-                case "PAY_WITH_OTHER":
-                    gateWayList[2].paymentGateways.append(paymentGateway)
                 default:
                     break
                 }
