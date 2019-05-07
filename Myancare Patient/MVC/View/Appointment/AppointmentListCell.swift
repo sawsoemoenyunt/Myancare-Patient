@@ -23,7 +23,12 @@ class AppointmentListCell: UICollectionViewCell {
                     }
                 }
                 
-                dateLabel.text = UtilityClass.getDateTimeStringFromUTC(data.date_of_issue_utc!)
+                let startDate = Date(milliseconds: data.slotStartTime!)
+                let fm = DateFormatter()
+                fm.dateFormat = "dd-MMM-yyyy h:mm a"
+                let dateString = fm.string(from: startDate)
+                
+                dateLabel.text = "\(dateString)"
                 typeBtn.setTitle("\(data.type!)", for: .normal)
                 conditionBtn.setTitle("\(data.booking_status)", for: .normal)
                 

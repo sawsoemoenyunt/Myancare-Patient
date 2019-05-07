@@ -326,7 +326,7 @@ extension RescheduleVC{
         let todayUTCDate = UtilityClass.getUtcDate()
         
         self.startAnimating()
-        let url = EndPoints.appointmentCreate.path
+        let url = EndPoints.rescheduleAppointment.path
         let params = ["doctor": docID,
                       "patient": patientID,
                       "old_appointment_id": appointmentData.id!,
@@ -352,7 +352,12 @@ extension RescheduleVC{
                     let alert = UIAlertController(title: "Success", message: "You requested for reschedule", preferredStyle: UIAlertController.Style.alert)
                     // add an action (button)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                        self.navigationController?.popViewController(animated: true)
+//                        self.navigationController?.popViewController(animated: true)
+                        let layout = UICollectionViewFlowLayout()
+                        let homeVC = HomeViewController(collectionViewLayout:layout)
+                        let navController = UINavigationController(rootViewController: homeVC)
+                        homeVC.pushToVC(vc: AppointmentListViewController())
+                        UtilityClass.changeRootViewController(with: navController)
                     }))
                     // show the alert
                     self.present(alert, animated: true, completion: nil)

@@ -91,6 +91,7 @@ class WalletCell: UICollectionViewCell {
         lbl.numberOfLines = 1
         lbl.font = UIFont.mmFontRegular(ofSize: 12)
         lbl.textColor = UIColor.MyanCareColor.darkGray
+        lbl.numberOfLines = 3
         return lbl
     }()
     

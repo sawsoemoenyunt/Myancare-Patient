@@ -66,6 +66,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         self.push?.delegate = self
         self.push?.setDesiredPushTypeAutomatically()
         
+        if UserDefaults.standard.isLoggedIn(){
+            if let token = UserDefaults.standard.getToken(){
+                jwtTkn = "Bearer \(token)"
+            }
+            updateUserData()
+        }
+        
         //register pushy
         registerPushyDevice()
         
