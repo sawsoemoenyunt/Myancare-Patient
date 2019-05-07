@@ -453,6 +453,7 @@ extension UserProfileEditVC: UIImagePickerControllerDelegate, UINavigationContro
         
         if let selectedImage = selectedImageFromPicker {
             profileImage = selectedImage
+            
             self.getImageUploadLinkFromServer()
         }
         

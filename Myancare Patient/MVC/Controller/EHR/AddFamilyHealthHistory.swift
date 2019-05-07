@@ -38,6 +38,7 @@ class AddFamilyHistory: UIViewController, UICollectionViewDelegate, UICollection
         tf.font = UIFont.MyanCareFont.type3
         tf.borderStyle = .roundedRect
         tf.placeholder = "အခြားအကြောင်းအရာထည့်ရန်"
+        tf.font = UIFont.MyanCareFont.type3
         return tf
     }()
     
@@ -187,7 +188,7 @@ class AddFamilyHistoryCell: UICollectionViewCell {
     var isChecked = false
     var index : Int?
     var ehrVC : EHRListVC?
-    var relativeTypeList = ["တော်စပ်ပုံ", "မိဘများ", "အဘိုးအဘွားများ", "မောင်နှမ", "သားသမီး", "အခြား"]
+    var relativeTypeList = ["မိဘများ", "အဘိုးအဘွားများ", "မောင်နှမ", "သားသမီး", "အခြား"]
     
     lazy var checkBox: UIImageView = {
         let img = UIImageView()
@@ -256,6 +257,7 @@ class AddFamilyHistoryCell: UICollectionViewCell {
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
         tf.inputView = relativePicker
+        tf.font = UIFont.MyanCareFont.type3
         return tf
     }()
     

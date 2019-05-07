@@ -83,6 +83,30 @@ class BMIModel{
             self.bmi = calculatedBmi
         }
     }
+    
+    func updateModelUsingDict(_ dict:[String:Any]){
+        if let feet1 = dict["feet"] as? String{
+            self.feet = Int(feet1)
+        }
+        
+        if let inch1 = dict["inches"] as? String{
+            self.inch = Int(inch1)
+        }
+        
+        if let weight1 = dict["weight"] as? String{
+            self.weight = Int(weight1)
+        }
+        
+        if let upblood = dict["upper_blood_pressure"] as? String{
+            self.upperBloodPressure = Int(upblood)
+        }
+        
+        if let downblood = dict["down_blood_pressure"] as? String{
+            self.lowerBloodPressure = Int(downblood)
+        }
+        
+        self.calculateBMI()
+    }
 }
 
 class EHRListVC: UIViewController, NVActivityIndicatorViewable {
@@ -99,7 +123,7 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
     var avoidMedicineList = [Disease]()
     var currentMedicineList = [Disease]()
     
-    var lifeStyleList = [Disease.init(_checked: false, _data: "", _name: "ရာသီတုပ်ကွေးကာကွယ်ဆေးထိုးလေ့ရိုပါသလား?"),
+    var lifeStyleList = [Disease.init(_checked: false, _data: "", _name: "ရာသီတုပ်ကွေးကာကွယ်ဆေးထိုးလေ့ရှိပါသလား?"),
                          Disease.init(_checked: false, _data: "", _name: "ဆေးလိပ်သောက်ပါသလား?"),
                          Disease.init(_checked: false, _data: "", _name: "အရက်သောက်ပါသလား?"),
                          Disease.init(_checked: false, _data: "", _name: "ကွမ်းစားပါသလား?")]
@@ -160,7 +184,7 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
         setupViews()
         
         if let userID = UserDefaults.standard.getUserData().object(forKey: "_id") as? String{
-            getEhrDataByUserID(userID)
+            getEhrDataByUserID2(userID)
         }
     }
     
@@ -174,7 +198,8 @@ class EHRListVC: UIViewController, NVActivityIndicatorViewable {
     
     func setupViews(){
         self.title = "ကျန်းမာရေးမှတ်တမ်းများ"
-        let newBackButton = UIBarButtonItem(title: "<Back", style: .plain, target: self, action: #selector(backButtonClick))
+        
+        let newBackButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-back-1"), style: .plain, target: self, action: #selector(backButtonClick))
         self.navigationItem.leftBarButtonItem = newBackButton
         
         view.addSubview(collectionView)
@@ -249,6 +274,7 @@ extension EHRListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             let cell1 = collectionView.dequeueReusableCell(withReuseIdentifier: cellID_lifeStyle, for: indexPath) as! LifeStyleCellCollectionView
             cell1.ehrVC = self
             cell1.lifeStyleList = self.lifeStyleList
+            cell1.collectionView.reloadData()
             cell = cell1
         }
         else if indexPath.row == 2{
@@ -352,7 +378,7 @@ extension EHRListVC{
         
         self.startAnimating()
         
-        let json = ["base_disease" : self.getBaseDiseasesUploadData(),
+        let json = ["base_diseases" : self.getBaseDiseasesUploadData(),
                     "current_drink_medicine" : self.getCurrentDrinkMedicineUploadData(),
                     "family_hr_record" : self.getFamilyHrRecordUploadData(),
                     "normal_records" : self.getNormalRecordUploadData(),
@@ -396,36 +422,6 @@ extension EHRListVC{
         
     }
     
-    func getJsonStringForUploadEhr() -> String{
-        
-        var jsonString = ""
-        
-        let json = ["base_disease" : self.getBaseDiseasesUploadData(),
-                    "current_drink_medicine" : self.getCurrentDrinkMedicineUploadData(),
-                    "family_hr_record" : self.getFamilyHrRecordUploadData(),
-                    "normal_records" : self.getNormalRecordUploadData(),
-                    "poison_medicine" : self.poisonMedicineRecordUploadData(),
-                    "your_operations" : self.operationUploadData(),
-                    "down_blood_pressure" : "\(self.bmiData.lowerBloodPressure!)",
-            "upper_blood_pressure" : "\(self.bmiData.upperBloodPressure!)",
-            "feet" : "\(self.bmiData.feet!)",
-            "inches" : "\(self.bmiData.inch!)",
-            "weight" : "\(self.bmiData.weight!)"
-            ] as [String : Any]
-        
-        do {
-            let data1 =  try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted) // first of all convert json to the data
-            let convertedString = String(data: data1, encoding: String.Encoding.utf8) // the data will be converted to the string
-            jsonString = convertedString!
-            
-            
-        } catch let myJSONError {
-            print(myJSONError)
-        }
-        
-        return jsonString
-    }
-    
     func getEhrDataByUserID2(_ userID:String){
         
         self.startAnimating()
@@ -441,6 +437,9 @@ extension EHRListVC{
                 if reponseStatus == 201 || reponseStatus == 200{
                     
                     if let responseDict = response.result.value as? [String:Any]{
+                        
+                        self.bmiData.updateModelUsingDict(responseDict)
+                        
                         if let baseDiseaseArrData = responseDict["base_diseases"] as? NSArray{
                             var baseDiseaseArr = [Disease]()
                             
@@ -497,28 +496,11 @@ extension EHRListVC{
                                     
                                     let disease = Disease()
                                     disease.updateModelUsingDict(normalRecordDict)
-                                    
                                     normalRecordArr.append(disease)
                                 }
                             }
                             if normalRecordArr.count > 0{
                                 self.lifeStyleList = normalRecordArr
-                            }
-                        }
-                        
-                        if let yourOperationsData = responseDict["your_operations"] as? NSArray{
-                            var currentDrinkMedArr = [Disease]()
-                            for med in yourOperationsData{
-                                if let currentDrinkMedDict = med as? [String:Any]{
-                                    
-                                    let disease = Disease()
-                                    disease.updateModelUsingDict(currentDrinkMedDict)
-                                    
-                                    currentDrinkMedArr.append(disease)
-                                }
-                            }
-                            if currentDrinkMedArr.count > 0{
-                                self.surgeryList = currentDrinkMedArr
                             }
                         }
                         
@@ -552,152 +534,9 @@ extension EHRListVC{
                             if currentDrinkMedArr.count > 0{
                                 self.familyHistory = currentDrinkMedArr
                             }
-                            
-                        }
-                    }
-                    
-                } else {
-                    print("Failed to get data for ehr")
-                }
-            case .failure(let error):
-                print("\(error)")
-            }
-            self.stopAnimating()
-        }
-    }
-    
-    func getEhrDataByUserID(_ userID:String){
-        
-        self.startAnimating()
-        let url = EndPoints.getEhrDataByUser(userID).path
-        let heads = ["Authorization" : "\(jwtTkn)"]
-
-        
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
-            
-            switch response.result{
-            case  .success:
-                let reponseStatus = response.response?.statusCode
-                if reponseStatus == 201 || reponseStatus == 200{
-                    
-                    if let responseString = response.result.value as? String{
-                        
-                        if let data = responseString.data(using: .utf8){
-                            do{
-                                if let responseDict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]{
-                                    
-                                    if let baseDiseaseArrData = responseDict["base_diseases"] as? NSArray{
-                                        var baseDiseaseArr = [Disease]()
-                                        
-                                        for bd in baseDiseaseArrData{
-                                            if let baseDiseaseDict = bd as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(baseDiseaseDict)
-                                                
-                                                baseDiseaseArr.append(disease)
-                                            }
-                                        }
-                                        self.diseasesList = baseDiseaseArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let currentDrinkMedArrData = responseDict["current_drink_medicine"] as? NSArray{
-                                        var currentDrinkMedArr = [Disease]()
-                                        for med in currentDrinkMedArrData{
-                                            if let currentDrinkMedDict = med as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(currentDrinkMedDict)
-                                                
-                                                currentDrinkMedArr.append(disease)
-                                            }
-                                        }
-                                        self.currentMedicineList = currentDrinkMedArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let poisonMedArrData = responseDict["poison_medicine"] as? NSArray{
-                                        var poisonMedArr = [Disease]()
-                                        for med in poisonMedArrData{
-                                            if let poisonMedDict = med as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(poisonMedDict)
-                                                
-                                                poisonMedArr.append(disease)
-                                            }
-                                        }
-                                        self.avoidMedicineList = poisonMedArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let normalRecordData = responseDict["normal_records"] as? NSArray{
-                                        var normalRecordArr = [Disease]()
-                                        for nr in normalRecordData{
-                                            if let normalRecordDict = nr as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(normalRecordDict)
-                                                
-                                                normalRecordArr.append(disease)
-                                            }
-                                        }
-                                        self.lifeStyleList = normalRecordArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let yourOperationsData = responseDict["your_operations"] as? NSArray{
-                                        var currentDrinkMedArr = [Disease]()
-                                        for med in yourOperationsData{
-                                            if let currentDrinkMedDict = med as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(currentDrinkMedDict)
-                                                
-                                                currentDrinkMedArr.append(disease)
-                                            }
-                                        }
-                                        self.surgeryList = currentDrinkMedArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let yourOperationsData = responseDict["your_operations"] as? NSArray{
-                                        var currentDrinkMedArr = [Disease]()
-                                        for med in yourOperationsData{
-                                            if let currentDrinkMedDict = med as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(currentDrinkMedDict)
-                                                
-                                                currentDrinkMedArr.append(disease)
-                                            }
-                                        }
-                                        self.surgeryList = currentDrinkMedArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                    if let familyHrData = responseDict["family_hr_record"] as? NSArray{
-                                        var currentDrinkMedArr = [Disease]()
-                                        for med in familyHrData{
-                                            if let currentDrinkMedDict = med as? [String:Any]{
-                                                
-                                                let disease = Disease()
-                                                disease.updateModelUsingDict(currentDrinkMedDict)
-                                                
-                                                currentDrinkMedArr.append(disease)
-                                            }
-                                        }
-                                        self.familyHistory = currentDrinkMedArr
-                                        self.sortArrays()
-                                    }
-                                    
-                                }
-                            } catch let error{
-                                print("\(error)")
-                            }
                         }
                         
+                        self.sortArrays()
                     }
                     
                 } else {
@@ -763,7 +602,7 @@ extension EHRListVC{
     func poisonMedicineRecordUploadData() -> [[String:Any]]{
         var dataArr = [[String:Any]]()
         
-        for data in familyHistory{
+        for data in avoidMedicineList{
             let dict = ["time_data" : data.data!,
                         "name" : data.name!] as [String : Any]
             dataArr.append(dict)

@@ -13,6 +13,7 @@ class ArticleCategoryCell: UICollectionViewCell {
     
     let icon: UIImageView = {
         let img = UIImageView()
+        img.image = UIImage(named: "no-image")
         img.backgroundColor = .gray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true

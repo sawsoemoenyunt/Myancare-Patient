@@ -84,6 +84,7 @@ class LifeStyleCell: UICollectionViewCell {
     
     var ehrVC : EHRListVC?
     var index : Int?
+    var isCheck = false
     
     let questionlabel: UILabel = {
         let lbl = UILabel()
@@ -100,13 +101,7 @@ class LifeStyleCell: UICollectionViewCell {
     }()
     
     @objc func changeAnswer(){
-        if (self.ehrVC?.lifeStyleList[index!].checked!)!{
-            self.ehrVC?.lifeStyleList[index!].checked = false
-            
-        } else {
-            self.ehrVC?.lifeStyleList[index!].checked = true
-        }
-        self.ehrVC?.collectionView.reloadData()
+        self.ehrVC?.lifeStyleList[index!].checked = answerSwitch.isOn
     }
     
     func setupViews(){

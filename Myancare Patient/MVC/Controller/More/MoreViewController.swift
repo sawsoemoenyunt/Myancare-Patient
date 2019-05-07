@@ -166,9 +166,9 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             self.showAlert(title: "Avilable soon", message: "...")
             
         } else if indexPath.row == 3{
-            if let openUrl = URL(string: "https://www.myancare.org/"){
+            if let openUrl = URL(string: "https://m.me/myancareapps"){
                 UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-                print("Redirect to myancare website...")
+                print("Redirect to myancare messenger...")
             }
             
         } else if indexPath.row == 4{
@@ -184,10 +184,7 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
             
         } else if indexPath.row == 5{
-            if let openUrl = URL(string: "https://m.me/myancareapps"){
-                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-                print("Redirect to myancare messenger...")
-            }
+            self.showAlert(title: "Avilable soon", message: "...")
         } else if indexPath.row == 6{
             self.navigationController?.pushViewController(AboutusVC(), animated: true)
         }

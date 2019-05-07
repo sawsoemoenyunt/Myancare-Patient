@@ -65,6 +65,7 @@ class AddSurgeryHistoryVC: UIViewController, UICollectionViewDelegate, UICollect
     lazy var yearTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "year"
+        tf.font = UIFont.MyanCareFont.type3
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
         tf.inputView = yearPicker
@@ -218,6 +219,7 @@ class AddSurgeryCell: UICollectionViewCell {
         tf.placeholder = "year"
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
+        tf.font = UIFont.MyanCareFont.type3
         tf.inputView = yearPicker
         return tf
     }()
