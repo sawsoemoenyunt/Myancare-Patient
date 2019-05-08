@@ -511,7 +511,10 @@ extension VideoCallHandlingVC{
     @objc func hangup()
     {
         self.call?.hangup()
-        self.dismiss()
+        self.dismiss(animated: true) {
+            //show review vc
+            NotificationCenter.default.post(name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil, userInfo: nil)
+        }
     }
     
     /// action performed on mute/unmute call button click
@@ -629,14 +632,17 @@ extension VideoCallHandlingVC{
     {
         print("did end call detail ===== \(String(describing: self.call?.details))")
         
+        dismiss(animated: true) {
+            self.audioController().stopPlayingSoundFile()
+            self.stopCallDurationTimer()
+            self.videoController().remoteView().removeFromSuperview()
+            self.audioController().disableSpeaker()
+            NotificationCenter.default.post(name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil, userInfo: nil)
+        }
         self.dismiss()
         
 //        doctorCallEvent (SocketManageCallEventKeyword.callEventDoctorHangs.rawValue)
         
-        self.audioController().stopPlayingSoundFile()
-        self.stopCallDurationTimer()
-        self.videoController().remoteView().removeFromSuperview()
-        self.audioController().disableSpeaker()
     }
     
     /// SINCallDelegate method -> call Did add video track

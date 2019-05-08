@@ -94,6 +94,7 @@
 		527A1D45225104C100B1D775 /* MedicalReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A1D44225104C100B1D775 /* MedicalReminder.swift */; };
 		527FAD0B224B8C9C00484DD1 /* AboutusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */; };
 		528129FE2264124300ADCD81 /* UserProfileEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528129FD2264124300ADCD81 /* UserProfileEditCell.swift */; };
+		52893E2B22828E12000B9934 /* PatientFeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52893E2A22828E12000B9934 /* PatientFeedbackVC.swift */; };
 		528B07A7226DB0CA00F149F6 /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B07A6226DB0CA00F149F6 /* FeedbackVC.swift */; };
 		528BFB29224D22DC00CC8986 /* SpecializationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528BFB28224D22DC00CC8986 /* SpecializationModel.swift */; };
 		528DA550221D96DA00140CFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528DA54F221D96DA00140CFF /* AppDelegate.swift */; };
@@ -246,6 +247,7 @@
 		527A1D44225104C100B1D775 /* MedicalReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReminder.swift; sourceTree = "<group>"; };
 		527FAD0A224B8C9C00484DD1 /* AboutusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutusVC.swift; sourceTree = "<group>"; };
 		528129FD2264124300ADCD81 /* UserProfileEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileEditCell.swift; sourceTree = "<group>"; };
+		52893E2A22828E12000B9934 /* PatientFeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientFeedbackVC.swift; sourceTree = "<group>"; };
 		528AC1FB223A9E9000082626 /* Myancare Patient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Myancare Patient.entitlements"; sourceTree = "<group>"; };
 		528B07A6226DB0CA00F149F6 /* FeedbackVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
 		528BFB28224D22DC00CC8986 /* SpecializationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationModel.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				523B1379224F922000914BA5 /* SINCallKitProvider.swift */,
 				523B137B224F9AE300914BA5 /* VoiceCallHandlingVC.swift */,
 				52C6FD682254DF92005A3944 /* VideoCallHandlingVC.swift */,
+				52893E2A22828E12000B9934 /* PatientFeedbackVC.swift */,
 			);
 			path = Consultation;
 			sourceTree = "<group>";
@@ -1093,6 +1096,7 @@
 				52F0329A226F141E0031B212 /* RescheduleVC.swift in Sources */,
 				528DA56D221D985300140CFF /* MoreViewController.swift in Sources */,
 				52E6B7AA226C0FF80002193D /* CurrentMedicineCellCollectionView.swift in Sources */,
+				52893E2B22828E12000B9934 /* PatientFeedbackVC.swift in Sources */,
 				52092D2322217DFB0035C257 /* AppointmentListViewController.swift in Sources */,
 				524FD57D22800D8100927CD3 /* CustomWebViewVC.swift in Sources */,
 				52E6B7AE226C18CE0002193D /* DiseaseCellViewController.swift in Sources */,

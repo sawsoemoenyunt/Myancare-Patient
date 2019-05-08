@@ -317,6 +317,7 @@ extension VoiceCallHandlingVC{
             self.audioController().disableSpeaker()
             
             //show review vc
+            NotificationCenter.default.post(name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil, userInfo: nil)
         }
     }
     
@@ -416,6 +417,7 @@ extension VoiceCallHandlingVC{
             self.audioController().disableSpeaker()
             
             //show review vc
+            NotificationCenter.default.post(name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil, userInfo: nil)
         }
     }
     

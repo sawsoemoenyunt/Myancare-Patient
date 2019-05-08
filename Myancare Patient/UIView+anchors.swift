@@ -27,6 +27,7 @@ extension Notification.Name {
     static let didReceiveDataForChatRecord = Notification.Name("didReceiveDataForChatRecord")
     static let didReceiveDataForNewChatMessage = Notification.Name("didReceiveDataForNewChatMessage")
     static let didReceiveAppointmentTimeUp = Notification.Name("didReceiveAppointmentTimeup")
+    static let didReceiveNotiToShowConfirmRetryForFeedback = Notification.Name("didReceiveNotiToShowConfirmRetryForFeedback")
 }
 
 extension String {

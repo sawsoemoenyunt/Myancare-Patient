@@ -72,6 +72,7 @@ enum EndPoints : ApiEndpoint {
     case getEhrDataByUser(String) //ehr
     case uploadEhrDataByUser(String)
     case logout(String)
+    case feebacks
     
     var path: URL
     {
@@ -178,6 +179,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"users/ehr/\(id)"))!
         case .logout(let deviceToken):
             return URL(string: String(baseURLString+"users/logout/\(deviceToken)"))!
+        case .feebacks:
+            return URL(string: String(baseURLString+"feedbacks"))!
         }
     }
 }

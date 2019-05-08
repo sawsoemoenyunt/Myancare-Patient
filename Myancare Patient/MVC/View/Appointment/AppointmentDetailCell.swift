@@ -56,6 +56,12 @@ class AppointmentDetailCell: UICollectionViewCell {
                 dFormatter.dateFormat = "dd-MMM-yyyy h:mm a"
                 let startDate = Date(milliseconds: data.slotStartTime!)
                 scheduleDataLabel.text = dFormatter.string(from: startDate)
+                
+                if (data.type?.contains("chat"))!{
+                    serviceUnitLabel.text = "3 days"
+                } else {
+                    serviceUnitLabel.text = "45min (max)"
+                }
             }
         }
     }

@@ -89,6 +89,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showRetryCompleteAlertAction), name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil)
     }
     
     func setupViews(){
@@ -297,6 +299,30 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         actionSheet.addAction(cancel)
         
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    @objc func showRetryCompleteAlertAction(){
+        let alert = UIAlertController(title: "Call Ended", message: "Would you like to retry or complete?", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Complete", style: UIAlertAction.Style.default, handler: { (action) in
+            let patientFeedbackVC = PatientFeedbackVC()
+            
+            if let patientID = self.appointmentData.patient?.object(forKey: "_id") as? String{
+                patientFeedbackVC.patientID = patientID
+            }
+            if let doctorID = self.appointmentData.doctor?.object(forKey: "_id") as? String{
+                patientFeedbackVC.doctorID = doctorID
+            }
+                
+            self.navigationController?.pushViewController(patientFeedbackVC, animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertAction.Style.default, handler: { (action) in
+//            self.checkAppointment()
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
 }
 

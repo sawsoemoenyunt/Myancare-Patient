@@ -29,8 +29,16 @@ class ServiceInvoiceCell: UICollectionViewCell {
                 
                 serviceUnitDataLabel.text = "-"
                 serviceTypeDataLabel.text = data.type?.uppercased()
-                totalAmountDataLabel.text = "\(data.total_appointment_fees!) Coin"
+                
+                let totalServiceFees = data.total_appointment_fees! - data.discount!
+                totalAmountDataLabel.text = "\(totalServiceFees) Coin"
+                discountLabel.text = "Service fees : \(data.total_appointment_fees!) Coin \nDiscount : \(data.discount!) Coin"
                 reasonDataLabel.text = data.reason
+                
+                if data.discount! > 0{
+                    promoCodeTextField.isEnabled = false
+                    applyBtn.isEnabled = false
+                }
             }
         }
     }
@@ -171,6 +179,16 @@ class ServiceInvoiceCell: UICollectionViewCell {
         return view
     }()
     
+    
+    let discountLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Discount : 0.0 Coin"
+        lbl.font = UIFont.MyanCareFont.type4
+        lbl.textColor = UIColor.red
+        lbl.numberOfLines = 0
+        return lbl
+    }()
+    
     lazy var promoCodeTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Promo Code"
@@ -199,6 +217,7 @@ class ServiceInvoiceCell: UICollectionViewCell {
         } else {
             invoiceVC?.getCoupon(couponID: promoString!)
         }
+        self.invoiceVC?.collectionView.reloadData()
     }
     
     let infoLabel: UILabel = {
@@ -233,6 +252,7 @@ class ServiceInvoiceCell: UICollectionViewCell {
         addSubview(infoLabel)
         addSubview(promoCodeTextField)
         addSubview(applyBtn)
+        addSubview(discountLabel)
         
         doctorNameLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         dateIssueLabel.anchor(doctorNameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 30, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -251,7 +271,8 @@ class ServiceInvoiceCell: UICollectionViewCell {
         
         totalAmountLabel.anchor(lineView2.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         totalAmountDataLabel.anchor(totalAmountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        lineView3.anchor(totalAmountDataLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+        discountLabel.anchor(totalAmountDataLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 10, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        lineView3.anchor(discountLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         
         reasonLabel.anchor(lineView3.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         reasonDataLabel.anchor(reasonLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)

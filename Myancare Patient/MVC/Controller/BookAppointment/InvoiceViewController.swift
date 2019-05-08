@@ -15,6 +15,7 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICo
     let cellID = "cellID"
     var discount_value = 0
     var discount_percent = 0
+    var couponCode = ""
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -58,6 +59,10 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICo
         setupViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+    
     func setupViews(){
         view.addSubview(collectionView)
         view.addSubview(confirmBtn)
@@ -82,7 +87,7 @@ class InvoiceViewController: UIViewController, NVActivityIndicatorViewable, UICo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let estimatedReasonHeight = self.view.calculateHeightofTextView(dummyText: bookAppointmentData.reason!, fontSize: 16, viewWdith: self.view.frame.width)
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height + estimatedReasonHeight + 140)
+        return CGSize(width: collectionView.frame.width, height: 600 + estimatedReasonHeight + 180)
     }
 }
 
@@ -99,9 +104,12 @@ extension InvoiceViewController{
             case .success:
                 let responseStatus = response.response?.statusCode
                 if responseStatus == 201 || responseStatus == 200{
-                    print("SUCCESS COUPON")
-                    print("\(response)")
+                    
                     if let responseData = response.result.value as? NSDictionary{
+                        
+                        if let couponCode1 = responseData.object(forKey: "coupon") as? String{
+                            bookAppointmentData.coupon = couponCode1
+                        }
                         
                         if let value1 = responseData.object(forKey: "value") as? Int{
                             self.discount_value = value1
@@ -113,10 +121,10 @@ extension InvoiceViewController{
                         
                         if self.discount_percent > 0 {
                             let discountAmount = bookAppointmentData.total_appointment_fees! * (self.discount_percent/100)
-                            bookAppointmentData.total_appointment_fees = bookAppointmentData.total_appointment_fees! - discountAmount
+                             bookAppointmentData.discount = bookAppointmentData.total_appointment_fees! - discountAmount
                             
                         } else if self.discount_value > 0{
-                            bookAppointmentData.total_appointment_fees = bookAppointmentData.total_appointment_fees! - self.discount_value
+                            bookAppointmentData.discount = self.discount_value
                         }
                         self.collectionView.reloadData()
                     }
@@ -145,7 +153,8 @@ extension InvoiceViewController{
                       "slotEndTime" : bookAppointmentData.slotEndTime!,
                       "date_of_issue_utc" : bookAppointmentData.date_of_issue_utc!,
                       "slot" : bookAppointmentData.slot!,
-                      "reason" : bookAppointmentData.reason!] as [String:Any]
+                      "reason" : bookAppointmentData.reason!,
+                      "coupon" : bookAppointmentData.coupon!] as [String:Any]
         let heads = ["Authorization" : "\(jwtTkn)"]
         
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in

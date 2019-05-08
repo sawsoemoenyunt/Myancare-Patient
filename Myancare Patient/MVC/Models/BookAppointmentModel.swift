@@ -28,8 +28,12 @@ class BookAppointmentModel {
     var slot : String? //slot
     var reason :String?
     var booking_status : BookingStatus?
+    var coupon : String?
+    var discount : Int?
     
     init() {
+        discount = 0
+        coupon = ""
         old_appointment_id = ""
         rescheduleBy = ""
         doctor = ""

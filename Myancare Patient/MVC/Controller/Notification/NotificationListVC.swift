@@ -99,7 +99,7 @@ extension NotificationListVC: UICollectionViewDelegate, UICollectionViewDataSour
             homeVC.pushToVC(vc: ChatListVC())
             UtilityClass.changeRootViewController(with: navController)
 
-        } else if (notiTypeString?.contains("appointment"))! || (notiTypeString?.contains("consultation"))!{
+        } else if (notiTypeString?.contains("appointment"))! || (notiTypeString?.contains("consultation"))! || (notiTypeString?.contains("booking"))!{
             let layout = UICollectionViewFlowLayout()
             let homeVC = HomeViewController(collectionViewLayout:layout)
             let navController = UINavigationController(rootViewController: homeVC)

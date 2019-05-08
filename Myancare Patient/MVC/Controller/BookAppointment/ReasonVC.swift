@@ -124,6 +124,12 @@ class ReasonVC: UIViewController, NVActivityIndicatorViewable {
         getServiceFees()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        bookAppointmentData.discount = 0
+        bookAppointmentData.coupon = ""
+    }
+    
     func setupViews(){
         
         view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(hidKeyBoard)))

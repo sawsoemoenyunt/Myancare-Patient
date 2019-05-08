@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class FeedbackVC: UIViewController {
+class FeedbackVC: UIViewController, NVActivityIndicatorViewable {
     
     let label: UILabel = {
         let lbl = UILabel()
@@ -54,3 +56,5 @@ class FeedbackVC: UIViewController {
         
     }
 }
+
+
