@@ -73,6 +73,10 @@ enum EndPoints : ApiEndpoint {
     case uploadEhrDataByUser(String)
     case logout(String)
     case feebacks
+    case setAppointmentAccept
+    case setAppointmentReject
+    case setAppointmentReschedule
+    case setAppointmentCancel
     
     var path: URL
     {
@@ -181,6 +185,14 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"users/logout/\(deviceToken)"))!
         case .feebacks:
             return URL(string: String(baseURLString+"feedbacks"))!
+        case .setAppointmentAccept:
+            return URL(string: String(baseURLString+"appointments/accept"))!
+        case .setAppointmentReject:
+            return URL(string: String(baseURLString+"appointments/reject"))!
+        case .setAppointmentCancel:
+            return URL(string: String(baseURLString+"appointments/cancel"))!
+        case .setAppointmentReschedule:
+            return URL(string: String(baseURLString+"appointments/reschedule"))!
         }
     }
 }

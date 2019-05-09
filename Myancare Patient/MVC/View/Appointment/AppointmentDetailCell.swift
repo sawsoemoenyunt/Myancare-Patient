@@ -60,7 +60,7 @@ class AppointmentDetailCell: UICollectionViewCell {
                 if (data.type?.contains("chat"))!{
                     serviceUnitLabel.text = "3 days"
                 } else {
-                    serviceUnitLabel.text = "45min (max)"
+                    serviceUnitLabel.text = "15min"
                 }
             }
         }

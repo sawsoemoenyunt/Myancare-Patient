@@ -11,6 +11,13 @@ import Sinch
 import Alamofire
 import NVActivityIndicatorView
 
+enum AppointmentChangeType{
+    case reject
+    case accept
+    case cancel
+    case reschedule
+}
+
 class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
@@ -123,7 +130,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         let buttonWidth = view.frame.width/3
         
         switch appointmentData.booking_status{
-        case .RESCHEDULE_BY_PATIENT, .RESCHEDULE_BY_DOCTOR:
+        case .RESCHEDULE_BY_DOCTOR:
             closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
             rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
             acceptBtn.anchor(nil, left: rejectBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
@@ -135,24 +142,49 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             acceptBtn.addTarget(self, action: #selector(accept), for: .touchUpInside)
             acceptBtn.setTitle("ACCEPT", for: .normal)
             break
+        
+        case .RESCHEDULE_BY_PATIENT:
+            closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width/2, heightConstant: 50)
+            rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width/2, heightConstant: 50)
+            collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+            
+            closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
+            rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+            rejectBtn.setTitle("CANCEL", for: .normal)
+            break
             
         case .PENDING:
-            if appointmentData.rescheduleBy != ""{
+            if (appointmentData.rescheduleBy?.lowercased().contains("patient"))!{
                 closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: view.frame.width/2, heightConstant: 50)
                 rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
                 collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+                closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
+                rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+                rejectBtn.setTitle("CANCEL", for: .normal)
+                
+            } else if (appointmentData.rescheduleBy?.lowercased().contains("doctor"))!{
+                closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                acceptBtn.anchor(nil, left: rejectBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
+                collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+                closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
+                rejectBtn.addTarget(self, action: #selector(reject), for: .touchUpInside)
+                rejectBtn.setTitle("REJECT", for: .normal)
+                acceptBtn.addTarget(self, action: #selector(accept), for: .touchUpInside)
+                acceptBtn.setTitle("ACCEPT", for: .normal)
+                
             } else {
                 closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
                 rejectBtn.anchor(nil, left: closeBtn.rightAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
                 acceptBtn.anchor(nil, left: rejectBtn.rightAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
                 collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+                closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
+                rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+                rejectBtn.setTitle("CANCEL", for: .normal)
+                acceptBtn.addTarget(self, action: #selector(reschedule), for: .touchUpInside)
+                acceptBtn.setTitle("RESCHEDULE", for: .normal)
             }
             
-            closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
-            rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-            rejectBtn.setTitle("CANCEL", for: .normal)
-            acceptBtn.addTarget(self, action: #selector(reschedule), for: .touchUpInside)
-            acceptBtn.setTitle("RESCHEDULE", for: .normal)
             break
             
         case .APPROVED:
@@ -161,8 +193,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
-            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
-//            acceptBtn.addTarget(self, action: #selector(start), for: .touchUpInside)
+//            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
+            acceptBtn.addTarget(self, action: #selector(start), for: .touchUpInside)
             acceptBtn.setTitle("START \(appointmentData.type!.uppercased())", for: .normal)
             break
         
@@ -187,10 +219,12 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     @objc func reject(){
         //reject doctor's reschedule
+        changeAppointment(.reject)
     }
     
     @objc func accept(){
         //accept doctor's reschedule
+        changeAppointment(.accept)
     }
     
     @objc func cancel(){
@@ -199,9 +233,14 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     @objc func reschedule(){
-        let rescheduleVC = RescheduleVC()
-        rescheduleVC.appointmentData = self.appointmentData
-        self.navigationController?.pushViewController(rescheduleVC, animated: true)
+        
+        if (appointmentData.type?.lowercased().contains("chat"))!{
+            self.showAlert(title: "Alert", message: "Chat cannot rescheulde!")
+        } else {
+            let rescheduleVC = RescheduleVC()
+            rescheduleVC.appointmentData = self.appointmentData
+                self.navigationController?.pushViewController(rescheduleVC, animated: true)
+        }
     }
     
     /// funcion to initialize SINCH Client variable
@@ -383,6 +422,56 @@ extension AppointmentDetailVC{
                 print("\(error)")
             }
             self.stopAnimating()
+        }
+    }
+    
+    func changeAppointment(_ type:AppointmentChangeType){
+        
+        self.startAnimating()
+        
+        var url = URL(string: "")
+        
+        switch type {
+        case .accept:
+            url = EndPoints.setAppointmentAccept.path
+        case .cancel:
+            url = EndPoints.setAppointmentCancel.path
+        default:
+            url = EndPoints.setAppointmentReject.path
+        }
+        
+        let params = ["id" : "\(appointmentData.id!)"]
+        let heads = ["Authorization" : "\(jwtTkn)"]
+        
+        Alamofire.request(url ?? "", method: .put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            self.stopAnimating()
+            
+            switch response.result{
+            case .success:
+                let responseStatus = response.response?.statusCode
+                if responseStatus == 201 || responseStatus == 200{
+                    
+                    self.showAlert(title: "Success", message: "Successfully \(type) this appointment!")
+                    
+                    if let responseDict = response.result.value as? [String:Any]{
+                        let appointment = AppointmentModel()
+                        appointment.updateModleUsingDict(responseDict)
+                        self.appointmentData = appointment
+                        
+                        //reload view
+                        self.collectionView.reloadData()
+                        self.viewDidLoad()
+                        self.viewWillAppear(true)
+                    }
+                } else {
+                    self.showAlert(title: "Error occured", message: "Failed to process your request!")
+                }
+                
+            case .failure(let error):
+                self.showAlert(title: "Error occured", message: "Failed to process your request!")
+                print("\(error)")
+            }
         }
     }
     

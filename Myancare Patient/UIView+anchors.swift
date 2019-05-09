@@ -73,29 +73,42 @@ extension UIColor {
     }
 }
 
-let imageCache = AutoPurgingImageCache()
+//let imageCache = AutoPurgingImageCache()
+let imageCache = AutoPurgingImageCache(memoryCapacity: 111_111_111, preferredMemoryUsageAfterPurge: 90_000_000)
 
 extension UIImage{
     class func loadImage(_ urlString:String, result: @escaping (UIImage) -> ()){
         if urlString != ""{
-            
-            let urlRequest = URLRequest(url: URL(string: "\(urlString)")!)
-            
-            if let cachedImage = imageCache.image(for: urlRequest, withIdentifier: "\(urlString)"){
-                result(cachedImage)
+            let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
+            Alamofire.request(url).responseImage { response in
+                if response.result.value != nil {
+                    let image = UIImage(data: response.data!, scale: 1.0)!
+                    imageCache.add(image, withIdentifier: url.absoluteString)
+                }
                 
-            } else {
-                let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
-                Alamofire.request(url).responseImage { response in
-                    
-                    if let image = response.result.value {
-                        imageCache.add(image, for: urlRequest, withIdentifier: "\(urlString)")
-                        result(image)
-                    } else {
-                        result(UIImage(named: "no-image")!)
-                    }
+                if let image = imageCache.image(withIdentifier: url.absoluteString)
+                {
+                    result(image)
                 }
             }
+//
+//            let urlRequest = URLRequest(url: URL(string: "\(urlString)")!)
+//
+//            if let cachedImage = imageCache.image(for: urlRequest, withIdentifier: "\(urlString)"){
+//                result(cachedImage)
+//
+//            } else {
+//                let url = URL(string: "\(urlString.replacingOccurrences(of: " ", with: ""))")!
+//                Alamofire.request(url).responseImage { response in
+//
+//                    if let image = response.result.value {
+//                        imageCache.add(image, for: urlRequest, withIdentifier: "\(urlString)")
+//                        result(image)
+//                    } else {
+//                        result(UIImage(named: "no-image")!)
+//                    }
+//                }
+//            }
         } else {
             result(UIImage(named: "no-image")!)
         }
