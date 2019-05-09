@@ -18,6 +18,7 @@ enum EButtonsBar
 
 class VideoCallHandlingVC: SINUIViewController, SINCallDelegate {
     
+    var totalSecond = 0
     var isMute : Bool = false
     var isDisableCamera : Bool = false
     var appointmentID : String = ""
@@ -562,6 +563,7 @@ extension VideoCallHandlingVC{
     {
         let duration = Int(Date().timeIntervalSince ((self.call?.details.establishedTime)!))
         self.setDuration(duration)
+        self.totalSecond = duration
     }
     
     //MARK: - Doctor Call Fire Socket Event
@@ -589,6 +591,7 @@ extension VideoCallHandlingVC{
     func callDidProgress(_ call: SINCall)
     {
         print("did Progress call detail ===== \(String(describing: self.call?.details))")
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventPatientCall.rawValue, callDuration: totalSecond)
         
 //        doctorCallEvent (SocketManageCallEventKeyword.callEventInitiated.rawValue)
         
@@ -603,6 +606,7 @@ extension VideoCallHandlingVC{
     /// - Parameter call: SINCall reference
     func callDidEstablish(_ call: SINCall)
     {
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventDoctorPicked.rawValue, callDuration: totalSecond)
         
         self.callinglabel.textColor = UIColor.white
         self.doctornamelabel.textColor = UIColor.white
@@ -631,6 +635,8 @@ extension VideoCallHandlingVC{
     func callDidEnd(_ call: SINCall)
     {
         print("did end call detail ===== \(String(describing: self.call?.details))")
+        
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventPatientHangs.rawValue, callDuration: totalSecond)
         
         dismiss(animated: true) {
             self.audioController().stopPlayingSoundFile()

@@ -10,6 +10,22 @@ import Foundation
 import SocketIO
 import PKHUD
 
+//MARK:- Socket Calling Keyword
+enum SocketManageCallEventKeyword:String
+{
+    
+    case callEventEnded = "call_ended"
+    
+    case callEventInitiated = "call_initiated"
+    case callEventPatientCall = "patient_calls"
+    case callEventPatientHangs = "patient_hungs_the_call"
+    
+    case callEventDoctorMiss = "doctor_missed_the_call"
+    case callEventDoctorPicked = "doctor_picks_the_call"
+    case callEventDoctorReject = "doctor_rejects_the_call"
+    case callEventDoctorHangs = "doctor_hungs_the_call"
+}
+
 class SocketManagerHandler: NSObject {
     
     //MARK:- SocketClient (Private)
@@ -104,6 +120,11 @@ class SocketManagerHandler: NSObject {
         socket?.on("appointmentTimeup", callback: { (data, socketAck) in
             NotificationCenter.default.post(name: Notification.Name.didReceiveAppointmentTimeUp, object: nil, userInfo: nil)
         })
+    }
+    
+    //send call log
+    func emitCallLog(appointmentID:String, eventType:String, callDuration:Int){
+        socket?.emit("calllog", [appointmentID, eventType, callDuration])
     }
     
     //Send message

@@ -13,6 +13,8 @@ import AudioToolbox
 
 class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
     
+    var totalSecond = 0
+    
     /// Bool Variable - Identify Mute/Unmute State
     var isMute : Bool = false
     /// Bool Variable - Identify Speaker On/Off State
@@ -301,7 +303,7 @@ extension VoiceCallHandlingVC{
         self.audioController().disableSpeaker()
         
 //        sinchSocketCallEvent (SocketManageCallEventKeyword.callEventPatientReject.rawValue, appointmentID: appointmentID)
-        
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventPatientHangs.rawValue, callDuration: totalSecond)
         self.dismiss()
     }
     
@@ -310,6 +312,7 @@ extension VoiceCallHandlingVC{
     /// - Parameter sender: HangUp Button Refrence
     @objc func hangup(_ sender: Any){
         self.call?.hangup()
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventPatientHangs.rawValue, callDuration: totalSecond)
         
         dismiss(animated: true){
             self.audioController().stopPlayingSoundFile()
@@ -370,6 +373,7 @@ extension VoiceCallHandlingVC{
     /// - Parameter call: SINCall Refrence
     func callDidProgress(_ call: SINCall){
         print("did Progress call detail ===== \(String(describing: self.call?.details))")
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventInitiated.rawValue, callDuration: totalSecond)
         
         self.setCallStatusText("ringing...")
         self.audioController().startPlayingSoundFile(path(forSound: "ringback"), loop: true)
@@ -380,6 +384,8 @@ extension VoiceCallHandlingVC{
     /// - Parameter call: SINCall Refrence
     func callDidEstablish(_ call: SINCall){
         print("did establish call detail ===== \(String(describing: self.call?.details))")
+        
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventPatientCall.rawValue, callDuration: totalSecond)
         
         self.startCallDurationTimer(with: #selector(self.onDurationTimer(_:)))
         
@@ -398,10 +404,8 @@ extension VoiceCallHandlingVC{
     func callDidEnd(_ call: SINCall){
         print("did end call detail ===== \(String(describing: self.call?.details))")
         
-        //if isDisappearing {
-        //    return
-        //}
-        //else
+        SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentID, eventType: SocketManageCallEventKeyword.callEventEnded.rawValue, callDuration: totalSecond)
+        
         if isAppearing
         {
             setShouldDeferredDismiss(true)
@@ -467,6 +471,8 @@ extension VoiceCallHandlingVC{
     // MARK: - Duration
     func setDuration(_ seconds: Int)
     {
+        totalSecond = seconds
+        
         setCallStatusText(String(format: "%02d:%02d", Int(seconds / 60), Int(seconds % 60)))
         
         callDuration = String(seconds)
