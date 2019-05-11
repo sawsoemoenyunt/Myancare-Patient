@@ -40,7 +40,7 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var topUpBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("TOP UP", for: .normal)
+        btn.setTitle("Top up".localized().uppercased(), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
@@ -83,7 +83,7 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
     
     let headerLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Transaction History"
+        lbl.text = "Transaction History".localized()
         lbl.numberOfLines = 0
         lbl.font = UIFont.mmFontBold(ofSize: 20)
         lbl.textColor = UIColor.MyanCareColor.gray
@@ -152,7 +152,7 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if paymentHistories.count == 0 {
             let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
-            notDataLabel.text = "No transaction found!"
+            notDataLabel.text = "No transaction found".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
             collectionView.backgroundView = notDataLabel

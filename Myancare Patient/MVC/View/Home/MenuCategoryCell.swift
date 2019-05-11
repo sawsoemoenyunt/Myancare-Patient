@@ -61,7 +61,7 @@ extension MenuCategoryCell: UICollectionViewDataSource, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:MenuCategoryButtonCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MenuCategoryButtonCell
-        cell.title.text = buttonList[indexPath.row].title
+        cell.title.text = buttonList[indexPath.row].title.localized()
         cell.icon.image = buttonList[indexPath.row].icon
         
         if indexPath.row == 0 {

@@ -6,26 +6,139 @@
   Copyright © 2019 Saw Soe Moe Nyunt. All rights reserved.
 */
 
-//LanguageViewController
-"Select Language" = "ဘာသာစကားရွေးချယ်ပါ";
-
-//HomeViewController
-"Welcome" = "မင်္ဂလာပါ";
-"Wallet" = "မိမိပိုက်ဆံ";
-"Appointments" = "ချိန်းဆိုချက်များ";
-"Medical Records" = "ဆေးစာအုပ်";
+//Home
+"Wallet" = "ပိုက်ဆံအိတ်";
+"Appointments" = "ချိန်းဆိုမှု";
+"Medical Records" = "ဆေးမှတ်တမ်းများ";
 "Articles" = "ဆောင်းပါးများ";
-"Reminder" = "Reminder";
+"Reminder" = "ဆေးသောက်ချိန်";
 "More" = "အခြား";
-
 "Online" = "လက်ရှိအွန်လိုင်း";
-"Favourite" = "မိမိဆရာ၀န်များ";
-"View all" = "အားလုံးကိုကြည့်ရန်";
+"View all" = "အားလုံးကိုကြည့်ရန်";
+"Favourite" = "မိမိဆရာဝန်";
+"No doctor available" = "ဆရာဝန်မရှိသေးပါ";
+"General Practitioners" = "အထွေထွေဆရာဝန်များ";
+"Specialists" = "အထူးကုဆရာဝန်များ";
 
-//More VC
-"Change Language" = "ဘာသာစကား ပြောင်းရန်";
-"Security" = "လုံခြုံရေး";
-"Feedback Us" = "မှတ်ချက်ပေးရန်";
+//Wallet
+"Top up" = "ငွေဖြည့်ရန်";
+"Transaction History" = "ငွေသွင်းငွေထုတ်မှတ်တမ်း";
+"No transaction found" = "မှတ်တမ်းမရှိပါ";
+"Consultation with Dr Paing Soe Aung" = "<doctor name> နှင့်တိုင်ပင်ဆွေးနွေး";
+"Payment Methods" = "ငွေဖြည့်ရန်နည်းလမ်းများ";
+
+//Appointments
+"Upcoming" = "လာမည့်";
+"Ongoing" = "လက်ရှိ";
+"History" = "ပြီးစီး";
+"No upcoming appointment available" = "လာမည့်ချိန်းဆိုမှုများမရှိပါ";
+"No ongoing appointment available" = "လက်ရှိချိန်းဆိုထားမှုများမရှိပါ";
+"No history appointment available" = "ပြီးဆုံးခဲ့သောချိန်းဆိုမှုများမရှိပါ";
+"Patient Name " = "ချိန်းဆိုသူအမည်";
+"Medical Record Book" = "ဆေးမှတ်တမ်း";
+"Record Book" = "ဆေးမှတ်တမ်း";
+"Cancel" = "မပြုလုပ်တော့ပါ";
+"Reschedule" = "ရက်ချိန်းရွေ့မည်";
+"Confirm Reschedule" = "ရက်ချိန်းရွေ့ခြင်းကိုအတည်ပြုရန်";
+"Pending" = "လာမည့်";
+"Approved" = "approved";
+"Start Chat" = "ချက်တင်စတင်မည်";
+"Start Voice" = "ခေါ်ဆိုရန်";
+"Start Video" = "ခေါ်ဆိုရန်";
+"Appointment Detail" = "ချိန်းဆိုမှုမှတ်တမ်း";
+"Reject" = "ပယ်ချ";
+
+
+//Medical Records
+"All Record" = "မှတ်တမ်းအားလုံး";
+"My Record" = "မိမိမှတ်တမ်း";
+
+//Articles
+"Read" = "ဖတ်မည်";
+"Bookmark" = "မှတ်ထားမည်";
+"Share" = "ဝေမျှမည်";
+"Likes" = "ကြိုက်သည်";
+"Reminder" = "သတိပေးချက်";
+
+//Medication Reminder
+"Today" = "ဒီနေ့အတွက်";
+"All" = "အားလုံး";
+"Add New Reminder" = "သတိပေးချက်အသစ်ထည့်ရန်";
+"Reason to take Drug" = "အကြောင်းအရင်း";
+"Drugs" = "သောက်ရမည့်ဆေးများ";
+"Start Day" = "စတင်မည့်နေ့";
+"End Day" = "ပြီးဆုံးမည့်နေ့";
+"Repeating Day/Hour" = "ထပ်ကြိမ်ပြုရန်";
+"Save" = "အတည်ပြုမည်";
+
+//More
+"View & Edit Profile" = "အသေးစိတ်ကြည့်ရန်နှိပ်ပါ";
+"Change Language" = "ဘာသာစကားပြောင်းရန်";
+"Security" = "လုံခြုံရေးစနစ်";
+"Feedback Us" = "အကြံပြုချက်ပေးပို့ရန်";
 "Invite your Friend" = "မိတ်ဆွေများအားဖိတ်ခေါ်ရန်";
 "Help" = "အကူညီရယူမည်";
-"About" = "ကျွနု်ပ်တို့အကြောင်း";
+"About" = "မြန်ကဲအကြောင်း";
+"Visit to our website" = "မြန်ကဲအင်တာနက်စာမျက်နှာ";
+"Policies" = "အချက်အလက်ဆိုင်ရာမူဝါဒများ";
+"Term of Use" = "အသုံးပြုခြင်းဆိုင်ရာမူဝါဒများ";
+"Privacy Policy" = "ကိုယ်ရေးအချက်အလက်မူဝါဒများ";
+"Cancellation Policy" = "ချိန်းဆိုမှုပျက်ကွက်မှုဆိုင်ရာမူဝါဒများ";
+"Absent Policy" = "to hide";
+"Payment Policy" = "ငွေပေးချေမှုရမည့်မူဝါဒများ";
+"Sign out" = "ထွက်ရန်";
+
+//General Practitioners
+"General Practitioner(GP)" = "အထွေထွေဆရာဝန်";
+"Offline" = "အော့ဖ်လိုင်း";
+"Online" = "အွန်လိုင်း";
+
+//Specialists
+"Liver" = "အသည်း";
+"Child Specialist" = "ကလေးသူငယ်အထူးကု";
+"General Practitioner(GP)" = "အထွေထွေရောဂါကုဆရာဝန် (မိသားစုဆရာဝန်)";
+"Specialization" = "အထူးပြု";
+
+//Book An Appointment
+"11 Year of Experience" = "အတွေ့အကြုံ <year> နှစ်";
+"Book Appointment" = "ရက်ချိန်းယူရန်";
+"Chat" = "ချက်တင်";
+"Voice" = "အသံ";
+"Video" = "ဗီဒီယို";
+"Reason text required!" = "အကြောင်းအရင်းဖြည့်သွင်းပါ";
+"Please fill reason for visit" = "ဆရာဝန်နှင့်ဆွေးနွေးမည့်အကြောင်းအရာကို အတိုချုံးရေးသားပေးစေလိုပါသည်။";
+"Type reason for visit" = "ဆရာဝန်နှင့်ဆွေးနွေးမည့်အကြောင်းအရာ";
+"Add photo to show Doctor" = "ဓါတ်ပုံတင်ပြရန်လိုအပ်ပါကထည့်သွင်းပါ";
+"Service Invoice" = "ဝန်ဆောင်မှုငွေတောင်းခံလွှာ";
+"Confirm" = "အတည်ပြုမည်";
+"Success" = "အောင်မြင်ပါသည်";
+"Your booking for appointment was successfully created" = "ရက်ချိန်းရယူခြင်းဆောင်ရွက်မှုအောင်မြင်ပါသည်။ ယခုချိန်းဆိုမှုအား ၁ နာရီအတွင်းဆရာဝန်ဘက်မှ အကြောင်းပြန်ကြားမည်ဖြစ်ပြီး သက်မှတ်ချိန်အတွင်းဆရာဝန်ဘက်မှအကြောင်းပြန်ခဲ့ခြင့်မရှိပါက အလိုလျောက်ပျက်ပြယ်သွားမည်ဖြစ်ပါသည်။";
+"Select medical record" = "ဆေးမှတ်တမ်းရွေးချယ်ရန်";
+"Skip" = "ဆေးမှတ်တမ်းတင်ပြရန်မရှိပါ";
+"Share Book " = "ဆေးမှတ်တမ်းရွေးချယ်ရန်";
+"View Book List" = "အသေးစိတ်ဆေးမှတ်တမ်းကြည့်ရန်";
+"Your selected medical record books successfully shared to Dr Paing Soe Aung" = "အောင်မြင်ပါသည်";
+
+//User Profile
+"Phone Number / User ID" = "ဖုန်းနံပါတ် / အသုံးပြုသူ ID";
+"Name" = "အမည်";
+"Date of Birth" = "မွေးရက်";
+"Email Address" = "အီးမေးလိပ်စာ";
+"Female " = "မ";
+"Male" = "ကျား";
+"Height" = "အမြင့်";
+"Weight" = "ကိုယ်အလေးချိန်";
+"Blood Type" = "သွေးအမျိုးအစား";
+"Edit my interest" = "မိမိစိတ်ဝင်စားသောအကြောင်းအရာများပြင်ရန်";
+"What are you interest in?" = "သင်ဘာတွေစိတ်ဝင်စားပါသလဲ?";
+"Choose one or more. You can edit this later." = "တခုထက်ပို၍ရွေးချယ်နိုင်ပါသည်";
+"Neurology" = "";
+"Ear, Nose, Throat" = "";
+
+//Common
+"Date of Issue" = "ရက်ချိန်းယူသည့်နေ့";
+"Reason for Visit" = "ဆွေးနွေးလိုသည့်အကြောင်းအရာ";
+"Service Unit" = "ဝန်ဆောင်စံနှုန်း";
+"Service Type" = "ဝန်ဆောင်မှုအမျိုးအစား";
+"Total Amount" = "စုစုပေါင်းကျသင့်ငွေ";
+"Schedule Date/Time" = "တွေ့ဆုံမည့်နေ့";

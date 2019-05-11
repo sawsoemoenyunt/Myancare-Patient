@@ -6,26 +6,138 @@
   Copyright © 2019 Saw Soe Moe Nyunt. All rights reserved.
 */
 
-//languageViewController
-"Select Language" = "SELECT LANGUAGE";
-
-//HomeViewController
-"Welcome" = "Welcome";
+//Home
 "Wallet" = "Wallet";
 "Appointments" = "Appointments";
 "Medical Records" = "Medical Records";
 "Articles" = "Articles";
 "Reminder" = "Reminder";
 "More" = "More";
-
 "Online" = "Online";
-"Favourite" = "Favourite";
 "View all" = "View all";
+"Favourite" = "Favourite";
+"No doctor available" = "No doctor available";
+"General Practitioners" = "General Practitioners";
+"Specialists" = "Specialists";
 
-//More VC
+//Wallet
+"Top up" = "Top up";
+"Transaction History" = "Transaction History";
+"No transaction found" = "No transaction found";
+"Consultation with Dr Paing Soe Aung" = "Consultation with Dr Paing Soe Aung";
+"Payment Methods" = "Payment Methods";
+
+//Appointments
+"Upcoming" = "Upcoming ";
+"Ongoing" = "Ongoing";
+"History" = "History";
+"No upcoming appointment available" = "No upcoming appointment available";
+"No ongoing appointment available" = "No ongoing appointment available";
+"No history appointment available" = "No history appointment available";
+"Patient Name " = "Patient Name ";
+"Medical Record Book" = "Medical Record Book";
+"Record Book" = "Record Book";
+"Cancel" = "Cancel";
+"Reschedule" = "Reschedule";
+"Confirm Reschedule" = "Confirm Reschedule";
+"Pending" = "Pending";
+"Approved" = "Approved";
+"Start Chat" = "Start Chat";
+"Start Voice" = "Start Voice";
+"Start Video" = "Start Video";
+"Appointment Detail" = "Appointment Detail";
+"Reject" = "Reject";
+
+//Medical Records
+"All Record" = "All Record";
+"My Record" = "My Record";
+
+//Articles
+"Read" = "Read";
+"Bookmark" = "Bookmark";
+"Share" = "Share";
+"Likes" = "Likes";
+"Reminder" = "Reminder";
+
+//Medication Reminder
+"Today" = "Today";
+"All" = "All";
+"Add New Reminder" = "Add New Reminder";
+"Reason to take Drug" = "Reason to take Drug";
+"Drugs" = "Drugs";
+"Start Day" = "Start Day";
+"End Day" = "End Day";
+"Repeating Day/Hour" = "Repeating Day/Hour";
+"Save" = "Save";
+
+//More
+"View & Edit Profile" = "View & Edit Profile";
 "Change Language" = "Change Language";
 "Security" = "Security";
 "Feedback Us" = "Feedback Us";
 "Invite your Friend" = "Invite your Friend";
 "Help" = "Help";
 "About" = "About";
+"Visit to our website" = "Visit to our website";
+"Policies" = "Policies";
+"Term of Use" = "Term of Use";
+"Privacy Policy" = "Privacy Policy";
+"Cancellation Policy" = "Cancellation Policy";
+"Absent Policy" = "Absent Policy";
+"Payment Policy" = "Payment Policy";
+"Sign out" = "Sign out";
+
+//General Practitioners
+"General Practitioner(GP)" = "General Practitioner(GP)";
+"Offline" = "Offline";
+"Online" = "Online";
+
+//Specialists
+"Liver" = "Liver";
+"Child Specialist" = "Child Specialist";
+"General Practitioner(GP)" = "General Practitioner(GP)";
+"Specialization" = "Specialization";
+
+//Book An Appointment
+"11 Year of Experience" = "11 Year of Experience";
+"Book Appointment" = "Book Appointment";
+"Chat" = "Chat";
+"Voice" = "Voice";
+"Video" = "Video";
+"Reason text required!" = "Reason text required!";
+"Please fill reason for visit" = "Please fill reason for visit";
+"Type reason for visit" = "Type reason for visit";
+"Add photo to show Doctor" = "Add photo to show Doctor";
+"Service Invoice" = "Service Invoice";
+"Confirm" = "Confirm";
+"Success" = "Success";
+"Your booking for appointment was successfully created" = "Your booking for appointment was successfully created";
+"Select medical record" = "Select medical record";
+"Skip" = "Skip";
+"Share Book " = "Share Book ";
+"View Book List" = "View Book List";
+"Your selected medical record books successfully shared to Dr Paing Soe Aung" = "Your selected medical record books successfully shared to Dr Paing Soe Aung";
+
+//User Profile
+"Phone Number / User ID" = "Phone Number / User ID";
+"Name" = "Name";
+"Date of Birth" = "Date of Birth";
+"Email Address" = "Email Address";
+"Female " = "Female ";
+"Male" = "Male";
+"Height" = "Height";
+"Weight" = "Weight";
+"Blood Type" = "Blood Type";
+"Edit my interest" = "Edit my interest";
+"What are you interest in?" = "What are you interest in?";
+"Choose one or more. You can edit this later." = "Choose one or more. You can edit this later.";
+"Neurology" = "Neurology";
+"Ear, Nose, Throat" = "Ear, Nose, Throat";
+
+//Common
+"Date of Issue" = "Date of Issue";
+"Reason for Visit" = "Reason for Visit";
+"Service Unit" = "Service Unit";
+"Service Type" = "Service Type";
+"Total Amount" = "Total Amount";
+"Schedule Date/Time" = "Schedule Date/Time";

@@ -33,7 +33,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
     var appointmentType = AppointmentType.upcoming
     
     lazy var listTypeSegment:UISegmentedControl = {
-        let sg = UISegmentedControl(items: ["Upcoming","Ongoing", "History"])
+        let sg = UISegmentedControl(items: ["Upcoming".localized(),"Ongoing".localized(), "History".localized()])
         sg.tintColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1)
         sg.backgroundColor = .clear
         sg.selectedSegmentIndex = 0
@@ -42,7 +42,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
         sg.layer.borderWidth = 2
         sg.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         sg.layer.borderColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1).cgColor
-        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
+        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font:UIFont.MyanCareFont.type6], for: .selected)
         sg.addTarget(self, action: #selector(handleSegment), for: .valueChanged)
         return sg
     }()
@@ -132,9 +132,10 @@ extension AppointmentListViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if appointmentList.count == 0 {
             let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
-            notDataLabel.text = "No \(appointmentType) appointment available!"
+            notDataLabel.text = "No \(appointmentType) appointment available".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
+            notDataLabel.font = UIFont.MyanCareFont.type4
             appointmentListCollectionView.backgroundView = notDataLabel
         }else{
             appointmentListCollectionView.backgroundView = nil

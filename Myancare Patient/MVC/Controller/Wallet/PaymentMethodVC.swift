@@ -39,7 +39,7 @@ class PaymentMethodVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     func setupViews(){
-        self.title = "Payment Methods"
+        self.title = "Payment Methods".localized()
         view.backgroundColor = .white
         
         view.addSubview(collectionView)
