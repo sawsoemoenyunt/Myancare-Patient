@@ -161,6 +161,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
             notDataLabel.text = "No doctor available".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
+            notDataLabel.font = UIFont.MyanCareFont.type6
             collectionView.backgroundView = notDataLabel
         }else{
             collectionView.backgroundView = nil
@@ -181,8 +182,10 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
             }
         }
         
-        if doctors.count - 1 == indexPath.row && isPaging{
-            self.getAllDoctors(.all)
+        if doctorType == .all{
+            if doctors.count - 1 == indexPath.row && isPaging{
+                self.getAllDoctors(.all)
+            }
         }
         
         return cell
@@ -204,7 +207,9 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
 extension DoctorListViewController{
     func getAllDoctors(_ docType:DoctorType){
         
-        startAnimating()
+        if doctors.count == 0{
+            startAnimating()
+        }
         
         let skip = doctors.count
         let limit = 30
