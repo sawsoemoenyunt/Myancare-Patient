@@ -39,11 +39,12 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     lazy var signOutBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SIGN OUT", for: .normal)
+        btn.setTitle("Sign out".localized(), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor(red:0.94, green:0.36, blue:0.19, alpha:1) //orange
         btn.layer.cornerRadius = 23
         btn.clipsToBounds = true
+        btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.addTarget(self, action: #selector(showLogoutOption), for: .touchUpInside)
         return btn
     }()

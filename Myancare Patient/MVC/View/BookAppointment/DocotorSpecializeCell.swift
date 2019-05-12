@@ -16,10 +16,13 @@ class SpecializationCell: UICollectionViewCell {
     var specData:SpecializationModel?{
         didSet{
             if let data = specData{
-                label.text = data.name!
+                label.text = data.name!.localized()
                 
-                UIImage.loadImage(data.image!) { (image) in
-                    self.icon.image = image
+                let dispatchQueue = DispatchQueue.global(qos: .background)
+                dispatchQueue.async {
+                    UIImage.loadImage(data.image!) { (image) in
+                        self.icon.image = image
+                    }
                 }
             }
         }

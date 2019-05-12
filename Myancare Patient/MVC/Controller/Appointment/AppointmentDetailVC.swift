@@ -39,7 +39,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var closeBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("CLOSE", for: .normal)
+        btn.setTitle("Close".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.lightGray
@@ -49,7 +49,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var closeBtn2: UIButton = {
         let btn = UIButton()
-        btn.setTitle("CLOSE", for: .normal)
+        btn.setTitle("Close".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.lightGray
@@ -138,9 +138,9 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
             rejectBtn.addTarget(self, action: #selector(reject), for: .touchUpInside)
-            rejectBtn.setTitle("REJECT", for: .normal)
+            rejectBtn.setTitle("Reject".localized(), for: .normal)
             acceptBtn.addTarget(self, action: #selector(accept), for: .touchUpInside)
-            acceptBtn.setTitle("ACCEPT", for: .normal)
+            acceptBtn.setTitle("Accept".localized(), for: .normal)
             break
         
         case .RESCHEDULE_BY_PATIENT:
@@ -150,7 +150,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
             rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-            rejectBtn.setTitle("CANCEL", for: .normal)
+            rejectBtn.setTitle("Cancel".localized(), for: .normal)
             break
             
         case .PENDING:
@@ -160,7 +160,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
                 collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
                 closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
                 rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-                rejectBtn.setTitle("CANCEL", for: .normal)
+                rejectBtn.setTitle("Cancel".localized(), for: .normal)
                 
             } else if (appointmentData.rescheduleBy?.lowercased().contains("doctor"))!{
                 closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
@@ -169,9 +169,9 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
                 collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
                 closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
                 rejectBtn.addTarget(self, action: #selector(reject), for: .touchUpInside)
-                rejectBtn.setTitle("REJECT", for: .normal)
+                rejectBtn.setTitle("Reject".localized(), for: .normal)
                 acceptBtn.addTarget(self, action: #selector(accept), for: .touchUpInside)
-                acceptBtn.setTitle("ACCEPT", for: .normal)
+                acceptBtn.setTitle("Accept".localized(), for: .normal)
                 
             } else {
                 closeBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth, heightConstant: 50)
@@ -180,9 +180,9 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
                 collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: closeBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 0)
                 closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
                 rejectBtn.addTarget(self, action: #selector(cancel), for: .touchUpInside)
-                rejectBtn.setTitle("CANCEL", for: .normal)
+                rejectBtn.setTitle("Cancel".localized(), for: .normal)
                 acceptBtn.addTarget(self, action: #selector(reschedule), for: .touchUpInside)
-                acceptBtn.setTitle("RESCHEDULE", for: .normal)
+                acceptBtn.setTitle("Reschedule".localized(), for: .normal)
             }
             
             break
@@ -195,7 +195,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             closeBtn.addTarget(self, action: #selector(closeBtnClick), for: .touchUpInside)
 //            acceptBtn.addTarget(self, action: #selector(checkAppointment), for: .touchUpInside)
             acceptBtn.addTarget(self, action: #selector(start), for: .touchUpInside)
-            acceptBtn.setTitle("START \(appointmentData.type!.uppercased())", for: .normal)
+            acceptBtn.setTitle("Start \(appointmentData.type!.capitalized.localized())", for: .normal)
             break
         
         case .COMPLETED:

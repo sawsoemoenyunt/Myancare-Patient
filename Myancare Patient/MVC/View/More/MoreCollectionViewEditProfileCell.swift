@@ -21,8 +21,8 @@ class MoreCollectionViewEditProfileCell: UICollectionViewCell {
     
     let label: UILabel = {
         let lbl = UILabel()
-        lbl.text = "View & Edit Profile"
-        lbl.font = UIFont.systemFont(ofSize: 12)
+        lbl.text = "View & Edit Profile".localized()
+        lbl.font = UIFont.MyanCareFont.type4
         lbl.textColor = UIColor.gray
         return lbl
     }()

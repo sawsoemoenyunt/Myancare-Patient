@@ -20,8 +20,11 @@ class ArticleCell: UICollectionViewCell {
                     introlabel.text = htmlString.string
                 }
                 
-                UIImage.loadImage(data.image_url!) { (image) in
-                    self.articleImage.image = image
+                let dispatchQueue = DispatchQueue.main
+                dispatchQueue.async {
+                    UIImage.loadImage(data.image_url!) { (image) in
+                        self.articleImage.image = image
+                    }
                 }
             }
         }
@@ -56,7 +59,7 @@ class ArticleCell: UICollectionViewCell {
     
     lazy var readBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("READ", for: .normal)
+        btn.setTitle("Read".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button1
 //        btn.setTitleColor(UIColor.MyanCareColor.curiousBlue, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.curiousBlue
@@ -75,7 +78,7 @@ class ArticleCell: UICollectionViewCell {
     
     lazy var bookMarkBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("BOOKMARK", for: .normal)
+        btn.setTitle("Bookmark".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button1
 //        btn.setTitleColor(UIColor.MyanCareColor.curiousBlue, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.curiousBlue

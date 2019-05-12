@@ -119,7 +119,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let patientLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Patient Name : "
+        lbl.text = "Patient Name ".localized()+": "
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
@@ -136,7 +136,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let dateLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Date of Issue : "
+        lbl.text = "Date of Issue".localized()+" : "
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
@@ -152,7 +152,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let reasonLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Reason for Visit : "
+        lbl.text = "Reason for Visit".localized()+" : "
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
@@ -181,7 +181,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let serviceLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Service Unit"
+        lbl.text = "Service Unit".localized()
         lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
@@ -197,7 +197,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let serviceTLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Service Type"
+        lbl.text = "Service Type".localized()
         lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.MyanCareColor.gray
         return lbl
@@ -219,7 +219,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     private let totalAmountLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Total Amount"
+        lbl.text = "Total Amount".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.gray
         lbl.textAlignment = .center
@@ -261,7 +261,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     lazy var medicalRecordBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("MEDICAL RECORD BOOK", for: .normal)
+        btn.setTitle("Medical Record Book".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.setTitleColor(UIColor.MyanCareColor.green, for: .normal)
         btn.backgroundColor = UIColor.white

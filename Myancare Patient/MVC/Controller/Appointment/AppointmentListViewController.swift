@@ -93,7 +93,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Appointments"
+        self.title = "Appointments".localized()
         view.backgroundColor = .white
         appointmentListCollectionView.register(AppointmentListCell.self, forCellWithReuseIdentifier: cellID)
         setupViews()

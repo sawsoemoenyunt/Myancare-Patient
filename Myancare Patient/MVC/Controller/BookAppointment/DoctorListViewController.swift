@@ -36,6 +36,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     
     @objc func refreshDoctorData() {
         docSearch.isSearch = false
+        isPaging = true
         doctors.removeAll()
         self.getAllDoctors(doctorType)
         self.refreshControl1.endRefreshing()
@@ -97,7 +98,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Doctors"
+        self.title = "Doctors".localized()
         self.view.backgroundColor = .white
         let searchButton = UIBarButtonItem(image: UIImage.init(named: "icons8-search"), style: .plain, target: self, action: #selector(searchButtonClick))
         self.navigationItem.rightBarButtonItems = []
@@ -116,16 +117,16 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         //change title
         switch doctorType {
         case .recommand:
-            self.title = "Online"
+            self.title = "Online".localized()
             break
         case .favourite:
-            self.title = "Favourite"
+            self.title = "Favourite".localized()
             break
         case .specialize:
-            self.title = "\(specializeName)"
+            self.title = "\(specializeName)".localized()
             break
         default:
-            self.title = "General Practitioners"
+            self.title = "General Practitioners".localized()
             self.navigationItem.rightBarButtonItems = [searchButton]
             self.filterBtn.isHidden = false
             break
@@ -157,7 +158,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if doctors.count == 0 {
             let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
-            notDataLabel.text = "No doctor available!"
+            notDataLabel.text = "No doctor available".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
             collectionView.backgroundView = notDataLabel
@@ -171,6 +172,17 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DoctorListCell
         if doctors.count > 0 {
             cell.docData = doctors[indexPath.row]
+            
+            let dispatchQueue = DispatchQueue.main
+            dispatchQueue.async {
+                UIImage.loadImage(self.doctors[indexPath.row].image_url!) { (image) in
+                    cell.profileImage.image = image
+                }
+            }
+        }
+        
+        if doctors.count - 1 == indexPath.row && isPaging{
+            self.getAllDoctors(.all)
         }
         
         return cell
@@ -194,9 +206,10 @@ extension DoctorListViewController{
         
         startAnimating()
         
-//        let skip = doctors.count != 0 ? doctors.count : 0
-//        let limit = 20
-        var url = EndPoints.getDoctors.path
+        let skip = doctors.count
+        let limit = 30
+        
+        var url = EndPoints.getDoctors(limit,skip).path
         
         switch docType {
         case .recommand:
@@ -214,7 +227,7 @@ extension DoctorListViewController{
         case .recent:
             url = EndPoints.getRecentDoctors.path
         default:
-            url = EndPoints.getDoctors.path
+            url = EndPoints.getDoctors(limit,skip).path
             break
         }
         
@@ -244,6 +257,9 @@ extension DoctorListViewController{
                                 
                                 self.doctors.append(docListModel)
                             }
+                        }
+                        if responseDataArr.count == 0{
+                            self.isPaging = false
                         }
                         self.collectionView.reloadData()
                     }

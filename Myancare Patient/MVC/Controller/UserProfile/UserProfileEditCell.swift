@@ -31,7 +31,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let phoneIDlabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Phone Number / User ID"
+        lbl.text = "Phone Number / User ID".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -39,9 +39,10 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var phoneUserIDTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Phone Number / User ID"
+        tf.placeholder = "Phone Number / User ID".localized()
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
+        tf.font = UIFont.MyanCareFont.type2
         tf.delegate = self
         tf.isEnabled = false
         return tf
@@ -49,7 +50,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let namelabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Name"
+        lbl.text = "Name".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -57,7 +58,8 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var nameTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Name"
+        tf.placeholder = "Name".localized()
+        tf.font = UIFont.MyanCareFont.type2
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
@@ -66,7 +68,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let doblabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Date of Birth"
+        lbl.text = "Date of Birth".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -74,7 +76,8 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var dobTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Date of Birth"
+        tf.placeholder = "Date of Birth".localized()
+        tf.font = UIFont.MyanCareFont.type2
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
@@ -99,7 +102,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let emaillabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Email Address"
+        lbl.text = "Email Address".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -107,7 +110,8 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var emailTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Email Address"
+        tf.placeholder = "Email Address".localized()
+        tf.font = UIFont.MyanCareFont.type2
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .next
         tf.delegate = self
@@ -128,7 +132,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let femalelabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Female"
+        lbl.text = "Female".localized()
         lbl.font = UIFont.mmFontRegular(ofSize: 14)
         lbl.textAlignment = .center
         return lbl
@@ -155,7 +159,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let malelabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Male"
+        lbl.text = "Male".localized()
         lbl.font = UIFont.mmFontRegular(ofSize: 14)
         lbl.textAlignment = .center
         return lbl
@@ -170,7 +174,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let heightlabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Height"
+        lbl.text = "Height".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -183,12 +187,13 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
         tf.returnKeyType = .next
         tf.delegate = self
         tf.keyboardType = .numberPad
+        tf.font = UIFont.MyanCareFont.type2
         return tf
     }()
     
     let weightlabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Weight"
+        lbl.text = "Weight".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -206,7 +211,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     let bloodlabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Blood Type"
+        lbl.text = "Blood Type".localized()
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.MyanCareColor.darkGray
         return lbl
@@ -214,7 +219,7 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     
     lazy var bloodtypeTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Blood Type"
+        tf.placeholder = "Blood Type".localized()
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
         tf.delegate = self

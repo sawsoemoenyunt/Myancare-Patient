@@ -47,7 +47,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     lazy var likeBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle(" 10 Likes", for: .normal)
+        btn.setTitle(" 10"+"Likes".localized(), for: .normal)
         btn.setImage(UIImage(named: "icons8-like")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
         btn.setTitleColor(UIColor.MyanCareColor.darkGray, for: .normal)
@@ -60,7 +60,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     lazy var bookmarkBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle(" Bookmark", for: .normal)
+        btn.setTitle(" "+"Bookmark".localized(), for: .normal)
         btn.setImage(UIImage(named: "icons8-bookmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
         btn.tintColor = UIColor.MyanCareColor.darkGray
@@ -73,7 +73,7 @@ class ArticleDetailCell: UICollectionViewCell {
     
     lazy var shareBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle(" Share", for: .normal)
+        btn.setTitle(" "+"Share".localized(), for: .normal)
         btn.setImage(UIImage(named: "icons8-share")?.withRenderingMode(.alwaysTemplate), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 14)
         btn.tintColor = UIColor.MyanCareColor.darkGray

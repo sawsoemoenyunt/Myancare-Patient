@@ -101,7 +101,7 @@ class WalletVC: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Wallet"
+        self.title = "Wallet".localized()
         view.backgroundColor = .white
         collectionView.register(WalletCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.refreshControl = refreshControl1
@@ -155,6 +155,7 @@ extension WalletVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             notDataLabel.text = "No transaction found".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
+            notDataLabel.font = UIFont.MyanCareFont.type6
             collectionView.backgroundView = notDataLabel
         }else{
             collectionView.backgroundView = UILabel()

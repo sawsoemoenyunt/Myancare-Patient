@@ -119,8 +119,12 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         cell.textView.text = message
         
         let senderType = chatRecords[indexPath.row].userRole?.lowercased() == "patient" ? true : false
-        UIImage.loadImage(chatRecords[indexPath.row].userImage!) { (image) in
-            cell.profileImageView.image = image
+        
+        let dispatchQueue = DispatchQueue.main
+        dispatchQueue.async {
+            UIImage.loadImage(self.chatRecords[indexPath.row].userImage!) { (image) in
+                cell.profileImageView.image = image
+            }
         }
         
         if chatRecords[indexPath.row].image_type == 0{
@@ -132,8 +136,13 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
             cell.imageView.isHidden = false
             cell.textView.isHidden = true
             
-            UIImage.loadImage(chatRecords[indexPath.row].image_url!) { (image) in
-                cell.imageView.image = image
+//            UIImage.loadImage(chatRecords[indexPath.row].image_url!) { (image) in
+//                cell.imageView.image = image
+//            }
+            dispatchQueue.async {
+                UIImage.loadImage(self.chatRecords[indexPath.row].image_url!) { (image) in
+                    cell.imageView.image = image
+                }
             }
         }
         
@@ -450,8 +459,14 @@ class ChatImageZoomVC: UIViewController, UIScrollViewDelegate {
     }
     
     func loadImage(){
-        UIImage.loadImage(imageUrl) { (image) in
-            self.imageView.image = image
+//        UIImage.loadImage(imageUrl) { (image) in
+//            self.imageView.image = image
+//        }
+        let dispatchQueue = DispatchQueue.global(qos: .background)
+        dispatchQueue.async {
+            UIImage.loadImage(self.imageUrl) { (image) in
+                self.imageView.image = image
+            }
         }
     }
     

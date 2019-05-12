@@ -81,7 +81,7 @@ class NotiCell: UICollectionViewCell {
         lbl.text = "Your next appointment with Dr.Henry is in 5 mins"
         lbl.font = UIFont.MyanCareFont.type3
         lbl.textColor = UIColor.black
-        lbl.numberOfLines = 3
+        lbl.numberOfLines = 0
         return lbl
     }()
     

@@ -86,6 +86,18 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         getDoctors(.favourite)
         getAppointments()
         
+//        let semephore = DispatchSemaphore(value: 0)
+//        let dispatchQueue = DispatchQueue.global(qos: .background)
+//        dispatchQueue.sync {
+//            getDoctors(.recommand)
+//            semephore.wait()
+//
+//            getDoctors(.favourite)
+//            semephore.wait()
+//
+//            getAppointments()
+//            semephore.wait()
+//        }
     }
     
     func setupNavBarItems(){
@@ -142,6 +154,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         case 2:
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionViewCellID_Category, for: indexPath) as! MenuCategoryCell
             categoryCell.homeViewController = self
+            categoryCell.collectionView.reloadData()
             cell = categoryCell
             break
         case 3:
@@ -189,7 +202,7 @@ extension HomeViewController{
         
         //        let skip = doctors.count != 0 ? doctors.count : 0
         //        let limit = 20
-        var url = EndPoints.getDoctors.path
+        var url = EndPoints.getDoctors(0,10).path
         
         switch docType {
         case .recommand:

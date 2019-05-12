@@ -139,20 +139,12 @@ class MenuOnlineButtonCell: UICollectionViewCell {
         didSet{
             if let data = docData{
                 self.title.text = data.name!
-                self.loadImage(data.image_url!)
-            }
-        }
-    }
-    
-    func loadImage(_ urlString:String){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.icon.image = image
+                
+                DispatchQueue.main.async{
+                    UIImage.loadImage(data.image_url!) { (image) in
+                        self.icon.image = image
+                    }
+                }
             }
         }
     }

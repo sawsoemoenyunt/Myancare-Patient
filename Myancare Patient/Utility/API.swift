@@ -31,7 +31,7 @@ enum EndPoints : ApiEndpoint {
     case patientUpdate
     case updateDeviceToken
     case get_transactions(Int,Int)
-    case getDoctors
+    case getDoctors(Int,Int)
     case getRecommandDoctors
     case getFavoriteDoctors
     case getRecentDoctors
@@ -101,8 +101,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"patients/update_device"))!
         case .get_transactions(let skip, let limit):
             return URL(string: String(baseURLString+"transactions/patient?skip=\(skip)&limit=\(limit)"))!
-        case .getDoctors:
-            return URL(string: String(baseURLString+"doctors"))!
+        case .getDoctors(let limit, let skip):
+            return URL(string: String(baseURLString+"doctors?limit=\(limit)&skip=\(skip)"))!
         case .getPaymentMethods:
             return URL(string: String(baseURLString+"exchange-rates"))!
         case .getExchangeRatesByPaymentGateway(let gateway):

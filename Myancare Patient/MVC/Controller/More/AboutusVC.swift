@@ -17,8 +17,8 @@ class AboutusVC: UITableViewController {
     
     let cellID = "cellID"
     
-    let sectionAndList = [AboutUsList.init(title: "About Us", subTitles: ["Visit to our website"]),
-                          AboutUsList.init(title: "Policies", subTitles: ["Term of Use", "Privacy Policy", "Cancellation Policy", "Absent Policy", "Payment Policy"])]
+    let sectionAndList = [AboutUsList.init(title: "About", subTitles: ["Visit to our website"]),
+                          AboutUsList.init(title: "Policies", subTitles: ["Term of Use", "Privacy Policy", "Cancellation Policy", "Payment Policy"])]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class AboutusVC: UITableViewController {
     }
     
     func setupViews(){
-        self.title = "About"
+        self.title = "About".localized()
         self.view.backgroundColor = UIColor.white
         
         tableView = UITableView(frame: self.tableView.frame, style: .grouped)
@@ -42,12 +42,12 @@ class AboutusVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionAndList[section].title
+        return sectionAndList[section].title.localized()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        cell.textLabel?.text = sectionAndList[indexPath.section].subTitles[indexPath.row]
+        cell.textLabel?.text = sectionAndList[indexPath.section].subTitles[indexPath.row].localized()
         cell.selectionStyle = .none
         return cell
     }

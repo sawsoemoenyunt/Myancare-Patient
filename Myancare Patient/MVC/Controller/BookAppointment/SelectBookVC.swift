@@ -33,7 +33,7 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
     
     lazy var shareBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SHARE", for: .normal)
+        btn.setTitle("Share".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
@@ -55,7 +55,7 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
     
     func setupViews(){
         view.backgroundColor = .white
-        self.title = "Share Book"
+        self.title = "Share Book".localized()
         
         view.addSubview(collectionView)
         view.addSubview(shareBtn)
@@ -63,7 +63,7 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
         shareBtn.anchor(nil, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 4, rightConstant: 20, widthConstant: 0, heightConstant: 50)
         collectionView.anchor(v.topAnchor, left: v.leftAnchor, bottom: shareBtn.topAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View Book List", style: .plain, target: self, action: #selector(viewBookList))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View Book List".localized(), style: .plain, target: self, action: #selector(viewBookList))
         
         collectionView.register(MedicalRecordSelectCell.self, forCellWithReuseIdentifier: cellID)
     }

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import Localize_Swift
 
 class DoctorDetailProfileCell: UICollectionViewCell {
     
@@ -20,7 +21,13 @@ class DoctorDetailProfileCell: UICollectionViewCell {
             if let data = docData{
                 nameLabel.text = data.name!
                 specializeLabel.text = data.specialization!
-                experienceLabel.text = "\(data.experience!) Year of Experience"
+                
+                if Localize.currentLanguage() == "en"{
+                    experienceLabel.text = "\(data.experience!) Year of Experience"
+                } else {
+                    experienceLabel.text = "အတွေ့အကြုံ \(data.experience!) နှစ်"
+                }
+                
                 UIImage.loadImage(data.image_url!) { (image) in
                     self.profileImage.image = image
                 }
@@ -145,11 +152,12 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     lazy var bookBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("BOOK APPOINTMENT", for: .normal)
+        btn.setTitle("Book Appointment".localized(), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor(red:0.54, green:0.77, blue:0.45, alpha:1) //green
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
+        btn.titleLabel?.font = UIFont.MyanCareFont.type2
         btn.addTarget(self, action: #selector(bookBtnClick), for: .touchUpInside)
         return btn
     }()
@@ -169,10 +177,11 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     lazy var voiceBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("Voice", for: .normal)
+        btn.setTitle("Voice".localized(), for: .normal)
         btn.setImage(#imageLiteral(resourceName: "icons8-phone").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.flamingo
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.layer.cornerRadius = 25 //height 50
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(bookVoiceAppointment), for: .touchUpInside)
@@ -194,11 +203,12 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     lazy var videoBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("Video", for: .normal)
+        btn.setTitle("Video".localized(), for: .normal)
         btn.setImage(#imageLiteral(resourceName: "icons8-video_call").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.mantis //orange
         btn.layer.cornerRadius = 25 //height 50
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(bookVideoAppointment), for: .touchUpInside)
         return btn
@@ -219,11 +229,12 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     lazy var chatBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("Chat", for: .normal)
+        btn.setTitle("Chat".localized(), for: .normal)
         btn.setImage(#imageLiteral(resourceName: "icons8-chat").withRenderingMode(.alwaysTemplate), for: .normal)
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.lightSeaGreen //green
         btn.layer.cornerRadius = 25 //height 50
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(chatBtnClick), for: .touchUpInside)
         return btn

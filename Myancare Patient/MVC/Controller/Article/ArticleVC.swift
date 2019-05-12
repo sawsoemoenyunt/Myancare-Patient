@@ -49,7 +49,7 @@ class ArticleVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     func setupViews(){
-        self.title = "Articles"
+        self.title = "Articles".localized()
         view.backgroundColor = UIColor.white
         
         articleCollectionView.register(ArticleCell.self, forCellWithReuseIdentifier: cellID)

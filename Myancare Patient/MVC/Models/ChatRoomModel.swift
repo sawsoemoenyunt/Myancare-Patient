@@ -68,9 +68,10 @@ class ChatRoomModel {
             if let date = message.object(forKey: "createdAt") as? String{
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                if let createdDate = formatter.date(from: date){
-                    timeAgo = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
-                }
+//                if let createdDate = formatter.date(from: date){
+//                    timeAgo = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
+//                }
+                timeAgo = UtilityClass.getDateTimeStringFromUTC(date)
                 createdAt = date
             }
         }

@@ -95,7 +95,10 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ChatListCell
-        cell.roomData = roomList[indexPath.row]
+        
+        if roomList.count > 0{
+            cell.roomData = roomList[indexPath.row]
+        }
         
         if isPaging && indexPath.row == roomList.count - 1 {
             self.getRooms()

@@ -25,4 +25,5 @@ target 'Myancare Patient' do
   pod 'Socket.IO-Client-Swift'
   pod 'SinchRTC'
   pod 'EMAlertController'
+  pod 'PINRemoteImage'
 end

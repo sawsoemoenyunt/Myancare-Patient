@@ -45,7 +45,7 @@ class ShareBookVC: UIViewController{
     
     lazy var chooseBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SELECT MEDICAL RECORD", for: .normal)
+        btn.setTitle("Select medical record".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.green
@@ -63,7 +63,7 @@ class ShareBookVC: UIViewController{
     
     lazy var skipBtn: UIButton = {
         let btn = UIButton()
-        btn.setTitle("SKIP", for: .normal)
+        btn.setTitle("Skip".localized(), for: .normal)
         btn.titleLabel?.font = UIFont.MyanCareFont.button2
         btn.tintColor = .white
         btn.backgroundColor = UIColor.MyanCareColor.yellow

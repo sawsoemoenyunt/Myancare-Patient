@@ -17,26 +17,17 @@ class DoctorListCell: UICollectionViewCell{
             if let data = docData{
                 nameLabel.text = data.name!
                 specializeLabel.text = data.specialization!
-                addressLabel.text = data.online_status == true ? "Online" : "Offline"
+                addressLabel.text = data.online_status == true ? "Online".localized() : "Offline".localized()
                 statusView.backgroundColor = data.online_status == true ? UIColor.MyanCareColor.green : UIColor.MyanCareColor.darkGray
                 
                 //load image
-                UIImage.loadImage(data.image_url!) { (image) in
-                    self.profileImage.image = image
-                }
-            }
-        }
-    }
-    
-    func loadImage(_ urlString:String){
-        let url = URL(string: "\(urlString)")!
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-                self.profileImage.image = image
+
+//                let dispatchQueue = DispatchQueue.main
+//                dispatchQueue.async {
+//                    UIImage.loadImage(data.image_url!) { (image) in
+//                        self.profileImage.image = image
+//                    }
+//                }
             }
         }
     }

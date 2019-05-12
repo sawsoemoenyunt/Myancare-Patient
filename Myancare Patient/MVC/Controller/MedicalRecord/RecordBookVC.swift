@@ -44,7 +44,7 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     lazy var typeSegment:UISegmentedControl = {
-        let sg = UISegmentedControl(items: ["All Record","My Record"])
+        let sg = UISegmentedControl(items: ["All Record".localized(),"My Record".localized()])
         //        sg.setImage( #imageLiteral(resourceName: "icons8-magazine"), forSegmentAt: 0)
         //        sg.setImage( #imageLiteral(resourceName: "icons8-more_filled"), forSegmentAt: 1)
         //        sg.setImage( #imageLiteral(resourceName: "icons8-appointment_reminders"), forSegmentAt: 2)
@@ -56,7 +56,7 @@ class RecordBookVC: UIViewController, NVActivityIndicatorViewable {
         sg.layer.borderWidth = 2
         sg.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         sg.layer.borderColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1).cgColor
-        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
+        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font:UIFont.MyanCareFont.type6], for: .selected)
         sg.addTarget(self, action: #selector(handleSegment), for: .valueChanged)
         return sg
     }()
