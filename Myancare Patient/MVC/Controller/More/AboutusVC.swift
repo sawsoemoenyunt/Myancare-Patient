@@ -42,13 +42,14 @@ class AboutusVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionAndList[section].title.localized()
+        return sectionAndList[section].title
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel?.text = sectionAndList[indexPath.section].subTitles[indexPath.row].localized()
         cell.selectionStyle = .none
+        cell.textLabel?.font = UIFont.MyanCareFont.type2
         return cell
     }
     

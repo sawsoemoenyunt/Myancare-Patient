@@ -163,10 +163,10 @@ extension InvoiceViewController{
             case .success:
                 let responseStatus = response.response?.statusCode
                 if responseStatus == 201 || responseStatus == 200{
-                    print("SUccess booking")
+                    print("Success booking")
                     if let responseDict = response.result.value as? NSDictionary{
                         if let recordBookID = responseDict.object(forKey: "recordBook") as? String{
-                            let alert = UIAlertController(title: "Success", message: "Your booking for appointment was successfully created".localized(), preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Success", message: "Your booking for appointment was successfully created", preferredStyle: UIAlertController.Style.alert)
                             // add an action (button)
                             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                                 self.uploadSheets(recordBookID)

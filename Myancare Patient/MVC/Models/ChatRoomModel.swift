@@ -19,6 +19,7 @@ class ChatRoomModel {
     var last_messageType : Int?
     var createdAt : String?
     var timeAgo : String?
+    var active_room : Int?
     
     init() {
         id = ""
@@ -30,9 +31,14 @@ class ChatRoomModel {
         last_messageType = 1
         createdAt = ""
         timeAgo = ""
+        active_room = 0
     }
     
     func updateModelUsingDict(_ dict:[String:Any]){
+        
+        if let activeRoom = dict["active_room"] as? Int{
+            active_room = activeRoom
+        }
     
         if let id1 = dict["id"] as? String{
             id = id1

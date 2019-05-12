@@ -24,6 +24,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     var imageKey = ""
     var imageUrl = ""
     var isFirstTimeLoad = true
+    var isActiveRoom = false
     
     let reminderView: UIView = {
         let view = UIView()
@@ -73,6 +74,38 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         view.backgroundColor = .gray
         return view
     }()
+    
+    let expireView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor.MyanCareColor.green
+        return view
+    }()
+    
+    let expireLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "သက်တမ်းကုန်ဆုံးသွားပါပြီ"
+        lbl.font = UIFont.MyanCareFont.type2
+        lbl.textColor = UIColor.white
+        return lbl
+    }()
+    
+    lazy var renewBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("သက်တမ်းတိုးရန်", for: .normal)
+        btn.setTitleColor(UIColor.red, for: .normal)
+        btn.backgroundColor = UIColor.white
+        btn.titleLabel?.font = UIFont.MyanCareFont.type4
+        btn.layer.cornerRadius = 15 //30
+        btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(renewBtnClick), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc func renewBtnClick(){
+        let docDetailVc = DoctorDetailVC(collectionViewLayout:UICollectionViewFlowLayout())
+        docDetailVc.doctorID = docID
+        self.navigationController?.pushViewController(docDetailVc, animated: true)
+    }
     
     lazy var refreshControl1 : UIRefreshControl = {
         let  rc = UIRefreshControl()
@@ -230,6 +263,25 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         //add button on navigation bar
         let newBackButton = UIBarButtonItem(title: "ရက်ချိန်းယူရန်", style: .plain, target: self, action: #selector(handleBookBtnClick))
         self.navigationItem.rightBarButtonItem = newBackButton
+        
+        if !isActiveRoom{
+            setupExpireView()
+        }
+    }
+    
+    func setupExpireView(){
+        containerView.addSubview(expireView)
+        expireView.tag = 100
+        expireView.fillSuperview()
+        
+        expireView.addSubview(expireLabel)
+        expireView.addSubview(renewBtn)
+        
+        renewBtn.anchor(nil, left: nil, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: 110, heightConstant: 30)
+        expireLabel.anchor(nil, left: containerView.leftAnchor, bottom: nil, right: renewBtn.leftAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        renewBtn.anchorCenterYToSuperview()
+        expireLabel.anchorCenterYToSuperview()
+        
     }
     
     @objc func handleBookBtnClick(){

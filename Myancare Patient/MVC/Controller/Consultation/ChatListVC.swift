@@ -118,6 +118,7 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             chatRoom.roomID = roomList[indexPath.row].id!
             chatRoom.docName = roomList[indexPath.row].doctor_name!
             chatRoom.docID = roomList[indexPath.row].doctor_id!
+            chatRoom.isActiveRoom = roomList[indexPath.row].active_room! == 1 ? true : false
             self.navigationController?.pushViewController(chatRoom, animated: true)
         }
     }
