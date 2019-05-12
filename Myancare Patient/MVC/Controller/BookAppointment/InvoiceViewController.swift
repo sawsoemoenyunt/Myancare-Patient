@@ -95,11 +95,12 @@ extension InvoiceViewController{
     
     func getCoupon(couponID:String){
         self.startAnimating()
+        
         let url = EndPoints.getCoupon(couponID.replacingOccurrences(of: " ", with: "")).path
         let heads = ["Authorization" : "\(jwtTkn)"]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
-            
+            print("\(response)")
             switch response.result{
             case .success:
                 let responseStatus = response.response?.statusCode
@@ -107,7 +108,7 @@ extension InvoiceViewController{
                     
                     if let responseData = response.result.value as? NSDictionary{
                         
-                        if let couponCode1 = responseData.object(forKey: "coupon") as? String{
+                        if let couponCode1 = responseData.object(forKey: "code") as? String{
                             bookAppointmentData.coupon = couponCode1
                         }
                         

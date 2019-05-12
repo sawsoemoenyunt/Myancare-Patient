@@ -66,8 +66,8 @@ class SocketManagerHandler: NSObject {
     override init() {
         super.init()
         
-        let url = "http://159.65.10.176:5500"
-//        let url = "http://192.168.0.253:5500"
+//        let url = "http://159.65.10.176:5500"
+        let url = "http://192.168.0.140:5500"
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         print("Socket server url : \(urlString!)")
