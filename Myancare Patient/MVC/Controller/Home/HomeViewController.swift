@@ -33,11 +33,33 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                 print("Update device token response status : \(status ?? 0)")
                 
                 if status == 403 || status == 500{
+                    self.logoutDeviceFromServer()
                     UserDefaults.standard.setToken(value: "")
                     UserDefaults.standard.setIsLoggedIn(value: false)
                     UserDefaults.standard.setUserData(value: NSDictionary())
                     UtilityClass.changeRootViewController(with: LoginViewController())
                 }
+            }
+        }
+    }
+    
+    @objc func logoutDeviceFromServer(){
+        self.startAnimating()
+        if let deviceToken = UserDefaults.standard.getPushyToken(){
+            let url = EndPoints.logout(deviceToken).path
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    let statusCode = response.response?.statusCode
+                    if statusCode == 200 || statusCode == 201{
+                        print("Logout success")
+                    }
+                case .failure(let error):
+                    print("\(error)")
+                }
+                self.stopAnimating()
             }
         }
     }
@@ -234,6 +256,7 @@ extension HomeViewController{
             case .failure(let error):
                 print("Error occur on request")
                 print("\(error)")
+                self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
             }
 //            self.stopAnimating()
         }

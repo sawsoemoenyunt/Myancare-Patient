@@ -200,6 +200,7 @@ extension WalletVC{
                 }
             case .failure(let error):
                 print("\(error)")
+                self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
             }
             self.stopAnimating()
         }
@@ -245,6 +246,7 @@ extension WalletVC{
                 case .failure(let error):
                     print("Faild to get transaction history from server...")
                     print("\(error)")
+                    self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
                 }
             }
             self.stopAnimating()

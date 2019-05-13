@@ -14,7 +14,8 @@ class SlotsCell: UICollectionViewCell {
     var operationHour: OperationHourModel?{
         didSet{
             if let data = operationHour{
-                timeLabel.text = "\(data.slot_start_time!) - \(data.slot_end_time!)"
+//                timeLabel.text = "\(data.slot_start_time!) - \(data.slot_end_time!)"
+                timeLabel.text = data.message!
             }
         }
     }

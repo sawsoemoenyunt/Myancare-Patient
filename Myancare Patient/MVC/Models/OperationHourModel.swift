@@ -17,6 +17,7 @@ class OperationHourModel {
     var slot_end_time_mililisecond : Int?
     var isConfirmed : Bool?
     var id :String?
+    var message : String?
     
     init() {
         date_utc = ""
@@ -24,9 +25,14 @@ class OperationHourModel {
         slot_end_time = ""
         isConfirmed = false
         id = ""
+        message = ""
     }
     
     func updateModelUsingDict(_ dict:[String:Any]){
+        if let message1 = dict["message"] as? String{
+            message = message1
+        }
+        
         if let date_utc1 = dict["date_utc"] as? String{
             date_utc = date_utc1
         }

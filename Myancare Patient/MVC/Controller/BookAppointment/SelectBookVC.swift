@@ -180,6 +180,7 @@ extension SelectBookVC{
             
             case .failure(let error):
                 print("\(error)")
+                self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
             }
             self.stopAnimating()
         }

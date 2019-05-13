@@ -212,7 +212,8 @@ extension SelectAmountVC{
 //                                    print("Redirect to coda website...")
 //                                }
                                 let customWebVC = CustomWebViewVC()
-                                customWebVC.urlString = "https://sandbox.codapayments.com/airtime/checkout?type=3&txn_id=\(txnId)&browser_type=mobile-web"
+                                 customWebVC.urlString = "https://airtime.codapayments.com/airtime/begin?type=3&txn_id=\(txnId)&browser_type=mobile-web"
+//                                customWebVC.urlString = "https://sandbox.codapayments.com/airtime/checkout?type=3&txn_id=\(txnId)&browser_type=mobile-web"
                                 self.navigationController?.pushViewController(customWebVC, animated: true)
                             }
                         }

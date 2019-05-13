@@ -106,6 +106,7 @@ extension PaymentMethodVC{
             case .failure(let error):
                 print("Error requesting payment amount...")
                 print("\(error)")
+                self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
             }
             self.stopAnimating()
         }

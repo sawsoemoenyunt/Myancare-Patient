@@ -90,6 +90,16 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
 
 extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if roomList.count == 0 {
+            let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
+            notDataLabel.text = "No chat list found!".localized()
+            notDataLabel.textColor = UIColor.MyanCareColor.darkGray
+            notDataLabel.textAlignment = .center
+            notDataLabel.font = UIFont.MyanCareFont.type6
+            collectionView.backgroundView = notDataLabel
+        }else{
+            collectionView.backgroundView = nil
+        }
         return roomList.count
     }
     

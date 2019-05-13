@@ -400,6 +400,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
             case .failure(let error):
                 print("failed to upload user data")
                 print(error)
+                self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
             }
             self.stopAnimating()
         }
