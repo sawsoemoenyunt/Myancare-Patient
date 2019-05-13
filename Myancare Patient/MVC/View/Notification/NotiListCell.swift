@@ -20,6 +20,7 @@ class NotiCell: UICollectionViewCell {
                 self.setupAttributeString(title, body: body)
                 
                 let formatter = DateFormatter()
+                formatter.timeZone = TimeZone(identifier: "UTC")
                 formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                 if let createdDate = formatter.date(from: data.createdAt!){
 //                    dateLabel.text = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)

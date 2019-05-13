@@ -143,7 +143,7 @@ class AppointmentDetailCell: UICollectionViewCell {
     
     let dateNameLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "20 Feb 2019 | 8:00AM"
+        lbl.text = "-"
         lbl.font = UIFont.MyanCareFont.type2
         lbl.textColor = UIColor.black
         return lbl

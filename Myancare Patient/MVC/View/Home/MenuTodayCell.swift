@@ -115,6 +115,7 @@ class TodayAppointmentCell: UICollectionViewCell {
             if let data = appointmentData{
                 
                 let formatter = DateFormatter()
+                formatter.timeZone = TimeZone(identifier: "UTC")
                 formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                 
                 if let date = formatter.date(from: data.date_of_issue!){
