@@ -54,15 +54,38 @@ class AboutusVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.section == 0 && indexPath.row == 0 {
-//            if let openUrl = URL(string: "https://www.myancare.org/"){
-//                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-//                print("Redirect to myancare website...")
-//            }
-//        }
-        if let openUrl = URL(string: "https://www.myancare.org/"){
-            UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
-            print("Redirect to myancare website...")
+        if indexPath.section == 0 && indexPath.row == 0 {
+            if let openUrl = URL(string: "https://www.myancare.org/about"){
+                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                print("Redirect to myancare website...")
+            }
+        } else if indexPath.section == 1{
+            if indexPath.row == 0 {
+                if let openUrl = URL(string: "https://www.myancare.org/terms-conditions"){
+                    UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                    print("Redirect to myancare website...")
+                }
+            } else if indexPath.row == 1 {
+                if let openUrl = URL(string: "https://www.myancare.org/privacy-policy"){
+                    UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                    print("Redirect to myancare website...")
+                }
+            } else if indexPath.row == 2 {
+                if let openUrl = URL(string: "https://www.myancare.org/cancellation-policy"){
+                    UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                    print("Redirect to myancare website...")
+                }
+            } else if indexPath.row == 3 {
+                if let openUrl = URL(string: "https://www.myancare.org/complaint-policy"){
+                    UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                    print("Redirect to myancare website...")
+                }
+            }
+            
         }
+//        if let openUrl = URL(string: "https://www.myancare.org/"){
+//            UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+//            print("Redirect to myancare website...")
+//        }
     }
 }

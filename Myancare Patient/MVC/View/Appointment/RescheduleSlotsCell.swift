@@ -14,7 +14,10 @@ class RescheduleSlotsCell: UICollectionViewCell {
         didSet{
             if let data = slotData{
 //                timeLabel.text = "\(data.slot_start_time!) - \(data.slot_end_time!)"
-                timeLabel.text = data.message!
+//                timeLabel.text = data.message!
+                let startTime : UnixTime = data.slot_start_time_mililisecond! / 1000
+                let endTime : UnixTime = data.slot_end_time_mililisecond! / 1000
+                timeLabel.text = "\(startTime.to12Hour) - \(endTime.to12Hour)"
             }
         }
     }

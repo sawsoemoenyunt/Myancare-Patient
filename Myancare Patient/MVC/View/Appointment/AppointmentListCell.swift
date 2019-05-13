@@ -23,12 +23,8 @@ class AppointmentListCell: UICollectionViewCell {
                     }
                 }
                 
-                let startDate = Date(milliseconds: data.slotStartTime!)
-                let fm = DateFormatter()
-                fm.dateFormat = "dd-MMM-yyyy h:mm a"
-                let dateString = fm.string(from: startDate)
-                
-                dateLabel.text = "\(dateString)"
+                let startTime : UnixTime = data.slotStartTime! / 1000
+                dateLabel.text = "\(startTime.dateTime)"
                 typeBtn.setTitle("\(data.type!)", for: .normal)
                 conditionBtn.setTitle("\(data.booking_status)", for: .normal)
                 
@@ -127,7 +123,7 @@ class AppointmentListCell: UICollectionViewCell {
         dateLabel.anchor(profileImage.topAnchor, left: profileImage.rightAnchor, bottom: nil, right: self.rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         doctorNameLabel.anchor(dateLabel.bottomAnchor, left: profileImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         typeBtn.anchor(doctorNameLabel.bottomAnchor, left: profileImage.rightAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 55, heightConstant: 20)
-        conditionBtn.anchor(doctorNameLabel.bottomAnchor, left: typeBtn.rightAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 20)
+        conditionBtn.anchor(doctorNameLabel.bottomAnchor, left: typeBtn.rightAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 90, heightConstant: 20)
         lineView.anchor(nil, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
     }
     

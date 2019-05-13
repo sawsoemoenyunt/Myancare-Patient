@@ -211,6 +211,7 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             bookAppointmentData.date_of_issue = UtilityClass.getDate()
             bookAppointmentData.date_of_issue_utc = UtilityClass.getUtcDate()
             bookAppointmentData.slot = slots[indexPath.row].id
+            
         }
     }
     

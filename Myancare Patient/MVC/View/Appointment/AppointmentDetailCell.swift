@@ -46,16 +46,15 @@ class AppointmentDetailCell: UICollectionViewCell {
                     patientNameLabel.text = patientName
                 }
 
-                dateNameLabel.text = UtilityClass.getDateTimeStringFromUTC(data.date_of_issue!)
+                dateNameLabel.text = UtilityClass.getDateTimeStringFromUTC(data.date_of_issue_utc!)
                 reasonDataLabel.text = "- \(data.reason!)"
                 serviceUnitLabel.text = "-"
                 serviceTypeLabel.text = data.type!.uppercased()
                 totalAmountDataLabel.text = "\(data.total_appointment_fees!) coin"
                 
-                let dFormatter = DateFormatter()
-                dFormatter.dateFormat = "dd-MMM-yyyy h:mm a"
-                let startDate = Date(milliseconds: data.slotStartTime!)
-                scheduleDataLabel.text = dFormatter.string(from: startDate)
+        
+                let startTime : UnixTime = data.slotStartTime! / 1000
+                scheduleDataLabel.text = startTime.dateTime
                 
                 if (data.type?.contains("chat"))!{
                     serviceUnitLabel.text = "3 days"

@@ -137,8 +137,8 @@ class TodayAppointmentCell: UICollectionViewCell {
                     }
                 }
                 
-                let date = Date(milliseconds: data.slotStartTime!)
-                timeLabel.text = UtilityClass.get12Hour(date)
+                let startTime : UnixTime = data.slotStartTime! / 1000
+                timeLabel.text = startTime.to12Hour
                 
                 reasonLabel.text = " | \(data.reason!)"
             }

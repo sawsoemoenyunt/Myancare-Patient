@@ -23,8 +23,8 @@ class ServiceInvoiceCell: UICollectionViewCell {
                 } else {
                     let dFormatter = DateFormatter()
                     dFormatter.dateFormat = "dd-MMM-yyyy h:mm a"
-                    let startDate = Date(milliseconds: data.slotStartTime!)
-                    appointmentDateDataLabel.text = dFormatter.string(from: startDate)
+                    let startTimeMilli : UnixTime = data.slotStartTime! / 1000
+                    appointmentDateDataLabel.text = startTimeMilli.dateTime
                 }
                 
                 serviceUnitDataLabel.text = "-"
@@ -61,7 +61,7 @@ class ServiceInvoiceCell: UICollectionViewCell {
     
     let dateIssueDataLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "25 Feb 2019 | 14:50 PM"
+        lbl.text = "-"
         lbl.font = UIFont.MyanCareFont.type8
         lbl.textColor = UIColor.black
         return lbl

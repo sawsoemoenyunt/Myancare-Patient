@@ -69,8 +69,13 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
     lazy var mobileBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Login with Mobile", for: .normal)
-        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 16)
+        btn.titleLabel?.font = UIFont.mmFontBold(ofSize: 20)
         btn.setTitleColor(UIColor.MyanCareColor.gray, for: .normal)
+        btn.backgroundColor = UIColor.white
+        btn.layer.cornerRadius = 25
+        btn.clipsToBounds = true
+        btn.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
+        btn.layer.borderWidth = 1
         btn.addTarget(self, action: #selector(mobileBtnClick), for: .touchUpInside)
         return btn
     }()
@@ -294,7 +299,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         view.addSubview(pageControl)
         
         //setup contraints of subviews
-         loginbtnBottomConstraint = mobileBtn.anchorWithReturnAnchors(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 287, heightConstant: 30)[0]
+         loginbtnBottomConstraint = mobileBtn.anchorWithReturnAnchors(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 287, heightConstant: 50)[0]
         mobileBtn.anchorCenterXToSuperview()
         fbBtn.anchor(nil, left: nil, bottom: mobileBtn.topAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 287, heightConstant: 50)
         fbBtn.anchorCenterXToSuperview()

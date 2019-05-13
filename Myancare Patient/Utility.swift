@@ -10,6 +10,36 @@ import UIKit
 
 let userDefaults = UserDefaults.standard
 
+typealias UnixTime = Int
+
+extension UnixTime {
+    private func formatType(form: String) -> DateFormatter {
+        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = form
+        dateFormatter.timeZone = NSTimeZone(name: "UTC") as! TimeZone
+        return dateFormatter
+    }
+    var dateFull: Date {
+        return Date(timeIntervalSince1970: Double(self))
+    }
+    
+    var to12Hour: String {
+        return formatType(form: "h:mm a").string(from: dateFull)
+    }
+    
+    var toHour: String {
+        return formatType(form: "HH:mm").string(from: dateFull)
+    }
+    var toDay: String {
+        return formatType(form: "MM/dd/yyyy").string(from: dateFull)
+    }
+    
+    var dateTime: String{
+        return formatType(form: "dd-MM-yyyy h:mm a").string(from: dateFull)
+    }
+}
+
 func getWeekdayString(weekDay: Int) -> String{
     var yourWeekday = ""
     switch weekDay {

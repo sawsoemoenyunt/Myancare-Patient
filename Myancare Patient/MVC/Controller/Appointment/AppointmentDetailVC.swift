@@ -411,12 +411,9 @@ extension AppointmentDetailVC{
                             } else {
                                 if let requireTime = responeData.object(forKey: "requireTime") as? Int{
                                     let currentTimeInMilli = UtilityClass.currentTimeInMilliSeconds() + requireTime
-                                    let date = Date(milliseconds: currentTimeInMilli)
-                                    let formatter = DateFormatter()
-                                    formatter.dateFormat = "dd-MMM-yyyy h:mm a"
-                                    let dt = formatter.string(from: date)
+                                    let dt : UnixTime = currentTimeInMilli / 1000
                                     //do some
-                                    self.showAlert(title: "Alert", message: "Consulation can start at \(dt).")
+                                    self.showAlert(title: "Alert", message: "Consulation can start at \(dt.dateTime).")
                                 }
                             }
                         }
