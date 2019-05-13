@@ -85,9 +85,14 @@ class PaymentRowCell: UICollectionViewCell, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let amountVC = SelectAmountVC()
-        amountVC.gateWayName = payments[indexPath.row]._id!
-        paymentMethodVC?.navigationController?.pushViewController(amountVC, animated: true)
+        
+        if payments[indexPath.row].gatewayType!.lowercased().contains("card"){
+            paymentMethodVC?.showAlert(title: "Available Soon!", message: "...")
+        } else {
+            let amountVC = SelectAmountVC()
+            amountVC.gateWayName = payments[indexPath.row]._id!
+            paymentMethodVC?.navigationController?.pushViewController(amountVC, animated: true)
+        }
     }
     
     override init(frame: CGRect) {

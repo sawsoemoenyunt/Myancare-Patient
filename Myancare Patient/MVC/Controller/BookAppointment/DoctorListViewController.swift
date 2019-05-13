@@ -22,7 +22,7 @@ enum DoctorType{
 class DoctorListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    var isPaging = false
+    var isPaging = true
     var doctorType = DoctorType.all
     var specializeID = ""
     var specializeName = ""
@@ -180,11 +180,13 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
                     cell.profileImage.image = image
                 }
             }
-        }
-        
-        if doctorType == .all{
-            if doctors.count - 1 == indexPath.row && isPaging{
-                self.getAllDoctors(.all)
+            
+            if doctorType == .all{
+                if indexPath.row == doctors.count - 1 && isPaging{
+                    isPaging = true
+                    print("load more worked")
+                    self.getAllDoctors(doctorType)
+                }
             }
         }
         
@@ -212,7 +214,7 @@ extension DoctorListViewController{
         }
         
         let skip = doctors.count
-        let limit = 30
+        let limit = 10
         
         var url = EndPoints.getDoctors(limit,skip).path
         
@@ -231,8 +233,9 @@ extension DoctorListViewController{
             docSearch.isSearch = false
         case .recent:
             url = EndPoints.getRecentDoctors.path
-        default:
+        case .all:
             url = EndPoints.getDoctors(limit,skip).path
+        default:
             break
         }
         
@@ -263,9 +266,7 @@ extension DoctorListViewController{
                                 self.doctors.append(docListModel)
                             }
                         }
-                        if responseDataArr.count == 0{
-                            self.isPaging = false
-                        }
+                        self.isPaging = responseDataArr.count > 0 ? true : false
                         self.collectionView.reloadData()
                     }
                 }

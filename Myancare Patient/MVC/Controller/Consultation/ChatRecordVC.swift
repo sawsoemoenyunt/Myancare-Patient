@@ -514,7 +514,7 @@ class ChatImageZoomVC: UIViewController, UIScrollViewDelegate {
 //        UIImage.loadImage(imageUrl) { (image) in
 //            self.imageView.image = image
 //        }
-        let dispatchQueue = DispatchQueue.global(qos: .background)
+        let dispatchQueue = DispatchQueue.main
         dispatchQueue.async {
             UIImage.loadImage(self.imageUrl) { (image) in
                 self.imageView.image = image

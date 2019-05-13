@@ -66,13 +66,13 @@ extension PaymentMethodVC : UICollectionViewDelegate, UICollectionViewDataSource
         
         let cellCount = paymentList[indexPath.row].paymentGateways.count
         let rowCount = cellCount / 4
-        var heightCell:CGFloat = 130 //for 1 row
+        var heightCell:CGFloat = 140 //for 1 row
         
-        if rowCount > 0 && rowCount <= 2{
-            heightCell = 200
-        } else if rowCount > 2 && rowCount <= 3{
-            heightCell = 280
-        }
+//        if rowCount > 0 && rowCount <= 2{
+//            heightCell = 200
+//        } else if rowCount > 2 && rowCount <= 3{
+//            heightCell = 280
+//        }
         
         return CGSize(width: collectionView.bounds.width, height: heightCell)
     }
@@ -114,8 +114,9 @@ extension PaymentMethodVC{
     
     func assignData(_ dataArray:NSArray){
         
-        var gateWayList = [PaymentList.init(paymentGroup: "PAY_WITH_CODA", paymentGateways: [PaymentRateModel]()),
-                           PaymentList.init(paymentGroup: "PAY_WITH_BANKING", paymentGateways: [PaymentRateModel]())]
+        var gateWayList = [PaymentList.init(paymentGroup: "PAY_WITH_BILL", paymentGateways: [PaymentRateModel]()),
+                           PaymentList.init(paymentGroup: "PAY_WITH_BANKING", paymentGateways: [PaymentRateModel]()),
+                           PaymentList.init(paymentGroup: "PAY_WITH_CARD", paymentGateways: [PaymentRateModel]())]
         
         for data in dataArray{
             if let dataDict = data as? [String:Any]{
@@ -127,6 +128,8 @@ extension PaymentMethodVC{
                     gateWayList[0].paymentGateways.append(paymentGateway)
                 case "PAY_WITH_BANKING":
                     gateWayList[1].paymentGateways.append(paymentGateway)
+                case "PAY_WITH_CARD":
+                    gateWayList[2].paymentGateways.append(paymentGateway)
                 default:
                     break
                 }

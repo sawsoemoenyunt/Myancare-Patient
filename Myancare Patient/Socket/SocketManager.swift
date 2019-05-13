@@ -66,7 +66,8 @@ class SocketManagerHandler: NSObject {
     override init() {
         super.init()
         
-        let url = "https://myancare.org/websocket"
+//        let url = "http://54.169.8.79/socket.io/"
+        let url = "https://myancare.org/socket.io/"
 //        let url = "http://159.65.10.176:5500"
 //        let url = "http://192.168.0.140:5500"
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -116,6 +117,12 @@ class SocketManagerHandler: NSObject {
     func isSocketConnected() -> Bool {
         return socket!.status == SocketIOStatus.connected
     }
+    
+//    func socketErrorListenerFromAPIServer(){
+//        socket?.on("error", callback: { (data, socketAck) in
+//
+//        })
+//    }
     
     func appointmentTimeupListener(){
         socket?.on("appointmentTimeup", callback: { (data, socketAck) in
