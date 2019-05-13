@@ -40,7 +40,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     lazy var closeBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Close".localized(), for: .normal)
-        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.lightGray
         btn.clipsToBounds = true
@@ -50,7 +50,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     lazy var closeBtn2: UIButton = {
         let btn = UIButton()
         btn.setTitle("Close".localized(), for: .normal)
-        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.setTitleColor(UIColor.darkGray, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.lightGray
         btn.clipsToBounds = true
@@ -61,7 +61,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     lazy var rejectBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("REJECT", for: .normal)
-        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.orange
         btn.clipsToBounds = true
@@ -71,7 +71,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     lazy var acceptBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("ACCEPT", for: .normal)
-        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.clipsToBounds = true
@@ -86,7 +86,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     lazy var startChatBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("START CHAT", for: .normal)
-        btn.titleLabel?.font = UIFont.MyanCareFont.button2
+        btn.titleLabel?.font = UIFont.MyanCareFont.button1
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.backgroundColor = UIColor.MyanCareColor.green
         btn.clipsToBounds = true
