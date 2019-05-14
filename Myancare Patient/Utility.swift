@@ -17,7 +17,8 @@ extension UnixTime {
         let dateFormatter = DateFormatter()
 //        dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.dateFormat = form
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as! TimeZone
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.calendar = NSCalendar.current
         return dateFormatter
     }
     var dateFull: Date {

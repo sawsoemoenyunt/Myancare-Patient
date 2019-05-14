@@ -212,6 +212,7 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             bookAppointmentData.date_of_issue_utc = UtilityClass.getUtcDate()
             bookAppointmentData.slot = slots[indexPath.row].id
             
+            print("message \(slots[indexPath.row].message!)")
         }
     }
     
@@ -237,6 +238,7 @@ extension BookAppointmentViewController: UICollectionViewDataSource, UICollectio
             let slotCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SlotsCell
             slotCell.operationHour = slots[indexPath.row]
             cell = slotCell
+            
         }
         return cell
     }
