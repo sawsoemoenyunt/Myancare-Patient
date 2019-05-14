@@ -120,9 +120,10 @@ extension PhotoGalleryVC: UICollectionViewDelegate, UICollectionViewDataSource, 
             if let sheed = recordSheet.record_sheed![indexPath.row] as? NSDictionary{
                 if let url = sheed.object(forKey: "images") as? String{
                     let imageUrl = "\(recordSheet.imageLink!)\(url)"
-                    UIImage.loadImage(imageUrl) { (image) in
-                        cell.imageView.image = image
-                    }
+//                    UIImage.loadImage(imageUrl) { (image) in
+//                        cell.imageView.image = image
+//                    }
+                    cell.imageView.loadImage(urlString: imageUrl)
                 }
             }
         }

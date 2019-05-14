@@ -104,9 +104,10 @@ extension MenuOnlineCell: UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if docList.count == 0 {
             let notDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: collectionView.bounds.height))
-            notDataLabel.text = "No doctor available!"
+            notDataLabel.text = "No doctor available".localized()
             notDataLabel.textColor = UIColor.MyanCareColor.darkGray
             notDataLabel.textAlignment = .center
+            notDataLabel.font = UIFont.MyanCareFont.type4
             collectionView.backgroundView = notDataLabel
         }else{
             collectionView.backgroundView = UILabel()
@@ -140,17 +141,18 @@ class MenuOnlineButtonCell: UICollectionViewCell {
             if let data = docData{
                 self.title.text = data.name!
                 
-                DispatchQueue.main.async{
-                    UIImage.loadImage(data.image_url!) { (image) in
-                        self.icon.image = image
-                    }
-                }
+//                DispatchQueue.main.async{
+//                    UIImage.loadImage(data.image_url!) { (image) in
+//                        self.icon.image = image
+//                    }
+//                }
+                self.icon.loadImage(urlString: data.image_url!)
             }
         }
     }
     
-    let icon: UIImageView = {
-        let img = UIImageView()
+    let icon: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
@@ -177,6 +179,8 @@ class MenuOnlineButtonCell: UICollectionViewCell {
         
         //circle icon
         icon.layer.cornerRadius = 33
+        icon.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
+        icon.layer.borderWidth = 0.5
         icon.clipsToBounds = true
         
         

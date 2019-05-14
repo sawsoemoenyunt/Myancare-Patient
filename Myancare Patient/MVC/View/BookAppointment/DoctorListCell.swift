@@ -32,11 +32,13 @@ class DoctorListCell: UICollectionViewCell{
         }
     }
     
-    let profileImage: UIImageView = {
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+    let profileImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage.init(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
+        img.layer.borderWidth = 0.5
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
         img.clipsToBounds = true
         return img
     }()

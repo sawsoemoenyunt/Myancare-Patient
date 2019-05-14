@@ -20,12 +20,7 @@ class ArticleCell: UICollectionViewCell {
                     introlabel.text = htmlString.string
                 }
                 
-                let dispatchQueue = DispatchQueue.main
-                dispatchQueue.async {
-                    UIImage.loadImage(data.image_url!) { (image) in
-                        self.articleImage.image = image
-                    }
-                }
+                self.articleImage.loadImage(urlString: data.image_url!)
             }
             readBtn.isHidden = true
             bookMarkBtn.isHidden = true
@@ -43,8 +38,8 @@ class ArticleCell: UICollectionViewCell {
         return lbl
     }()
     
-    let articleImage: UIImageView = {
-        let img = UIImageView()
+    let articleImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "no-image")
         img.backgroundColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill

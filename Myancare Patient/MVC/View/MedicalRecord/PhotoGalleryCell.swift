@@ -10,8 +10,8 @@ import UIKit
 
 class PhotoGalleryCell: UICollectionViewCell {
     
-    let imageView: UIImageView = {
-        let img = UIImageView()
+    let imageView: CachedImageView = {
+        let img = CachedImageView()
         img.backgroundColor = UIColor.gray
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true

@@ -146,13 +146,13 @@ class ChatListCell: UICollectionViewCell {
                 UIImage.loadImage(data.doctor_imageUrl!) { (image) in
                     self.profileImage.image = image
                 }
-                
+//                self.profileImage.loadImage(urlString: data.doctor_imageUrl!)
             }
         }
     }
     
-    let profileImage: UIImageView = {
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+    let profileImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage.init(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32

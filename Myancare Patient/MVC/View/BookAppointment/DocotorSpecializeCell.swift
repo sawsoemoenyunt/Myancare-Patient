@@ -18,12 +18,13 @@ class SpecializationCell: UICollectionViewCell {
             if let data = specData{
                 label.text = data.name!.localized()
                 
-                let dispatchQueue = DispatchQueue.global(qos: .background)
-                dispatchQueue.async {
-                    UIImage.loadImage(data.image!) { (image) in
-                        self.icon.image = image
-                    }
-                }
+//                let dispatchQueue = DispatchQueue.global(qos: .background)
+//                dispatchQueue.async {
+//                    UIImage.loadImage(data.image!) { (image) in
+//                        self.icon.image = image
+//                    }
+//                }
+                self.icon.loadImage(urlString: data.image!)
             }
         }
     }
@@ -37,8 +38,8 @@ class SpecializationCell: UICollectionViewCell {
         return img
     }()
     
-    let icon: UIImageView = {
-        let img = UIImageView()
+    let icon: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "no-image")
         img.backgroundColor = .white
         img.contentMode = .scaleAspectFit

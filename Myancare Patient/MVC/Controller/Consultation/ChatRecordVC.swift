@@ -169,14 +169,16 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
             cell.imageView.isHidden = false
             cell.textView.isHidden = true
             
+            cell.imageView.loadImage(urlString: chatRecords[indexPath.row].image_url!)
+            
 //            UIImage.loadImage(chatRecords[indexPath.row].image_url!) { (image) in
 //                cell.imageView.image = image
 //            }
-            dispatchQueue.async {
-                UIImage.loadImage(self.chatRecords[indexPath.row].image_url!) { (image) in
-                    cell.imageView.image = image
-                }
-            }
+//            dispatchQueue.async {
+//                UIImage.loadImage(self.chatRecords[indexPath.row].image_url!) { (image) in
+//                    cell.imageView.image = image
+//                }
+//            }
         }
         
         setupCell(cell: cell, message: message, isSender: senderType)

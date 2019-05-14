@@ -37,8 +37,8 @@ class ChatRecordCell: UICollectionViewCell {
         return img
     }()
     
-    let imageView: UIImageView = {
-        let img = UIImageView()
+    let imageView: CachedImageView = {
+        let img = CachedImageView()
         img.backgroundColor = UIColor.gray
         img.clipsToBounds = true
         img.contentMode = .scaleAspectFill

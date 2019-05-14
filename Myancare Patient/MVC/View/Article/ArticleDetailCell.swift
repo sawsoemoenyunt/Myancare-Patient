@@ -16,10 +16,11 @@ class ArticleDetailCell: UICollectionViewCell {
             if let data = articleData{
                 titlelabel.text = data.title!
                 infoLabel.text = data.short_description!
-                UIImage.loadImage(data.image_url!) { (image) in
-                    self.articleImage.image = image
-                    return
-                }
+//                UIImage.loadImage(data.image_url!) { (image) in
+//                    self.articleImage.image = image
+//                    return
+//                }
+                self.articleImage.loadImage(urlString: data.image_url!)
                 if let htmlString = data.short_description?.htmlToAttributedString{
                     infoLabel.text = htmlString.string
                 }
@@ -36,8 +37,8 @@ class ArticleDetailCell: UICollectionViewCell {
         return lbl
     }()
     
-    let articleImage: UIImageView = {
-        let img = UIImageView()
+    let articleImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "no-image")
         img.backgroundColor = UIColor.MyanCareColor.lightGray
         img.contentMode = .scaleAspectFill

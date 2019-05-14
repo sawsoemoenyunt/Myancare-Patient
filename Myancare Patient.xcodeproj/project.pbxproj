@@ -43,6 +43,7 @@
 		5245F6E8222EAE2600D270F4 /* VoiceCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */; };
 		5245F6EA222EBD1500D270F4 /* VideoCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */; };
 		5249E69E2243BD4C00CA1810 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */; };
+		524CD357228B2EA900894B0D /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524CD356228B2EA900894B0D /* UIImageView+Cache.swift */; };
 		524D8EA12237943400B7AEAB /* ArticleCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA02237943400B7AEAB /* ArticleCategoryCell.swift */; };
 		524D8EA32237945100B7AEAB /* ArticleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA22237945100B7AEAB /* ArticleListCell.swift */; };
 		524D8EA52237949C00B7AEAB /* ArticleDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D8EA42237949C00B7AEAB /* ArticleDetailCell.swift */; };
@@ -196,6 +197,7 @@
 		5245F6E7222EAE2600D270F4 /* VoiceCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCallVC.swift; sourceTree = "<group>"; };
 		5245F6E9222EBD1500D270F4 /* VideoCallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallVC.swift; sourceTree = "<group>"; };
 		5249E69D2243BD4C00CA1810 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
+		524CD356228B2EA900894B0D /* UIImageView+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache.swift"; sourceTree = "<group>"; };
 		524D8EA02237943400B7AEAB /* ArticleCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoryCell.swift; sourceTree = "<group>"; };
 		524D8EA22237945100B7AEAB /* ArticleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListCell.swift; sourceTree = "<group>"; };
 		524D8EA42237949C00B7AEAB /* ArticleDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailCell.swift; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 				528DA556221D96DC00140CFF /* Assets.xcassets */,
 				528DA558221D96DC00140CFF /* LaunchScreen.storyboard */,
 				528DA55B221D96DC00140CFF /* Info.plist */,
+				524CD356228B2EA900894B0D /* UIImageView+Cache.swift */,
 			);
 			path = "Myancare Patient";
 			sourceTree = "<group>";
@@ -926,14 +929,19 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Pushy/Pushy.framework",
+				"${BUILT_PRODUCTS_DIR}/Siren/Siren.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
@@ -947,14 +955,19 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pushy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Siren.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
@@ -1019,6 +1032,7 @@
 				528DA56F221D98E400140CFF /* MenuCell.swift in Sources */,
 				52B30393222BBC1100BBFDA1 /* NotificationListVC.swift in Sources */,
 				528DA573221D992D00140CFF /* MenuCategoryCell.swift in Sources */,
+				524CD357228B2EA900894B0D /* UIImageView+Cache.swift in Sources */,
 				528DA579221D9A5400140CFF /* DoctorListCell.swift in Sources */,
 				528DA582221D9B8C00140CFF /* MoreCollectionViewEditProfileCell.swift in Sources */,
 				529490462237CE2200507240 /* EnterPasscodeVC.swift in Sources */,

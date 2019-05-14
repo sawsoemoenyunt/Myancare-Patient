@@ -26,4 +26,6 @@ target 'Myancare Patient' do
   pod 'SinchRTC'
   pod 'EMAlertController'
   pod 'PINRemoteImage'
+  pod 'Kingfisher'
+  pod 'Siren'
 end

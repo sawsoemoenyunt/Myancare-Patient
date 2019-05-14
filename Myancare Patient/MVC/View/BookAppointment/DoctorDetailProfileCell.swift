@@ -28,9 +28,10 @@ class DoctorDetailProfileCell: UICollectionViewCell {
                     experienceLabel.text = "အတွေ့အကြုံ \(data.experience!) နှစ်"
                 }
                 
-                UIImage.loadImage(data.image_url!) { (image) in
-                    self.profileImage.image = image
-                }
+//                UIImage.loadImage(data.image_url!) { (image) in
+//                    self.profileImage.image = image
+//                }
+                self.profileImage.loadImage(urlString: data.image_url!)
                 
                 buttongroup3()
                 chatBtn.isHidden = true
@@ -115,11 +116,13 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         videoBtn.anchor(experienceLabel.bottomAnchor, left: voiceBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
     }
     
-    lazy var profileImage: UIImageView = {
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 115, height: 115))
+    lazy var profileImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 57.5
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
+        img.layer.borderWidth = 0.5
         img.clipsToBounds = true
         return img
     }()

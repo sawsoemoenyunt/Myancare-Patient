@@ -173,13 +173,10 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DoctorListCell
         if doctors.count > 0 {
             cell.docData = doctors[indexPath.row]
+            cell.profileImage.image = #imageLiteral(resourceName: "no-image")
             
-            let dispatchQueue = DispatchQueue.main
-            dispatchQueue.async {
-                UIImage.loadImage(self.doctors[indexPath.row].image_url!) { (image) in
-                    cell.profileImage.image = image
-                }
-            }
+            
+            cell.profileImage.loadImage(urlString: self.doctors[indexPath.row].image_url!, completion: nil)
             
             if doctorType == .all{
                 if indexPath.row == doctors.count - 1 && isPaging{

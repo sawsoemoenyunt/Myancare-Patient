@@ -19,6 +19,7 @@ import UserNotifications
 import Alamofire
 import PushKit
 import CallKit
+import Siren
 
 var jwtTkn = ""
 //var jwtTkn = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViMDU2MGUzZjg4MTdjMzg4ODE5YWY1MCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNTU0MjgzNjYyfQ.ZSBCbJu1soHAGH6CGq9h0yg7pliYbSqAphMu1Hw-s9U" //akm
@@ -99,8 +100,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         window?.rootViewController = StartScreenViewController()
         
         
-        
         return true
+    }
+    
+    /// An example on how to present your own custom alert using Siren's localized Strings and version checking cadence.
+    func customAlertRulesExample() {
+        let siren = Siren.shared
+        // The key for using custom alerts is to set the `alertType` to `.none`.
+        // The `Results` type will return localized strings for your app's custom modal presentation.
+        // The `promptFrequency` allows you to customize how often Siren performs the version check before returning a non-error result back into your app, prompting your custom alert functionality.
+        let rules = Rules(promptFrequency: .immediately, forAlertType: .none)
+        siren.rulesManager = RulesManager(globalRules: rules)
+        siren.wail(performCheck: .onDemand) { (results, kerr) in
+            print(results)
+        }
     }
     
     func registerNotification(){
@@ -191,7 +204,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
         AppEventsLogger.activate(application)
     }
 

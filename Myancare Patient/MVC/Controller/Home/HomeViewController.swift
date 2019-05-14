@@ -283,7 +283,7 @@ extension HomeViewController{
     }
     
     func getAppointments(){
-        self.startAnimating()
+//        self.startAnimating()
         let url = EndPoints.getAppointment.path
         
         let heads = ["Authorization" : "\(jwtTkn)"]
@@ -312,7 +312,7 @@ extension HomeViewController{
             case .failure(let error):
                 print("\(error)")
             }
-            self.stopAnimating()
+//            self.stopAnimating()
         }
     }
 }
