@@ -167,23 +167,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
                 let responseStatus = response.response?.statusCode
                 print("Response status: \(responseStatus ?? 0)")
                 
-                if responseStatus == 404{
-                    //register user process here
-                    print("RECORD NOT FOUND")
-                    if isFB {
-                        self.mobileLogin()
-                    } else {
-                        if id != ""{
-                            let userInfoVC = UserInformationVC()
-                            userInfoVC.phoneID = id
-                            userInfoVC.countryCode = self.countryCode
-                            userInfoVC.facebookID = self.facebookID
-                            
-                            self.navigationController?.pushViewController(userInfoVC, animated: true)
-                        }
-                    }
-                    
-                } else if responseStatus == 200{
+                if responseStatus == 200{
                     //apply login process here
                     print("RECORD WAS FOUND")
                     if let responseData = response.result.value as? NSDictionary{
@@ -218,6 +202,26 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
                             UtilityClass.switchToHomeViewController()
                         }
                     }
+                } else {
+                    //register user process here
+                    print("RECORD NOT FOUND")
+                    if isFB {
+                        self.mobileLogin()
+                    } else {
+                        if id != ""{
+                            let userInfoVC = UserInformationVC()
+                            userInfoVC.phoneID = id
+                            userInfoVC.countryCode = self.countryCode
+                            userInfoVC.facebookID = self.facebookID
+                            
+                            self.countryCode = ""
+                            self.pohoneID = ""
+                            self.facebookID = ""
+                            
+                            self.navigationController?.pushViewController(userInfoVC, animated: true)
+                        }
+                    }
+                    
                 }
             case .failure(let error):
                 print(error)
@@ -258,16 +262,6 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
         setupViews()
-        
-        _accountKit.requestAccount {
-            (account, error) -> Void in
-            
-            if let phoneNumber = account?.phoneNumber{
-                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
-                self.countryCode = phoneNumber.countryCode
-                self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
-            }
-        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -280,8 +274,19 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         animateViews()
-        
         showLoading()
+        
+        _accountKit.requestAccount {
+            (account, error) -> Void in
+            
+            if let phoneNumber = account?.phoneNumber{
+                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
+                self.countryCode = phoneNumber.countryCode
+                if phoneNumber.phoneNumber != ""{
+                    self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
+                }
+            }
+        }
     }
     
     /**

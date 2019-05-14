@@ -379,6 +379,7 @@ extension EHRListVC{
         self.startAnimating()
         
         let json = ["base_diseases" : self.getBaseDiseasesUploadData(),
+                    "pregnant_history" : self.pregnantUploadData(),
                     "current_drink_medicine" : self.getCurrentDrinkMedicineUploadData(),
                     "family_hr_record" : self.getFamilyHrRecordUploadData(),
                     "normal_records" : self.getNormalRecordUploadData(),
@@ -537,6 +538,22 @@ extension EHRListVC{
                             }
                         }
                         
+                        if let pregnantData = responseDict["pregnant_history"] as? NSArray{
+                            var currentDrinkMedArr = [Disease]()
+                            for med in pregnantData{
+                                if let currentDrinkMedDict = med as? [String:Any]{
+                                    
+                                    let disease = Disease()
+                                    disease.updateModelUsingDict(currentDrinkMedDict)
+                                    
+                                    currentDrinkMedArr.append(disease)
+                                }
+                            }
+                            if currentDrinkMedArr.count > 0{
+                                self.pregnantHistory = currentDrinkMedArr
+                            }
+                        }
+                        
                         self.sortArrays()
                     }
                     
@@ -617,6 +634,19 @@ extension EHRListVC{
         var dataArr = [[String:Any]]()
         
         for data in surgeryList{
+            let dict = ["checked" : data.checked!,
+                        "data" : data.data!,
+                        "name" : data.name!] as [String : Any]
+            dataArr.append(dict)
+        }
+        
+        return dataArr
+    }
+    
+    func pregnantUploadData() -> [[String:Any]]{
+        var dataArr = [[String:Any]]()
+        
+        for data in pregnantHistory{
             let dict = ["checked" : data.checked!,
                         "data" : data.data!,
                         "name" : data.name!] as [String : Any]

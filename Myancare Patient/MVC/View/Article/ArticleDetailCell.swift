@@ -101,18 +101,18 @@ class ArticleDetailCell: UICollectionViewCell {
     func setupViews(){
         addSubview(titlelabel)
         addSubview(articleImage)
-        addSubview(likeBtn)
-        addSubview(bookmarkBtn)
-        addSubview(shareBtn)
+//        addSubview(likeBtn)
+//        addSubview(bookmarkBtn)
+//        addSubview(shareBtn)
         addSubview(lineView)
         addSubview(infoLabel)
         
         titlelabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         articleImage.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 250)
-        likeBtn.anchor(articleImage.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
-        bookmarkBtn.anchor(articleImage.bottomAnchor, left: likeBtn.rightAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
-        shareBtn.anchor(articleImage.bottomAnchor, left: bookmarkBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
-        lineView.anchor(likeBtn.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+//        likeBtn.anchor(articleImage.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+//        bookmarkBtn.anchor(articleImage.bottomAnchor, left: likeBtn.rightAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+//        shareBtn.anchor(articleImage.bottomAnchor, left: bookmarkBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 4, leftConstant: 10, bottomConstant: 0, rightConstant: 20, widthConstant: self.bounds.width/3 - 18, heightConstant: 40)
+        lineView.anchor(articleImage.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
         infoLabel.anchor(lineView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0)
     }
     

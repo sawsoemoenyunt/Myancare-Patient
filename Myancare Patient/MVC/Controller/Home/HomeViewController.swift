@@ -283,7 +283,7 @@ extension HomeViewController{
     }
     
     func getAppointments(){
-        
+        self.startAnimating()
         let url = EndPoints.getAppointment.path
         
         let heads = ["Authorization" : "\(jwtTkn)"]
@@ -295,10 +295,7 @@ extension HomeViewController{
                 let status = response.response?.statusCode
                 print("Status code : \(status ?? 0)")
                 
-                if status == 400{
-                    print("Record Not found!")
-                    
-                } else if status == 200{
+                if status == 200{
                     var appointmentarray = [AppointmentModel]()
                     if let responseDict = response.result.value as? [String:Any]{
                         let appointment = AppointmentModel()
@@ -308,11 +305,14 @@ extension HomeViewController{
                     }
                     self.todayAppointmentArr = appointmentarray
                     self.collectionView.reloadData()
+                } else {
+                    print("Record not found!")
                 }
                 
             case .failure(let error):
                 print("\(error)")
             }
+            self.stopAnimating()
         }
     }
 }

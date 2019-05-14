@@ -18,7 +18,7 @@ class AboutusVC: UITableViewController {
     let cellID = "cellID"
     
     let sectionAndList = [AboutUsList.init(title: "About", subTitles: ["Visit to our website"]),
-                          AboutUsList.init(title: "Policies", subTitles: ["Term of Use", "Privacy Policy", "Cancellation Policy", "Payment Policy"])]
+                          AboutUsList.init(title: "Policies", subTitles: ["Term of Use", "Privacy Policy", "Cancellation Policy", "Complaint Policy"])]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,28 +55,28 @@ class AboutusVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
-            if let openUrl = URL(string: "https://www.myancare.org/about"){
+            if let openUrl = URL(string: "https://myancare.org/about"){
                 UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
                 print("Redirect to myancare website...")
             }
         } else if indexPath.section == 1{
             if indexPath.row == 0 {
-                if let openUrl = URL(string: "https://www.myancare.org/terms-conditions"){
+                if let openUrl = URL(string: "https://myancare.org/terms-conditions"){
                     UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
                     print("Redirect to myancare website...")
                 }
             } else if indexPath.row == 1 {
-                if let openUrl = URL(string: "https://www.myancare.org/privacy-policy"){
+                if let openUrl = URL(string: "https://myancare.org/privacy-policy"){
                     UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
                     print("Redirect to myancare website...")
                 }
             } else if indexPath.row == 2 {
-                if let openUrl = URL(string: "https://www.myancare.org/cancellation-policy"){
+                if let openUrl = URL(string: "https://myancare.org/cancellation-policy"){
                     UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
                     print("Redirect to myancare website...")
                 }
             } else if indexPath.row == 3 {
-                if let openUrl = URL(string: "https://www.myancare.org/complaint-policy"){
+                if let openUrl = URL(string: "https://myancare.org/complaint-policy"){
                     UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
                     print("Redirect to myancare website...")
                 }

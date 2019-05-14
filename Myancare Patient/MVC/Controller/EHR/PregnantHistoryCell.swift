@@ -16,6 +16,7 @@ class PrefnantHistoryCell: UICollectionViewCell, UITextFieldDelegate {
         didSet{
             if let data = dataList{
                 if data.count == 2{
+                    
                     label1.text = data[0].name!
                     childrenLabel.text = data[1].name!
                     

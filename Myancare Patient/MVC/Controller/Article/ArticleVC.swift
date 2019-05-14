@@ -59,14 +59,14 @@ class ArticleVC: UIViewController, NVActivityIndicatorViewable {
         view.addSubview(articleCollectionView)
         
         let v = view.safeAreaLayoutGuide
-        categoryListView.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 77)
+        categoryListView.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1) //77
         articleCollectionView.anchor(categoryListView.bottomAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 1, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 
 extension ArticleVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == articleCollectionView{
             let articleDetail = ArticleDetailVC()
             articleDetail.articleID = articles[indexPath.row].id!

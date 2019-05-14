@@ -27,13 +27,17 @@ class ArticleCell: UICollectionViewCell {
                     }
                 }
             }
+            readBtn.isHidden = true
+            bookMarkBtn.isHidden = true
+            icon1.isHidden = true
+            icon2.isHidden = true
         }
     }
     
     let titlelabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Article Title\nonemore"
-        lbl.numberOfLines = 2
+        lbl.numberOfLines = 3
         lbl.font = UIFont.MyanCareFont.type1
         lbl.textColor = UIColor.black
         return lbl

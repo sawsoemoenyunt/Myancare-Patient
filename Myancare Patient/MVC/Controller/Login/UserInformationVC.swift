@@ -136,6 +136,9 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         setupViews()
         let newBackButton = UIBarButtonItem(title: "<Back", style: .plain, target: self, action: #selector(handleBackBtn))
         self.navigationItem.leftBarButtonItem = newBackButton
+        
+        self.agreeSwitch.isOn = true
+        self.swithOnOff()
     }
     
     @objc func handleBackBtn(){
@@ -203,7 +206,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     
     func validateForm() -> Bool{
         
-        var result = true
+        var result = false
         
         if name == "" {
             print("name required")
@@ -211,24 +214,35 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         } else if dob == ""{
             print("dob required")
             result = false
-        } else if email == ""{
-            print("email required")
-            result = false
         } else if gender == ""{
             print("gender required")
             result = false
-        } else if height == ""{
-            print("height required")
-            result = false
-        } else if weight == ""{
-            print("weight required")
-            result = false
-        } else if bloodType == ""{
-            print("blood type required")
-            result = false
-        } else if validateEmail(email: self.email) == false{
-            print("invalid email")
         }
+        
+//        if name == "" {
+//            print("name required")
+//            result = false
+//        } else if dob == ""{
+//            print("dob required")
+//            result = false
+//        } else if email == ""{
+//            print("email required")
+//            result = false
+//        } else if gender == ""{
+//            print("gender required")
+//            result = false
+//        } else if height == ""{
+//            print("height required")
+//            result = false
+//        } else if weight == ""{
+//            print("weight required")
+//            result = false
+//        } else if bloodType == ""{
+//            print("blood type required")
+//            result = false
+//        } else if validateEmail(email: self.email) == false{
+//            print("invalid email")
+//        }
         
         return result
     }
@@ -421,7 +435,7 @@ extension UserInformationVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 1000)
+        return CGSize(width: collectionView.bounds.width, height: 700)
     }
     
 }
