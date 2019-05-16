@@ -119,6 +119,8 @@ class UtilityClass: NSObject {
     class func getUtcDate()->String{
         let date = Date()
         let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.calendar = Calendar.current
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return formatter.string(from: date)
     }
@@ -126,6 +128,8 @@ class UtilityClass: NSObject {
     class func getDate()->String{
         let date = Date()
         let fm2 = DateFormatter()
+        fm2.timeZone = TimeZone.current
+        fm2.calendar = Calendar.current
         fm2.dateFormat = "yyyy-MM-dd"
         return fm2.string(from: date)
     }

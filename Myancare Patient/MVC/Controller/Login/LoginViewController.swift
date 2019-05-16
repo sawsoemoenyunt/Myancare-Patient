@@ -262,6 +262,18 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isHidden = true
         setupViews()
+        
+        _accountKit.requestAccount {
+            (account, error) -> Void in
+            
+            if let phoneNumber = account?.phoneNumber{
+                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
+                self.countryCode = phoneNumber.countryCode
+                if phoneNumber.phoneNumber != ""{
+                    self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
+                }
+            }
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -275,18 +287,6 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewDidAppear(true)
         animateViews()
         showLoading()
-        
-        _accountKit.requestAccount {
-            (account, error) -> Void in
-            
-            if let phoneNumber = account?.phoneNumber{
-                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
-                self.countryCode = phoneNumber.countryCode
-                if phoneNumber.phoneNumber != ""{
-                    self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
-                }
-            }
-        }
     }
     
     /**

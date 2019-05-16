@@ -67,7 +67,8 @@ class SocketManagerHandler: NSObject {
         super.init()
         
 //        let url = "http://54.169.8.79/socket.io/"
-        let url = "https://myancare.org/socket.io/"
+//        let url = "https://myancare.org/socket.io/"
+        let url = "http://52.76.5.165:9999/"
 //        let url = "http://159.65.10.176:5500"
 //        let url = "http://192.168.0.140:5500"
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

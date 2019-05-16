@@ -206,7 +206,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
     
     func validateForm() -> Bool{
         
-        var result = false
+        var result = true
         
         if name == "" {
             print("name required")

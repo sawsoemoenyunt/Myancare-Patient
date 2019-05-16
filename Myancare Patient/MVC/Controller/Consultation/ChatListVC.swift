@@ -143,10 +143,10 @@ class ChatListCell: UICollectionViewCell {
                 specializeLabel.text = data.last_message!
                 addressLabel.text = data.timeAgo!
                 
-                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
-                    self.profileImage.image = image
-                }
-//                self.profileImage.loadImage(urlString: data.doctor_imageUrl!)
+//                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
+//                    self.profileImage.image = image
+//                }
+                self.profileImage.loadImage(urlString: data.doctor_imageUrl!)
             }
         }
     }
@@ -156,7 +156,10 @@ class ChatListCell: UICollectionViewCell {
         img.image = UIImage.init(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
+        img.layer.borderWidth = 0.5
         img.clipsToBounds = true
+        img.backgroundColor = UIColor.gray
         return img
     }()
     
