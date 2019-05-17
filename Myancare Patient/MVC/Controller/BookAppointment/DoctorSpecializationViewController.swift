@@ -51,7 +51,7 @@ class DoctorSpecializeViewController: UICollectionViewController, UICollectionVi
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! SpecializationCell
         cell.specData = specList[indexPath.row]
-        
+        print("spec id \(specList[indexPath.row])")
         return cell
     }
     

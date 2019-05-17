@@ -17,7 +17,7 @@ class ChatRoomModel {
     var last_message : String?
     var last_messageStatus : Int?
     var last_messageType : Int?
-    var createdAt : String?
+    var createdAt : Int?
     var timeAgo : String?
     var active_room : Int?
     
@@ -29,7 +29,7 @@ class ChatRoomModel {
         last_message = ""
         last_messageStatus = 1
         last_messageType = 1
-        createdAt = ""
+        createdAt = 0
         timeAgo = ""
         active_room = 0
     }
@@ -71,14 +71,17 @@ class ChatRoomModel {
                 last_message = msg
             }
             
-            if let date = message.object(forKey: "createdAt") as? String{
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-//                if let createdDate = formatter.date(from: date){
-//                    timeAgo = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
-//                }
-                timeAgo = UtilityClass.getDateTimeStringFromUTC(date)
+            if let date = message.object(forKey: "createdAt") as? Int{
                 createdAt = date
+                
+//                print("sayar gatone tan phoe : \(date)")
+//                let formatter = DateFormatter()
+//                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+////                if let createdDate = formatter.date(from: date){
+////                    timeAgo = UtilityClass.timeAgoSinceDate(createdDate, currentDate: Date(), numericDates: true)
+////                }
+//                timeAgo = UtilityClass.getDateTimeStringFromUTC(date)
+//                createdAt = date
             }
         }
     }

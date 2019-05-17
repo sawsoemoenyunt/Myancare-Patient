@@ -14,7 +14,7 @@ class WalletCell: UICollectionViewCell {
         didSet{
             if let data = transactionData{
                 
-                dateLabel.text = UtilityClass.getDateTimeStringFromUTC(data.updatedAt!)
+                dateLabel.text = UtilityClass.getDateStringFromUTC(data.updatedAt!)
                 
                 switch data.remarks{
                 case "Onhold":

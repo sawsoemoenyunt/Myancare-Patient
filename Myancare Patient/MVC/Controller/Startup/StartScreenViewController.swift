@@ -105,6 +105,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
                     UserDefaults.standard.setToken(value: "")
                     UserDefaults.standard.setIsLoggedIn(value: false)
                     UserDefaults.standard.setUserData(value: NSDictionary())
+                    jwtTkn = ""
                     UtilityClass.changeRootViewController(with: LoginViewController())
                     
                 } else if status == 426 {
@@ -115,6 +116,14 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
                     
                 } else if status == 200 || status == 201{
                     result(true)
+                } else {
+                    result(false)
+                    self.logoutDeviceFromServer()
+                    UserDefaults.standard.setToken(value: "")
+                    UserDefaults.standard.setIsLoggedIn(value: false)
+                    UserDefaults.standard.setUserData(value: NSDictionary())
+                    jwtTkn = ""
+                    UtilityClass.changeRootViewController(with: LoginViewController())
                 }
             }
         }

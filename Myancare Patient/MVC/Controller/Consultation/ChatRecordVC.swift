@@ -129,6 +129,15 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         self.getChatRemainTime()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.navigationController?.navigationBar.isTranslucent = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isTranslucent = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,17 +145,23 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         view.backgroundColor = UIColor.white
         self.navigationItem.largeTitleDisplayMode = .never
         
-        collectionView?.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 78, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 70, left: 0, bottom: 78, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = .white
         collectionView?.register(ChatRecordCell.self, forCellWithReuseIdentifier: cellID)
+        
+//        collectionView.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(hideKeyboard)))
         
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name.didReceiveDataForChatRecord, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveDataForNewMessage(_:)), name: Notification.Name.didReceiveDataForNewChatMessage, object: nil)
         getChatRecords()
+    }
+    
+    @objc func hideKeyboard(){
+        self.view.endEditing(true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -163,9 +178,10 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         
         let dispatchQueue = DispatchQueue.main
         dispatchQueue.async {
-            UIImage.loadImage(self.chatRecords[indexPath.row].userImage!) { (image) in
-                cell.profileImageView.image = image
-            }
+//            UIImage.loadImage(self.chatRecords[indexPath.row].userImage!) { (image) in
+//                cell.profileImageView.image = image
+//            }
+            cell.profileImageView.loadImage(urlString: self.chatRecords[indexPath.row].userImage!)
         }
         
         if chatRecords[indexPath.row].image_type == 0{
@@ -254,7 +270,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     
     func setupViews() {
         view.addSubview(reminderView)
-        reminderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 85, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 30)
+        reminderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 30)
         reminderView.addSubview(reminderLabel)
         reminderLabel.fillSuperview()
         

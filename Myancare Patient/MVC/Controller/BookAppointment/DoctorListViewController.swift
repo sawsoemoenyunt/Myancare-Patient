@@ -17,6 +17,7 @@ enum DoctorType{
     case specialize
     case filter
     case recent
+    case gp
 }
 
 class DoctorListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NVActivityIndicatorViewable {
@@ -69,6 +70,11 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
             self.title = "Doctors"
             self.refreshDoctorData()
         }
+        let gpBtn = UIAlertAction(title: "General Practitioners", style: .default) { (action) in
+            self.doctorType = .gp
+            self.title = "General Practitioners"
+            self.refreshDoctorData()
+        }
         let filterBtn = UIAlertAction(title: "Filter", style: .default) { (action) in
             self.doctorType = .filter
             docSearch.isSearch = true
@@ -87,6 +93,7 @@ class DoctorListViewController: UICollectionViewController, UICollectionViewDele
         }
         
         actionSheet.addAction(allBtn)
+        actionSheet.addAction(gpBtn)
         actionSheet.addAction(filterBtn)
         actionSheet.addAction(favBtn)
         actionSheet.addAction(recentBtn)
@@ -216,6 +223,8 @@ extension DoctorListViewController{
         var url = EndPoints.getDoctors(limit,skip).path
         
         switch docType {
+        case .gp:
+            url = EndPoints.getDocotrBySpecialiation("5a4e2ec2d683b52694167b2f").path
         case .recommand:
             url = EndPoints.getRecommandDoctors.path
             break

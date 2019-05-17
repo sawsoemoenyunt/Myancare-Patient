@@ -84,7 +84,10 @@ extension NotificationListVC: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let estimatedHeight = self.view.calculateHeightofTextView(dummyText: notiList[indexPath.row].message_body!, fontSize: 16, viewWdith: collectionView.frame.width - 100)
+        var estimatedHeight:CGFloat = 0
+        if notiList.count > 0{
+             estimatedHeight = self.view.calculateHeightofTextView(dummyText: notiList[indexPath.row].message_body!, fontSize: 18, viewWdith: collectionView.frame.width - 100)
+        }
         return CGSize(width: collectionView.bounds.width, height: 60 + estimatedHeight)
     }
     

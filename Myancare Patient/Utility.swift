@@ -120,6 +120,23 @@ class UtilityClass: NSObject {
         return dateString
     }
     
+    class func getDateStringFromUTC(_ utcTime:String)->String{
+        var dateString = ""
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.calendar = Calendar.current
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        if let date = formatter.date(from: utcTime){
+            let formatter2 = DateFormatter()
+            formatter2.timeZone = TimeZone.current
+            formatter2.calendar = Calendar.current
+            formatter2.dateFormat = "dd-MMM-yyyy"
+            let updateAt = formatter2.string(from: date)
+            dateString = updateAt
+        }
+        return dateString
+    }
+    
     class func getUtcDate()->String{
         let date = Date()
         let formatter = DateFormatter()

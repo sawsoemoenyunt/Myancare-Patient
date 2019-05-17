@@ -90,6 +90,7 @@ extension MenuCategoryCell: UICollectionViewDataSource, UICollectionViewDelegate
             
             let layout = UICollectionViewFlowLayout()
             let docListVC = DoctorListViewController(collectionViewLayout: layout)
+            docListVC.doctorType = .gp
             self.homeViewController?.navigationController?.pushViewController(docListVC, animated: true)
         }
     }

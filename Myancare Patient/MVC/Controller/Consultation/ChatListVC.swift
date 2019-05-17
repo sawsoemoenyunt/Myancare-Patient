@@ -45,6 +45,7 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name.didReceiveDataForChatRoomList, object: nil)
@@ -141,7 +142,17 @@ class ChatListCell: UICollectionViewCell {
             if let data = roomData{
                 nameLabel.text = data.doctor_name!
                 specializeLabel.text = data.last_message!
-                addressLabel.text = data.timeAgo!
+                
+                
+                let date:UnixTime = data.createdAt! / 1000
+//                addressLabel.text = date.dateTime
+                let ago = date.dateFull
+                addressLabel.text = UtilityClass.timeAgoSinceDate(ago, currentDate: Date(), numericDates: true)
+                
+                
+                if data.last_messageType == 1{
+                    specializeLabel.text = "Send photo..."
+                }
                 
 //                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
 //                    self.profileImage.image = image

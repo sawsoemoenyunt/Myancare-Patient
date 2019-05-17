@@ -28,12 +28,13 @@ class ChatRecordCell: UICollectionViewCell {
         return view
     }()
     
-    let profileImageView: UIImageView = {
-        let img = UIImageView()
+    let profileImageView: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage.init(named: "pablo-profile")
         img.layer.cornerRadius = 16
         img.clipsToBounds = true
         img.contentMode = .scaleAspectFill
+        img.backgroundColor = UIColor.gray
         return img
     }()
     
