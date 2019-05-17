@@ -17,10 +17,11 @@ class AppointmentListCell: UICollectionViewCell {
                     doctorNameLabel.text = docName
                 }
                 if let docImage = data.doctor?.object(forKey: "image_url") as? String{
-                    UIImage.loadImage(docImage) { (image) in
-                        self.profileImage.image = image
-                        return
-                    }
+//                    UIImage.loadImage(docImage) { (image) in
+//                        self.profileImage.image = image
+//                        return
+//                    }
+                    self.profileImage.loadImage(urlString: docImage)
                 }
                 
                 let startTime : UnixTime = data.slotStartTime! / 1000
@@ -49,11 +50,13 @@ class AppointmentListCell: UICollectionViewCell {
         }
     }
     
-    let profileImage: UIImageView = {
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
-        img.image = UIImage(named: "pablo-profile")
+    let profileImage: CachedImageView = {
+        let img = CachedImageView()
+        img.image = UIImage(named: "no-image")
         img.contentMode = .scaleAspectFill
         img.layer.cornerRadius = 32
+        img.layer.borderWidth = 0.5
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
         img.clipsToBounds = true
         return img
     }()

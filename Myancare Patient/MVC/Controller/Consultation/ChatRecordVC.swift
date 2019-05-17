@@ -26,16 +26,18 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     var isFirstTimeLoad = true
     var isActiveRoom = false
     
+    
     let reminderView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.MyanCareColor.lightGray
         return view
     }()
     
     let reminderLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "days Remaining"
+        lbl.text = "Chat will expire on ..."
         lbl.font = UIFont.MyanCareFont.type8
+        lbl.textAlignment = .center
         return lbl
     }()
     
@@ -121,6 +123,12 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         self.refreshControl1.endRefreshing()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.getChatRemainTime()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -128,7 +136,7 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
         view.backgroundColor = UIColor.white
         self.navigationItem.largeTitleDisplayMode = .never
         
-        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 78, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 78, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = .white
@@ -245,6 +253,11 @@ class ChatRecordVC: UICollectionViewController, UITextFieldDelegate, UICollectio
     }
     
     func setupViews() {
+        view.addSubview(reminderView)
+        reminderView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 85, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 30)
+        reminderView.addSubview(reminderLabel)
+        reminderLabel.fillSuperview()
+        
         
         view.addSubview(containerView)
         
@@ -463,7 +476,31 @@ extension ChatRecordVC: UIImagePickerControllerDelegate, UINavigationControllerD
             }
             self.stopAnimating()
         }
-        
+    }
+    
+    func getChatRemainTime(){
+        let url = EndPoints.getChatRemainDate(roomID).path
+        let heads = ["Authorization":"\(jwtTkn)"]
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                let statusCode = response.response?.statusCode
+                if statusCode == 200 || statusCode == 201{
+                    if let responseDict = response.result.value as? NSDictionary{
+                        if let expireTime = responseDict.object(forKey: "expireTime") as? Int{
+                            let date:UnixTime = expireTime / 1000
+                            self.reminderLabel.text = "Chat will expire on \(date.dateTime)"
+                        }
+                    }
+                    
+                } else {
+                    print("failed to ged expire time")
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
     }
 }
 
@@ -471,8 +508,8 @@ class ChatImageZoomVC: UIViewController, UIScrollViewDelegate {
     
     var imageUrl = ""
     
-    lazy var imageView: UIImageView = {
-       let img = UIImageView()
+    lazy var imageView: CachedImageView = {
+       let img = CachedImageView()
         img.backgroundColor = .gray
         img.image = UIImage(named: "no-image")
         img.clipsToBounds = false
@@ -516,12 +553,13 @@ class ChatImageZoomVC: UIViewController, UIScrollViewDelegate {
 //        UIImage.loadImage(imageUrl) { (image) in
 //            self.imageView.image = image
 //        }
-        let dispatchQueue = DispatchQueue.main
-        dispatchQueue.async {
-            UIImage.loadImage(self.imageUrl) { (image) in
-                self.imageView.image = image
-            }
-        }
+//        let dispatchQueue = DispatchQueue.main
+//        dispatchQueue.async {
+//            UIImage.loadImage(self.imageUrl) { (image) in
+//                self.imageView.image = image
+//            }
+//        }
+        self.imageView.loadImage(urlString: imageUrl)
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

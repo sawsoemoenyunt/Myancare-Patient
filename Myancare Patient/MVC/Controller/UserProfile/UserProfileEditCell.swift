@@ -14,11 +14,13 @@ class UserProfileEditCell: UICollectionViewCell, UITextFieldDelegate {
     var isFemaleSelected = false
     var bloodOptions = ["A+","O+","B+","AB+","A-","O-","B-", "AB-"]
     
-    lazy var profileImage: UIImageView = {
-        let img = UIImageView()
+    lazy var profileImage: CachedImageView = {
+        let img = CachedImageView()
         img.contentMode = .scaleAspectFill
         img.backgroundColor = UIColor.gray
         img.layer.cornerRadius = 40 //80
+        img.layer.borderWidth = 0.5
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
         img.clipsToBounds = true
         img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(profileImageClick)))
         img.isUserInteractionEnabled = true

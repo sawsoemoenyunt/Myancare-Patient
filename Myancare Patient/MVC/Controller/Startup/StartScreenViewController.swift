@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyGif
+import Alamofire
 
 /// Start Screen View Controller with Animated gif logo
 class StartScreenViewController: UIViewController, SwiftyGifDelegate {
@@ -31,6 +32,14 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
         
         //init gif
         initGifPlayer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if let token = UserDefaults.standard.getToken(){
+            print("Login token : \(token)")
+            jwtTkn = "Bearer \(token)"
+        }
     }
     
     /**
@@ -67,12 +76,78 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
 //        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: homeViewController))
         
-        if UserDefaults.standard.isLoggedIn(){
-            print("User already logged in")
-            UtilityClass.switchToHomeViewController()
-        } else {
-            print("User didn't logged in")
-            UtilityClass.changeRootViewController(with: LanguageViewController())
+        self.updateDeviceToken { (res) in
+            if res{
+                if UserDefaults.standard.isLoggedIn(){
+                    print("User already logged in")
+                    UtilityClass.switchToHomeViewController()
+                } else {
+                    print("User didn't logged in")
+                    UtilityClass.changeRootViewController(with: LanguageViewController())
+                }
+            }
+            return
+        }
+    }
+    
+    func updateDeviceToken(result: @escaping (Bool)-> ()){
+        if let deviceToken = UserDefaults.standard.getPushyToken(){
+            let url = EndPoints.updateDeviceToken.path
+            let params = ["device_token":"\(deviceToken)", "app_version" : "3.0.0"]
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                let status = response.response?.statusCode
+                print("Update device token response status : \(status ?? 0)")
+                
+                if status == 403 || status == 500{
+                    result(false)
+                    self.logoutDeviceFromServer()
+                    UserDefaults.standard.setToken(value: "")
+                    UserDefaults.standard.setIsLoggedIn(value: false)
+                    UserDefaults.standard.setUserData(value: NSDictionary())
+                    UtilityClass.changeRootViewController(with: LoginViewController())
+                    
+                } else if status == 426 {
+                    result(false)
+                    
+                    print("Update ios app")
+                    self.showUpdateAlert()
+                    
+                } else if status == 200 || status == 201{
+                    result(true)
+                }
+            }
+        }
+    }
+    
+    @objc func showUpdateAlert(){
+        let alert = UIAlertController(title: "Update Available!", message: "Please update MyanCare app!", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "UPDATE", style: UIAlertAction.Style.default, handler: { (action) in
+            print("redirect to app store")
+            if let openUrl = URL(string: "itms://itunes.apple.com/app/apple-store/id1396490288?mt=8"){
+                UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+            }
+            self.showUpdateAlert()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func logoutDeviceFromServer(){
+        if let deviceToken = UserDefaults.standard.getPushyToken(){
+            let url = EndPoints.logout(deviceToken).path
+            let heads = ["Authorization" : "\(jwtTkn)"]
+            Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
+                
+                switch response.result{
+                case .success:
+                    let statusCode = response.response?.statusCode
+                    if statusCode == 200 || statusCode == 201{
+                        print("Logout success")
+                    }
+                case .failure(let error):
+                    print("\(error)")
+                }
+            }
         }
     }
     

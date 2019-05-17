@@ -199,7 +199,12 @@ extension PatientFeedbackVC{
                 if statusCode == 200 || statusCode == 201{
                     let alert = UIAlertController(title: "Success", message: "Your feedback was successfully send!", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (response) in
-                        self.navigationController?.popViewController(animated: true)
+//                        self.navigationController?.popViewController(animated: true)
+                        let layout = UICollectionViewFlowLayout()
+                        let homeVC = HomeViewController(collectionViewLayout:layout)
+                        let navController = UINavigationController(rootViewController: homeVC)
+                        homeVC.pushToVC(vc: AppointmentListViewController())
+                        UtilityClass.changeRootViewController(with: navController)
                     }))
                     self.present(alert, animated: true, completion: nil)
                     

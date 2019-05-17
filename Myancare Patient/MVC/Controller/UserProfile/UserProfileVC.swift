@@ -111,10 +111,11 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.heightTextField.text = "\(userData.height!.replacingOccurrences(of: ".", with: "'"))"
         cell.weightTextField.text = "\(userData.weight!)"
         cell.bloodtypeTextField.text = "\(userData.bloodType!)"
-        UIImage.loadImage(userData.image_url!) { (image) in
-            cell.profileImage.image = image   
-        }
+//        UIImage.loadImage(userData.image_url!) { (image) in
+//            cell.profileImage.image = image
+//        }
         
+        cell.profileImage.loadImage(urlString: userData.image_url!)
         cell.phoneUserIDTextField.isEnabled = false
         cell.nameTextField.isEnabled = false
         cell.dobTextField.isEnabled = false

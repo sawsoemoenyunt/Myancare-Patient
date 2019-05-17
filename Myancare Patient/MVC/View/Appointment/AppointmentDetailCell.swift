@@ -19,9 +19,10 @@ class AppointmentDetailCell: UICollectionViewCell {
                     doctorNameLabel.text = docName
                 }
                 if let docImage = data.doctor?.object(forKey: "image_url") as? String{
-                    UIImage.loadImage(docImage) { (image) in
-                        self.doctorImage.image = image
-                    }
+//                    UIImage.loadImage(docImage) { (image) in
+//                        self.doctorImage.image = image
+//                    }
+                    self.doctorImage.loadImage(urlString: docImage)
                 }
                 
                 statusBtn.setTitle("\(data.booking_status)", for: .normal)
@@ -71,8 +72,8 @@ class AppointmentDetailCell: UICollectionViewCell {
         return v
     }()
     
-    lazy var doctorImage: UIImageView = {
-        let img = UIImageView()
+    lazy var doctorImage: CachedImageView = {
+        let img = CachedImageView()
         img.contentMode = .scaleAspectFill
         img.backgroundColor = UIColor.gray
         img.layer.cornerRadius = 25 //size 50

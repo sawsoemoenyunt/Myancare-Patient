@@ -13,7 +13,7 @@ class MoreCollectionViewEditProfileCell: UICollectionViewCell {
     
     let namelabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Pablo Escobar"
+        lbl.text = "User Name"
         lbl.font = UIFont.MyanCareFont.type1
         lbl.textColor = UIColor.black
         return lbl
@@ -27,10 +27,11 @@ class MoreCollectionViewEditProfileCell: UICollectionViewCell {
         return lbl
     }()
     
-    let icon: UIImageView = {
-        let img = UIImageView()
+    let icon: CachedImageView = {
+        let img = CachedImageView()
         img.contentMode = .scaleAspectFill
         img.image = #imageLiteral(resourceName: "pablo-profile")
+        img.backgroundColor = UIColor.gray
         return img
     }()
     

@@ -55,6 +55,8 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         UserDefaults.standard.setToken(value: "")
         UserDefaults.standard.setIsLoggedIn(value: false)
         UserDefaults.standard.setUserData(value: NSDictionary())
+        jwtTkn = ""
+        UIApplication.shared.applicationIconBadgeNumber = 0
         UtilityClass.changeRootViewController(with: LoginViewController())
     }
     
@@ -268,9 +270,10 @@ extension MoreViewController: UICollectionViewDataSource, UICollectionViewDelega
                     profilecell.namelabel.text = userName
             }
             if let image_url = UserDefaults.standard.getUserData().object(forKey: "image_url") as? String{
-                UIImage.loadImage(image_url) { (image) in
-                    profilecell.icon.image = image
-                }
+//                UIImage.loadImage(image_url) { (image) in
+//                    profilecell.icon.image = image
+//                }
+                profilecell.icon.loadImage(urlString: image_url)
             }
             
             

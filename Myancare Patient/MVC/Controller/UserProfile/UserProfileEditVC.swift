@@ -205,9 +205,6 @@ class UserProfileEditVC: UIViewController, UITextFieldDelegate, NVActivityIndica
         } else if email == ""{
             print("email required")
             result = false
-        } else if gender == ""{
-            print("gender required")
-            result = false
         } else if height == ""{
             print("height required")
             result = false
@@ -419,9 +416,10 @@ extension UserProfileEditVC: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.heightTextField.text = "\(userData.height!.replacingOccurrences(of: ".", with: "'"))"
         cell.weightTextField.text = "\(userData.weight!)"
         cell.bloodtypeTextField.text = "\(userData.bloodType!)"
-        UIImage.loadImage(userData.image_url!) { (image) in
-            cell.profileImage.image = image
-        }
+//        UIImage.loadImage(userData.image_url!) { (image) in
+//            cell.profileImage.image = image
+//        }
+        cell.profileImage.loadImage(urlString: userData.image_url!)
         cell.setUerInfo()
         
         return cell

@@ -13,11 +13,13 @@ class ProfileCell: UICollectionViewCell, UITextFieldDelegate {
     var userProfileVC:UserProfileVC?
     var isFemaleSelected = false
     
-    let profileImage: UIImageView = {
-        let img = UIImageView()
+    let profileImage: CachedImageView = {
+        let img = CachedImageView()
         img.contentMode = .scaleAspectFill
         img.backgroundColor = UIColor.gray
         img.layer.cornerRadius = 40 //80
+        img.layer.borderWidth = 0.5
+        img.layer.borderColor = UIColor.MyanCareColor.darkGray.cgColor
         img.clipsToBounds = true
         return img
     }()

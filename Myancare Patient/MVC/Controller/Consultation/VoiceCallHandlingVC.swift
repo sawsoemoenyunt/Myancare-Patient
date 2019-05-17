@@ -48,8 +48,8 @@ class VoiceCallHandlingVC: SINUIViewController, SINCallDelegate {
         self.call?.delegate = self
     }
     
-    let doctorImage: UIImageView = {
-        let img = UIImageView()
+    let doctorImage: CachedImageView = {
+        let img = CachedImageView()
         img.image = UIImage(named: "pablo-image")
         img.contentMode = .scaleAspectFill
         img.backgroundColor = UIColor.gray
@@ -225,17 +225,19 @@ extension VoiceCallHandlingVC{
                 self.doctornamelabel.text = dicData!["CALLER_NAME"] as? String
                 self.doctorID = (dicData!["CALL_ID"] as? String)!
                 
-                UIImage.loadImage((dicData!["CALLER_IMAGE"] as? String)!) { (image) in
-                    self.doctorImage.image = image
-                }
+//                UIImage.loadImage((dicData!["CALLER_IMAGE"] as? String)!) { (image) in
+//                    self.doctorImage.image = image
+//                }
+                self.doctorImage.loadImage(urlString: (dicData!["CALLER_IMAGE"] as? String)!)
                 
             } else if(pushDict != nil){
                 self.doctornamelabel.text = pushDict["CALLER_NAME"] as? String
                 self.doctorID = (pushDict["CALL_ID"] as? String)!
                 
-                UIImage.loadImage((dicData!["CALLER_IMAGE"] as? String)!) { (image) in
-                    self.doctorImage.image = image
-                }
+//                UIImage.loadImage((dicData!["CALLER_IMAGE"] as? String)!) { (image) in
+//                    self.doctorImage.image = image
+//                }
+                self.doctorImage.loadImage(urlString: (dicData!["CALLER_IMAGE"] as? String)!)
                 
             } else{
                 self.doctornamelabel.text = self.call?.remoteUserId

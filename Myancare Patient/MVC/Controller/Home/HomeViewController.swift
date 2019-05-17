@@ -26,7 +26,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     func updateDeviceToken(){
         if let deviceToken = UserDefaults.standard.getPushyToken(){
             let url = EndPoints.updateDeviceToken.path
-            let params = ["device_token":"\(deviceToken)"]
+            let params = ["device_token":"\(deviceToken)", "app_version" : "3.0.0"]
             let heads = ["Authorization" : "\(jwtTkn)"]
             Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
                 let status = response.response?.statusCode
@@ -37,7 +37,19 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                     UserDefaults.standard.setToken(value: "")
                     UserDefaults.standard.setIsLoggedIn(value: false)
                     UserDefaults.standard.setUserData(value: NSDictionary())
+                    jwtTkn = ""
                     UtilityClass.changeRootViewController(with: LoginViewController())
+                } else if status == 426{
+                    print("Update ios app")
+
+                    let alert = UIAlertController(title: "Update Available!", message: "Please update MyanCare app!", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "UPDATE", style: UIAlertAction.Style.default, handler: { (action) in
+                        print("redirect to app store")
+                        if let openUrl = URL(string: "itms://itunes.apple.com/app/apple-store/id1396490288?mt=8"){
+                            UIApplication.shared.open(openUrl, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -91,6 +103,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        self.todayAppointmentArr.removeAll()
+        self.collectionView.reloadData()
+        
         setupViews()
         
         ///MARK : CHANGE LATER
@@ -283,6 +299,7 @@ extension HomeViewController{
     }
     
     func getAppointments(){
+        
 //        self.startAnimating()
         let url = EndPoints.getAppointment.path
         
@@ -296,15 +313,18 @@ extension HomeViewController{
                 print("Status code : \(status ?? 0)")
                 
                 if status == 200{
-                    var appointmentarray = [AppointmentModel]()
-                    if let responseDict = response.result.value as? [String:Any]{
-                        let appointment = AppointmentModel()
-                        appointment.updateModleUsingDict(responseDict)
-                        appointmentarray.append(appointment)
-                        
+                    DispatchQueue.main.async {
+                        var appointmentarray = [AppointmentModel]()
+                        if let responseDict = response.result.value as? [String:Any]{
+                            let appointment = AppointmentModel()
+                            appointment.updateModleUsingDict(responseDict)
+                            appointmentarray.append(appointment)
+                            
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){  self.todayAppointmentArr = appointmentarray
+                            self.collectionView.reloadData()
+                        }
                     }
-                    self.todayAppointmentArr = appointmentarray
-                    self.collectionView.reloadData()
                 } else {
                     print("Record not found!")
                 }

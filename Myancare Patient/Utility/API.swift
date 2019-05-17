@@ -78,6 +78,7 @@ enum EndPoints : ApiEndpoint {
     case setAppointmentReject
     case setAppointmentReschedule
     case setAppointmentCancel
+    case getChatRemainDate(String)
     
     var path: URL
     {
@@ -194,6 +195,8 @@ enum EndPoints : ApiEndpoint {
             return URL(string: String(baseURLString+"appointments/cancel"))!
         case .setAppointmentReschedule:
             return URL(string: String(baseURLString+"appointments/reschedule"))!
+        case .getChatRemainDate(let roomID):
+            return URL(string: String(baseURLString+"appointments/check/expired?roomid=\(roomID)"))!
         }
     }
 }
