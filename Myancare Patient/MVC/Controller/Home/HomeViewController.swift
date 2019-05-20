@@ -126,6 +126,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
             print("WORK HERE Home")
             SocketManagerHandler.sharedInstance().connectSocket { (data, emit) in
+                print("Socket connected")
                 print(data)
                 print(emit)
             }

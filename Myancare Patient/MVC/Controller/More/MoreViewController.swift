@@ -55,13 +55,18 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         
         print("Socket stauts : \(SocketManagerHandler.sharedInstance().isSocketConnected())")
         
-        self.logoutDeviceFromServer()
-        UserDefaults.standard.setToken(value: "")
-        UserDefaults.standard.setIsLoggedIn(value: false)
-        UserDefaults.standard.setUserData(value: NSDictionary())
-        jwtTkn = ""
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
+        if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
+            self.logoutDeviceFromServer()
+            UserDefaults.standard.setToken(value: "")
+            UserDefaults.standard.setIsLoggedIn(value: false)
+            UserDefaults.standard.setUserData(value: NSDictionary())
+            jwtTkn = ""
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
+        } else {
+            self.showAlert(title: "Alert", message: "Failed to logout!")
+        }
+        
     }
     
     @objc func logoutDeviceFromServer(){

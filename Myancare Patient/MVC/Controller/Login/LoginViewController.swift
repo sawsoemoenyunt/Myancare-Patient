@@ -165,8 +165,10 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
             switch response.result{
             case .success:
                 
-                //disconnect socket
-                SocketManagerHandler.sharedInstance().disconnectSocket()
+//                if SocketManagerHandler.sharedInstance().isSocketConnected() == true{
+//                    //disconnect socket
+//                    SocketManagerHandler.sharedInstance().disconnectSocket()
+//                }
                 
                 let responseStatus = response.response?.statusCode
                 print("Response status: \(responseStatus ?? 0)")

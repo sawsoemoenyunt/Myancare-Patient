@@ -138,7 +138,8 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
         UserDefaults.standard.setToken(value: "")
         UserDefaults.standard.setIsLoggedIn(value: false)
         UserDefaults.standard.setUserData(value: NSDictionary())
-        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
+//        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
+        UtilityClass.changeRootViewController(with: LanguageViewController())
     }
     
     @objc func showUpdateAlert(){
