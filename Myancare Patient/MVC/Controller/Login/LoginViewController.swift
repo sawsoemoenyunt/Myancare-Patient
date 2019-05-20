@@ -164,6 +164,10 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
             print("This is requrest url : \(String(describing: response.request))")
             switch response.result{
             case .success:
+                
+                //disconnect socket
+                SocketManagerHandler.sharedInstance().disconnectSocket()
+                
                 let responseStatus = response.response?.statusCode
                 print("Response status: \(responseStatus ?? 0)")
                 
@@ -199,30 +203,35 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
                                                      "updatedAt":user.updatedAt!]
                             UserDefaults.standard.setUserData(value: info)
                             UserDefaults.standard.setIsLoggedIn(value: true)
+                            
                             UtilityClass.switchToHomeViewController()
                         }
                     }
-                } else {
+                } else if responseStatus == 404 || responseStatus == 400 {
                     //register user process here
                     print("RECORD NOT FOUND")
                     if isFB {
+                        print("this is facebook")
                         self.mobileLogin()
                     } else {
-                        if id != ""{
-                            let userInfoVC = UserInformationVC()
-                            userInfoVC.phoneID = id
-                            userInfoVC.countryCode = self.countryCode
-                            userInfoVC.facebookID = self.facebookID
-                            
-                            self.countryCode = ""
-                            self.pohoneID = ""
-                            self.facebookID = ""
-                            
-                            self.navigationController?.pushViewController(userInfoVC, animated: true)
-                        }
+                        print("this is mobile")
+                        let userInfoVC = UserInformationVC()
+                        userInfoVC.phoneID = id
+                        userInfoVC.countryCode = self.countryCode
+                        userInfoVC.facebookID = self.facebookID
+                        
+                        self.countryCode = ""
+                        self.pohoneID = ""
+                        self.facebookID = ""
+                        
+                        self.navigationController?.pushViewController(userInfoVC, animated: true)
+                        
                     }
                     
+                } else {
+                    self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
                 }
+                
             case .failure(let error):
                 print(error)
                 self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
@@ -263,17 +272,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         self.navigationController?.navigationBar.isHidden = true
         setupViews()
         
-        _accountKit.requestAccount {
-            (account, error) -> Void in
-            
-            if let phoneNumber = account?.phoneNumber{
-                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
-                self.countryCode = phoneNumber.countryCode
-                if phoneNumber.phoneNumber != ""{
-                    self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
-                }
-            }
-        }
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -287,6 +286,18 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         super.viewDidAppear(true)
         animateViews()
         showLoading()
+        
+        _accountKit.requestAccount {
+            (account, error) -> Void in
+            
+            if let phoneNumber = account?.phoneNumber{
+                print("phoneNumber \(phoneNumber.countryCode)\(phoneNumber.phoneNumber)")
+                self.countryCode = phoneNumber.countryCode
+                if phoneNumber.phoneNumber != ""{
+                    self.ischeckFB(isFB: false, id: "\(phoneNumber.phoneNumber)")
+                }
+            }
+        }
     }
     
     /**

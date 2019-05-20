@@ -18,6 +18,8 @@ enum AppointmentChangeType{
     case reschedule
 }
 
+var appointment_EndTime_MilliSecond = 0
+
 class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
@@ -98,6 +100,12 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(showRetryCompleteAlertAction), name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil)
+        
+        let date = Date().millisecondsSince1970
+        let sum = appointmentData.slotEndTime! - date
+        print("current \(date)")
+        print("slotend \(appointmentData.slotEndTime!)")
+        print("Diff \(sum)")
     }
     
     func setupViews(){
@@ -289,6 +297,9 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         if let receiveImage = appointmentData.doctor?.object(forKey: "image_url") as? String{
             receiverImage = receiveImage
         }
+        
+        //set appointment end time for call drop
+        appointment_EndTime_MilliSecond = appointmentData.slotEndTime!
         
         //start conversation chat, voice, video
         let myDictOfDict = [

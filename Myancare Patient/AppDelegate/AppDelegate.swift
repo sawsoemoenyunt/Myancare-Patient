@@ -78,10 +78,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UICollectionViewDelegateF
         registerPushyDevice()
         
         //connect socket
-        SocketManagerHandler.sharedInstance().connectSocket { (dataArray, socAck) in
-            print(dataArray)
-            print(socAck)
-        }
+//        if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
+//            print("WORK HERE APPDELEGATE")
+//            SocketManagerHandler.sharedInstance().connectSocket { (data, emit) in
+//                print(data)
+//                print(emit)
+//            }
+//        }
         
         //update user data
         if UserDefaults.standard.isLoggedIn(){

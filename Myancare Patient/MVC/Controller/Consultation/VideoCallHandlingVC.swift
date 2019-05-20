@@ -708,9 +708,16 @@ extension VideoCallHandlingVC
             self.call?.hangup()
             self.dismiss()
             
-        } else if (seconds == 800){
+        }
+        
+        let current_milliSecond = Date().millisecondsSince1970
+        
+        if current_milliSecond == appointment_EndTime_MilliSecond{
+            self.call?.hangup()
+            self.dismiss()
+        } else if current_milliSecond == appointment_EndTime_MilliSecond - 120000{
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            self.showAlert(title: "Warning", message: "Consultation will end in next 2 mins")
+            self.showAlert(title: "Warning", message: "Consultation will end in next 2 minutes!")
         }
     }
     

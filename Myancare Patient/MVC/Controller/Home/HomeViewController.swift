@@ -34,11 +34,12 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                 
                 if status == 403 || status == 500{
                     self.logoutDeviceFromServer()
+                    SocketManagerHandler.sharedInstance().disconnectSocket()
                     UserDefaults.standard.setToken(value: "")
                     UserDefaults.standard.setIsLoggedIn(value: false)
                     UserDefaults.standard.setUserData(value: NSDictionary())
                     jwtTkn = ""
-                    UtilityClass.changeRootViewController(with: LoginViewController())
+                    UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
                 } else if status == 426{
                     print("Update ios app")
 
@@ -99,6 +100,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         UNUserNotificationCenter.current().delegate = self
         updateDeviceToken()
         initSinch()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +122,15 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidAppear(true)
         self.title = "Welcome".localized()
         setupNavBarItems()
+        
+        if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
+            print("WORK HERE Home")
+            SocketManagerHandler.sharedInstance().connectSocket { (data, emit) in
+                print(data)
+                print(emit)
+            }
+        }
+        
         getDoctors(.recommand)
         getDoctors(.favourite)
         getAppointments()

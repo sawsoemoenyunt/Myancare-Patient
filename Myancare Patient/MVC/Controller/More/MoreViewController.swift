@@ -51,13 +51,17 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     
     @objc func signOutButtonClick(){
         //logout user and delete token from userdefaults
+        SocketManagerHandler.sharedInstance().disconnectSocket()
+        
+        print("Socket stauts : \(SocketManagerHandler.sharedInstance().isSocketConnected())")
+        
         self.logoutDeviceFromServer()
         UserDefaults.standard.setToken(value: "")
         UserDefaults.standard.setIsLoggedIn(value: false)
         UserDefaults.standard.setUserData(value: NSDictionary())
         jwtTkn = ""
         UIApplication.shared.applicationIconBadgeNumber = 0
-        UtilityClass.changeRootViewController(with: LoginViewController())
+        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
     }
     
     @objc func logoutDeviceFromServer(){

@@ -76,6 +76,7 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     @objc func onDidReceiveData(_ notification:Notification){
+        
         if let data = notification.userInfo as? [String:[ChatRoomModel]]{
             for (key, dataArr) in data{
                 print("\(key)")
@@ -112,6 +113,7 @@ extension ChatListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
         
         if isPaging && indexPath.row == roomList.count - 1 {
+            
             self.getRooms()
         }
         

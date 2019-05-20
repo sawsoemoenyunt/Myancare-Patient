@@ -84,7 +84,7 @@ class ReasonVC: UIViewController, NVActivityIndicatorViewable {
             let invoiceVC = InvoiceViewController()
             self.navigationController?.pushViewController(invoiceVC, animated: true)
         } else {
-            self.showAlert(title: "Reason text required!".localized(), message: "Please fill reason for visit.")
+            self.showAlert(title: "Reason text required!", message: "Please fill reason for visit.")
         }
     }
     

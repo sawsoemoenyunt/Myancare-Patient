@@ -15,9 +15,9 @@ import NVActivityIndicatorView
 class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     let cellID = "cellID"
-    var profileImage = UIImage(named: "pablo-profile")
+    var profileImage = UIImage(named: "no-image")
     
-    var countryCode = "95"
+    var countryCode = ""
     var phoneID = ""
     var name = ""
     var dob = ""

@@ -83,6 +83,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
                     UtilityClass.switchToHomeViewController()
                 } else {
                     print("User didn't logged in")
+//                    UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
                     UtilityClass.changeRootViewController(with: LanguageViewController())
                 }
             }
@@ -96,37 +97,48 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
             let params = ["device_token":"\(deviceToken)", "app_version" : "3.0.0"]
             let heads = ["Authorization" : "\(jwtTkn)"]
             Alamofire.request(url, method: HTTPMethod.put, parameters: params, encoding: JSONEncoding.default, headers: heads).responseJSON { (response) in
-                let status = response.response?.statusCode
-                print("Update device token response status : \(status ?? 0)")
                 
-                if status == 403 || status == 500{
-                    result(false)
-                    self.logoutDeviceFromServer()
-                    UserDefaults.standard.setToken(value: "")
-                    UserDefaults.standard.setIsLoggedIn(value: false)
-                    UserDefaults.standard.setUserData(value: NSDictionary())
-                    jwtTkn = ""
-                    UtilityClass.changeRootViewController(with: LoginViewController())
+                switch response.result{
+                case .success:
+                    let status = response.response?.statusCode
+                    print("Update device token response status : \(status ?? 0)")
                     
-                } else if status == 426 {
-                    result(false)
+                    if status == 403 || status == 500{
+                        self.removeData()
+                        result(false)
+                        
+                    } else if status == 426 {
+                        print("Update ios app")
+                        self.showUpdateAlert()
+                        result(false)
+                        
+                    } else if status == 200 || status == 201{
+                        result(true)
+                        
+                    } else {
+                        self.removeData()
+                        result(false)
+                    }
                     
-                    print("Update ios app")
-                    self.showUpdateAlert()
-                    
-                } else if status == 200 || status == 201{
-                    result(true)
-                } else {
+                case .failure(let error):
+                    print("\(error)")
+                    self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
+                    self.removeData()
                     result(false)
-                    self.logoutDeviceFromServer()
-                    UserDefaults.standard.setToken(value: "")
-                    UserDefaults.standard.setIsLoggedIn(value: false)
-                    UserDefaults.standard.setUserData(value: NSDictionary())
-                    jwtTkn = ""
-                    UtilityClass.changeRootViewController(with: LoginViewController())
                 }
+                
             }
         }
+    }
+    
+    func removeData(){
+        SocketManagerHandler.sharedInstance().disconnectSocket()
+        self.logoutDeviceFromServer()
+        jwtTkn = ""
+        UserDefaults.standard.setToken(value: "")
+        UserDefaults.standard.setIsLoggedIn(value: false)
+        UserDefaults.standard.setUserData(value: NSDictionary())
+        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
     }
     
     @objc func showUpdateAlert(){
@@ -155,6 +167,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
                     }
                 case .failure(let error):
                     print("\(error)")
+                    self.showAlert(title: "Something went wrong!".localized(), message: "The connection to the server failed!".localized())
                 }
             }
         }

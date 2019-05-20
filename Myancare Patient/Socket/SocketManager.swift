@@ -74,9 +74,9 @@ class SocketManagerHandler: NSObject {
         let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         print("Socket server url : \(urlString!)")
-        if let jwTToken = UserDefaults.standard.getToken(){
-            jwtTkn = "Bearer \(jwTToken)"
-        }
+//        if let jwTToken = UserDefaults.standard.getToken(){
+//            jwtTkn = "Bearer \(jwTToken)"
+//        }
         
         socketMngr = SocketManager(socketURL: URL(string: "\(urlString!)")!, config: [.log(true),.compress])
         socketMngr?.config = SocketIOClientConfiguration(
@@ -92,6 +92,7 @@ class SocketManagerHandler: NSObject {
     //MARK:- Disconnect Socket Method
     func disconnectSocket()
     {
+        socket?.removeAllHandlers()
         socket?.disconnect()
         socketMngr?.disconnect()
     }
