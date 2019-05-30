@@ -399,7 +399,7 @@ class UserInformationVC: UIViewController, UITextFieldDelegate, NVActivityIndica
                                                      "_id":user._id!,
                                                      "createdAt":user.createdAt!,
                                                      "gender":user.gender!,
-                                                     "dob":user.gender!,
+                                                     "dob":user.dob!,
                                                      "email":user.email!,
                                                      "mobile":user.mobile!,
                                                      "blood_type":user.bloodType!,

@@ -79,7 +79,10 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
             } else if indexPath.row == 3{
                 additionalCell.iconImage.image = UIImage(named: "info-yellow")
                 additionalCell.titleLabel.text = "ကိုယ်ရေးအကျဥ်း"
-                additionalCell.bodyLabel.text = "\(doctorData.biography!)"
+//                additionalCell.bodyLabel.text = "\(doctorData.biography!)"
+                if let htmlString = doctorData.biography!.htmlToAttributedString{
+                    additionalCell.bodyLabel.text = "\(htmlString.string)"
+                }
                 
             } else if indexPath.row == 4{
                 additionalCell.iconImage.image = UIImage(named: "language-green")

@@ -42,6 +42,7 @@ class AppointmentListViewController: UIViewController, NVActivityIndicatorViewab
         sg.layer.borderWidth = 2
         sg.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         sg.layer.borderColor = UIColor(red:0.51, green:0.75, blue:0.35, alpha:1).cgColor
+        sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.MyanCareColor.green, NSAttributedString.Key.font:UIFont.MyanCareFont.type6], for: .normal)
         sg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font:UIFont.MyanCareFont.type6], for: .selected)
         sg.addTarget(self, action: #selector(handleSegment), for: .valueChanged)
         return sg

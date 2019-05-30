@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PatientInfoCell: UICollectionViewCell {
+class PatientInfoCell: UICollectionViewCell, UITextFieldDelegate {
     
     var ehrVC : EHRListVC?
     var bmiInfoData : BMIModel?{
@@ -39,6 +39,7 @@ class PatientInfoCell: UICollectionViewCell {
         tf.placeholder = "Feet"
         tf.borderStyle = .roundedRect
         tf.keyboardType = .numberPad
+        tf.delegate = self
         return tf
     }()
     
@@ -87,6 +88,7 @@ class PatientInfoCell: UICollectionViewCell {
         tf.placeholder = ""
         tf.borderStyle = .roundedRect
         tf.keyboardType = .numberPad
+        tf.delegate = self
         return tf
     }()
     
@@ -103,6 +105,7 @@ class PatientInfoCell: UICollectionViewCell {
         tf.placeholder = ""
         tf.borderStyle = .roundedRect
         tf.keyboardType = .numberPad
+        tf.delegate = self
         return tf
     }()
     
@@ -127,6 +130,7 @@ class PatientInfoCell: UICollectionViewCell {
         tf.placeholder = "lbs"
         tf.borderStyle = .roundedRect
         tf.keyboardType = .numberPad
+        tf.delegate = self
         return tf
     }()
     
@@ -223,6 +227,21 @@ class PatientInfoCell: UICollectionViewCell {
         bmiButton.anchor(weightTextField.bottomAnchor, left: bmiLabel.rightAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 70, heightConstant: 50)
         
         lineView.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        
+        if textField == feetTextField{
+            return count < 2
+        } else {
+            return count <= 3
+        }
     }
     
     override init(frame: CGRect) {

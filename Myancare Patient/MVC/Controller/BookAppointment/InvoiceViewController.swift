@@ -199,7 +199,8 @@ extension InvoiceViewController{
     
     func uploadSheets(_ recordBookID:String){
         let url = EndPoints.addSheet.path
-        imageKeys.removeAll {$0 == ""}
+//        imageKeys.removeAll {$0 == ""}
+        
         let params = ["medicalbook_id" : recordBookID,
         "image" : imageKeys] as [String:Any]
         let heads = ["Authorization":"\(jwtTkn)"]

@@ -9,9 +9,10 @@
 import UIKit
 import SwiftyGif
 import Alamofire
+import NVActivityIndicatorView
 
 /// Start Screen View Controller with Animated gif logo
-class StartScreenViewController: UIViewController, SwiftyGifDelegate {
+class StartScreenViewController: UIViewController, SwiftyGifDelegate, NVActivityIndicatorViewable {
     
     ///Imageview for gif logo
     let logo: UIImageView = {
@@ -70,14 +71,15 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
      */
     func gifDidStop(sender: UIImageView) {
         print("StartScreen : gif file finished animating")
-        
         //switch rootview controller to HomeViewController after gif was finished playing
 //        let layout = UICollectionViewFlowLayout()
 //        let homeViewController =  HomeViewController(collectionViewLayout:layout)
 //        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: homeViewController))
         
         self.updateDeviceToken { (res) in
+            print("work here")
             if res{
+                print("here")
                 if UserDefaults.standard.isLoggedIn(){
                     print("User already logged in")
                     UtilityClass.switchToHomeViewController()
@@ -86,12 +88,22 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
 //                    UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
                     UtilityClass.changeRootViewController(with: LanguageViewController())
                 }
+            } else {
+                print("hola")
             }
             return
+        }
+        
+        if !UserDefaults.standard.isLoggedIn(){
+            print("work without check")
+            UtilityClass.changeRootViewController(with: LanguageViewController())
         }
     }
     
     func updateDeviceToken(result: @escaping (Bool)-> ()){
+        
+        self.startAnimating()
+        
         if let deviceToken = UserDefaults.standard.getPushyToken(){
             let url = EndPoints.updateDeviceToken.path
             let params = ["device_token":"\(deviceToken)", "app_version" : "3.0.0"]
@@ -126,7 +138,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate {
                     self.removeData()
                     result(false)
                 }
-                
+                self.stopAnimating()
             }
         }
     }

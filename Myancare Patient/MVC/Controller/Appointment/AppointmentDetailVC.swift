@@ -100,12 +100,6 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(showRetryCompleteAlertAction), name: Notification.Name.didReceiveNotiToShowConfirmRetryForFeedback, object: nil)
-        
-        let date = Date().millisecondsSince1970
-        let sum = appointmentData.slotEndTime! - date
-        print("current \(date)")
-        print("slotend \(appointmentData.slotEndTime!)")
-        print("Diff \(sum)")
     }
     
     func setupViews(){

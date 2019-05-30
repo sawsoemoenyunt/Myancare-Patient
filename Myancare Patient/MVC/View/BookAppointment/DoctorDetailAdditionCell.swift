@@ -21,7 +21,7 @@ class DoctorDetailAdditionCell: UICollectionViewCell{
         let lbl = UILabel()
         lbl.text = "Title"
         //        lbl.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        lbl.font = UIFont.mmFontBold(ofSize: 16)
+        lbl.font = UIFont.MyanCareFont.type2
         return lbl
     }()
     
@@ -29,7 +29,7 @@ class DoctorDetailAdditionCell: UICollectionViewCell{
         let lbl = UILabel()
         lbl.text = "-"
         //        lbl.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        lbl.font = UIFont.mmFontRegular(ofSize: 12)
+        lbl.font = UIFont.MyanCareFont.type4
         lbl.numberOfLines = 0
         //        lbl.textColor = UIColor.gray
         return lbl

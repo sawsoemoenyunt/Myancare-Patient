@@ -119,6 +119,9 @@ class ReasonVC: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageKeys = ["", "", "", "", "", "", "", ""]
+        
         setupViews()
         collectionView.register(ReasonImageCell.self, forCellWithReuseIdentifier: cellID)
         getServiceFees()
@@ -174,7 +177,7 @@ extension ReasonVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
+//        selectedIndex = indexPath.row
         print("cell clicked")
     }
 }
@@ -280,6 +283,7 @@ extension ReasonVC{
             case 200:
                 print("Image uploaded to s3 success...")
                 imageKeys[self.selectedIndex] = self.imageKey
+                print("\(imageKeys)")
             default:
                 print("Failed uploading Image to s3...")
                 self.imageList[self.selectedIndex] = UIImage()
