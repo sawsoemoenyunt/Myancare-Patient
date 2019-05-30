@@ -318,6 +318,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             //call voice
             if(self.client().isStarted())
             {
+                SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentData.id!, eventType: SocketManageCallEventKeyword.callEventPatientCall.rawValue, callDuration: 0)
+                
                 weak var call: SINCall? = self.client().call().callUser(withId:receiverID,headers: myDictOfDict as [AnyHashable : Any])
                 
                 ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)
@@ -328,6 +330,8 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
             print("video call")
             if(self.client().isStarted())
             {
+                SocketManagerHandler.sharedInstance().emitCallLog(appointmentID: appointmentData.id!, eventType: SocketManageCallEventKeyword.callEventPatientCall.rawValue, callDuration: 0)
+                
                 weak var call: SINCall? = self.client().call().callUserVideo(withId:receiverID, headers: myDictOfDict as [AnyHashable : Any])
                 
                 ((UIApplication.shared.delegate as? AppDelegate)?.callKitProvider)?.reportNewOutgoingCall(call)

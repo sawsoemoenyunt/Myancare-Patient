@@ -330,13 +330,14 @@ extension VoiceCallHandlingVC{
     ///
     /// - Parameter sender: Mute/UnMute Button Refrence
     @objc func muteUnmute(_ sender: Any){
-        if(isMute){
-            isMute = false
+        isMute = !isMute
+        if(!isMute){
+//            isMute = false
             self.audioController().unmute()
             self.muteBtn.setImage(#imageLiteral(resourceName: "icons8-microphone").withRenderingMode(.alwaysTemplate), for: .normal)
             
         } else {
-            isMute = true
+//            isMute = true
             self.audioController().mute()
             self.muteBtn.setImage(#imageLiteral(resourceName: "icons8-no_microphone").withRenderingMode(.alwaysTemplate), for: .normal)
         }
@@ -346,15 +347,16 @@ extension VoiceCallHandlingVC{
     ///
     /// - Parameter sender: Speaker On/Off Button Refrence
     @objc func speaker(_ sender: Any){
+        isSpeaker = !isSpeaker
         if(isSpeaker)
         {
-            isSpeaker = false
+//            isSpeaker = false
             self.audioController().enableSpeaker()
             self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-speaker").withRenderingMode(.alwaysTemplate), for: .normal)
         }
         else
         {
-            isSpeaker = true
+//            isSpeaker = true
             self.audioController().disableSpeaker()
             self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
         }
