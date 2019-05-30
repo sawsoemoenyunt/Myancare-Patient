@@ -44,7 +44,24 @@ class SelectBookVC: UIViewController, NVActivityIndicatorViewable {
     }()
     
     @objc func shareButtonClick(){
-        shareMedicalBooks()
+        
+        if bookIDArray.count == 0{
+            let alert = UIAlertController(title: "Alert", message: "Continue without sharing medical books?", preferredStyle: UIAlertController.Style.alert)
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                //dismiss
+            }))
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                //redirect to homeview controller
+                UtilityClass.switchToHomeViewController()
+            }))
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+            shareMedicalBooks()
+        }
     }
     
     override func viewDidLoad() {
@@ -164,7 +181,7 @@ extension SelectBookVC{
             case .success:
                 let responseStatus = response.response?.statusCode
                 if responseStatus == 200 || responseStatus == 201{
-                    let alert = UIAlertController(title: "Success", message: "Your selected medical record books shared to \(bookAppointmentData.doctor_name!)", preferredStyle: UIAlertController.Style.alert)
+                    let alert = UIAlertController(title: "Success", message: "Your medical record books shared to \(bookAppointmentData.doctor_name!)", preferredStyle: UIAlertController.Style.alert)
                     // add an action (button)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                         //redirect to homeview controller

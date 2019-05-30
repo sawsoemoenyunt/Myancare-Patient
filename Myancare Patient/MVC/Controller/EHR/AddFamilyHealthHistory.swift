@@ -77,6 +77,7 @@ class AddFamilyHistory: UIViewController, UICollectionViewDelegate, UICollection
         tf.placeholder = "Relation"
         tf.borderStyle = .roundedRect
         tf.returnKeyType = .done
+        tf.font = UIFont.MyanCareFont.type4
         tf.inputView = relativePicker
         return tf
     }()
@@ -172,14 +173,25 @@ extension AddFamilyHistory: UIPickerViewDelegate, UIPickerViewDataSource{
         return relativeTypeList.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return relativeTypeList[row]
-    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return relativeTypeList[row]
+//    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         self.yearTextField.text = relativeTypeList[row]
         self.ehrVC?.familyHistory[row].data = yearTextField.text!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil{
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.MyanCareFont.type1
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = relativeTypeList[row]
+        return pickerLabel!
     }
 }
 
@@ -296,14 +308,25 @@ extension AddFamilyHistoryCell: UIPickerViewDelegate, UIPickerViewDataSource{
         return relativeTypeList.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return relativeTypeList[row]
-    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return relativeTypeList[row]
+//    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         self.yearTextField.text = relativeTypeList[row]
         self.ehrVC?.familyHistory[index!].data = yearTextField.text!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil{
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.MyanCareFont.type1
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.text = relativeTypeList[row]
+        return pickerLabel!
     }
 }
 
