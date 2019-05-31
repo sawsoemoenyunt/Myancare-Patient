@@ -92,8 +92,8 @@ class SocketManagerHandler: NSObject {
     //MARK:- Disconnect Socket Method
     func disconnectSocket()
     {
-        socket?.removeAllHandlers()
         socket?.disconnect()
+        socket?.removeAllHandlers()
         socketMngr?.disconnect()
     }
     

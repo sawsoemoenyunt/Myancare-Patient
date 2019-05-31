@@ -259,6 +259,9 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        removeData()
+        print("Jwtf : \(jwtTkn)")
+        
         self.navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .white
         collectionView.register(WalkthroughCell.self, forCellWithReuseIdentifier: cellID)
@@ -267,6 +270,14 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
             _accountKit = AKFAccountKit(responseType: .accessToken)
         }
         _accountKit.logOut()
+    }
+    
+    func removeData(){
+        SocketManagerHandler.sharedInstance().disconnectSocket()
+        jwtTkn = ""
+        UserDefaults.standard.setToken(value: "")
+        UserDefaults.standard.setIsLoggedIn(value: false)
+        UserDefaults.standard.setUserData(value: NSDictionary())
     }
     
     override func viewWillAppear(_ animated: Bool) {
