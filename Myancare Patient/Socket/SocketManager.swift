@@ -30,7 +30,7 @@ class SocketManagerHandler: NSObject {
     
     //MARK:- SocketClient (Private)
     private var socket : SocketIOClient?
-    private var socketMngr : SocketManager?
+    var socketMngr : SocketManager?
     static let shared = SocketManagerHandler()
     
     //MARK:- Instance Creation (Private)
@@ -40,10 +40,44 @@ class SocketManagerHandler: NSObject {
         return newInstance
     }()
     
+    private override init() {
+        super.init()
+        
+        let url = "http://52.76.5.165:9999/"
+        
+        // Initializing the socket client for socket host
+        socketMngr = SocketManager(socketURL: URL(string: url)!, config: [.log(true), .reconnects(true), .connectParams(["token": "\(jwtTkn)"]), .reconnectAttempts(-1), .forceNew(true), .reconnectWait(1), .compress])
+        
+        socket = socketMngr?.defaultSocket
+        setupErrorListner()
+        setupDisconnectListner()
+    }
+    
     //MARK:- Shared Instance(Global)
     class func sharedInstance() -> SocketManagerHandler {
         return instance
     }
+    
+//    override init() {
+//        super.init()
+//
+////        let url = "http://54.169.8.79/socket.io/"
+////        let url = "https://myancare.org/socket.io/"
+////        let url = "http://159.65.10.176:5500"
+////        let url = "http://192.168.0.140:5500"
+//
+//        let url = "http://52.76.5.165:9999/"
+//        let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//
+//        socketMngr = SocketManager(socketURL: URL(string: "\(urlString!)")!, config: [.log(true),.compress])
+//        socketMngr?.config = SocketIOClientConfiguration(
+//            arrayLiteral: .compress, .connectParams(["token": "\(jwtTkn)"])
+//        )
+//        socket = socketMngr?.defaultSocket
+//
+//        setupErrorListner()
+//        setupDisconnectListner()
+//    }
     
     //MARK:- Connect Socket Method
     func connectSocket(callback:@escaping (_ data:[Any], _ ack:SocketAckEmitter) -> ())
@@ -54,47 +88,60 @@ class SocketManagerHandler: NSObject {
                 print("Connect listner : ", dataArray)
                 
                 callback (dataArray, ack)
+                
+                self.removeAllChatRoomsListener()
+                self.removeChatRecordsListener()
+                self.removeChatMessageListener()
+                self.removeappointmentTimeupListener()
+                
+                self.getAllChatRoomsListener()
+                self.getChatRecordsListener()
+                self.getChatMessageListener()
+                self.appointmentTimeupListener()
         })
-    
+        
         socket?.connect()
-        
-        self.getAllChatRoomsListener()
-        self.getChatRecordsListener()
-        self.getChatMessageListener()
     }
     
-    override init() {
-        super.init()
-        
-//        let url = "http://54.169.8.79/socket.io/"
-//        let url = "https://myancare.org/socket.io/"
-        let url = "http://52.76.5.165:9999/"
-//        let url = "http://159.65.10.176:5500"
-//        let url = "http://192.168.0.140:5500"
-        let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        
-        print("Socket server url : \(urlString!)")
-//        if let jwTToken = UserDefaults.standard.getToken(){
-//            jwtTkn = "Bearer \(jwTToken)"
-//        }
-        
-        socketMngr = SocketManager(socketURL: URL(string: "\(urlString!)")!, config: [.log(true),.compress])
-        socketMngr?.config = SocketIOClientConfiguration(
-            arrayLiteral: .compress, .connectParams(["token": "\(jwtTkn)"])
-        )
-        socket = socketMngr?.defaultSocket
-        
-        setupErrorListner()
-        setupDisconnectListner()
+    func removeAllChatRoomsListener(){
+        if isSocketConnected(){
+            socket?.off("rooms")
+        }
     }
     
+    func removeChatRecordsListener(){
+        if isSocketConnected(){
+            socket?.off("messages")
+        }
+    }
+    
+    func removeChatMessageListener(){
+        if isSocketConnected(){
+            socket?.off("message")
+        }
+    }
+    
+    func removeappointmentTimeupListener(){
+        if isSocketConnected(){
+            socket?.off("appointmentTimeup")
+        }
+    }
     
     //MARK:- Disconnect Socket Method
     func disconnectSocket()
     {
+        self.removeAllChatRoomsListener()
+        self.removeChatRecordsListener()
+        self.removeChatMessageListener()
+        self.removeappointmentTimeupListener()
+        
         socket?.disconnect()
-        socket?.removeAllHandlers()
         socketMngr?.disconnect()
+    }
+    
+    //MARK:- Socket Connection Status
+    func isSocketConnected() -> Bool {
+        return socket!.status == SocketIOStatus.connected
     }
     
     //MARK:- Error Listener
@@ -114,17 +161,6 @@ class SocketManagerHandler: NSObject {
                 print("Disconnect listner : ", dataArray)
         })
     }
-    
-    //MARK:- Socket Connection Status
-    func isSocketConnected() -> Bool {
-        return socket!.status == SocketIOStatus.connected
-    }
-    
-//    func socketErrorListenerFromAPIServer(){
-//        socket?.on("error", callback: { (data, socketAck) in
-//
-//        })
-//    }
     
     func appointmentTimeupListener(){
         socket?.on("appointmentTimeup", callback: { (data, socketAck) in
@@ -209,6 +245,8 @@ class SocketManagerHandler: NSObject {
                     do{
                         if let jsonArray = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [Any]{
                             var chatRoomList = [ChatRoomModel]()
+                            chatRoomList.removeAll()
+                            
                             for data in jsonArray{
                                 if let dataDict = data as? [String:Any]{
                                     let room = ChatRoomModel()

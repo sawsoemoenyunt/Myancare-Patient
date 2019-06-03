@@ -86,6 +86,16 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SocketManagerHandler.sharedInstance().connectSocket
+            {[weak self] (data, ack) in
+                
+                guard self != nil else { return }
+                
+                print("socket connect work")
+                print(data)
+                print(ack)
+        }
+        
         //collectionview
         self.collectionView?.backgroundColor = .white
         self.collectionView?.showsVerticalScrollIndicator = false
@@ -121,17 +131,9 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.title = "Welcome".localized()
+        
+        
         setupNavBarItems()
-        
-        if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
-            print("WORK HERE Home")
-            SocketManagerHandler.sharedInstance().connectSocket { (data, emit) in
-                print("Socket connected")
-                print(data)
-                print(emit)
-            }
-        }
-        
         getDoctors(.recommand)
         getDoctors(.favourite)
         getAppointments()

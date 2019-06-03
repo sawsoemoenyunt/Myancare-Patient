@@ -52,6 +52,16 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        startAnimating()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            self.stopAnimating()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         refreshData()
@@ -69,7 +79,7 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
     }
     
     func getRooms(){
-        let skip = roomList.count > 0 ? roomList.count : 0
+        let skip = roomList.count
         let limit = 10
         SocketManagerHandler.sharedInstance().emitChatRooms(skip: skip, limit: limit)
         
@@ -80,9 +90,11 @@ class ChatListVC: UIViewController, NVActivityIndicatorViewable {
         if let data = notification.userInfo as? [String:[ChatRoomModel]]{
             for (key, dataArr) in data{
                 print("\(key)")
+                
                 for room in dataArr{
                     roomList.append(room)
                 }
+                
                 self.collectionView.reloadData()
                 self.isPaging = dataArr.count > 0 ? true : false
             }

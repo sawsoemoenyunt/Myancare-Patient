@@ -53,9 +53,10 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         //logout user and delete token from userdefaults
         SocketManagerHandler.sharedInstance().disconnectSocket()
         
+        
         print("Socket stauts : \(SocketManagerHandler.sharedInstance().isSocketConnected())")
         
-        if SocketManagerHandler.sharedInstance().isSocketConnected() == false{
+        if !SocketManagerHandler.sharedInstance().isSocketConnected(){
             self.logoutDeviceFromServer()
             UserDefaults.standard.setToken(value: "")
             UserDefaults.standard.setIsLoggedIn(value: false)
@@ -63,6 +64,7 @@ class MoreViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
             jwtTkn = ""
             UIApplication.shared.applicationIconBadgeNumber = 0
             UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: LoginViewController()))
+
         } else {
             self.showAlert(title: "Alert", message: "Failed to logout!")
         }

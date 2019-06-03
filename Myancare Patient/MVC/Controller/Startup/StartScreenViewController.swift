@@ -77,9 +77,7 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate, NVActivity
 //        UtilityClass.changeRootViewController(with: UINavigationController(rootViewController: homeViewController))
         
         self.updateDeviceToken { (res) in
-            print("work here")
             if res{
-                print("here")
                 if UserDefaults.standard.isLoggedIn(){
                     print("User already logged in")
                     UtilityClass.switchToHomeViewController()
@@ -95,7 +93,6 @@ class StartScreenViewController: UIViewController, SwiftyGifDelegate, NVActivity
         }
         
         if !UserDefaults.standard.isLoggedIn(){
-            print("work without check")
             UtilityClass.changeRootViewController(with: LanguageViewController())
         }
     }
