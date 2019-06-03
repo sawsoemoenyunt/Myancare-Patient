@@ -78,7 +78,7 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
                 
             } else if indexPath.row == 3{
                 additionalCell.iconImage.image = UIImage(named: "info-yellow")
-                additionalCell.titleLabel.text = "ကိုယ်ရေးအကျဥ်း"
+                additionalCell.titleLabel.text = "ကိုယ်ရေးအကျဉ်း"
 //                additionalCell.bodyLabel.text = "\(doctorData.biography!)"
                 if let htmlString = doctorData.biography!.htmlToAttributedString{
                     additionalCell.bodyLabel.text = "\(htmlString.string)"

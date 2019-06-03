@@ -42,7 +42,16 @@ class SocketManagerHandler: NSObject {
     
     private override init() {
         super.init()
-        
+    }
+    
+    //MARK:- Shared Instance(Global)
+    class func sharedInstance() -> SocketManagerHandler {
+        return instance
+    }
+    
+    //MARK:- Connect Socket Method
+    func connectSocket(callback:@escaping (_ data:[Any], _ ack:SocketAckEmitter) -> ())
+    {
         let url = "http://52.76.5.165:9999/"
         
         // Initializing the socket client for socket host
@@ -51,37 +60,7 @@ class SocketManagerHandler: NSObject {
         socket = socketMngr?.defaultSocket
         setupErrorListner()
         setupDisconnectListner()
-    }
-    
-    //MARK:- Shared Instance(Global)
-    class func sharedInstance() -> SocketManagerHandler {
-        return instance
-    }
-    
-//    override init() {
-//        super.init()
-//
-////        let url = "http://54.169.8.79/socket.io/"
-////        let url = "https://myancare.org/socket.io/"
-////        let url = "http://159.65.10.176:5500"
-////        let url = "http://192.168.0.140:5500"
-//
-//        let url = "http://52.76.5.165:9999/"
-//        let urlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//
-//        socketMngr = SocketManager(socketURL: URL(string: "\(urlString!)")!, config: [.log(true),.compress])
-//        socketMngr?.config = SocketIOClientConfiguration(
-//            arrayLiteral: .compress, .connectParams(["token": "\(jwtTkn)"])
-//        )
-//        socket = socketMngr?.defaultSocket
-//
-//        setupErrorListner()
-//        setupDisconnectListner()
-//    }
-    
-    //MARK:- Connect Socket Method
-    func connectSocket(callback:@escaping (_ data:[Any], _ ack:SocketAckEmitter) -> ())
-    {
+        
         socket?.on(clientEvent: .connect, callback:
             { (dataArray, ack) in
                 
@@ -130,6 +109,8 @@ class SocketManagerHandler: NSObject {
     //MARK:- Disconnect Socket Method
     func disconnectSocket()
     {
+        
+        print("my socket dc")
         self.removeAllChatRoomsListener()
         self.removeChatRecordsListener()
         self.removeChatMessageListener()

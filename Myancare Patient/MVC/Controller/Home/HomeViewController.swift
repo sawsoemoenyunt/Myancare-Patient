@@ -91,7 +91,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
                 
                 guard self != nil else { return }
                 
-                print("socket connect work")
                 print(data)
                 print(ack)
         }

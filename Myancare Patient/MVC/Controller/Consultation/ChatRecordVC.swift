@@ -369,11 +369,12 @@ extension ChatRecordVC{
         if let data = notification.userInfo as? [String:ChatRecordModel]{
             for (key, message) in data{
                 print("\(key)")
-                self.chatRecords.insert(message, at: 0)
-                self.collectionView.reloadData()
-                
-                if chatRecords.count > 0{
-                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                if self.roomID == message.roomID!{
+                    self.chatRecords.insert(message, at: 0)
+                    self.collectionView.reloadData()
+                    if chatRecords.count > 0{
+                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                    }
                 }
             }
         }

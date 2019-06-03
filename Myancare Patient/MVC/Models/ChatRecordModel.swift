@@ -22,8 +22,10 @@ class ChatRecordModel{
     var userRole : String?
     var userName : String?
     var image_url : String?
+    var roomID : String?
     
     init() {
+        roomID = ""
         id = ""
         createdAt = ""
         updatedAt = ""
@@ -41,6 +43,10 @@ class ChatRecordModel{
     func updateModelUsingDict(_ dict:[String:Any]){
         if let image_url1 = dict["image_url"] as? String{
             image_url = image_url1
+        }
+        
+        if let roomid = dict["room_id"] as? String{
+            roomID = roomid
         }
         
         if let id1 = dict["id"] as? String{

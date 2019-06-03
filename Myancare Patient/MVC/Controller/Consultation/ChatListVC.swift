@@ -168,6 +168,11 @@ class ChatListCell: UICollectionViewCell {
                     specializeLabel.text = "Send photo..."
                 }
                 
+                if data.createdAt! <= 0{
+                    addressLabel.text = ""
+                    specializeLabel.text = "Start Chat"
+                }
+                
 //                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
 //                    self.profileImage.image = image
 //                }
