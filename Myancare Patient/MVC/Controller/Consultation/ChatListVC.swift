@@ -157,12 +157,9 @@ class ChatListCell: UICollectionViewCell {
                 nameLabel.text = data.doctor_name!
                 specializeLabel.text = data.last_message!
                 
-                
                 let date:UnixTime = data.createdAt! / 1000
-//                addressLabel.text = date.dateTime
                 let ago = date.dateFull
                 addressLabel.text = UtilityClass.timeAgoSinceDate(ago, currentDate: Date(), numericDates: true)
-                
                 
                 if data.last_messageType == 1{
                     specializeLabel.text = "Send photo..."
@@ -173,9 +170,6 @@ class ChatListCell: UICollectionViewCell {
                     specializeLabel.text = "Start Chat"
                 }
                 
-//                UIImage.loadImage(data.doctor_imageUrl!) { (image) in
-//                    self.profileImage.image = image
-//                }
                 self.profileImage.loadImage(urlString: data.doctor_imageUrl!)
             }
         }

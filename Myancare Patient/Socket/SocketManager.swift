@@ -52,7 +52,8 @@ class SocketManagerHandler: NSObject {
     //MARK:- Connect Socket Method
     func connectSocket(callback:@escaping (_ data:[Any], _ ack:SocketAckEmitter) -> ())
     {
-        let url = "http://52.76.5.165:9999/"
+//        let url = "http://52.76.5.165:9999/"
+        let url = "http://sandbox.myancare.org:9999/"
         
         // Initializing the socket client for socket host
         socketMngr = SocketManager(socketURL: URL(string: url)!, config: [.log(true), .reconnects(true), .connectParams(["token": "\(jwtTkn)"]), .reconnectAttempts(-1), .forceNew(true), .reconnectWait(1), .compress])
