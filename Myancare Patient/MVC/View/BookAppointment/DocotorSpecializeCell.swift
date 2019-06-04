@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import Localize_Swift
 
 //specialization cell
 class SpecializationCell: UICollectionViewCell {
@@ -16,14 +17,8 @@ class SpecializationCell: UICollectionViewCell {
     var specData:SpecializationModel?{
         didSet{
             if let data = specData{
-                label.text = data.name!.localized()
                 
-//                let dispatchQueue = DispatchQueue.global(qos: .background)
-//                dispatchQueue.async {
-//                    UIImage.loadImage(data.image!) { (image) in
-//                        self.icon.image = image
-//                    }
-//                }
+                label.text = Localize.currentLanguage() == "en" ? data.name! : data.name_my!
                 self.icon.loadImage(urlString: data.image!)
             }
         }

@@ -15,6 +15,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     var buttonWidth:CGFloat?
     var doctorDetailViewController: DoctorDetailVC?
+    var stackView: UIStackView?
     
     var docData:DoctorModel?{
         didSet{
@@ -28,45 +29,21 @@ class DoctorDetailProfileCell: UICollectionViewCell {
                     experienceLabel.text = "အတွေ့အကြုံ \(data.experience!) နှစ်"
                 }
                 
-//                UIImage.loadImage(data.image_url!) { (image) in
-//                    self.profileImage.image = image
-//                }
                 self.profileImage.loadImage(urlString: data.image_url!)
                 
-                buttongroup3()
-                chatBtn.isHidden = true
-                voiceBtn.isHidden = true
-                videoBtn.isHidden = true
+                if data.chat_rate! <= 0 {
+                    stackView = UIStackView(arrangedSubviews: [voiceBtn, videoBtn])
+                } else {
+                    stackView = UIStackView(arrangedSubviews: [chatBtn, voiceBtn, videoBtn])
+                }
                 
-//                var buttonArr = [String]()
-//                if data.chat!{
-//                    buttonArr.append("CHAT")
-//
-//                } else if data.voice!{
-//                    buttonArr.append("VOICE")
-//
-//                } else if data.video!{
-//                    buttonArr.append("VIDEO")
-//                }
-//
-//                for (index,button) in buttonArr.enumerated(){
-//                    if index == 0 {
-//                        assignAction(button, button: chatBtn)
-//                    } else if index == 1{
-//                        assignAction(button, button: voiceBtn)
-//                    } else if index == 2{
-//                        assignAction(button, button: videoBtn)
-//                    }
-//                }
-//
-//                if buttonArr.count == 3{
-//                    buttongroup3()
-//                } else if buttonArr.count == 2{
-//                    buttongroup2()
-//                } else if buttonArr.count == 1{
-//                    buttongroup1()
-//                }
+                stackView?.axis = .horizontal
+                stackView?.distribution = .fillEqually
+                stackView?.spacing = 4
                 
+                self.addSubview(stackView!)
+                stackView?.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
+                stackView?.isHidden = true
                 
             }
         }
@@ -86,34 +63,6 @@ class DoctorDetailProfileCell: UICollectionViewCell {
         default:
             break
         }
-    }
-    
-    func buttongroup1(){
-        addSubview(chatBtn)
-        addSubview(voiceBtn)
-        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-    }
-    
-    func buttongroup2(){
-        
-        buttonWidth = self.frame.width/2 - 15
-        
-        addSubview(chatBtn)
-        addSubview(voiceBtn)
-        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
-        voiceBtn.anchor(experienceLabel.bottomAnchor, left: chatBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
-    }
-    
-    func buttongroup3(){
-        
-        buttonWidth = self.frame.width/3 - 15
-        
-        addSubview(chatBtn)
-        addSubview(voiceBtn)
-        addSubview(videoBtn)
-        chatBtn.anchor(experienceLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
-        voiceBtn.anchor(experienceLabel.bottomAnchor, left: chatBtn.rightAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: buttonWidth!, heightConstant: 50)
-        videoBtn.anchor(experienceLabel.bottomAnchor, left: voiceBtn.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 50)
     }
     
     lazy var profileImage: CachedImageView = {
@@ -172,10 +121,7 @@ class DoctorDetailProfileCell: UICollectionViewCell {
     
     @objc func bookBtnClick(){
         bookBtn.isHidden = true
-        
-        chatBtn.isHidden = false
-        voiceBtn.isHidden = false
-        videoBtn.isHidden = false
+        stackView?.isHidden = false
     }
     
     lazy var voiceBtn: UIButton = {

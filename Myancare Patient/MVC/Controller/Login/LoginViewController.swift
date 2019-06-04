@@ -330,11 +330,15 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         view.addSubview(pageControl)
         
         //setup contraints of subviews
-         loginbtnBottomConstraint = mobileBtn.anchorWithReturnAnchors(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 287, heightConstant: 50)[0]
-        mobileBtn.anchorCenterXToSuperview()
-        fbBtn.anchor(nil, left: nil, bottom: mobileBtn.topAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 287, heightConstant: 50)
+//         loginbtnBottomConstraint = mobileBtn.anchorWithReturnAnchors(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 287, heightConstant: 50)[0]
+//        mobileBtn.anchorCenterXToSuperview()
+//        fbBtn.anchor(nil, left: nil, bottom: mobileBtn.topAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 287, heightConstant: 50)
+//        fbBtn.anchorCenterXToSuperview()
+        loginbtnBottomConstraint = fbBtn.anchorWithReturnAnchors(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 287, heightConstant: 50)[0]
         fbBtn.anchorCenterXToSuperview()
-        lineView.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: fbBtn.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 50, rightConstant: 0, widthConstant: 0, heightConstant: 1)
+        mobileBtn.anchor(nil, left: nil, bottom: fbBtn.topAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 287, heightConstant: 50)
+        mobileBtn.anchorCenterXToSuperview()
+        lineView.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: mobileBtn.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 50, rightConstant: 0, widthConstant: 0, heightConstant: 1)
         collectionView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: lineView.topAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         pageControl.anchor(lineView.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         pageControl.anchorCenterXToSuperview()
