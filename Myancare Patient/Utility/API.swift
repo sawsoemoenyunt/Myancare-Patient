@@ -8,8 +8,14 @@
 
 import Foundation
 
-let baseURLString = "http://sandbox.myancare.org/api/"
-//let baseURLString = "https://myancare.org/api/"
+//production
+let baseURLString = "https://myancare.org/api/" //baseUrl
+let socket_url = "http://52.76.5.165:9999/" //socket
+
+//development
+//let baseURLString = "http://sandbox.myancare.org/api/" //baseUrl
+//let url = "http://sandbox.myancare.org:9999/" //socket
+
 //let baseURLString = "http://159.65.10.176/api/"
 //let baseURLString = "http://192.168.0.140:5000/api/"
 
