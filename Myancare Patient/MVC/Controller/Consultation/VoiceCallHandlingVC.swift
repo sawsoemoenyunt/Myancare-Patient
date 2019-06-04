@@ -350,13 +350,11 @@ extension VoiceCallHandlingVC{
         isSpeaker = !isSpeaker
         if(isSpeaker)
         {
-//            isSpeaker = false
             self.audioController().enableSpeaker()
             self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-speaker").withRenderingMode(.alwaysTemplate), for: .normal)
         }
         else
         {
-//            isSpeaker = true
             self.audioController().disableSpeaker()
             self.speakerBtn.setImage(#imageLiteral(resourceName: "icons8-mute").withRenderingMode(.alwaysTemplate), for: .normal)
         }
@@ -445,32 +443,6 @@ extension VoiceCallHandlingVC{
     {
         self.callinglabel.text = text
     }
-    
-    // MARK: - Buttons
-//    func showButtons(_ buttons: UIButton)
-//    {
-//        if buttons == EButtonsBar.kButtonsAnswerDecline
-//        {
-//            answerButton.isHidden = false
-//            declineButton.isHidden = false
-//            endCallButton.isHidden = true
-//            connectingLabel.isHidden = true
-//        }
-//        else if buttons == EButtonsBar.kButtonsHangup
-//        {
-//            endCallButton.isHidden = false
-//            answerButton.isHidden = true
-//            declineButton.isHidden = true
-//            connectingLabel.isHidden = true
-//        }
-//        else if buttons == EButtonsBar.kButtonsWakenByCallKit
-//        {
-//            endCallButton.isHidden = true
-//            answerButton.isHidden = true
-//            declineButton.isHidden = true
-//            connectingLabel.isHidden = false
-//        }
-//    }
     
     // MARK: - Duration
     func setDuration(_ seconds: Int)
