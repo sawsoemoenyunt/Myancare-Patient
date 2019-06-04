@@ -108,7 +108,7 @@ extension UserProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.maleBtn.backgroundColor = UIColor.white
         }
         
-        cell.heightTextField.text = "\(userData.height!.replacingOccurrences(of: ".", with: "'"))"
+        cell.heightTextField.text = "\(userData.height!.replacingOccurrences(of: ".", with: "'"))''"
         cell.weightTextField.text = "\(userData.weight!)"
         cell.bloodtypeTextField.text = "\(userData.bloodType!)"
 //        UIImage.loadImage(userData.image_url!) { (image) in

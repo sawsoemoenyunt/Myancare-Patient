@@ -270,6 +270,8 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
             _accountKit = AKFAccountKit(responseType: .accessToken)
         }
         _accountKit.logOut()
+        
+        self.animateWalkthrough()
     }
     
     func removeData(){
@@ -338,6 +340,7 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         pageControl.anchorCenterXToSuperview()
         
         loginbtnBottomConstraint?.constant = 150
+        fbBtn.isHidden = true
     }
     
     /**
@@ -363,6 +366,34 @@ class LoginViewController: UIViewController, NVActivityIndicatorViewable {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.stopAnimating()
         }
+    }
+    
+    var timer : Timer?
+    
+    func animateWalkthrough(){
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(handleReload), userInfo: nil, repeats: false)
+    }
+    
+    @objc func handleReload(){
+        let randomItem = Int(arc4random_uniform(5))
+        scrollToMenuIndex(menuIndex: randomItem)
+        animateWalkthrough()
+    }
+    
+    func scrollToMenuIndex(menuIndex: Int){
+        let indexPath = IndexPath(row: menuIndex, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageNumber = round(scrollView.contentOffset.x / view.frame.width)
+        pageControl.currentPage = Int(pageNumber)
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageNumber = round(scrollView.contentOffset.x / view.frame.width)
+        pageControl.currentPage = Int(pageNumber)
     }
 }
 

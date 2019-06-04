@@ -122,7 +122,7 @@ class SocketManagerHandler: NSObject {
     
     //MARK:- Socket Connection Status
     func isSocketConnected() -> Bool {
-        return socket!.status == SocketIOStatus.connected
+        return socket?.status == SocketIOStatus.connected
     }
     
     //MARK:- Error Listener

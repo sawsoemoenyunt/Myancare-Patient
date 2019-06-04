@@ -61,6 +61,7 @@ class DoctorDetailVC: UICollectionViewController, UICollectionViewDelegateFlowLa
             let profileCell = collectionView.dequeueReusableCell(withReuseIdentifier: profileCellID, for: indexPath) as! DoctorDetailProfileCell
             profileCell.doctorDetailViewController = self
             profileCell.docData = doctorData
+
             cell = profileCell
             
         } else {
