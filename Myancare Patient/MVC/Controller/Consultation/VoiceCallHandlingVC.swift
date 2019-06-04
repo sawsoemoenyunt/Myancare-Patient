@@ -471,10 +471,21 @@ extension VoiceCallHandlingVC{
         
         let current_milliSecond = Date().millisecondsSince1970
         
-        if current_milliSecond == appointment_EndTime_MilliSecond{
+        if current_milliSecond > appointment_EndTime_MilliSecond{
+            print("appointment ended auto")
             self.call?.hangup()
-            self.dismiss()
-        } else if current_milliSecond == appointment_EndTime_MilliSecond - 120000{
+            self.dismiss(animated: true)
+            {
+                self.audioController().stopPlayingSoundFile()
+                
+                self.stopCallDurationTimer()
+                
+                self.audioController().disableSpeaker()
+                
+                //show review vc
+            }
+        } else if current_milliSecond > appointment_EndTime_MilliSecond - 120000{
+            print("appointment reminded auto")
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             self.showAlert(title: "Warning", message: "Consultation will end in next 2 minutes!")
         }

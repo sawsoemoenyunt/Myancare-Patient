@@ -294,6 +294,7 @@ class AppointmentDetailVC: UIViewController, NVActivityIndicatorViewable {
         
         //set appointment end time for call drop
         appointment_EndTime_MilliSecond = appointmentData.slotEndTime!
+        print("Appointment endtime \(appointment_EndTime_MilliSecond)")
         
         //start conversation chat, voice, video
         let myDictOfDict = [
